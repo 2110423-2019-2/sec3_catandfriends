@@ -1,4 +1,4 @@
-# sec3_CatAndFriends
+# sec3_catandfriends
 Member: 
 + Nathabordine Wonghirundecha 6030183821
 + Nuttrawanee Kitwatthanachai 6030184421
