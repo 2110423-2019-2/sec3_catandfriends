@@ -9,7 +9,6 @@ const scheduleRoute = require('./schedule');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 app.use('/courses',courseRoute);
 app.use('/requests',requestRoute);
 app.use('/profile',profileRoute);
