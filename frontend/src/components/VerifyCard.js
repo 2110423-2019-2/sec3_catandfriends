@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import './VerifyCard.css'
+import "./VerifyCard.css";
 export default class VerifyCard extends Component {
   constructor(props) {
     super(props);
@@ -30,24 +30,24 @@ export default class VerifyCard extends Component {
   };
   render() {
     return (
-      <div>
-          <table>
-            <tbody>
-            <tr>
-            <td colSpan="2" style={{textAlign:"center"}}>
-                <label htmlFor="veridoc">Verification Document</label>
-            </td>
-            </tr>
-            <tr>
-                <td>
-                  <input id="veridoc"  className="form-control-file"  type="file" name="file" onChange={this.onChangeHandler}/>
-                </td>
-                <td>
-                  <button type="button" className="btn btn-success btn-sm" onClick={this.onClickHandler}>Upload </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div className="container">
+        <div className="card" style={{width: "16rem"}}>
+          <div className="card-body align-content-center">
+            <p className='card-title text-center title'>Verify Document</p>
+            <input
+              id="veridoc"
+              className="form-control-file p-1"
+              type="file"
+              name="file"
+              onChange={this.onChangeHandler}
+            />
+            <button
+              type="button"
+              className="btn btn-block btn-success btn-sm p-1"
+              onClick={this.onClickHandler}
+            >Upload</button>
+          </div>
+        </div>
       </div>
     );
   }
