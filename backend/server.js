@@ -7,10 +7,22 @@ const profileRoute = require('./profile');
 const scheduleRoute = require('./schedule');
 const mongoose = require('mongoose')
 
+const fs = require('fs');
+let usernamePassword = "";
+
+try {
+  const usernPassws = fs.readFileSync('./secret.a', 'utf8');
+  const usernPasswList = usernPassws.split(";");
+  usernamePassword = usernPasswList[1];//select permission here
+  //console.log(usernPasswList);
+} catch (err) {
+  console.error(err);
+}
+
 function connectToDatabase() {
   try {
     // console.log(usernamePassword);
-    mongoose.connect('mongodb+srv://User:User@cluster0-gcbxg.mongodb.net/TutorHere', { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect('mongodb+srv://' + usernamePassword + '@cluster0-gcbxg.mongodb.net/TutorHere', { useNewUrlParser: true, useUnifiedTopology: true });
     console.log('Successful connecting to database.');
   } catch (error) {
     console.log('Error connecting to database.');
