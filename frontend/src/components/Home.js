@@ -1,16 +1,16 @@
 
 import React, { Component } from 'react'
 
-export class Dummy extends Component {
+export class Home extends Component {
     render() {
         return (
             <div>
-                hello world
+                Welcome to tutor here
             </div>
         )
     }
 }
 
-export default Dummy
+export default Home
 
 
