@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
-// const courseRoute = require('./course');
-// const requestRoute = require('./request');
-// const profileRoute = require('./profile');
-// const scheduleRoute = require('./schedule');
+const courseRoute = require('./course');
+const requestRoute = require('./request');
+const profileRoute = require('./profile');
+const scheduleRoute = require('./schedule');
 var multer = require('multer')
 var cors = require('cors');
 
@@ -14,10 +14,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-// app.use('/courses',courseRoute);
-// app.use('/requests',requestRoute);
-// app.use('/profile',profileRoute);
-// app.use('/schedule',scheduleRoute);
+app.use('/courses',courseRoute);
+app.use('/requests',requestRoute);
+app.use('/profile',profileRoute);
+app.use('/schedule',scheduleRoute);
 
 
 var storage = multer.diskStorage({
