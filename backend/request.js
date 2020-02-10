@@ -3,21 +3,21 @@ const router = express.Router();
 const mongoose = require('mongoose')
 const RequestModel = require('./models/request')
 
-async function connection() {
+async function connectToDatabase() {
     try {
         await mongoose.connect('mongodb+srv://User:User@cluster0-gcbxg.mongodb.net/TutorHere', { useNewUrlParser: true, useUnifiedTopology: true }
         );
-        console.log("Successful connecting to database.");
+        console.log('Successful connecting to database.');
     } catch (error) {
-        console.log("Error connecting to database.");
-        throw "Conection Failed";
+        console.log('Error connecting to database.');
+        throw new Error('CONNECTION ERROR');
     }
 }
 
 router.get('/', async (req, res) => {
     // try {
     // const connection = await connection();
-    connection();
+    connectToDatabase();
     const requests = await RequestModel.find({});
     console.log(requests);
     res.json(requests);
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
     const requests = new RequestModel(payload);
     console.log(requests);
     // const connection = await connection();
-    connection();
+    connectToDatabase();
     await requests.save();
     res.status(201).end();
     // // } catch (error) {
