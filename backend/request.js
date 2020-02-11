@@ -3,6 +3,8 @@ const router = express.Router();
 const RequestModel = require('./models/request')
 
 router.get('/', async (req, res) => {
+    let reqID = req.query.reqID;
+    console.log(reqID);
     const requests = await RequestModel.find({});
     console.log(requests);
     res.json(requests);
