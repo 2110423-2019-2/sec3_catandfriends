@@ -6,31 +6,12 @@ const requestRoute = require('./request');
 const profileRoute = require('./profile');
 const scheduleRoute = require('./schedule');
 const mongoose = require('mongoose')
+require('dotenv').config();
 
-const fs = require('fs');
-let usernamePassword = "";
+mongoose.connect(process.env.MONGO_DB,{useUnifiedTopology: true, useNewUrlParser:true});
+mongoose.connection.on('error', err => {logError(err);});
+mongoose.connection.on('connected', () => {console.log("Connected")});
 
-try {
-  const usernPassws = fs.readFileSync('./secret.a', 'utf8');
-  const usernPasswList = usernPassws.split(";");
-  usernamePassword = usernPasswList[1];//select permission here
-  //console.log(usernPasswList);
-} catch (err) {
-  console.error(err);
-}
-
-function connectToDatabase() {
-  try {
-    // console.log(usernamePassword);
-    mongoose.connect('mongodb+srv://' + usernamePassword + '@cluster0-gcbxg.mongodb.net/TutorHere', { useNewUrlParser: true, useUnifiedTopology: true });
-    console.log('Successful connecting to database.');
-  } catch (error) {
-    console.log('Error connecting to database.');
-    throw new Error('CONNECTION ERROR');
-  }
-}
-
-connectToDatabase();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
