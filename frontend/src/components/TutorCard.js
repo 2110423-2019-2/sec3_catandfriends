@@ -14,10 +14,10 @@ export default class TutorCard extends Component {
     render() {
         return (
             <div className="card " style={{width: "12rem", textAlign:"center"}}>
-                <img src={this.state.imgsrc} className="card-img-top" alt="..." />
+                <img src={this.props.imgsrc} className="card-img-top" alt="..." />
                     <div className="card-body">
-                        <h5 className="card-title">{this.state.name}</h5>
-                        <a href={this.state.link} className="btn btn-info">Tutor's Profile</a>
+                        <h5 className="card-title">{this.props.name}</h5>
+                        <a href={this.props.link} className="btn btn-info">Tutor's Profile</a>
                 </div>
             </div>
            
