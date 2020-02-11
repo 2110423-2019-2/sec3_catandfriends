@@ -10,7 +10,7 @@ const requestSchema = new Schema({
     status: Boolean,
     timeStamp: { type: Date, default: Date.now }
 }, {
-    collection: 'course_request', versionKey: false  
+    collection: collectionName, versionKey: false  
 });
 
 const RequestModel = mongoose.model('RequestModel', requestSchema);
