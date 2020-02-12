@@ -8,9 +8,9 @@ export class TutorProfileCard extends Component {
 
     this.state = {
       imgsrc: mypic,
-      FirstName: "Iceeee",
-      LastName: "Kit",
-      gender: "Male",
+      FirstName: "Nuttrawanee",
+      LastName: "Kitwatthanachai",
+      gender: "MaleFeMale",
       email: "hahaha",
       PhoneNumber: "00000000"
     };
@@ -31,19 +31,21 @@ export class TutorProfileCard extends Component {
           <div class="col-md-8">
             <div class="card-body">
               <div class="row border text-center">
-                <h3 class="card-title border">Profile</h3>
+                <h3 class="card-title border">Tutor Profile</h3>
               </div>
               <div class="row ">
+                <div class="col-md-6 border">
+                  <h4 style={{}}>{this.state.FirstName}</h4>
+                </div>
+                <div class="col-md-6 border">
+                  <h4>{this.state.LastName}</h4>
+                </div>
+
                 <div class="col-md-12 border">
                   <br />
                     {/*Enter*/}
                   <br />
-                  <body>    
-                    <strong>First name : </strong> {this.state.FirstName}
-                  </body>
-                  <body>    
-                    <strong>Last name : </strong> {this.state.LastName}
-                  </body>
+                  
                   <body>    
                     <strong>Gender : </strong> {this.state.gender}
                   </body>
