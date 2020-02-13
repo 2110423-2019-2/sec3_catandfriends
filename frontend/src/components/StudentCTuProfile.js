@@ -1,13 +1,12 @@
 import React,{Component} from 'react';
 import './StudentCTuProfile.css';
-import mypic from './picture/bg-36.jpg';
 export class StudentCTuProfile extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      imgsrc: mypic,
+      imgsrc: "https://www.img.in.th/images/10ee320e3f9646a722277a0029fd6844.jpg",
       FirstName: "Nuttrawanee",
       LastName: "Kitwatthanachai",
       gender: "MaleFeMale",

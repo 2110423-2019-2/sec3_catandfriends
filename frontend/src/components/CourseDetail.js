@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import mypic from './picture/bg-01.jpg';
 import './CourseDetail.css';
 export class CourseDetail extends Component {
 
@@ -7,7 +6,7 @@ export class CourseDetail extends Component {
     super(props);
 
     this.state = {
-      imgsrc: mypic,
+      imgsrc: "https://www.img.in.th/images/ced52db8eb1c2a59ab18b803b25e80c9.jpg",
       courseId: "123456789",
       courseName: "A",
       dayAndtime: "friday 10:00-12:00",

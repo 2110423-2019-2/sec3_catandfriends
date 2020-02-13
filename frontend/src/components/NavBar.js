@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import "./NavBar.css";
-import mypic from "./picture/logo.jpg";
 export class NavBar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      imgjaa: mypic
+      imgjaa: "https://www.img.in.th/images/8517bda5f5991478fb667d1d086145ac.jpg"
     };
   }
 
