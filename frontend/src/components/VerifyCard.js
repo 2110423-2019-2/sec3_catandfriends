@@ -30,9 +30,9 @@ export default class VerifyCard extends Component {
   };
   render() {
     return (
-      <div className="container">
+      <div>
         <div className="card" style={{width: "16rem"}}>
-          <div className="card-body align-content-center">
+          <div className="card-body">
             <h5 className='card-title text-center'>Verify Document</h5>
             <input
               id="veridoc"
