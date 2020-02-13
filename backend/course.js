@@ -1,8 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const CourseModel = require('./models/course');
+const moment = require('moment-timezone');
 
 router.get('/', async(req,res) => {
+    if (req.query.tutorID == undefined) {
+        res.status(400).end();
+        throw new Error('No received argument');
+    }
     let courseId = req.query.courseId;
     console.log(courseId);
     const course =  await CourseModel.find({courseId: courseId});
@@ -21,9 +26,12 @@ router.get('/', async(req,res) => {
 
 router.post('/',async(req,res)=>{
     const payload = req.body;
+    const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
+    payload.createdTime = dateThailand._d;
+    payload.lastModified = dateThailand._d;
+
     const courses = new CourseModel(payload);
     console.log(courses);
-
     await courses.save();
     res.status(201).end();
 });
@@ -39,12 +47,14 @@ router.put('/',async(req,res)=>{
         res.json(s);
     }
     else{
+        const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
         /*for(var k in payload)
             course[0][k] = payload[k];*/
+        payload.lastModified = dateThailand._d;
         await CourseModel.updateOne({courseId: payload["courseId"]},{$set: payload});
         res.json("update complete");
     }
-    res.status(200).end();
+    res.status(201).end();
 });
 
 module.exports = router;

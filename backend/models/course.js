@@ -12,7 +12,9 @@ const courseSchema = new Schema({
     amountOfStudent: Number,
     listOfStudentId: [String],
     description: String,
-    courseFee: Number
+    courseFee: Number,
+    createdTime: Date,
+    lastModified: Date
 }, {
     collection: collectionName, versionKey: false  
 });
