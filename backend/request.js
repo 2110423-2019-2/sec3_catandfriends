@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     let tutorID;
     if (req.query.tutorID == undefined) {
         res.status(400).end();
-        throw new Error('No argument error');
+        throw new Error('No received argument');
     } else {
         tutorID = req.query.tutorID.toString();
     }
@@ -77,6 +77,7 @@ router.put('/', async (req, res) => {
         throw new Error('Unexpected error occurred');
     }
     if (!request) {
+        res.status(201).end();
         throw new Error('Request does not existed');
     } else {
         let err, save;
@@ -96,7 +97,7 @@ router.put('/', async (req, res) => {
             res.status(500).end();
             throw new Error('Unexpected error occurred');
         }
-        res.status(200).end();
+        res.status(201).end();
     }
 });
 
