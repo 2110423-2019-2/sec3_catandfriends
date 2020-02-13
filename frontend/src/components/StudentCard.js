@@ -6,8 +6,8 @@ export default class StudentProfile extends Component {
 
     this.state = {
       imgsrc: "https://i.ibb.co/8NHMg4K/pic.png",
-      name: "TS",
-      surname: "TS",
+      name: "ts",
+      surname: "ts",
       comment: "You know when you know when you know when you know you know",
       email: "@@@",
       faceurl: "/kkk"
@@ -16,41 +16,41 @@ export default class StudentProfile extends Component {
 
   render() {
     return (
-      <div class="card mb-3" style={{ maxWidth: "1000px" }}>
-        <div class="row no-gutters">
-          <div class="col-md-4">
+      <div className="card mb-3" style={{ maxWidth: "1000px" }}>
+        <div className="row no-gutters">
+          <div className="col-md-4">
             <img
               src={this.state.imgsrc}
-              class="card-img p-3"
+              className="card-img p-3"
               style={{ maxWidth: "300px" }}
               alt="..."
             />
           </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <div class="row border text-center">
-                <h3 class="card-title border">Profile</h3>
+          <div className="col-md-8">
+            <div className="card-body">
+              <div className="row border mystyle text-center" className="mystyle">
+                <h3 className="card-title border" style={{ textAlign: "center" }}>Profile</h3>
               </div>
-              <div class="row ">
-                <div class="col-md-6 border">
+              <div className="row ">
+                <div className="col-md-6 border">
                   <h4 style={{ textAlign: "center" }}>{this.state.name}</h4>
                 </div>
-                <div class="col-md-6 border">
+                <div className="col-md-6 border">
                   <h4>{this.state.surname}</h4>
                 </div>
               </div>
 
               <br />
               <br />
-              <p class="card-text">
+              <p className="card-text">
                 This is a wider card with supporting text below as a natural
                 lead-in to additional content. This content is a little bit
                 longer.
               </p>
               <a href={this.state.faceurl}>Facebook</a>
               <p>Email: {this.state.email}</p>
-              <p class="card-text">
-                <small class="text-muted">Last updated 3 mins ago</small>
+              <p className="card-text">
+                <small className="text-muted">Last updated 3 mins ago</small>
               </p>
             </div>
           </div>
