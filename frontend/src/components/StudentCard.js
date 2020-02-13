@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./StudentCard.css";
-export default class StudentProfile extends Component {
+export default class StudentCard extends Component {
   constructor(props) {
     super(props);
 
@@ -29,7 +29,7 @@ export default class StudentProfile extends Component {
           <div className="col-md-8">
             <div className="card-body">
               <div className="row border mystyle text-center" className="mystyle">
-                <h3 className="card-title border" style={{ textAlign: "center" }}>Profile</h3>
+                <h3 className="card-title border">Student Profile</h3>
               </div>
               <div className="row ">
                 <div className="col-md-6 border">
