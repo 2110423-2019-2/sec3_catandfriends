@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const RequestModel = require('./models/request')
 const to = require('await-to-js').default;
-const moment = require('moment-timezone');
-const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
 
 router.get('/', async (req, res) => {
 
@@ -37,7 +35,6 @@ router.post('/', async (req, res) => {
         studentId: payload.studentId,
         courseId: payload.courseId
     }));
-    console.log(!request);
     
     if (err) {
         res.status(500).end();
@@ -45,9 +42,7 @@ router.post('/', async (req, res) => {
     }
     if (!request) {
         payload.requestId = Date.now() + payload.tutorId;
-        //console.log(payload);
         const requests = new RequestModel(payload);
-        // console.log(requests);
         let err, save;
 
         [err, save] = await to(requests.save());
