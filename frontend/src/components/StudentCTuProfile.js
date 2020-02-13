@@ -1,12 +1,12 @@
-import React,{Component} from 'react';
-import './StudentCTuProfile.css';
+import React, { Component } from "react";
+import "./StudentCTuProfile.css";
 export class StudentCTuProfile extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      imgsrc: "https://www.img.in.th/images/10ee320e3f9646a722277a0029fd6844.jpg",
+      imgsrc:
+        "https://www.img.in.th/images/10ee320e3f9646a722277a0029fd6844.jpg",
       FirstName: "Nuttrawanee",
       LastName: "Kitwatthanachai",
       gender: "MaleFeMale",
@@ -20,7 +20,7 @@ export class StudentCTuProfile extends Component {
       <div class="card mb-3" style={{ maxWidth: "1000px" }}>
         <div class="row no-gutters">
           <div class="col-md-4">
-          <img
+            <img
               src={this.state.imgsrc}
               class="card-img p-3"
               style={{ maxWidth: "300px" }}
@@ -29,9 +29,10 @@ export class StudentCTuProfile extends Component {
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <div class="row border text-center">
+              <div class="row border text-center" className="myStyle">
                 <h3 class="card-title border">Tutor Profile</h3>
               </div>
+              <br />
               <div class="row ">
                 <div class="col-md-6 border">
                   <h4 style={{}}>{this.state.FirstName}</h4>
@@ -40,29 +41,40 @@ export class StudentCTuProfile extends Component {
                   <h4>{this.state.LastName}</h4>
                 </div>
 
-                <div class="col-md-12 border">
+                <div class="col-md-4 border">
                   <br />
-                    {/*Enter*/}
+                  {/*Enter*/}
                   <br />
-                  
-                  <body>    
-                    <strong>Gender : </strong> {this.state.gender}
+
+                  <body>
+                    <strong>Gender : </strong>
                   </body>
-                  <body>    
-                    <strong>Email : </strong> {this.state.email}
+                  <body>
+                    <strong>Email : </strong>
                   </body>
-                  <body>    
-                    <strong>Phone number : </strong> {this.state.PhoneNumber}
+                  <body>
+                    <strong>Phone number : </strong>
                   </body>
                   <br />
-                    {/*Enter*/}
+                  {/*Enter*/}
+                  <br />
+                </div>
+                <div class="col-md-8 border">
+                  <br />
+                  {/*Enter*/}
+                  <br />
+
+                  <body> {this.state.gender}</body>
+                  <body> {this.state.email}</body>
+                  <body> {this.state.PhoneNumber}</body>
+                  <br />
+                  {/*Enter*/}
                   <br />
                 </div>
               </div>
               <br />
               {/*Enter*/}
               <br />
-              
             </div>
           </div>
         </div>

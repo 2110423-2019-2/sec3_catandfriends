@@ -1,12 +1,12 @@
-import React,{Component} from 'react';
-import './CourseDetail.css';
+import React, { Component } from "react";
+import "./CourseDetail.css";
 export class CourseDetail extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      imgsrc: "https://www.img.in.th/images/ced52db8eb1c2a59ab18b803b25e80c9.jpg",
+      imgsrc:
+        "https://www.img.in.th/images/ced52db8eb1c2a59ab18b803b25e80c9.jpg",
       courseId: "123456789",
       courseName: "A",
       dayAndtime: "friday 10:00-12:00",
@@ -32,73 +32,83 @@ export class CourseDetail extends Component {
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <div class="row border text-center">
+              <div class="row border text-center" className="myStyle">
                 <h3 class="card-title border">Course Details</h3>
               </div>
+              <br />
               <div class="row">
                 <div class="col-md-6 border">
-                  <h4 style={{/* textAlign: "center"*/ }}>{this.state.courseName}</h4>
+                  <h4
+                    style={
+                      {
+                        /* textAlign: "center"*/
+                      }
+                    }
+                  >
+                    {this.state.courseName}
+                  </h4>
                 </div>
                 <div class="col-md-6 border">
                   <h4>{this.state.courseId}</h4>
                 </div>
-              
-                <div class="col-md-12 border">
-                    <br />
-                      {/*Enter*/}
-                    <br />
-                    <body>    
-                      <strong>Day and Time : </strong> {this.state.dayAndtime}
-                    </body>
-                    <body>    
-                      <strong>Start day : </strong> {this.state.startDate}
-                    </body>
-                    <body>    
-                      <strong>End day : </strong> {this.state.endDate}
-                    </body>
-                    <body>    
-                      <strong>tutor Id : </strong> {this.state.tutorId}
-                    </body>
-                    <h6>should we show the tutor name?</h6>
-                    <br />
-                      {/*Enter*/}
-                    <br />
-                </div>
-              
+
                 <div class="col-md-12 border">
                   <br />
-                  <br />  
-                  <p class="card-text">{this.state.description}
+                  {/*Enter*/}
+                  <br />
+                  <body>
+                    <strong>Day and Time : </strong> {this.state.dayAndtime}
+                  </body>
+                  <body>
+                    <strong>Start day : </strong> {this.state.startDate}
+                  </body>
+                  <body>
+                    <strong>End day : </strong> {this.state.endDate}
+                  </body>
+                  <body>
+                    <strong>tutor Id : </strong> {this.state.tutorId}
+                  </body>
+                  <h6>should we show the tutor name?</h6>
+                  <br />
+                  {/*Enter*/}
+                  <br />
+                </div>
+
+                <div class="col-md-12 border">
+                  <br />
+                  <br />
+                  <p class="card-text">
+                    {this.state.description}
                     {/*This is a wider card with supporting text below as a natural
                     lead-in to additional content. This content is a little bit
                     longer.*/}
                   </p>
-                  
-                  
                 </div>
 
                 <div class="col-md-12 border">
                   <div class="alert alert-warning">
-                    <strong>Warning!</strong> If you request to enroll this course.....
+                    <strong>Warning!</strong> If you request to enroll this
+                    course.....
                   </div>
-                  <button 
-                    type="button" 
-                    class="btn btn-outline-success">Request
+                  <button type="button" class="btn btn-outline-success">
+                    Request
                   </button>
-                  <button 
-                    type="button" 
-                    data-toggle="button" 
-                    aria-pressed="false" 
+                  <button
+                    type="button"
+                    data-toggle="button"
+                    aria-pressed="false"
                     autocomplete="off"
                     aria-pressed="true"
-                    class="btn btn-primary" >Request
+                    class="btn btn-primary"
+                  >
+                    Request
                   </button>
                   <br />
                   <br />
                 </div>
-              <p class="card-text">
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </p>
+                <p class="card-text">
+                  <small class="text-muted">Last updated 3 mins ago</small>
+                </p>
               </div>
             </div>
           </div>

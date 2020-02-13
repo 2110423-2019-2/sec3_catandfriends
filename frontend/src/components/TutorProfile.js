@@ -36,8 +36,9 @@ export class TutorProfile extends Component {
           <div class="col-md-8">
             <div class="card-body">
               <div class="row border text-center" className="myStyle">
-                <h3 class="card-title border">Tutor Profile</h3>
+                <h3 class="card-title border">My Profile</h3>
               </div>
+              <br />
               <div class="row ">
                 <div class="col-md-4 border">
                   <h4 style={{}}>{this.state.FirstName}</h4>
@@ -90,13 +91,16 @@ export class TutorProfile extends Component {
                       <body>{this.state.PhoneNumber}</body>
                     </div>
                   </div>
-
                   <br />
-                  {/*Enter*/}
                   <br />
                 </div>
               </div>
               <br />
+              <div className="myStyle">
+                <button type="button" class="btn btn-outline-primary">
+                  Edit Information
+                </button>
+              </div>
               {/*Enter*/}
               <br />
             </div>
