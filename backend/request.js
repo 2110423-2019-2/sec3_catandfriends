@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const RequestModel = require('./models/request')
+const RequestModel = require('./models/request');
 
 router.get('/', async (req, res) => {
     let reqID = req.query.reqID;
