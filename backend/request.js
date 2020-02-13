@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const RequestModel = require('./models/request')
 const to = require('await-to-js').default;
+const moment = require('moment-timezone');
 
 router.get('/', async (req, res) => {
 
@@ -29,19 +30,22 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const payload = req.body;
     let err, request;
-
+    const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
+    
     [err, request] = await to(RequestModel.countDocuments({
         tutorId: payload.tutorId,
         studentId: payload.studentId,
         courseId: payload.courseId
     }));
-    
+
     if (err) {
         res.status(500).end();
         throw new Error('Unexpected error occurred');
     }
     if (!request) {
         payload.requestId = Date.now() + payload.tutorId;
+        payload.createdTime = dateThailand._d;
+        payload.lastModified = dateThailand._d;
         const requests = new RequestModel(payload);
         let err, save;
 
@@ -52,13 +56,48 @@ router.post('/', async (req, res) => {
         }
         res.status(201).end();
     } else {
+        res.status(201).end();
         throw new Error('Request existed');
     }
 
 });
 
-router.put('/', (req, res) => {
+router.put('/', async (req, res) => {
+    const payload = req.body;
+    let err, request;
 
+    [err, request] = await to(RequestModel.countDocuments({
+        tutorId: payload.tutorId,
+        studentId: payload.studentId,
+        courseId: payload.courseId
+    }));
+
+    if (err) {
+        res.status(500).end();
+        throw new Error('Unexpected error occurred');
+    }
+    if (!request) {
+        throw new Error('Request does not existed');
+    } else {
+        let err, save;
+        const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
+        
+        [err, save] = await to(RequestModel.findOneAndUpdate({
+            tutorId: payload.tutorId,
+            studentId: payload.studentId,
+            courseId: payload.courseId
+        }, {
+            status: true,
+            lastModified: dateThailand._d
+        }, { 
+            useFindAndModify: false 
+        }));
+        if (err) {
+            res.status(500).end();
+            throw new Error('Unexpected error occurred');
+        }
+        res.status(200).end();
+    }
 });
 
 

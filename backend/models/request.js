@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var collectionName = 'course_request';
-const moment = require('moment-timezone');
-const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
 
 const requestSchema = new Schema({
     requestId: String,
@@ -10,8 +8,8 @@ const requestSchema = new Schema({
     tutorId: String,
     studentId: String,
     status: { type: Boolean, default: false },
-    createdTime: { type: Date, default: dateThailand._d },
-    lastModified: { type: Date, default: dateThailand._d }
+    createdTime: { type: Date},
+    lastModified: { type: Date}
 }, {
     collection: collectionName,
     versionKey: false,
