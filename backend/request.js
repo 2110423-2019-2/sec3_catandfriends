@@ -97,6 +97,11 @@ router.put('/', async (req, res) => {
             res.status(500).end();
             throw new Error('Unexpected error occurred');
         }
+
+        //TODO: UPDATE LISTOFCOURSE IN SCHEDULE
+        ///////////////////////////////////////////////////////
+        //TOdO: UPDATE AMOUNTOFSTUDENT, LISTOFSTUDENT IN COURSE
+        ///////////////////////////////////////////////////////
         res.status(201).end();
     }
 });
