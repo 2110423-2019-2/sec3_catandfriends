@@ -10,7 +10,8 @@ export default class StudentCard extends Component {
       surname: "ts",
       comment: "You know when you know when you know when you know you know",
       email: "@@@",
-      faceurl: "/kkk"
+      faceurl: "/kkk",
+      bio: "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."
     };
   }
 
@@ -31,6 +32,7 @@ export default class StudentCard extends Component {
               <div className="row border mystyle text-center" className="mystyle">
                 <h3 className="card-title border">Student Profile</h3>
               </div>
+              <br/>
               <div className="row ">
                 <div className="col-md-6 border">
                   <h4 style={{ textAlign: "center" }}>{this.state.name}</h4>
@@ -39,14 +41,8 @@ export default class StudentCard extends Component {
                   <h4>{this.state.surname}</h4>
                 </div>
               </div>
-
               <br />
-              <br />
-              <p className="card-text">
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </p>
+              <p className="card-text">{this.state.bio}</p>
               <a href={this.state.faceurl}>Facebook</a>
               <p>Email: {this.state.email}</p>
               <p className="card-text">
