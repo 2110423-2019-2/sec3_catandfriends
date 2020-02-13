@@ -29,7 +29,11 @@ router.post('/',async(req,res)=>{
     const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
     payload.createdTime = dateThailand._d;
     payload.lastModified = dateThailand._d;
-
+    if(payload['dayAndTime'].length!=7){
+        res.json('dayAndTime is incorrect');
+        res.status(400).end();
+        throw new Error('dayAndTime is incorrect');
+    }
     const courses = new CourseModel(payload);
     console.log(courses);
     await courses.save();
@@ -45,6 +49,11 @@ router.put('/',async(req,res)=>{
         var s = "this course isn't create yet"
         console.log(s);
         res.json(s);
+    }
+    else if(payload['dayAndTime'].length!=7){
+        res.json('dayAndTime is incorrect');
+        res.status(400).end();
+        throw new Error('dayAndTime is incorrect');
     }
     else{
         const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
