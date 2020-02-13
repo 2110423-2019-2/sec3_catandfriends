@@ -30,30 +30,36 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const payload = req.body;
-    let requestId = parseInt(dateThailand._d) + payload.tutorId;
+    let err, request;
+
+    [err, request] = await to(RequestModel.countDocuments({
+        tutorId: payload.tutorId,
+        studentId: payload.studentId,
+        courseId: payload.courseId
+    }));
+    console.log(!request);
     
-    
-    payload.requestId = requestId;
-
-    console.log(payload);
-    const requests = new RequestModel(payload);
-    console.log(requests);
-
-    let err, save;
-    // let condition = {
-    //     tutorId: payload.tutorId,
-    //     studentId: payload.studentId,
-    //     courseId: payload.courseId
-    // }
-
-    // [err, save] = await to(RequestModel.find(condition));
-
-    [err, save] = await to(requests.save());
     if (err) {
         res.status(500).end();
         throw new Error('Unexpected error occurred');
     }
-    res.status(201).end();
+    if (!request) {
+        payload.requestId = Date.now() + payload.tutorId;
+        //console.log(payload);
+        const requests = new RequestModel(payload);
+        // console.log(requests);
+        let err, save;
+
+        [err, save] = await to(requests.save());
+        if (err) {
+            res.status(500).end();
+            throw new Error('Unexpected error occurred');
+        }
+        res.status(201).end();
+    } else {
+        throw new Error('Request existed');
+    }
+
 });
 
 router.put('/', (req, res) => {
