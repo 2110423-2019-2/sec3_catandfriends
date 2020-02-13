@@ -23,38 +23,38 @@ export class TutorProfile extends Component {
 
   render() {
     return (
-      <div class="card mb-3" style={{ maxWidth: "1000px" }}>
-        <div class="row no-gutters">
-          <div class="col-md-4">
+      <div className="card mb-3" style={{ maxWidth: "1000px" }}>
+        <div className="row no-gutters">
+          <div className="col-md-4">
             <img
               src={this.state.imgsrc}
-              class="card-img p-3"
+              className="card-img p-3"
               style={{ maxWidth: "300px" }}
               alt="..."
             />
           </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <div class="row border text-center" className="myStyle">
-                <h3 class="card-title border">My Profile</h3>
+          <div className="col-md-8">
+            <div className="card-body">
+              <div className="row border text-center" className="myStyle">
+                <h3 className="card-title border">My Profile</h3>
               </div>
               <br />
-              <div class="row ">
-                <div class="col-md-4 border">
+              <div className="row ">
+                <div className="col-md-4 border">
                   <h4 style={{}}>{this.state.FirstName}</h4>
                 </div>
-                <div class="col-md-4 border">
+                <div className="col-md-4 border">
                   <h4>{this.state.LastName}</h4>
                 </div>
-                <div class="col-md-4 border">
+                <div className="col-md-4 border">
                   <h4>{this.state.tutorId}</h4>
                 </div>
-                <div class="col-md-12 border">
+                <div className="col-md-12 border">
                   <br />
                   {/*Enter*/}
                   <br />
-                  <div class="row ">
-                    <div class="col-md-4 border">
+                  <div className="row ">
+                    <div className="col-md-4 border">
                       <body>
                         <strong>SSN : </strong>
                       </body>
@@ -80,7 +80,7 @@ export class TutorProfile extends Component {
                         <strong>Phone number : </strong>
                       </body>
                     </div>
-                    <div class="col-md-8 border">
+                    <div className="col-md-8 border">
                       <body>{this.state.ssn}</body>
                       <body>{this.state.birthdate}</body>
                       <body>{this.state.gender}</body>
@@ -97,7 +97,7 @@ export class TutorProfile extends Component {
               </div>
               <br />
               <div className="myStyle">
-                <button type="button" class="btn btn-outline-primary">
+                <button type="button" className="btn btn-outline-primary">
                   Edit Information
                 </button>
               </div>

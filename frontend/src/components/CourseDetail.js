@@ -20,24 +20,24 @@ export class CourseDetail extends Component {
 
   render() {
     return (
-      <div class="card mb-3" style={{ maxWidth: "1000px" }}>
-        <div class="row no-gutters">
-          <div class="col-md-4">
+      <div className="card mb-3" style={{ maxWidth: "1000px" }}>
+        <div className="row no-gutters">
+          <div className="col-md-4">
             <img
               src={this.state.imgsrc}
-              class="card-img p-3"
+              className="card-img p-3"
               style={{ maxWidth: "300px" }}
               alt="..."
             />
           </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <div class="row border text-center" className="myStyle">
-                <h3 class="card-title border">Course Details</h3>
+          <div className="col-md-8">
+            <div className="card-body">
+              <div className="row border text-center" className="myStyle">
+                <h3 className="card-title border">Course Details</h3>
               </div>
               <br />
-              <div class="row">
-                <div class="col-md-6 border">
+              <div className="row">
+                <div className="col-md-6 border">
                   <h4
                     style={
                       {
@@ -48,11 +48,11 @@ export class CourseDetail extends Component {
                     {this.state.courseName}
                   </h4>
                 </div>
-                <div class="col-md-6 border">
+                <div className="col-md-6 border">
                   <h4>{this.state.courseId}</h4>
                 </div>
 
-                <div class="col-md-12 border">
+                <div className="col-md-12 border">
                   <br />
                   {/*Enter*/}
                   <br />
@@ -74,10 +74,10 @@ export class CourseDetail extends Component {
                   <br />
                 </div>
 
-                <div class="col-md-12 border">
+                <div className="col-md-12 border">
                   <br />
                   <br />
-                  <p class="card-text">
+                  <p className="card-text">
                     {this.state.description}
                     {/*This is a wider card with supporting text below as a natural
                     lead-in to additional content. This content is a little bit
@@ -85,29 +85,20 @@ export class CourseDetail extends Component {
                   </p>
                 </div>
 
-                <div class="col-md-12 border">
-                  <div class="alert alert-warning">
+                <div className="col-md-12 border">
+                  <div className="alert alert-warning">
                     <strong>Warning!</strong> If you request to enroll this
                     course.....
                   </div>
-                  <button type="button" class="btn btn-outline-success">
-                    Request
-                  </button>
-                  <button
-                    type="button"
-                    data-toggle="button"
-                    aria-pressed="false"
-                    autocomplete="off"
-                    aria-pressed="true"
-                    class="btn btn-primary"
-                  >
-                    Request
-                  </button>
-                  <br />
+                  <div className="myStyle">
+                    <button type="button" className="btn btn-outline-success">
+                      Request
+                    </button>
+                  </div>
                   <br />
                 </div>
-                <p class="card-text">
-                  <small class="text-muted">Last updated 3 mins ago</small>
+                <p className="card-text">
+                  <small className="text-muted">Last updated 3 mins ago</small>
                 </p>
               </div>
             </div>
