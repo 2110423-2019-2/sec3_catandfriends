@@ -5,7 +5,9 @@ var collectionName = 'schedule';
 const scheduleSchema = new Schema({
     scheduleId: String,
     studentId: String,
-    listOfCourse: Array
+    listOfCourse: Array,
+    createdDate: Date,
+    lastModified: Date
 }, {
     collection: collectionName, versionKey: false  
 });

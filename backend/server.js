@@ -6,6 +6,7 @@ const requestRoute = require('./request');
 const profileRoute = require('./profile');
 const scheduleRoute = require('./schedule');
 const mongoose = require('mongoose')
+mongoose.set('useCreateIndex', true);
 require('dotenv').config();
 
 mongoose.connect(process.env.MONGO_DB,{useUnifiedTopology: true, useNewUrlParser:true});
