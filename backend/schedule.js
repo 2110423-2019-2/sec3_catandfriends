@@ -5,7 +5,7 @@ const ScheduleModel = require('./models/schedule')
 router.get('/', async (req, res) => {
     let reqID = req.query.reqID;
     console.log(reqID);
-    const schedule = await ScheduleModel.find({});
+    const schedule = await ScheduleModel.find({studentId: reqID});
     console.log(schedule);
     res.json(schedule);
     res.status(200).end();
