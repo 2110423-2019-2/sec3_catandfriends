@@ -4,25 +4,53 @@ const CourseModel = require('./models/course');
 const moment = require('moment-timezone');
 
 router.get('/', async(req,res) => {
-    if (req.query.tutorID == undefined) {
-        console.log('No received argument');
-        res.json('No received argument');
-        res.status(400).end();
-    }
     let courseId = req.query.courseId;
-    console.log(courseId);
-    const course =  await CourseModel.find({courseId: courseId});
-    if(Object.keys(course).length === 0){
-        var s = "this course isn't create yet"
-        console.log(s);
-        res.json(s);
+    let tutorId = req.query.tutorId;
+    let studentId = req.query.studentId;
+
+    if(courseId != undefined){
+        console.log(courseId);
+        let course =  await CourseModel.find({courseId: courseId});
+        if(course.length == 0){
+            var s = "this course hasn't been created yet"
+            console.log(s);
+            res.json(s);
+        }
+        else{
+            console.log(course);
+            res.json(course);
+        }
+        res.status(200).end();
     }
+    if (tutorId != undefined) {
         
-    else{
-        console.log(course);
-        res.json(course);
+        course = await CourseModel.find({tutorId: tutorId});
+        if(course.length == 0){
+            var s = "tutor hasn't created any courses"
+            console.log(s);
+            res.json(s);
+        }
+        else
+            res.json(course);
+        res.status(200).end();
     }
-    res.status(200).end;
+    if (studentId != undefined) {
+        
+        course = await CourseModel.find({studentId: studentId});
+        if(course.length == 0){
+            var s = "student hasn't enrolled any courses"
+            console.log(s);
+            res.json(s);
+        }
+        else
+            res.json(course);
+        res.status(200).end();
+    }
+    else{
+        res.json('invalid');
+        res.status(404).end();
+    }
+    
 });
 
 router.post('/',async(req,res)=>{
