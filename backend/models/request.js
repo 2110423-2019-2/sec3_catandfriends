@@ -3,13 +3,36 @@ const Schema = mongoose.Schema;
 var collectionName = 'course_request';
 
 const requestSchema = new Schema({
-    requestId: String,
-    courseId: String,
-    tutorId: String,
-    studentId: String,
-    status: { type: Boolean, default: false },
-    createdTime: { type: Date},
-    lastModified: { type: Date}
+    requestId: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    courseId: {
+        type: String,
+        required: true,
+    },
+    tutorId: {
+        type: String,
+        required: true,
+    },
+    studentId: {
+        type: String,
+        required: true,
+    },
+    status: { 
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    createdTime: { 
+        type: Date,
+        required: true
+    },
+    lastModified: { 
+        type: Date,
+        required: true
+    }
 }, {
     collection: collectionName,
     versionKey: false,
