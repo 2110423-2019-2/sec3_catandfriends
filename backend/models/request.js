@@ -7,10 +7,12 @@ const requestSchema = new Schema({
     courseId: String,
     tutorId: String,
     studentId: String,
-    status: Boolean,
-    timeStamp: { type: Date, default: Date.now }
+    status: { type: Boolean, default: false },
+    createdTime: { type: Date},
+    lastModified: { type: Date}
 }, {
-    collection: collectionName, versionKey: false 
+    collection: collectionName,
+    versionKey: false,
 });
 
 const RequestModel = mongoose.model('RequestModel', requestSchema);
