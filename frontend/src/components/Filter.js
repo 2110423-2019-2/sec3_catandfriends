@@ -2,25 +2,23 @@ import React from 'react'
 
 function CheckboxTemplate(props) {
     return (
-        <li>
+        <div>
             <input
                 id={props.id}
                 type='checkbox'
                 checked={props.state}
                 onChange={props.handler}
             />
-            <label
-                htmlFor={props.id}
-            >
-                {props.text}
-            </label>
-        </li>
+            <label htmlFor={props.id}>{props.text}</label>
+        </div>
     );
 }
 
 function DayGroup(props) {
     return (
-        <ul>
+  
+        <ul className="border" style={{textAlign:"left"}} > 
+            <h4 style={{textAlign:"left"}}>Day</h4>
             <CheckboxTemplate
                 text='Sunday'
                 id='sunday'
@@ -69,7 +67,8 @@ function DayGroup(props) {
 
 function SubjectGroup(props) {
     return (
-        <ul>
+        <ul className="border" style={{textAlign:"left"}}  >
+            <h4 style={{textAlign:"left"}}>Subject</h4>
             <CheckboxTemplate
                 text='Mathematics'
                 id='mathematics'
@@ -100,7 +99,8 @@ function SubjectGroup(props) {
 
 function TimeGroup(props) {
     return (
-        <ul>
+        <ul className="border" style={{textAlign:"left"}} >
+            <h4 style={{textAlign:"left"}}>Time</h4>
             <CheckboxTemplate
                 text='6:00 to 8:00'
                 id='time6To8'
@@ -155,7 +155,8 @@ function TimeGroup(props) {
 
 function PriceGroup(props) {
     return (
-        <ul>
+        <ul className="border" style={{textAlign:"left"}} >
+            <h4 style={{textAlign:"left"}}>Price</h4>
             <CheckboxTemplate
                 text='0 - 500 Baht'
                 id='price0To500'
@@ -181,7 +182,7 @@ function PriceGroup(props) {
                 handler={props.handler}
             />
             <CheckboxTemplate
-                text='6500 Baht and above'
+                text='6500 Baht up'
                 id='price6500AndAbove'
                 state={props.state.price6500AndAbove}
                 handler={props.handler}
@@ -195,77 +196,88 @@ class Filter extends React.Component {
         super(props);
         this.state = {
             day: {
-                sunday: false,
-                monday: false,
-                tuesday: false,
-                wednesday: false,
-                thursday: false,
-                friday: false,
-                saturday: false
+                sunday:  false,
+                monday:  false,
+                tuesday:  false,
+                wednesday:  false,
+                thursday:  false,
+                friday:  false,
+                saturday:  false
             },
             subject: {
-                mathematics: false,
-                science: false,
-                social: false,
-                language: false,
+                mathematics:  false,
+                science:  false,
+                social:  false,
+                language:  false,
             },
             time: {
-                time6To8: false,
-                time8To10: false,
-                time10To12: false,
-                time12To14: false,
-                time14To16: false,
-                time16To18: false,
-                time18To20: false,
-                time20To22: false
+                time6To8:  false,
+                time8To1false:  false,
+                time1falseTo12:  false,
+                time12To14:  false,
+                time14To16:  false,
+                time16To18:  false,
+                time18To2false:  false,
+                time2falseTo22:  false
             },
             price: {
-                price0To500: false,
-                price500To1500: false,
-                price1500To3500: false,
-                price3500To6500: false,
-                price6500AndAbove: false
+                price0To500:  false,
+                price500To1500:  false,
+                price1500To3500:  false,
+                price3500To6500:  false,
+                price6500AndAbove:  false
             }
         };
         this.handleDayChange = this.handleDayChange.bind(this);
         this.handleSubjectChange = this.handleSubjectChange.bind(this);
         this.handleTimeChange = this.handleTimeChange.bind(this);
         this.handlePriceChange = this.handlePriceChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     debug() {
         //console.log(this.state);
     }
     handleDayChange(event) {
         let temp = this.state;
-        temp.day[event.target.id] = event.target.checked
+        temp.day[event.target.id] = event.target.checked;
         this.setState(temp);
         this.debug();
     }
     handleSubjectChange(event) {
         let temp = this.state;
-        temp.subject[event.target.id] = event.target.checked
+        temp.subject[event.target.id] =  event.target.checked;
         this.setState(temp);
         this.debug();
     }
     handleTimeChange(event) {
         let temp = this.state;
-        temp.time[event.target.id] = event.target.checked
+        temp.time[event.target.id] =  event.target.checked;
         this.setState(temp);
         this.debug();
     }
     handlePriceChange(event) {
         let temp = this.state;
-        temp.price[event.target.id] = event.target.checked
+        temp.price[event.target.id] =  event.target.checked;
         this.setState(temp);
         this.debug();
     }
+    handleSubmit(event) {
+        console.log(this.state);
+        //alert('A name was submitted: ' + JSON.stringify(this.state));
+        event.preventDefault();
+      }
     render() {
         return (
-            <div>
+            <div className="card border" style={{maxWidth:250}}>
+            <div className="card-body">
+            <form onSubmit={this.handleSubmit} style={{textAlign:"center"}}>  
                 <DayGroup state={this.state.day} handler={this.handleDayChange} />
                 <SubjectGroup state={this.state.subject} handler={this.handleSubjectChange} />
                 <TimeGroup state={this.state.time} handler={this.handleTimeChange} />
                 <PriceGroup state={this.state.price} handler={this.handlePriceChange} />
+                <input className="btn btn-success" type="submit" value="Submit"/>
+            </form>
+            </div>
             </div>
         );
     }
