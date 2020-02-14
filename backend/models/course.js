@@ -3,18 +3,18 @@ const Schema = mongoose.Schema;
 var collectionName = 'course';
 
 const courseSchema = new Schema({
-    courseId: String,
-    courseName: String,
-    dayAndTime: [String],
-    startDate: Date,
-    endDate: Date,
-    tutorId: String,
-    amountOfStudent: Number,
-    listOfStudentId: [String],
-    description: String,
-    courseFee: Number,
-    createdTime: Date,
-    lastModified: Date
+    courseId: {type: String,required: true,unique: true},
+    courseName: {type: String,required: true},
+    dayAndTime: {type: [String],required: true},
+    startDate: {type: Date,required: true},
+    endDate: {type: Date,required: true},
+    tutorId: {type: String,required: true},
+    amountOfStudent: {type: Number,required: true},
+    listOfStudentId: {type: [String],required: true},
+    description: {type: String,required: true},
+    courseFee: {type: Number,required: true},
+    createdTime: {type: Date,required: true},
+    lastModified: {type: Date,required: true},
 }, {
     collection: collectionName, versionKey: false  
 });
