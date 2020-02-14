@@ -5,8 +5,9 @@ const moment = require('moment-timezone');
 
 router.get('/', async(req,res) => {
     if (req.query.tutorID == undefined) {
+        console.log('No received argument');
+        res.json('No received argument');
         res.status(400).end();
-        throw new Error('No received argument');
     }
     let courseId = req.query.courseId;
     console.log(courseId);
@@ -30,9 +31,9 @@ router.post('/',async(req,res)=>{
     payload.createdTime = dateThailand._d;
     payload.lastModified = dateThailand._d;
     if(payload['dayAndTime'].length!=7){
+        console.log('dayAndTime is incorrect');
         res.json('dayAndTime is incorrect');
         res.status(400).end();
-        throw new Error('dayAndTime is incorrect');
     }
     const courses = new CourseModel(payload);
     console.log(courses);
@@ -51,9 +52,10 @@ router.put('/',async(req,res)=>{
         res.json(s);
     }
     else if(payload['dayAndTime'].length!=7){
+        console.log('dayAndTime is incorrect');
         res.json('dayAndTime is incorrect');
         res.status(400).end();
-        throw new Error('dayAndTime is incorrect');
+        
     }
     else{
         const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
