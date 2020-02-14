@@ -15,7 +15,9 @@ export default class MyStudentCard extends Component {
       password:"password",
       phoneNumber:"0123456789",
       scheduleId:"0987654321",
-      imgsrc: "https://i.ibb.co/8NHMg4K/pic.png"
+      imgsrc: "https://i.ibb.co/8NHMg4K/pic.png",
+      faceurl: "/kkk",
+      bio: "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."
     };
   }
 
@@ -58,6 +60,8 @@ export default class MyStudentCard extends Component {
                 <strong>Password : </strong><br/>
                 <strong>Phone Number : </strong><br/>
                 <strong>Schedule ID : </strong><br/>
+                <strong>Bio : </strong><br/>
+                <strong>Facebook : </strong><br/>
               </div>
               <div class="col-md-8 border">
                 <body>{this.state.ssn}</body>
@@ -66,6 +70,8 @@ export default class MyStudentCard extends Component {
                 <body>{this.state.password}</body>
                 <body>{this.state.phoneNumber}</body>
                 <body>{this.state.scheduleId}</body>
+                <body>{this.state.faceurl}</body>
+                <body>{this.state.bio}</body>
               </div>
               </div>
               <br/>
