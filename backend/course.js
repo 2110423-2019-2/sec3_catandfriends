@@ -22,7 +22,7 @@ router.get('/', async(req,res) => {
         }
         res.status(200).end();
     }
-    if (tutorId != undefined) {
+    else if (tutorId != undefined) {
         
         course = await CourseModel.find({tutorId: tutorId});
         if(course.length == 0){
@@ -34,7 +34,7 @@ router.get('/', async(req,res) => {
             res.json(course);
         res.status(200).end();
     }
-    if (studentId != undefined) {
+    else if (studentId != undefined) {
         
         course = await CourseModel.find({studentId: studentId});
         if(course.length == 0){
