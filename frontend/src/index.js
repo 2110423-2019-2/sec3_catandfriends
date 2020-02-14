@@ -7,7 +7,7 @@ import $ from 'jquery';
 import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import * as serviceWorker from './serviceWorker';
-import Ice from './components/ice'
+
 
 ReactDOM.render(<Titang />, document.getElementById('root'));
 
