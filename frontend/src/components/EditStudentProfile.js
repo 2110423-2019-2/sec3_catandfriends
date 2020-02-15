@@ -18,13 +18,17 @@ export default class EditStudentProfile extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
       }
     
-      handleChange(event) {
-        this.setState({value: event.target.value});
+      handleChange(e) {
+        this.setState({ [e.target.name] : e.target.value });
       }
     
       handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.setState({
+            [name]: value
+        });
       }
     
       render() {
@@ -40,43 +44,43 @@ export default class EditStudentProfile extends Component {
               <div class="row">
                   <div class="col-md-6" width="100%">
                     <label>First Name<br/>
-                  <input type="text" value={this.state.firstName} style={{width:250}} onChange={e=>this.setState({firstName:e.target.value})}/> 
+                  <input type="text" value={this.state.firstName} name="firstName" style={{width:250}} onChange={this.handleChange}/> 
                  </label> 
                  </div>
                   <div class="col-md-6">
                       <label>Last Name<br/>
-                  <input type="text" value={this.state.lastName} style={{width:250}} onChange={e=>this.setState({lastName:e.target.value})} />
+                  <input type="text" value={this.state.lastName}  style={{width:250}} name="lastName" onChange={this.handleChange} />
                   </label>
                   </div>
               </div>
               <div class="row">
                   <div class="col-md-6" width="100%">
                     <label>Password<br/>
-                  <input type="password" value={this.state.password} style={{width:250}} onChange={e=>this.setState({password:e.target.value})}/> 
+                  <input type="password" value={this.state.password} style={{width:250}} name="password" onChange={this.handleChange} /> 
                  </label> 
                  </div>
                   <div class="col-md-6">
                       <label>New Password<br/>
-                  <input type="password" value={this.state.newPassword} style={{width:250}} onChange={e=>this.setState({newPassword:e.target.value})} />
+                  <input type="password" value={this.state.newPassword} style={{width:250}} name="newPassword" onChange={this.handleChange}  />
                   </label>
                   </div>
               </div>
               <div class="row">
                   <div class="col-md-6" width="100%">
                     <label>Phone Number<br/>
-                  <input type="tel" value={this.state.phoneNumber} style={{width:250}} onChange={e=>this.setState({phoneNumber:e.target.value})}/> 
+                  <input type="tel" value={this.state.phoneNumber} style={{width:250}} name="phoneNumber" onChange={this.handleChange} /> 
                  </label> 
                  </div>
                   <div class="col-md-6">
                       <label>Facebook<br/>
-                  <input type="url" value={this.state.facebook} style={{width:250}} onChange={e=>this.setState({facebook:e.target.value})} />
+                  <input type="url" value={this.state.facebook} style={{width:250}} name="facebook" onChange={this.handleChange}  />
                   </label>
                   </div>
               </div>
               <div class="row">
                   <div class="col-md-6" width="100%">
                     <label>Bio<br/>
-                  <textarea type="text" value={this.state.bio} style={{width:250}} onChange={e=>this.setState({bio:e.target.value})}/> 
+                  <textarea type="text" value={this.state.bio} style={{width:250}} name="bio" onChange={this.handleChange} /> 
                  </label> 
                  </div>
               </div>
