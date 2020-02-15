@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const fuse = require('fuse.js');
+var Fuse = require('fuse.js');
 const CourseModel = require('./models/course');
 const to = require('await-to-js').default;
 
@@ -12,12 +12,19 @@ router.get('/', async (req, res) => {
     let price = req.query.price;
     let day = req.query.day;
     let time = req.query.time;
-    
+
     let err, courses;
 
     [err, courses] = await to(CourseModel.find({}));
     if (err) {
         res.status(500).end();
+    }
+
+    let data = [];
+    let order = [];
+
+    for (let i = 0; i < courses; i++){
+        i = 0;
     }
 
     var options = {
@@ -29,13 +36,14 @@ router.get('/', async (req, res) => {
         maxPatternLength: 32,
         minMatchCharLength: 6,
         keys: [{
-            
+            name: 'title'
         }, {
-            
+            name: 'title'
         }]
     };
-    var fuse = new Fuse(courses, options);
-    fuse.search();
+    var fuse = new Fuse(courses, options)
+
+    fuse.search('tion')
 
     res.json(courses);
     res.status(200).end();
