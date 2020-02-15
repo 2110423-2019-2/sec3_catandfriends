@@ -1,19 +1,22 @@
 import React, { Component } from "react";
+import StudentCTutor from "./StudentCTuProfile";
+import TutorProfile from "./TutorProfile";
+import Course from "./CourseDetail";
+import Nav from "./NavBar";
+import Edit from "./EditTutorProfile";
 
-import TuProfile from "./TutorProfile";
-import CDetail from "./CourseDetail";
-import Navbar from "./NavBar";
-import StuCProfile from "./StudentCTuProfile";
-
-export default class Mix extends Component {
+export class Mix extends Component {
   render() {
     return (
       <div>
-        <Navbar />
-        <CDetail />
-        <StuCProfile />
-        <TuProfile />
+        <Nav />
+        <Course />
+        <StudentCTutor />
+        <TutorProfile />
+        <Edit />
       </div>
     );
   }
 }
+
+export default Mix;

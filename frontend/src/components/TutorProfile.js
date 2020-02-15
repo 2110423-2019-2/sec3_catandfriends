@@ -17,7 +17,8 @@ export class TutorProfile extends Component {
       password: "password",
       premiumStatus: "false",
       verificationDocument: "link",
-      PhoneNumber: "00000000"
+      PhoneNumber: "00000000",
+      bio: "my bio"
     };
   }
 
@@ -79,6 +80,9 @@ export class TutorProfile extends Component {
                       <body>
                         <strong>Phone number : </strong>
                       </body>
+                      <body>
+                        <strong>Bio : </strong>
+                      </body>
                     </div>
                     <div className="col-md-8 border">
                       <body>{this.state.ssn}</body>
@@ -89,6 +93,7 @@ export class TutorProfile extends Component {
                       <body>{this.state.premiumStatus}</body>
                       <body>{this.state.verificationDocument}</body>
                       <body>{this.state.PhoneNumber}</body>
+                      <body>{this.state.bio}</body>
                     </div>
                   </div>
                   <br />

@@ -31,15 +31,11 @@ export class NavBar extends Component {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="#" style={{ paddingLeft: "30px" }}>
                 Home <span className="sr-only">(current)</span>
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
-            </li>
+            {/*}
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -50,7 +46,7 @@ export class NavBar extends Component {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                Dropdown
+                Explore
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a className="dropdown-item" href="#">
@@ -65,18 +61,18 @@ export class NavBar extends Component {
                 </a>
               </div>
             </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" href="#">
-                Disabled
-              </a>
-            </li>
+    */}
 
-            <form className="form-inline my-2 my-lg-0">
+            <form
+              className="form-inline my-2 my-lg-0"
+              style={{ paddingLeft: "30px" }}
+            >
               <input
                 className="form-control mr-sm-2"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                style={{ width: "300px" }}
               />
               <button
                 className="btn btn-outline-success my-2 my-sm-0"
@@ -85,17 +81,18 @@ export class NavBar extends Component {
                 Search
               </button>
             </form>
+
+            <li className="nav-item active" style={{ paddingLeft: "350px" }}>
+              <a className="nav-link" href="#">
+                My profile <span className="sr-only">(current)</span>
+              </a>
+            </li>
+            <li className="nav-item active"style={{ paddingLeft: "20px" }}>
+              <a className="nav-link" href="#">
+                Log out <span className="sr-only">(current)</span>
+              </a>
+            </li>
           </ul>
-          <li className="nav-item active">
-            <a className="nav-link" href="#">
-              My profile <span className="sr-only">(current)</span>
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a className="nav-link" href="#">
-              Log out <span className="sr-only">(current)</span>
-            </a>
-          </li>
         </div>
       </nav>
     );

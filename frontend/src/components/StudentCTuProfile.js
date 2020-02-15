@@ -11,7 +11,8 @@ export class StudentCTuProfile extends Component {
       LastName: "Kitwatthanachai",
       gender: "MaleFeMale",
       email: "hahaha",
-      PhoneNumber: "00000000"
+      PhoneNumber: "00000000",
+      bio: "my bio"
     };
   }
 
@@ -45,7 +46,9 @@ export class StudentCTuProfile extends Component {
                   <br />
                   {/*Enter*/}
                   <br />
-
+                  <body>
+                    <strong>Bio : </strong>
+                  </body>
                   <body>
                     <strong>Gender : </strong>
                   </body>
@@ -63,7 +66,7 @@ export class StudentCTuProfile extends Component {
                   <br />
                   {/*Enter*/}
                   <br />
-
+                  <body> {this.state.bio}</body>
                   <body> {this.state.gender}</body>
                   <body> {this.state.email}</body>
                   <body> {this.state.PhoneNumber}</body>
