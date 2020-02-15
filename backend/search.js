@@ -59,32 +59,53 @@ router.get('/', async (req, res) => {
                 period.push([min, max]);
             }
         }
-        // console.log(period);
+        //console.log(period);
 
-        let dayMatch = [0, 0, 0, 0, 0, 0, 0];
+        let dayList = [0, 0, 0, 0, 0, 0, 0];
         for (let i = 0; i < day.length; i++) {
-            dayMatch[i] = day[i] == "1" ? 1 : 0;
+            dayList[i] = day[i] == "1" ? 1 : 0;
         }
-        // console.log(dayMatch);
+        console.log(dayList);
 
         let err, courses;
 
-        let query = { $and:[] };
+        let query = { $and: [] };
+        let andCount = -1;
         if (courseId != "") {
             query = { courseId: courseId };
         } else {
             //////for price sreaching//////
-            query.$and.push({$or: []});
+            query.$and.push({ $or: [] });
+            andCount++;
             for (let i = 0; i < priceRange.length; i++) {
-                query.$and[0].$or.push({ "courseFee": { $gt: priceRange[i][0], $lt: priceRange[i][1] } });
+                query.$and[andCount].$or.push({ "courseFee": { $gt: priceRange[i][0], $lt: priceRange[i][1] } });
             }
             ///////////////////////////////
             //////for category sreaching//////
-            query.$and.push({category:category});
+            if (category != "") {
+                query.$and.push({ category: category });
+                andCount++;
+            }
+            ///////////////////////////////
+            //////for category sreaching//////
+            for (let i = 0; i < dayList.length; i++) {
+                if (dayList[i] == 1) {
+                    query.$and.push({ $or: [] });
+                    andCount++;
+                    break;
+                }
+            }
+            if (dayList[0] == 1) query.$and[andCount].$or.push({ "dayAndTime.0": { $ne: null } });
+            if (dayList[1] == 1) query.$and[andCount].$or.push({ "dayAndTime.1": { $ne: null } });
+            if (dayList[2] == 1) query.$and[andCount].$or.push({ "dayAndTime.2": { $ne: null } });
+            if (dayList[3] == 1) query.$and[andCount].$or.push({ "dayAndTime.3": { $ne: null } });
+            if (dayList[4] == 1) query.$and[andCount].$or.push({ "dayAndTime.4": { $ne: null } });
+            if (dayList[5] == 1) query.$and[andCount].$or.push({ "dayAndTime.5": { $ne: null } });
+            if (dayList[6] == 1) query.$and[andCount].$or.push({ "dayAndTime.6": { $ne: null } });
             ///////////////////////////////
         }
         console.log(JSON.stringify(query));
-        
+
 
         [err, courses] = await to(CourseModel.find(query));
         if (err) {
