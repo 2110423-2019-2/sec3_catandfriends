@@ -8,6 +8,7 @@ const scheduleRoute = require('./schedule');
 const searchRoute = require('./search');
 const mongoose = require('mongoose')
 require('dotenv').config();
+mongoose.set('useCreateIndex', true);
 
 mongoose.connect(process.env.MONGO_DB,{useUnifiedTopology: true, useNewUrlParser:true});
 mongoose.connection.on('error', err => {logError(err);});
