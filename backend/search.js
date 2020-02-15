@@ -8,14 +8,21 @@ router.get('/', async (req, res) => {
     let courseName = req.query.courseName;
     let courseId = req.query.courseId;
     let description = req.query.description;
+    let category = req.query.subject;
     let tutorName = req.query.tutorName;
     let price = req.query.price;
     let day = req.query.day;
     let time = req.query.time;
 
+    let priceList = [0,500,1500,3500,6500];
+
     let err, courses;
 
-    [err, courses] = await to(CourseModel.find({}));
+    [err, courses] = await to(CourseModel.find({
+        category: category,
+        price: {$gt: priceList[price], $lt: priceList[price+1]},
+        courseId: courseId
+    }));
     if (err) {
         res.status(500).end();
     }
