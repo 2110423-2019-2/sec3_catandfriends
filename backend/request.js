@@ -14,15 +14,46 @@ router.get('/', async (req, res) => {
     } else {
         tutorID = req.query.tutorID.toString();
     }
-    let err, requests;
+    let err, query;
 
-    [err, requests] = await to(RequestModel.find({
-        tutorId: tutorID
+    [err, query] = await to(RequestModel.find({
+        tutorId: tutorID,
+        status: false
     }));
     if (err) {
         res.status(500).end();
     }
 
+    requests = [];
+    for (let i = 0; i < query.length; i++) {
+        let err, value;
+
+        [err, value] = await to(CourseModel.findOne({
+            courseId: query[i].courseId
+        }));
+        if (err) {
+            res.status(500).end();
+        }
+
+        let studentId, studentName, requestId, createdTime, isAvailable;
+        studentId = query[i].studentId;
+        requestId = query[i].requestId;
+        createdTime = query[i].createdTime;
+
+        studentName = ""; //waiting for profile
+        isAvailable = value.amountOfStudent > 0 ? true:false;
+
+        aRequest = { 
+            studentId: studentId, 
+            studentName: studentName , 
+            requestId: requestId, 
+            createdTime: createdTime, 
+            isAvailable: isAvailable
+        }
+
+        requests.push(aRequest);
+    }
+    
     res.json(requests);
     res.status(200).end();
 });
