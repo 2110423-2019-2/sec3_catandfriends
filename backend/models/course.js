@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 var collectionName = 'course';
 
 const courseSchema = new Schema({
-    courseId: {type: String,required: true,unique: true},
+    //_id: String,
+    //courseId: {type: String,required: true,unique: true},
     courseName: {type: String,required: true},
     dayAndTime: {type: [String],required: true},
     startDate: {type: Date,required: true},
