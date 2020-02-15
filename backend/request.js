@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const RequestModel = require('./models/request');
 const ScheduleModel = require('./models/schedule');
+const CourseModel = require('./models/course');
 const to = require('await-to-js').default;
 const moment = require('moment-timezone');
 
@@ -91,30 +92,43 @@ router.put('/', async (req, res) => {
             res.status(500).end();
         }
 
-        //TODO: UPDATE LISTOFCOURSE IN SCHEDULE
-        [err, value] = await to(ScheduleModel.findOne({
+        [err, value] = await to(ScheduleModel.findOneAndUpdate({
             studentId: payload.studentId
+        }, {
+            $push: {
+                listOfCourse: payload.courseId
+            },
+            lastModified: dateThailand._d
+        }, {
+            useFindAndModify: false
         }));
         if (err) {
             res.status(500).end();
         }
-        if (!value.listOfCourse.includes(payload.courseId)) {
-            [err, value] = await to(ScheduleModel.findOneAndUpdate({
-                studentId: payload.studentId
-            }, {
-                $push: {
-                    listOfCourse: payload.courseId
-                },
-                lastModified: dateThailand._d
-            }, {
-                useFindAndModify: false
-            }));
-            if (err) {
-                res.status(500).end();
-            }
-        }
         ///////////////////////////////////////////////////////
-        //TOdO: UPDATE AMOUNTOFSTUDENT, LISTOFSTUDENT IN COURSE
+        //UPDATE AMOUNTOFSTUDENT, LISTOFSTUDENT IN COURSE
+        [err, value] = await to(CourseModel.findOne({
+            courseId: payload.courseId
+        }));
+        if (err) {
+            res.status(500).end();
+        }
+        let currentAmountOfStudent = value.amountOfStudent;
+
+        [err, value] = await to(CourseModel.findOneAndUpdate({
+            courseId: payload.courseId
+        }, {
+            $push: {
+                listOfStudentId: payload.studentId
+            },
+            amountOfStudent: currentAmountOfStudent - 1,
+            lastModified: dateThailand._d
+        }, {
+            useFindAndModify: false
+        }));
+        if (err) {
+            res.status(500).end();
+        }
         ///////////////////////////////////////////////////////
         res.status(201).end();
     }
