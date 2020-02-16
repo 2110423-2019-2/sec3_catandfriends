@@ -1,18 +1,24 @@
 import React, { Component } from "react";
 
 import "./Login.css";
+import Util from "../apis/Util";
 
 export class Login extends Component {
   render() {
     return (
       <div className="login">
         <div>
-          <span>{"Username : "}</span>
-          <input type="text" id="username" placeholder="username"></input>
+          <span>{"Email : "}</span>
+          <input type="text" id="email" placeholder="email"></input>
         </div>
         <div>
           <span>{"Password : "}</span>
-          <input type="text" id="password" placeholder="password"></input>
+          <input
+            type="password"
+            id="password"
+            placeholder="password"
+            onKeyDown={this.handleOnKeyDown}
+          ></input>
         </div>
         <button id="Submit" onClick={this.onClickLogin}>
           Login
@@ -21,9 +27,22 @@ export class Login extends Component {
     );
   }
 
-  onClickLogin = () => {
-    let username = document.getElementById("username");
-    let password = document.getElementById("password");
+  onClickLogin = async () => {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let data = await Util.login(email, password);
+    if (data.error) {
+      window.alert("email or password invalid");
+      document.getElementById("password").value = "";
+    } else {
+      await localStorage.setItem("token", data.token);
+    }
+  };
+
+  handleOnKeyDown = event => {
+    if (event.keyCode === 13) {
+      document.getElementById("Submit").click();
+    }
   };
 }
 

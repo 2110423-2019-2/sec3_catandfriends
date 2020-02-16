@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const app = express();
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const courseRoute = require("./course");
 const requestRoute = require("./request");
 const profileRoute = require("./profile");
@@ -26,10 +27,17 @@ mongoose.set("useCreateIndex", true);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 app.use("/courses", courseRoute);
 app.use("/requests", requestRoute);
-app.use("/profile", profileRoute);
+app.use(
+  "/profile",
+  passport.authenticate("jwt-profile", {
+    session: false
+  }),
+  profileRoute
+);
 app.use("/schedule", scheduleRoute);
 app.use("/login", loginRoute);
 app.use("/signup", signupRoute);
