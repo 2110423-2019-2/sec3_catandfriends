@@ -25,7 +25,7 @@ body, html{
     transform:translate(10px,0);
 }
 
-.card-header{
+.mcard-header{
     border-radius: 12px 12px 0px 0px;
     height: 110px;
     width: 100%;
@@ -36,13 +36,13 @@ body, html{
 }
 
 
-.card-header--title{
+.mcard-header--title{
     float: left;
     text-transform: uppercase;
     font-weight: 650;
 }
 
-.card-body{
+.mcard-body{
     height: 160px;
     padding: 5px;
     background-color: #ffffff;

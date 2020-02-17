@@ -20,7 +20,7 @@ const RequestScrollBar=()=>{
     //do nothing
 };
     return(
-        <div data-spy="scroll" id="overflowTest" > 
+        <div className="card" data-spy="scroll" id="overflowTest" > 
               {list.map(item => (
         <table class="table table-borderless" key={item.id}>
           <td><label>{item.name}</label></td>

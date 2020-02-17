@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Route, Switch, Link, NavLink } from "react-router-dom";
 import EditStudentProfile from "./EditStudentProfile";
-import VerifyCard from "./VerifyCard";
+// import Mix from "./Mix";
+import Mint from "./Mint";
+import Titang from "./Titang";
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;
@@ -39,25 +41,25 @@ class App extends Component {
                   Home
                 </NavLink>
                 <NavLink
-                  to="/post"
+                  to="/mint"
                   activeClassName="is-active"
                   className="navbar-item"
                 >
-                  Posts
+                  Mint
                 </NavLink>
                 <NavLink
-                  to="/verify"
+                  to="/titang"
                   activeClassName="is-active"
                   className="navbar-item"
                 >
-                  Verify
+                  Titang
                 </NavLink>
                 <NavLink
-                  to="/about"
+                  to="/ice"
                   activeClassName="is-active"
                   className="navbar-item"
                 >
-                  About
+                  Ice
                 </NavLink>
                 <NavLink
                   to="/editstudentform"
@@ -79,9 +81,9 @@ class App extends Component {
         </nav>
         <div className="App container">
           <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/post" component={Post} />
-          <Route path="/verify" component={VerifyCard} />
+          {/* <Route path="/ice" component={Mix} /> */}
+          <Route path="/mint" component={Mint} />
+          <Route path="/titang" component={Titang} />
           <Route path="/editstudentform" component={EditStudentProfile} />
         </div>
       </div>

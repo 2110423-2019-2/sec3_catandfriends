@@ -12,8 +12,11 @@ export default class EditCourse extends Component {
         }
     
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
       }
-    
+      handleChange(e) {
+        this.setState({ [e.target.name] : e.target.value });
+      }
       handleSubmit(event) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -48,14 +51,14 @@ export default class EditCourse extends Component {
               <div class="row">
                   <div class="col-md-6" width="100%" height="100px">
                     <label>Short description<br/>
-                  <input type="text" value={this.state.description} style={{width:500 ,height:100}} name="description" onChange={this.handleChange} /> 
+                  <textarea type="text" value={this.state.description} style={{width:500 ,height:100}} name="description" onChange={this.handleChange} /> 
                  </label> 
                  </div>
               </div>
               <div class="row">
                   <div class="col-md-6">
                       <label>Detail<br/>
-                  <input type="text" value={this.state.detail} style={{width:500, height:100}} name="detail" onChange={this.handleChange}  />
+                  <textarea type="text" value={this.state.detail} style={{width:500, height:100}} name="detail" onChange={this.handleChange}  />
                   </label>
                   </div>
               </div>

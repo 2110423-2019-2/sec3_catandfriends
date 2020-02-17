@@ -10,8 +10,8 @@ class  CardHeader extends React.Component{
         var style = {
             backgroundImage: 'url(' + image + ')' };
     return (
-      React.createElement("header", { style: style, id: image, className: "card-header" },
-        React.createElement("h6", {className: "card-header--title"}, "Category"),
+      React.createElement("header", { style: style, id: image, className: "mcard-header" },
+        React.createElement("h6", {className: "mcard-header--title"}, "Category"),
         <EditBtn onclick={() => history.push('/EditCourse')}></EditBtn>
         )
     );
@@ -67,7 +67,7 @@ class EditBtn extends React.Component{
 class CardBody extends React.Component{
     render(){
         return(
-            React.createElement("div", { className: "card-body" },
+            React.createElement("div", { className: "mcard-body" },
                 React.createElement("p", { className: "date" }, "20 February 2020"),
 
                 React.createElement("h5", {className: "course-name"}, this.props.title),
