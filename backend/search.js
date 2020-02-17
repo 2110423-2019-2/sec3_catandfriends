@@ -1,15 +1,11 @@
 const express = require('express');
 const router = express.Router();
-var Fuse = require('fuse.js');
 const CourseModel = require('./models/course');
 const to = require('await-to-js').default;
 
 router.get('/', async (req, res) => {
-    let courseName = req.query.courseName == undefined ? "" : req.query.courseName;
-    let courseId = req.query.courseId == undefined ? "" : req.query.courseId;
-    let description = req.query.description == undefined ? "" : req.query.description;
+
     let category = req.query.subject == undefined ? "" : req.query.subject;
-    let tutorName = req.query.tutorName == undefined ? "" : req.query.tutorName;
     let price = req.query.price == undefined ? "11111" : req.query.price;
     let day = req.query.day == undefined ? "1111111" : req.query.day;
     let time = req.query.time == undefined ? "11111111" : req.query.time;
@@ -17,8 +13,9 @@ router.get('/', async (req, res) => {
     if (price == "00000" || day == "0000000" || time == "00000000") {
         res.status(400).end();
     } else {
-        let priceList = [0, 500, 1500, 3500, 6500, 20000];
+        // console.log(category);
 
+        let priceList = [0, 500, 1500, 3500, 6500, 20000];
         let priceRange = [];
         let min = 20000;
         let max = 0;
@@ -37,7 +34,6 @@ router.get('/', async (req, res) => {
             }
         }
         // console.log(priceRange);
-
 
         let timeList = [6, 8, 10, 12, 14, 16, 18, 20, 22];
         // let timeList = ["06.00-08.00", "08.00-10.00", "10.00-12.00",
@@ -58,7 +54,7 @@ router.get('/', async (req, res) => {
                 timeRange.push([min, max]);
             }
         }
-        console.log(timeRange);
+        // console.log(timeRange);
 
         let dayList = [0, 0, 0, 0, 0, 0, 0];
         for (let i = 0; i < day.length; i++) {
@@ -70,58 +66,57 @@ router.get('/', async (req, res) => {
 
         let query = { $and: [] };
         let andCount = -1;
-        if (courseId != "") {
-            query = { "courseId": courseId };
-        } else {
-            //////for price searching//////
-            query.$and.push({ $or: [] });
-            andCount++;
-            for (let i = 0; i < priceRange.length; i++) {
-                query.$and[andCount].$or.push({ "courseFee": { $gt: priceRange[i][0], $lt: priceRange[i][1] } });
-            }
-            ///////////////////////////////
-            //////for category searching//////
-            if (category != "") {
-                query.$and.push({ "category": category });
-                andCount++;
-            }
-            ///////////////////////////////
-            //////for day searching//////
-            for (let i = 0; i < dayList.length; i++) {
-                if (dayList[i] == 1) {
-                    query.$and.push({ $or: [] });
-                    andCount++;
-                    break;
-                }
-            }
-            if (dayList[0] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.0": { $ne: null } });
-            if (dayList[1] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.1": { $ne: null } });
-            if (dayList[2] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.2": { $ne: null } });
-            if (dayList[3] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.3": { $ne: null } });
-            if (dayList[4] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.4": { $ne: null } });
-            if (dayList[5] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.5": { $ne: null } });
-            if (dayList[6] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.6": { $ne: null } });
-            ///////////////////////////////
-            //////for time searching//////
 
-            if (timeRange.length != 0) {
+        //////for price searching//////
+        query.$and.push({ $or: [] });
+        andCount++;
+        for (let i = 0; i < priceRange.length; i++) {
+            query.$and[andCount].$or.push({ "courseFee": { $gt: priceRange[i][0], $lt: priceRange[i][1] } });
+        }
+        ///////////////////////////////
+        //////for category searching//////
+        if (category != "") {
+            query.$and.push({ "category": category });
+            andCount++;
+        }
+        ///////////////////////////////
+        //////for day searching//////
+        for (let i = 0; i < dayList.length; i++) {
+            if (dayList[i] == 1) {
                 query.$and.push({ $or: [] });
                 andCount++;
-                for (let i = 0; i < timeRange.length; i++) {
-                    let min = timeRange[i][0];
-                    let duration = timeRange[i][1] - timeRange[i][0];
-                    query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.0": { $gte: min } }, { "durationDayAndTime.0": { $lte: duration } }] });
-                    query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.1": { $gte: min } }, { "durationDayAndTime.1": { $lte: duration } }] });
-                    query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.2": { $gte: min } }, { "durationDayAndTime.2": { $lte: duration } }] });
-                    query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.3": { $gte: min } }, { "durationDayAndTime.3": { $lte: duration } }] });
-                    query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.4": { $gte: min } }, { "durationDayAndTime.4": { $lte: duration } }] });
-                    query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.5": { $gte: min } }, { "durationDayAndTime.5": { $lte: duration } }] });
-                }
+                break;
             }
-            ///////////////////////////////
-
         }
-        console.log(JSON.stringify(query));
+        if (dayList[0] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.0": { $ne: null } });
+        if (dayList[1] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.1": { $ne: null } });
+        if (dayList[2] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.2": { $ne: null } });
+        if (dayList[3] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.3": { $ne: null } });
+        if (dayList[4] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.4": { $ne: null } });
+        if (dayList[5] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.5": { $ne: null } });
+        if (dayList[6] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.6": { $ne: null } });
+        ///////////////////////////////
+        //////for time searching//////
+
+        if (timeRange.length != 0) {
+            query.$and.push({ $or: [] });
+            andCount++;
+            for (let i = 0; i < timeRange.length; i++) {
+                let start = timeRange[i][0];
+                let end = timeRange[i][1];
+                query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.0": { $gte: start } }, { "dayAndEndTime.0": { $lte: end } }] });
+                query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.1": { $gte: start } }, { "dayAndEndTime.1": { $lte: end } }] });
+                query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.2": { $gte: start } }, { "dayAndEndTime.2": { $lte: end } }] });
+                query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.3": { $gte: start } }, { "dayAndEndTime.3": { $lte: end } }] });
+                query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.4": { $gte: start } }, { "dayAndEndTime.4": { $lte: end } }] });
+                query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.5": { $gte: start } }, { "dayAndEndTime.5": { $lte: end } }] });
+                query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.6": { $gte: start } }, { "dayAndEndTime.6": { $lte: end } }] });
+            }
+        }
+        ///////////////////////////////
+
+
+        // console.log(JSON.stringify(query));
 
 
         [err, courses] = await to(CourseModel.find(query));
