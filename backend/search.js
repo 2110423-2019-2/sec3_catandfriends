@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
         // console.log(priceRange);
 
 
-        let timeList = ["06", "08", "10", "12", "14", "16", "18", "20", "22"];
+        let timeList = [6, 8, 10, 12, 14, 16, 18, 20, 22];
         // let timeList = ["06.00-08.00", "08.00-10.00", "10.00-12.00",
         //     "12.00-14.00", "14.00-16.00", "16.00-18.00", "18.00-20.00", "20.00-22.00"];
         let timeRange = [];
@@ -50,12 +50,12 @@ router.get('/', async (req, res) => {
                 max = timeList[i + 1] > max ? timeList[i + 1] : max;
             } else {
                 if (min < max) {
-                    timeRange.push([min+".00", max+".00"]);
+                    timeRange.push([min, max]);
                 }
                 min = timeList[i + 1];
             }
             if (i == time.length - 1 && min < max) {
-                timeRange.push([min+".00", max+".00"]);
+                timeRange.push([min, max]);
             }
         }
         console.log(timeRange);
@@ -71,7 +71,7 @@ router.get('/', async (req, res) => {
         let query = { $and: [] };
         let andCount = -1;
         if (courseId != "") {
-            query = { courseId: courseId };
+            query = { "courseId": courseId };
         } else {
             //////for price searching//////
             query.$and.push({ $or: [] });
@@ -82,7 +82,7 @@ router.get('/', async (req, res) => {
             ///////////////////////////////
             //////for category searching//////
             if (category != "") {
-                query.$and.push({ category: category });
+                query.$and.push({ "category": category });
                 andCount++;
             }
             ///////////////////////////////
@@ -94,16 +94,30 @@ router.get('/', async (req, res) => {
                     break;
                 }
             }
-            if (dayList[0] == 1) query.$and[andCount].$or.push({ "dayAndTime.0": { $ne: null } });
-            if (dayList[1] == 1) query.$and[andCount].$or.push({ "dayAndTime.1": { $ne: null } });
-            if (dayList[2] == 1) query.$and[andCount].$or.push({ "dayAndTime.2": { $ne: null } });
-            if (dayList[3] == 1) query.$and[andCount].$or.push({ "dayAndTime.3": { $ne: null } });
-            if (dayList[4] == 1) query.$and[andCount].$or.push({ "dayAndTime.4": { $ne: null } });
-            if (dayList[5] == 1) query.$and[andCount].$or.push({ "dayAndTime.5": { $ne: null } });
-            if (dayList[6] == 1) query.$and[andCount].$or.push({ "dayAndTime.6": { $ne: null } });
+            if (dayList[0] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.0": { $ne: null } });
+            if (dayList[1] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.1": { $ne: null } });
+            if (dayList[2] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.2": { $ne: null } });
+            if (dayList[3] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.3": { $ne: null } });
+            if (dayList[4] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.4": { $ne: null } });
+            if (dayList[5] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.5": { $ne: null } });
+            if (dayList[6] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.6": { $ne: null } });
             ///////////////////////////////
             //////for time searching//////
-            
+
+            if (timeRange.length != 0) {
+                query.$and.push({ $or: [] });
+                andCount++;
+                for (let i = 0; i < timeRange.length; i++) {
+                    let min = timeRange[i][0];
+                    let duration = timeRange[i][1] - timeRange[i][0];
+                    query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.0": { $gte: min } }, { "durationDayAndTime.0": { $lte: duration } }] });
+                    query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.1": { $gte: min } }, { "durationDayAndTime.1": { $lte: duration } }] });
+                    query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.2": { $gte: min } }, { "durationDayAndTime.2": { $lte: duration } }] });
+                    query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.3": { $gte: min } }, { "durationDayAndTime.3": { $lte: duration } }] });
+                    query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.4": { $gte: min } }, { "durationDayAndTime.4": { $lte: duration } }] });
+                    query.$and[andCount].$or.push({ $and: [{ "dayAndStartTime.5": { $gte: min } }, { "durationDayAndTime.5": { $lte: duration } }] });
+                }
+            }
             ///////////////////////////////
 
         }
@@ -114,6 +128,9 @@ router.get('/', async (req, res) => {
         if (err) {
             res.status(500).end();
         }
+
+        // console.log(courses[0].dayAndStartTime);
+
 
         let data = [];
         let order = [];
