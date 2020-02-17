@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch, Link, NavLink } from "react-router-dom";
 import EditStudentProfile from "./EditStudentProfile";
-// import Mix from "./Mix";
+import Mix from "./Mix";
 import Mint from "./Mint";
 import Titang from "./Titang";
 const Home = () => <h1>Home</h1>;
@@ -81,7 +81,7 @@ class App extends Component {
         </nav>
         <div className="App container">
           <Route exact path="/" component={Home} />
-          {/* <Route path="/ice" component={Mix} /> */}
+          <Route path="/ice" component={Mix} />
           <Route path="/mint" component={Mint} />
           <Route path="/titang" component={Titang} />
           <Route path="/editstudentform" component={EditStudentProfile} />

@@ -1,6 +1,6 @@
 import React from 'react'
 import './RequestScrollBar.css'
-import 'bootstrap'
+// import 'bootstrap'
 
 const initialList=[
   { id: 'a', name: 'Student Name',courseName:"Course Name" },
