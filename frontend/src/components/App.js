@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Route, Switch, Link, NavLink } from "react-router-dom";
 import EditStudentProfile from "./EditStudentProfile";
 import Mix from "./Mix";
-import Mint from "./Mint";
-import Titang from "./Titang";
+import SearchResult from "../page/SearchResult"
+import TutorPage from "../page/TutorPage"
 import Cat from "./Cat";
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
@@ -42,11 +42,11 @@ class App extends Component {
                   Home
                 </NavLink>
                 <NavLink
-                  to="/mint"
+                  to="/search"
                   activeClassName="is-active"
                   className="navbar-item"
                 >
-                  Mint
+                  Search
                 </NavLink>
                 <NavLink
                   to="/titang"
@@ -82,9 +82,8 @@ class App extends Component {
         </nav>
         <div className="App container">
           <Route exact path="/" component={Home} />
-          <Route path="/ice" component={Mix} />
-          <Route path="/mint" component={Mint} />
-          <Route path="/titang" component={Titang} />
+          <Route path="/search" component={SearchResult} />
+          <Route path="/tutorprofile" component={TutorPage} />
           <Route path="/cat" component={Cat} />
         </div>
       </div>
