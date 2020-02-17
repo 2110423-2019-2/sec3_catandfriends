@@ -4,6 +4,7 @@ import EditStudentProfile from "./EditStudentProfile";
 import Mix from "./Mix";
 import Mint from "./Mint";
 import Titang from "./Titang";
+import Cat from "./Cat";
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;
@@ -62,11 +63,11 @@ class App extends Component {
                   Ice
                 </NavLink>
                 <NavLink
-                  to="/editstudentform"
+                  to="/cat"
                   activeClassName="is-active"
                   className="navbar-item"
                 >
-                  Edit Profile
+                  Cat
                 </NavLink>
                 <a
                   className="navbar-item"
@@ -84,7 +85,7 @@ class App extends Component {
           <Route path="/ice" component={Mix} />
           <Route path="/mint" component={Mint} />
           <Route path="/titang" component={Titang} />
-          <Route path="/editstudentform" component={EditStudentProfile} />
+          <Route path="/cat" component={Cat} />
         </div>
       </div>
     );
