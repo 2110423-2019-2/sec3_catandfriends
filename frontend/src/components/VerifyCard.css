@@ -1,0 +1,12 @@
+.col-v-centered {
+    display: flex;
+    align-items: center;
+  }
+.solid {border-style: solid;}
+/* table, th, td {
+    border: 1px solid black;
+  } */
+.title{
+  font-size: larger;
+  font-weight: bold;
+}
