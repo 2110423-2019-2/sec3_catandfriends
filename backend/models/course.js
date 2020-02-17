@@ -7,7 +7,7 @@ const courseSchema = new Schema({
     //courseId: {type: String,required: true,unique: true},
     courseName: {type: String,required: true},
     dayAndStartTime: {type: [Number],required: true},
-    durationDayAndTime: {type: [Number],required: true},
+    dayAndEndTime: {type: [Number],required: true},
     startDate: {type: Date,required: true},
     endDate: {type: Date,required: true},
     tutorId: {type: String,required: true},
