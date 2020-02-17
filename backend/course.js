@@ -53,6 +53,7 @@ router.get('/', async(req,res) => {
                     //console.log(course[i]);
                     s.push(course[i]);
                     console.log(s);
+                    continue;
                 }
             }
         }
