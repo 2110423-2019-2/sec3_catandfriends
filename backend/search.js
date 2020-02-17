@@ -20,8 +20,8 @@ router.get('/', async (req, res) => {
         let priceList = [0, 500, 1500, 3500, 6500, 20000];
 
         let priceRange = [];
-        let min = 22;
-        let max = 6;
+        let min = 20000;
+        let max = 0;
         for (let i = 0; i < price.length; i++) {
             if (price.charAt(i) == "1") {
                 min = priceList[i] < min ? priceList[i] : min;
@@ -36,14 +36,13 @@ router.get('/', async (req, res) => {
                 priceRange.push([min, max]);
             }
         }
-        console.log(priceRange);
+        // console.log(priceRange);
 
 
-        let timeList = [6, 8, 10, 12, 14, 16, 18, 20, 22];
+        let timeList = ["06", "08", "10", "12", "14", "16", "18", "20", "22"];
         // let timeList = ["06.00-08.00", "08.00-10.00", "10.00-12.00",
         //     "12.00-14.00", "14.00-16.00", "16.00-18.00", "18.00-20.00", "20.00-22.00"];
-
-        let period = [];
+        let timeRange = [];
         min = 22; max = 6;
         for (let i = 0; i < time.length; i++) {
             if (time.charAt(i) == "1") {
@@ -51,21 +50,21 @@ router.get('/', async (req, res) => {
                 max = timeList[i + 1] > max ? timeList[i + 1] : max;
             } else {
                 if (min < max) {
-                    period.push([min, max]);
+                    timeRange.push([min+".00", max+".00"]);
                 }
                 min = timeList[i + 1];
             }
             if (i == time.length - 1 && min < max) {
-                period.push([min, max]);
+                timeRange.push([min+".00", max+".00"]);
             }
         }
-        //console.log(period);
+        console.log(timeRange);
 
         let dayList = [0, 0, 0, 0, 0, 0, 0];
         for (let i = 0; i < day.length; i++) {
             dayList[i] = day[i] == "1" ? 1 : 0;
         }
-        console.log(dayList);
+        // console.log(dayList);
 
         let err, courses;
 
@@ -74,20 +73,20 @@ router.get('/', async (req, res) => {
         if (courseId != "") {
             query = { courseId: courseId };
         } else {
-            //////for price sreaching//////
+            //////for price searching//////
             query.$and.push({ $or: [] });
             andCount++;
             for (let i = 0; i < priceRange.length; i++) {
                 query.$and[andCount].$or.push({ "courseFee": { $gt: priceRange[i][0], $lt: priceRange[i][1] } });
             }
             ///////////////////////////////
-            //////for category sreaching//////
+            //////for category searching//////
             if (category != "") {
                 query.$and.push({ category: category });
                 andCount++;
             }
             ///////////////////////////////
-            //////for category sreaching//////
+            //////for day searching//////
             for (let i = 0; i < dayList.length; i++) {
                 if (dayList[i] == 1) {
                     query.$and.push({ $or: [] });
@@ -103,6 +102,10 @@ router.get('/', async (req, res) => {
             if (dayList[5] == 1) query.$and[andCount].$or.push({ "dayAndTime.5": { $ne: null } });
             if (dayList[6] == 1) query.$and[andCount].$or.push({ "dayAndTime.6": { $ne: null } });
             ///////////////////////////////
+            //////for time searching//////
+            
+            ///////////////////////////////
+
         }
         console.log(JSON.stringify(query));
 
