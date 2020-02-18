@@ -9,6 +9,7 @@ import Filter from "./Filter";
 import NavBar from "./NavBar";
 import StudentPage from "../page/StudentPage";
 import CourseInformation from "../page/CourseInformation";
+import EditCourseCardLayout from "./EditCourseCardLayout"
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;
@@ -24,7 +25,7 @@ class App extends Component {
         <Route path="/search" component={SearchResult} />
         <Route path="/tutor" component={TutorPage} />
         <Route path="/student" component={StudentPage} />
-        <Route path="/course" component={CourseInformation} />
+        <Route path="/course" component={EditCourseCardLayout} />
       </div>
     );
   }
