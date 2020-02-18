@@ -6,16 +6,18 @@ const moment = require('moment-timezone');
 
 router.get('/', async (req, res) => {
 
-    let tutorID;
-    if (req.query.tutorID == undefined) {
+    console.log(req.query);
+    
+    let tutorId;
+    if (req.query.tutorId == undefined) {
         res.status(400).end();
     } else {
-        tutorID = req.query.tutorID.toString();
+        tutorId = req.query.tutorId.toString();
     }
     let err, requests;
 
     [err, requests] = await to(RequestModel.find({
-        tutorId: tutorID
+        tutorId: tutorId
     }));
     if (err) {
         res.status(500).end();
@@ -40,7 +42,7 @@ router.post('/', async (req, res) => {
         res.status(500).end();
     }
     if (!request) {
-        payload.requestId = Date.now() + payload.tutorId;
+        // payload.requestId = Date.now() + payload.tutorId;
         payload.createdTime = dateThailand._d;
         payload.lastModified = dateThailand._d;
         const requests = new RequestModel(payload);
@@ -89,11 +91,6 @@ router.put('/', async (req, res) => {
         if (err) {
             res.status(500).end();
         }
-
-        //TODO: UPDATE LISTOFCOURSE IN SCHEDULE
-        ///////////////////////////////////////////////////////
-        //TOdO: UPDATE AMOUNTOFSTUDENT, LISTOFSTUDENT IN COURSE
-        ///////////////////////////////////////////////////////
         res.status(201).end();
     }
 });

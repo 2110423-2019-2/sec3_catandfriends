@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 var collectionName = 'course_request';
 
 const requestSchema = new Schema({
-    requestId: {
-        type: String,
-        required: true,
-        unique: true
-    },
+    // requestId: {
+    //     type: String,
+    //     required: true,
+    //     unique: true
+    // },
     courseId: {
         type: String,
         required: true,
