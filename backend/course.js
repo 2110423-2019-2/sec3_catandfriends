@@ -76,7 +76,13 @@ router.post('/',async(req,res)=>{
     const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
     payload.createdTime = dateThailand._d;
     payload.lastModified = dateThailand._d;
-    if(payload['dayAndStartTime'].length != 7){
+    if(Object.keys(payload).length != 13){
+        console.log(Object.keys(payload).length);
+        console.log('input is incomplete');
+        res.json('input is incomplete');
+        res.status(400).end();
+    }
+    else if(payload['dayAndStartTime'].length != 7){
         console.log('dayAndStartTime is incorrect');
         res.json('dayAndStartTime is incorrect');
         res.status(400).end();
