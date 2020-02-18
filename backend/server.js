@@ -11,7 +11,6 @@ const requestRoute = require('./request');
 const profileRoute = require('./profile');
 const scheduleRoute = require('./schedule');
 const searchRoute = require('./search');
-const mongoose = require('mongoose')
 mongoose.set('useCreateIndex', true);
 require('dotenv').config();
 require("./auth/auth");

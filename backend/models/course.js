@@ -18,7 +18,8 @@ const courseSchema = new Schema({
     createdTime: {type: Date,required: true},
     lastModified: {type: Date,required: true},
     category: {type: String,required: true},
-    day: String
+    day: String,
+    duration: String
 }, {
     collection: collectionName, versionKey: false  
 });

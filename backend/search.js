@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const CourseModel = require('./models/course');
 const tutorModel = require('./models/tutor');
+const moment = require('moment-timezone');
 const to = require('await-to-js').default;
 
 router.get('/', async (req, res) => {
@@ -121,7 +122,6 @@ router.get('/', async (req, res) => {
 
         console.log(JSON.stringify(query));
 
-
         [err, courses] = await to(CourseModel.find(query));
         if (err) {
             res.status(500).end();
@@ -139,16 +139,6 @@ router.get('/', async (req, res) => {
                 res.status(500).end();
             }
             
-            // courseName
-            // startDate
-            // endDate
-            courses[i].amountOfStudent = undefined;
-            courses[i].listOfStudentId = undefined;
-            // description
-            // courseFee
-            courses[i].createdTime = undefined;
-            courses[i].lastModified = undefined;
-            
             let s = "";
             for (j = 0; j < 7; j++) {                
                 if (courses[i]['dayAndStartTime'][j] == null) continue;
@@ -159,13 +149,34 @@ router.get('/', async (req, res) => {
                 else if (j == 4) s += "Fri ";
                 else if (j == 5) s += "Sat ";
                 else if (j == 6) s += "Sun ";
-                s += courses[i]['dayAndStartTime'][j] + ":00-" + courses[i]['dayAndStartTime'][j] + ":00/ ";
-                console.log(i);
-                
+                s += courses[i]['dayAndStartTime'][j] + ":00-" + courses[i]['dayAndEndTime'][j] + ":00/ ";
             }
             courses[i].day = s;
             courses[i].premiumTutorStatus = tutor[0].premiumStatus;
+            //[Mon Feb 10 2020 19:46:05 GMT+0700 (GMT+07:00)]
+            s = "";
+            let dateSplit = ((courses[i].startDate).toString()).split(" ");
+            s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
+            dateSplit = ((courses[i].endDate).toString()).split(" ");
+            s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
+            
+            courses[i].duration = s;
+            // courses[i].duration = (courses[i].startDate) + (courses[i].endDate);
 
+            // courseName
+            courses[i].startDate = undefined;
+            courses[i].endDate = undefined;
+            courses[i].dayAndStartTime = undefined;
+            courses[i].dayAndEndTime = undefined;
+            courses[i].tutorId = undefined;
+            courses[i].amountOfStudent = undefined;
+            courses[i].listOfStudentId = undefined;
+            // description
+            // courseFee
+            courses[i].createdTime = undefined;
+            courses[i].lastModified = undefined;
+            // category
+            // day
 
         }
 
