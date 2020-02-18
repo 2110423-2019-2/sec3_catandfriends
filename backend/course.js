@@ -78,7 +78,14 @@ router.get('/', async(req,res) => {
             }
             total_course[i]['dayAndStartTime']=undefined;
             total_course[i]['dayAndEndTime']=undefined;
-            total_course[i]['day']=s;       
+            total_course[i]['day']=s.slice(0, s.length-2);;
+            s = "";
+            let dateSplit = ((total_course[i]['startDate'].toString()).split(" "));
+            s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
+            dateSplit = ((total_course[i]['endDate']).toString()).split(" ");
+            s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
+            
+            total_course[i].duration = s;
             console.log(total_course);
             
         }

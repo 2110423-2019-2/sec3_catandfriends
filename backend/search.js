@@ -121,7 +121,7 @@ router.get('/', async (req, res) => {
         }
         ///////////////////////////////
 
-        console.log(JSON.stringify(query));
+        // console.log(JSON.stringify(query));
 
         [err, courses] = await to(CourseModel.find(query));
         if (err) {
