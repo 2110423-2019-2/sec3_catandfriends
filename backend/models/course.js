@@ -17,7 +17,8 @@ const courseSchema = new Schema({
     courseFee: {type: Number,required: true},
     createdTime: {type: Date,required: true},
     lastModified: {type: Date,required: true},
-    category: {type: String,required: true}
+    category: {type: String,required: true},
+    day: String
 }, {
     collection: collectionName, versionKey: false  
 });

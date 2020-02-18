@@ -10,6 +10,7 @@ router.get('/', async(req,res) => {
     // console.log(await CourseModel.find({listOfStudentId:["987654321"]
     // }));
     //console.log(courseId);
+    let total_course=[];
     if(courseId != undefined){
         console.log(courseId);
         let course =  await CourseModel.find({ _id: courseId});
@@ -20,29 +21,26 @@ router.get('/', async(req,res) => {
             res.json(s);
         }
         else{
-            console.log(course);
-            res.json(course);
+            total_course =course;
         }
-        res.status(200).end();
     }
     else if (tutorId != undefined) {
         //console.log(req);
         //console.log("print");
         let course = await CourseModel.find({tutorId: tutorId});
+        total_course  = []
         if(course.length == 0){
             var s = "tutor hasn't created any courses"
             console.log(s);
             res.json(s);
         }
         else
-            res.json(course);
-        res.status(200).end();
+            total_course =course;
     }
     else if (studentId != undefined) {
         console.log(studentId);
         console.log('ajsdkfl');
         let course = await CourseModel.find({});
-        let s = [];
         console.log('\n\n\n');
         for(i=0; i<course.length;i++){
             //console.log(CourseModel().type);
@@ -51,22 +49,41 @@ router.get('/', async(req,res) => {
             for(j=0;j<length;j++){
                 if(course[i]['listOfStudentId'][j] == studentId){
                     //console.log(course[i]);
-                    s.push(course[i]);
-                    console.log(s);
+                    total_course.push(course[i]);
                     continue;
                 }
             }
         }
-        console.log(s);
-        res.json(s);
-        res.status(200).end();
     }
     else{
         
         res.json('invalid');
         course = await CourseModel.find({});
-        consol.log(course);
+        console.log(course);
         res.status(404).end();
+    }
+    if(courseId!=undefined||studentId!=undefined||tutorId!=undefined){
+        for(i=0;i<total_course.length;i++){
+            let s="";
+            for(j=0;j<7;j++){
+                if(total_course[i]['dayAndStartTime'][j]== null ) continue;
+                if(j==0) s+="Mon ";
+                else if(j==1) s+="Tue ";
+                else if (j==2) s+="Wed ";
+                else if (j==3) s+="Thu ";
+                else if (j==4) s+="Fri ";
+                else if (j==5) s+="Sat ";
+                else if (j==6) s+="Sun ";
+                s+=total_course[i]['dayAndStartTime'][j]+":00-"+total_course[i]['dayAndEndTime'][j]+":00/ ";
+            }
+            total_course[i]['dayAndStartTime']=undefined;
+            total_course[i]['dayAndEndTime']=undefined;
+            total_course[i]['day']=s;       
+            console.log(total_course);
+            
+        }
+        res.json(total_course);
+        res.status(200).end();
     }
     
 });
