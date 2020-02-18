@@ -7,14 +7,14 @@ export default class SearchResult extends Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-2">
             <Filter />
           </div>
-          <div className="col-md-9">
+          <div className="col-md-10">
             <CourseCardLayout />
+            {/* <CourseCardLayout />
             <CourseCardLayout />
-            <CourseCardLayout />
-            <CourseCardLayout />
+            <CourseCardLayout /> */}
           </div>
         </div>
       </div>
