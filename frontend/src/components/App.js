@@ -7,6 +7,7 @@ import Home from "./Home";
 import Search from "./Search";
 import Course from "./Course";
 import Profile from "./Profile";
+import Login from "./Login";
 import "./App.css";
 
 
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/search" component={Search}/>
         <Route path="/courses" component={Course}/>
         <Route path="/profile" component={Profile}/>
+        <Route path="/login" component={Login}/>
       </Router>
     </div>
   );
