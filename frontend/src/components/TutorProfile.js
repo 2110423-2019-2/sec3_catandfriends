@@ -7,7 +7,6 @@ export class TutorProfile extends Component {
     this.state = {
       imgsrc:
         "https://www.img.in.th/images/3f2b15dc36aa6aa06ce42f1c1ed84a22.jpg",
-      tutorId: "123456789",
       FirstName: "Nuttrawanee",
       LastName: "Kitwatthanachai",
       ssn: "1234567891234",
@@ -42,13 +41,13 @@ export class TutorProfile extends Component {
               <br />
               <div className="row ">
                 <div className="col-md-4 border">
-                  <h4 style={{}}>{this.state.FirstName}</h4>
+                  <h4 style={{}}>{this.props.data.firstName}</h4>
                 </div>
                 <div className="col-md-4 border">
-                  <h4>{this.state.LastName}</h4>
+                  <h4>{this.props.data.lastName}</h4>
                 </div>
                 <div className="col-md-4 border">
-                  <h4>{this.state.tutorId}</h4>
+                  <h4></h4>
                 </div>
                 <div className="col-md-12 border">
                   <br />
@@ -69,9 +68,6 @@ export class TutorProfile extends Component {
                         <strong>Email : </strong>
                       </body>
                       <body>
-                        <strong>Password : </strong>
-                      </body>
-                      <body>
                         <strong>Premium status : </strong>
                       </body>
                       <body>
@@ -80,20 +76,17 @@ export class TutorProfile extends Component {
                       <body>
                         <strong>Phone number : </strong>
                       </body>
-                      <body>
-                        <strong>Bio : </strong>
-                      </body>
                     </div>
                     <div className="col-md-8 border">
-                      <body>{this.state.ssn}</body>
-                      <body>{this.state.birthdate}</body>
-                      <body>{this.state.gender}</body>
-                      <body>{this.state.email}</body>
-                      <body>{this.state.password}</body>
-                      <body>{this.state.premiumStatus}</body>
-                      <body>{this.state.verificationDocument}</body>
-                      <body>{this.state.PhoneNumber}</body>
-                      <body>{this.state.bio}</body>
+                      <body>{this.props.data.ssn}</body>
+                      <body>{this.props.data.birthDate}</body>
+                      <body>{this.props.data.gender}</body>
+                      <body>{this.props.data.email}</body>
+                      <body>
+                        {this.props.data.premiumStatus ? "Yes" : "No"}
+                      </body>
+                      <body>{"this.props.data.verificationDocument"}</body>
+                      <body>{this.props.data.phoneNumber}</body>
                     </div>
                   </div>
                   <br />

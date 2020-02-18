@@ -5,18 +5,15 @@ import EnrollSchedule from "../components/EnrollSchedule";
 export default class StudentPage extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      a: false
-    };
   }
 
   render() {
-    if (this.state.a) {
+    if (this.props.owner) {
       return (
         <div className="justify-content-center">
           <div className="row justify-content-center">
-            <StudentCard />
+            <MyStudentCard data={this.props.data} />
+            <EnrollSchedule />
           </div>
         </div>
       );
@@ -24,8 +21,7 @@ export default class StudentPage extends Component {
       return (
         <div className="justify-content-center">
           <div className="row justify-content-center">
-            <MyStudentCard />
-            <EnrollSchedule />
+            <StudentCard data={this.props.data} />
           </div>
         </div>
       );

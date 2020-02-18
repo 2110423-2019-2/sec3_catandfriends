@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import history from "../history";
 import "./Login.css";
 import Util from "../apis/Util";
 
@@ -36,6 +36,7 @@ export class Login extends Component {
       document.getElementById("password").value = "";
     } else {
       await localStorage.setItem("token", data.token);
+      history.push("/profile");
     }
   };
 

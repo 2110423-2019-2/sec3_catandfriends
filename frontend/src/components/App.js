@@ -10,6 +10,7 @@ import NavBar from "./NavBar";
 import StudentPage from "../page/StudentPage";
 import CourseInformation from "../page/CourseInformation";
 import Profile from "./Profile";
+import Login from "./Login";
 import history from "../history";
 import EditCourseCardLayout from "./EditCourseCardLayout";
 const Home = () => <h1>Home</h1>;
@@ -24,6 +25,7 @@ class App extends Component {
       <Router history={history}>
         <NavBar />
         <Switch>
+          <Route path="/login" component={Login} />
           <Route path="/search" component={SearchResult} />
           <Route path="/profile" component={Profile} />>
           <Route path="/course" component={CourseInformation} />

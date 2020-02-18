@@ -8,18 +8,14 @@ import StudentCTuProfile from "../components/StudentCTuProfile";
 export default class TutorPage extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      a: true
-    };
   }
 
   render() {
-    if (this.state.a) {
+    if (this.props.owner) {
       return (
         <div className="justify-content-center">
           <div className="row justify-content-center">
-            <TutorProfile />
+            <TutorProfile data={this.props.data} />
           </div>
           <div className="row justify-content-center">
             <VerifyCard />

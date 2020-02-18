@@ -6,30 +6,37 @@ const studentModel = require("./models/student");
 
 router.get("/", async (req, res, next) => {
   const userId = req.query.userId;
-  let profile = await userModel.findById(userId, err => {
-    return next(err);
-  });
-  profile.password = undefined;
-  switch (profile.role) {
-    case "tutor":
-      let tutorProfile = await tutorModel.findOne(
-        { userId },
-        { _id: 0, userId: 0 }
-      );
-      profile = { ...profile.toObject(), ...tutorProfile.toObject() };
-      break;
-    case "student":
-      let studentProfile = await studentModel.findOne(
-        { userId },
-        { _id: 0, userId: 0 }
-      );
-      profile = { ...profile.toObject(), ...studentProfile.toObject() };
-      break;
-  }
-  profile.owner = true;
-  if (req.user._id != userId) {
+  var profile;
+  if (!userId) {
+    profile = await userModel.findById(req.user._id);
+    profile.password = undefined;
     switch (profile.role) {
       case "tutor":
+        let tutorProfile = await tutorModel.findOne(
+          { userId: req.user._id },
+          { _id: 0, userId: 0 }
+        );
+        profile = { ...profile.toObject(), ...tutorProfile.toObject() };
+        break;
+      case "student":
+        let studentProfile = await studentModel.findOne(
+          { userId: req.user._id },
+          { _id: 0, userId: 0 }
+        );
+        profile = { ...profile.toObject(), ...studentProfile.toObject() };
+        break;
+    }
+    profile.owner = true;
+  } else {
+    profile = await userModel.findById(userId);
+    profile.password = undefined;
+    switch (profile.role) {
+      case "tutor":
+        let tutorProfile = await tutorModel.findOne(
+          { userId },
+          { _id: 0, userId: 0 }
+        );
+        profile = { ...profile.toObject(), ...tutorProfile.toObject() };
         profile.email = undefined;
         profile.ssn = undefined;
         profile.premiumStatus = undefined;
@@ -37,6 +44,11 @@ router.get("/", async (req, res, next) => {
         profile.owner = false;
         break;
       case "student":
+        let studentProfile = await studentModel.findOne(
+          { userId },
+          { _id: 0, userId: 0 }
+        );
+        profile = { ...profile.toObject(), ...studentProfile.toObject() };
         profile.email = undefined;
         profile.ssn = undefined;
         profile.scheduleId = undefined;
