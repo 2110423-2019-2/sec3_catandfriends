@@ -1,18 +1,21 @@
 import React, { Component } from "react";
 import Filter from "../components/Filter";
-import CourseCard from "../components/CourseCard";
+import CourseCardLayout from "../components/CourseCardLayout";
 
 export default class SearchResult extends Component {
-  state = { courses: [] };
-
   render() {
     return (
-      <div className="row">
-        <div className="col-md-2">
-          <Filter />
-        </div>
-        <div className="col-md-10">
-          <CourseCard />
+      <div>
+        <div className="row">
+          <div className="col-md-3">
+            <Filter />
+          </div>
+          <div className="col-md-9">
+            <CourseCardLayout />
+            <CourseCardLayout />
+            <CourseCardLayout />
+            <CourseCardLayout />
+          </div>
         </div>
       </div>
     );
