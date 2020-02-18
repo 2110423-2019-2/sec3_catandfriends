@@ -4,10 +4,10 @@ import EditStudentProfile from "./EditStudentProfile";
 import Mix from "./Mix";
 import SearchResult from "../page/SearchResult";
 import TutorPage from "../page/TutorPage";
-import SCTutorPage from "../page/SCTutorPage";
 import Cat from "./Cat";
 import Filter from "./Filter";
 import NavBar from "./NavBar";
+import StudentPage from "../page/StudentPage";
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;
@@ -21,8 +21,8 @@ class App extends Component {
         <NavBar />
         <Route exact path="/" component={Home} />
         <Route path="/search" component={SearchResult} />
-        <Route path="/mytutorprofile" component={TutorPage} />
-        <Route path="/tutor" component={SCTutorPage} />
+        <Route path="/tutor" component={TutorPage} />
+        <Route path="/student" component={StudentPage} />
         <Route path="/cat" component={Cat} />
       </div>
     );
