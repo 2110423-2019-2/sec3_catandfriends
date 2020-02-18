@@ -9,13 +9,9 @@ import Filter from "./Filter";
 import NavBar from "./NavBar";
 import StudentPage from "../page/StudentPage";
 import CourseInformation from "../page/CourseInformation";
-<<<<<<< HEAD
 import Profile from "./Profile";
 import history from "../history";
-||||||| merged common ancestors
-=======
-import EditCourseCardLayout from "./EditCourseCardLayout"
->>>>>>> 3e054f1f812ece188667fddab0e77802a7e14134
+import EditCourseCardLayout from "./EditCourseCardLayout";
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;

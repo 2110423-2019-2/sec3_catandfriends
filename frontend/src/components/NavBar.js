@@ -34,7 +34,7 @@ export class NavBar extends Component {
             <li className="nav-item active ">
               <a
                 className="nav-link"
-                onClick={() => this.onClickNavBar("/profile")}
+                onClick={() => this.onClickNavBar(`/profile`)}
               >
                 My profile <span className="sr-only">(current)</span>
               </a>
@@ -54,7 +54,7 @@ export class NavBar extends Component {
   }
 
   onClickNavBar = page => {
-    if ((page = "/logout")) {
+    if (page == "/logout") {
       localStorage.clear();
       history.push("/");
     } else {

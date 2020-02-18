@@ -1,7 +1,7 @@
 const Util = {
   login: async (email, password) => {
-    console.log({ email, password });
-    const response = await fetch("http://localhost:8000/login", {
+    const URL = "http://localhost:8000/login";
+    const response = await fetch(URL, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -15,15 +15,17 @@ const Util = {
     if (response.status == 200) return response.json();
   },
   getProfile: async userId => {
-    const response = await fetch(
-      `http://localhost:8000/profile?userId=${userId}&token=${localStorage.getItem(
-        "token"
-      )}`,
-      {
-        method: "GET",
-        mode: "cors"
-      }
-    );
+    const URL = userId
+      ? `http://localhost:8000/profile?userId=${userId}&token=${localStorage.getItem(
+          "token"
+        )}`
+      : `http://localhost:8000/profile?token=${localStorage.getItem("token")}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors"
+    });
+    if (response.status == 404) return { error: true };
+    if (response.status == 200) return response.json;
   }
 };
 

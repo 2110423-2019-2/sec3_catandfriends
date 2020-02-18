@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TutorPage from "../page/TutorPage";
 import StudentPage from "../page/StudentPage";
+import Util from "../apis/Util";
 
 export class Home extends Component {
   state = { role: "tutor" };
@@ -10,6 +11,12 @@ export class Home extends Component {
     } else {
       return <StudentPage />;
     }
+  }
+
+  componentDidMount() {
+    console.log(window.location.search);
+    let data = Util.getProfile(window.location.search);
+    console.log(data);
   }
 }
 
