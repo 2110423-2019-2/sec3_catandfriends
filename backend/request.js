@@ -137,6 +137,28 @@ router.put('/', async (req, res) => {
         if (err) {
             res.status(500).end();
         }
+        //TODO: UPDATE LISTOFCOURSE IN SCHEDULE
+        [err, value] = await to(ScheduleModel.findOne({
+            studentId: payload.studentId
+        }));
+        if (err) {
+            res.status(500).end();
+        }
+        if (!value.listOfCourse.includes(payload.courseId)) {
+            [err, value] = await to(ScheduleModel.findOneAndUpdate({
+                studentId: payload.studentId
+            }, {
+                $push: {
+                    listOfCourse: payload.courseId
+                },
+                lastModified: dateThailand._d
+            }, {
+                useFindAndModify: false
+            }));
+            if (err) {
+                res.status(500).end();
+            }
+        }
         ///////////////////////////////////////////////////////
         //UPDATE AMOUNTOFSTUDENT, LISTOFSTUDENT IN COURSE
         [err, value] = await to(CourseModel.findOne({
