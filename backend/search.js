@@ -151,7 +151,7 @@ router.get('/', async (req, res) => {
                 else if (j == 6) s += "Sun ";
                 s += courses[i]['dayAndStartTime'][j] + ":00-" + courses[i]['dayAndEndTime'][j] + ":00/ ";
             }
-            courses[i].day = s;
+            courses[i].day = s.slice(0, s.length-2);
             courses[i].premiumTutorStatus = tutor[0].premiumStatus;
             //[Mon Feb 10 2020 19:46:05 GMT+0700 (GMT+07:00)]
             s = "";
