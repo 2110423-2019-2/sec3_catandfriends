@@ -65,10 +65,11 @@ router.get('/', async (req, res) => {
         }
         // console.log(dayList);
 
+        const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
         let err, courses;
 
-        let query = { $and: [] };
-        let andCount = -1;
+        let query = { $and: [{ "endDate": { $gte: dateThailand } }] };
+        let andCount = 0;
 
         //////for price searching//////
         query.$and.push({ $or: [] });
@@ -138,9 +139,9 @@ router.get('/', async (req, res) => {
             if (err) {
                 res.status(500).end();
             }
-            
+
             let s = "";
-            for (j = 0; j < 7; j++) {                
+            for (j = 0; j < 7; j++) {
                 if (courses[i]['dayAndStartTime'][j] == null) continue;
                 if (j == 0) s += "Mon ";
                 else if (j == 1) s += "Tue ";
@@ -151,7 +152,7 @@ router.get('/', async (req, res) => {
                 else if (j == 6) s += "Sun ";
                 s += courses[i]['dayAndStartTime'][j] + ":00-" + courses[i]['dayAndEndTime'][j] + ":00/ ";
             }
-            courses[i].day = s.slice(0, s.length-2);
+            courses[i].day = s.slice(0, s.length - 2);
             courses[i].premiumTutorStatus = tutor[0].premiumStatus;
             //[Mon Feb 10 2020 19:46:05 GMT+0700 (GMT+07:00)]
             s = "";
@@ -159,58 +160,30 @@ router.get('/', async (req, res) => {
             s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
             dateSplit = ((courses[i].endDate).toString()).split(" ");
             s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
-            
             courses[i].duration = s;
-            // courses[i].duration = (courses[i].startDate) + (courses[i].endDate);
-
+            courses[i].isAvailable = courses[i].amountOfStudent > 0 ? true : false;
             // courseName
-            courses[i].startDate = undefined;
+            // courses[i].startDate = undefined;
             courses[i].endDate = undefined;
             courses[i].dayAndStartTime = undefined;
             courses[i].dayAndEndTime = undefined;
-            courses[i].tutorId = undefined;
+            // courses[i].tutorId = undefined;
             courses[i].amountOfStudent = undefined;
             courses[i].listOfStudentId = undefined;
             // description
             // courseFee
             courses[i].createdTime = undefined;
             courses[i].lastModified = undefined;
+            
             // category
             // day
-
         }
 
-        console.log(courses);
-
-
-
-        // console.log(courses[0].dayAndStartTime);
-
-
-        let data = [];
-        let order = [];
-
-        // for (let i = 0; i < courses.length; i++) {
-        //     i = 0;
-        // }
-
-        // var options = {
-        //     shouldSort: true,
-        //     includeScore: true,
-        //     threshold: 0.6,
-        //     location: 0,
-        //     distance: 100,
-        //     maxPatternLength: 32,
-        //     minMatchCharLength: 6,
-        //     keys: [{
-        //         name: 'title'
-        //     }, {
-        //         name: 'title'
-        //     }]
-        // };
-        // var fuse = new Fuse(courses, options)
-
-        // fuse.search('tion')
+        // console.log(courses);
+        courses.sort((a, b) => {
+            return b.isAvailable - a.isAvailable || b.premiumTutorStatus - a.premiumTutorStatus || a.startDate - b.startDate;
+        });
+        // console.log(courses);
 
         res.json(courses);
         res.status(200).end();
