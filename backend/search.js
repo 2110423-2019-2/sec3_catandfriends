@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const CourseModel = require('./models/course');
+const tutorModel = require('./models/tutor');
 const to = require('await-to-js').default;
 
 router.get('/', async (req, res) => {
@@ -65,7 +66,7 @@ router.get('/', async (req, res) => {
 
         let err, courses;
 
-        let query = { $and: []};
+        let query = { $and: [] };
         let andCount = -1;
 
         //////for price searching//////
@@ -125,6 +126,52 @@ router.get('/', async (req, res) => {
         if (err) {
             res.status(500).end();
         }
+
+        // console.log(courses);
+
+        for (let i = 0; i < courses.length; i++) {
+            let err, tutor
+
+            [err, tutor] = await to(tutorModel.find({
+                _id: courses[i].tutorId
+            }));
+            if (err) {
+                res.status(500).end();
+            }
+            
+            // courseName
+            // startDate
+            // endDate
+            courses[i].amountOfStudent = undefined;
+            courses[i].listOfStudentId = undefined;
+            // description
+            // courseFee
+            courses[i].createdTime = undefined;
+            courses[i].lastModified = undefined;
+            
+            let s = "";
+            for (j = 0; j < 7; j++) {                
+                if (courses[i]['dayAndStartTime'][j] == null) continue;
+                if (j == 0) s += "Mon ";
+                else if (j == 1) s += "Tue ";
+                else if (j == 2) s += "Wed ";
+                else if (j == 3) s += "Thu ";
+                else if (j == 4) s += "Fri ";
+                else if (j == 5) s += "Sat ";
+                else if (j == 6) s += "Sun ";
+                s += courses[i]['dayAndStartTime'][j] + ":00-" + courses[i]['dayAndStartTime'][j] + ":00/ ";
+                console.log(i);
+                
+            }
+            courses[i].day = s;
+            courses[i].premiumTutorStatus = tutor[0].premiumStatus;
+
+
+        }
+
+        console.log(courses);
+
+
 
         // console.log(courses[0].dayAndStartTime);
 
