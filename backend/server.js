@@ -2,6 +2,9 @@ const express = require("express");
 const passport = require("passport");
 const app = express();
 const bodyParser = require("body-parser");
+const cors = require("cors");
+const loginRoute = require("./login");
+const signupRoute = require("./signup");
 const courseRoute = require('./course');
 const requestRoute = require('./request');
 const profileRoute = require('./profile');
@@ -15,14 +18,7 @@ mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.MONGO_DB,{useUnifiedTopology: true, useNewUrlParser:true});
 mongoose.connection.on('error', err => {logError(err);});
 mongoose.connection.on('connected', () => {console.log("Connected")});
-const cors = require("cors");
-const courseRoute = require("./course");
-const requestRoute = require("./request");
-const profileRoute = require("./profile");
-const scheduleRoute = require("./schedule");
-const loginRoute = require("./login");
-const signupRoute = require("./signup");
-const mongoose = require("mongoose");
+
 require("dotenv").config();
 require("./auth/auth");
 
