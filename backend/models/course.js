@@ -3,9 +3,11 @@ const Schema = mongoose.Schema;
 var collectionName = 'course';
 
 const courseSchema = new Schema({
-    courseId: {type: String,required: true,unique: true},
+    //_id: String,
+    //courseId: {type: String,required: true,unique: true},
     courseName: {type: String,required: true},
-    dayAndTime: {type: [String],required: true},
+    dayAndStartTime: {type: [Number],required: true},
+    dayAndEndTime: {type: [Number],required: true},
     startDate: {type: Date,required: true},
     endDate: {type: Date,required: true},
     tutorId: {type: String,required: true},
@@ -15,6 +17,7 @@ const courseSchema = new Schema({
     courseFee: {type: Number,required: true},
     createdTime: {type: Date,required: true},
     lastModified: {type: Date,required: true},
+    category: {type: String,required: true}
 }, {
     collection: collectionName, versionKey: false  
 });
