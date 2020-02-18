@@ -4,11 +4,13 @@ export default class EditCourse extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            courseId: "",
-            courseName: "",
-            category:"",
-            description: "",
-            detail: ""
+          courseID:"",
+          courseName:"",
+          image:"",
+          category:"",
+          description:"",
+          price:"",
+          date:""
         }
     
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,28 +41,33 @@ export default class EditCourse extends Component {
               <div class="row">
                   <div class="col-md-6" width="100%">
                     <label>Course Name<br/>
-                  <input type="text" value={this.state.courseName} name="courseName" style={{width:250}} onChange={this.handleChange}/> 
+                  <input type="text" value={this.state.courseName} name="courseName" style={{width:262}} onChange={this.handleChange}/> 
                  </label> 
                  </div>
                   <div class="col-md-6">
                       <label>Category<br/>
-                  <input type="text" value={this.state.category}  style={{width:250}} name="category" onChange={this.handleChange} />
+                  <input type="text" value={this.state.category}  style={{width:262}} name="category" onChange={this.handleChange} />
+                  </label>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6" width="100%">
+                    <label>Start Date<br/>
+                  <input type="Date" value={this.state.date} name="date" style={{width:262}} onChange={this.handleChange}/> 
+                 </label> 
+                 </div>
+                  <div class="col-md-6">
+                      <label>Price<br/>
+                  <input type="number" value={this.state.price}  style={{width:262}} name="price" onChange={this.handleChange} />
                   </label>
                   </div>
               </div>
               <div class="row">
                   <div class="col-md-6" width="100%" height="100px">
-                    <label>Short description<br/>
-                  <textarea type="text" value={this.state.description} style={{width:500 ,height:100}} name="description" onChange={this.handleChange} /> 
+                    <label>Description<br/>
+                  <textarea type="text"  value={this.state.description} style={{width:651 ,height:100,resize:"none"}} name="description" onChange={this.handleChange} /> 
                  </label> 
                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-6">
-                      <label>Detail<br/>
-                  <textarea type="text" value={this.state.detail} style={{width:500, height:100}} name="detail" onChange={this.handleChange}  />
-                  </label>
-                  </div>
               </div>
               <br/>
              <div className="text-center" style={{marginRight:40}}>
