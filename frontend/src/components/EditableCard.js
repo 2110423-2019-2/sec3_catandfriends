@@ -17,8 +17,8 @@ class CardHeader extends React.Component {
             style={{ paddingLeft: "7px", paddingTop: "4px" }}
           >
             {this.props.category}
-            <EditBtn onclick={() => history.push('/EditCourse')}></EditBtn>
           </h6>
+          <EditBtn onclick={() => history.push('/EditCourse')} style={{paddingLeft:"100px"}}></EditBtn>
         </header>
       );
     }
@@ -92,6 +92,15 @@ class CardBody extends React.Component{
 class EditableCard extends React.Component{
     constructor(props){
         super(props);
+        this.state={
+            courseID: "00002",
+          courseName: "b",
+          image: "https://source.unsplash.com/user/erondu/600x400",
+          category: "more",
+          description: "TS",
+          price: "4500",
+          date: "Tuedays 8.00-10.00"
+        }
     }
     render() {
         const {

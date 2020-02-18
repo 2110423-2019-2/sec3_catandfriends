@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TutorProfile from "../components/TutorProfile";
 import VerifyCard from "../components/VerifyCard";
 import RequestScrollBar from "../components/RequestScrollBar";
+import EditCourseCardLayout from "../components/EditCourseCardLayout";
 import CourseCardLayout from "../components/CourseCardLayout";
 import StudentCTuProfile from "../components/StudentCTuProfile";
 export default class TutorPage extends Component {
@@ -23,7 +24,7 @@ export default class TutorPage extends Component {
           <div className="row justify-content-center">
             <VerifyCard />
             <RequestScrollBar />
-            <CourseCardLayout />
+            <EditCourseCardLayout />
           </div>
         </div>
       );
