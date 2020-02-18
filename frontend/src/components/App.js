@@ -8,6 +8,7 @@ import Cat from "./Cat";
 import Filter from "./Filter";
 import NavBar from "./NavBar";
 import StudentPage from "../page/StudentPage";
+import CourseInformation from "../page/CourseInformation";
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;
@@ -23,7 +24,7 @@ class App extends Component {
         <Route path="/search" component={SearchResult} />
         <Route path="/tutor" component={TutorPage} />
         <Route path="/student" component={StudentPage} />
-        <Route path="/cat" component={Cat} />
+        <Route path="/course" component={CourseInformation} />
       </div>
     );
   }
