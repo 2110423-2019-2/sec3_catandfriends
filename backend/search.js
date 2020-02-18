@@ -10,11 +10,12 @@ router.get('/', async (req, res) => {
     let day = req.query.day == undefined ? "1111111" : req.query.day;
     let time = req.query.time == undefined ? "11111111" : req.query.time;
 
+    /////invalid detection/////
     if (price == "00000" || day == "0000000" || time == "00000000") {
         res.status(400).end();
     } else {
         // console.log(category);
-
+        /////get range of input price/////
         let priceList = [0, 500, 1500, 3500, 6500, 20000];
         let priceRange = [];
         let min = 20000;
@@ -34,7 +35,7 @@ router.get('/', async (req, res) => {
             }
         }
         // console.log(priceRange);
-
+        /////get set of course time of input course time/////
         let timeList = [6, 8, 10, 12, 14, 16, 18, 20, 22];
         // let timeList = ["06.00-08.00", "08.00-10.00", "10.00-12.00",
         //     "12.00-14.00", "14.00-16.00", "16.00-18.00", "18.00-20.00", "20.00-22.00"];
@@ -55,7 +56,7 @@ router.get('/', async (req, res) => {
             }
         }
         // console.log(timeRange);
-
+        /////get days of input days/////
         let dayList = [0, 0, 0, 0, 0, 0, 0];
         for (let i = 0; i < day.length; i++) {
             dayList[i] = day[i] == "1" ? 1 : 0;
@@ -64,7 +65,7 @@ router.get('/', async (req, res) => {
 
         let err, courses;
 
-        let query = { $and: [] };
+        let query = { $and: []};
         let andCount = -1;
 
         //////for price searching//////
@@ -74,12 +75,14 @@ router.get('/', async (req, res) => {
             query.$and[andCount].$or.push({ "courseFee": { $gt: priceRange[i][0], $lt: priceRange[i][1] } });
         }
         ///////////////////////////////
+
         //////for category searching//////
         if (category != "") {
             query.$and.push({ "category": category });
             andCount++;
         }
         ///////////////////////////////
+
         //////for day searching//////
         for (let i = 0; i < dayList.length; i++) {
             if (dayList[i] == 1) {
@@ -96,8 +99,8 @@ router.get('/', async (req, res) => {
         if (dayList[5] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.5": { $ne: null } });
         if (dayList[6] == 1) query.$and[andCount].$or.push({ "dayAndStartTime.6": { $ne: null } });
         ///////////////////////////////
-        //////for time searching//////
 
+        //////for time searching//////
         if (timeRange.length != 0) {
             query.$and.push({ $or: [] });
             andCount++;
@@ -115,8 +118,7 @@ router.get('/', async (req, res) => {
         }
         ///////////////////////////////
 
-
-        // console.log(JSON.stringify(query));
+        console.log(JSON.stringify(query));
 
 
         [err, courses] = await to(CourseModel.find(query));
