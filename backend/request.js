@@ -8,17 +8,18 @@ const moment = require('moment-timezone');
 
 router.get('/', async (req, res) => {
 
-    let tutorID;
-    if (req.query.tutorID == undefined) {
+    console.log(req.query);
+    
+    let tutorId;
+    if (req.query.tutorId == undefined) {
         res.status(400).end();
     } else {
-        tutorID = req.query.tutorID.toString();
+        tutorId = req.query.tutorId.toString();
     }
     let err, query;
 
-    [err, query] = await to(RequestModel.find({
-        tutorId: tutorID,
-        status: false
+    [err, requests] = await to(RequestModel.find({
+        tutorId: tutorId
     }));
     if (err) {
         res.status(500).end();
@@ -73,7 +74,7 @@ router.post('/', async (req, res) => {
         res.status(500).end();
     }
     if (!request) {
-        payload.requestId = Date.now() + payload.tutorId;
+        // payload.requestId = Date.now() + payload.tutorId;
         payload.createdTime = dateThailand._d;
         payload.lastModified = dateThailand._d;
         const requests = new RequestModel(payload);
