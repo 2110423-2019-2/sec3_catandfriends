@@ -18,7 +18,10 @@ export class StudentCTuProfile extends Component {
 
   render() {
     return (
-      <div className="card mb-3" style={{ maxWidth: "1000px" }}>
+      <div
+        className="card mb-3"
+        style={{ maxWidth: "1000px", maxHeight: "400px" }}
+      >
         <div className="row no-gutters">
           <div className="col-md-4">
             <img
