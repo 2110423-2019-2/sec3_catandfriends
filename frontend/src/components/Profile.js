@@ -1,16 +1,16 @@
-
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import TutorPage from "../page/TutorPage";
+import StudentPage from "../page/StudentPage";
 
 export class Home extends Component {
-    render() {
-        return (
-            <div>
-                Welcome to profile page
-            </div>
-        )
+  state = { role: "tutor" };
+  render() {
+    if (this.state.role == "tutor") {
+      return <TutorPage />;
+    } else {
+      return <StudentPage />;
     }
+  }
 }
 
-export default Home
-
-
+export default Home;
