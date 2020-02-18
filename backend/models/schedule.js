@@ -6,10 +6,11 @@ const scheduleSchema = new Schema({
     scheduleId: String,
     studentId: String,
     listOfCourse: Array,
-    createdDate: Date,
-    lastModified: Date
+    createdDate: { type: Date },
+    lastModified: { type: Date }
 }, {
-    collection: collectionName, versionKey: false  
+    collection: collectionName,
+    versionKey: false  
 });
 
 const ScheduleModel = mongoose.model('ScheduleModel', scheduleSchema);
