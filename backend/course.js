@@ -76,23 +76,26 @@ router.post('/',async(req,res)=>{
     const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
     payload.createdTime = dateThailand._d;
     payload.lastModified = dateThailand._d;
-    if(payload['dayAndStartTime'] == undefined || payload['dayAndStartTime'].length != 7){
+    if(payload['dayAndStartTime'].length != 7){
         console.log('dayAndStartTime is incorrect');
         res.json('dayAndStartTime is incorrect');
         res.status(400).end();
         
     }
-    else if(payload['dayAndEndTime'] == undefined || payload['dayAndEndTime'].length != 7){
+    else if(payload['dayAndEndTime'].length != 7){
         console.log('dayAndEndTime is incorrect');
         res.json('dayAndEndTime is incorrect');
         res.status(400).end();
         
     }
-    const courses = new CourseModel(payload);
-    console.log(courses);
-    await courses.save();
-    console.log("klfsal");
-    res.status(201).end();
+    else{
+        const courses = new CourseModel(payload);
+        console.log(courses);
+        await courses.save();
+        console.log("klfsal");
+        res.status(201).end();
+    }
+    
 });
 
 router.put('/',async(req,res)=>{
@@ -106,13 +109,13 @@ router.put('/',async(req,res)=>{
         console.log(s);
         res.json(s);
     }
-    else if(payload['dayAndStartTime'] == undefined || payload['dayAndStartTime'].length != 7){
+    else if(payload['dayAndStartTime'] != undefined && payload['dayAndStartTime'].length != 7){
         console.log('dayAndStartTime is incorrect');
         res.json('dayAndStartTime is incorrect');
         res.status(400).end();
         
     }
-    else if(payload['dayAndEndTime'] == undefined || payload['dayAndEndTime'].length != 7){
+    else if(payload['dayAndEndTime'] != undefined && payload['dayAndEndTime'].length != 7){
         console.log('dayAndEndTime is incorrect');
         res.json('dayAndEndTime is incorrect');
         res.status(400).end();
