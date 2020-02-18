@@ -7,8 +7,10 @@ class  CardHeader extends React.Component{
         var style = {
             backgroundImage: 'url(' + image + ')' };
     return (
-      React.createElement("header", { style: style, id: image, className: "mcard-header"},
-      React.createElement("h6", { className: "mcard-header--title" }, "Category")));
+        <header style={style} id='image' className="mcard-header"> 
+            <h6 className='mcard-header--title'>Subject</h6>
+        </header>
+    );
     }
 }
 
@@ -37,16 +39,17 @@ class Button extends React.Component{
 }
 
 class CardBody extends React.Component{
+    constructor(props){
+        super(props)
+    }
     render(){
         return(
-            React.createElement("div", { className: "mcard-body" },
-                React.createElement("p", { className: "date" }, "20 February 2020"),
-
-                React.createElement("h5", {className: "course-name"}, this.props.title),
-
-                React.createElement("p", { className: "body-content" }, this.props.text),
+            <div className="mcard-body">
+                <p className="date">20 February 2020</p>
+                <h5 className="course-name">{this.props.title}</h5>
+                <p className="body-content">{this.props.text}</p>
                 <Button type="button" class="btn btn-primary" ></Button>
-            )
+            </div>
         );
     }
 }
@@ -58,6 +61,7 @@ class CourseCard extends React.Component{
         this.state={
             courseID: "00001",
             courseName: "EWEf",
+            image:'https://source.unsplash.com/user/erondu/600x400',
             category: "few",
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
@@ -65,10 +69,10 @@ class CourseCard extends React.Component{
     }
     render(){
         return(
-            React.createElement("article", { className: "CourseCard" },
-                React.createElement(CardHeader, { image: 'https://source.unsplash.com/user/erondu/600x400' }),
-                React.createElement(CardBody, { title: this.state.courseName, text: this.state.description })
-                )
+            <article className="CourseCard">
+                <CardHeader image={this.state.image}></CardHeader>
+                <CardBody title={this.state.courseName} text={this.state.description}></CardBody>
+            </article>
         );
     }
 }
