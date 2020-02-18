@@ -5,9 +5,9 @@ const to = require('await-to-js').default;
 const moment = require('moment-timezone');
 
 router.get('/', async (req, res) => {
-    let reqID = req.query.reqID;
-    console.log(reqID);
-    const schedule = await ScheduleModel.find({studentId: reqID});
+    let studentId = req.query.studentId;
+    console.log(studentId);
+    const schedule = await ScheduleModel.find({studentId: studentId});
     console.log(schedule);
     res.json(schedule);
     res.status(200).end();

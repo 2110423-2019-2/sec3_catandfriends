@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 var collectionName = 'schedule';
 
 const scheduleSchema = new Schema({
-    scheduleId: String,
+    // scheduleId: String,
     studentId: String,
     listOfCourse: Array,
     createdDate: { type: Date },
