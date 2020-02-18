@@ -9,16 +9,16 @@ body, html{
     display: inline-block;
     margin-top: 12px;
     margin-bottom: 12px;
-    margin-left: 8px;
-    margin-right: 8px;
-    box-shadow: 2px 2px 5px 5px rgb(224, 224, 224);
+    margin-left: 5px;
+    margin-right: 5px;
+    box-shadow: 2px 2px 2px 2px rgb(224, 224, 224);
     transition: .20s;
     text-align: left;
     border-radius: 12px 12px ;
 }
 
 .CourseCard:hover{
-    box-shadow: 5px 5px 10px 10px #4e4e4e;
+    box-shadow: 2px 2px 2px 2px #4e4e4e;
     cursor: pointer;
 }
 .CourseCard:hover .button-primary{

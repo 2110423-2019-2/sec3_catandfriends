@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Filter from '../components/Filter'
-import CourseCard from '../components/CourseCard'
+import CourseCardLayout from '../components/CourseCardLayout'
 
 export default class SearchResult extends Component {
     render() {
@@ -12,7 +12,10 @@ export default class SearchResult extends Component {
                         <Filter/>
                     </div>
                     <div className="col-md-9">
-                        <CourseCard/>
+                        <CourseCardLayout/>
+                        <CourseCardLayout/>
+                        <CourseCardLayout/>
+                        <CourseCardLayout/>
                     </div>
                 </div>
                 </div>
