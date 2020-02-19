@@ -20,4 +20,18 @@ export default class SearchResult extends Component {
       </div>
     );
   }
+
+  getFilter = () =>{
+    let day = "";
+    let subject = "";
+    let time = "";
+    let price = "";
+    return
+  }
+  async componentDidMount() {
+    console.log(window.location.search);
+    let data = await Util.getSearchResult(window.location.search);
+    await this.setState({ data });
+    await console.log(data);
+  }
 }

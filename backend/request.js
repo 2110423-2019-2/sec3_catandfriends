@@ -9,7 +9,7 @@ const to = require('await-to-js').default;
 const moment = require('moment-timezone');
 
 router.get('/', async (req, res) => {
-    // console.log(req.query);
+    console.log(req.query);
 
     if (req.query.tutorId == undefined) {
         res.status(400).end();

@@ -23,8 +23,8 @@ const Util = {
     }
     const URL = userId
       ? `http://localhost:8000/profile?userId=${userId}&token=${localStorage.getItem(
-          "token"
-        )}`
+        "token"
+      )}`
       : `http://localhost:8000/profile?token=${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "GET",
@@ -59,6 +59,15 @@ const Util = {
     const URL = `http://localhost:8000/course?userId=${userId}&token=${localStorage.getItem(
       "token"
     )}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors"
+    });
+    if (response.status == 404) return { error: true };
+    if (response.status == 200) return response.json();
+  },
+  getSearchResult: async (day, subject, time, price) => {
+    const URL = `http://localhost:8000/search?day=${day}&subject=${subject}&time=${time}&price=${price}`;
     const response = await fetch(URL, {
       method: "GET",
       mode: "cors"
