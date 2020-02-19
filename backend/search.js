@@ -82,11 +82,11 @@ router.get('/', async (req, res) => {
     // //////for price searching//////
     if (price.price0To500 || price.price500To1500 || price.price1500To3500 || price.price3500To6500 || price6500AndAbove) {
         query.$and.push({ $or: [] });
-        if (price.price0To500) query.$and[0].$or.push({ "price": { $gte: 0, $lte: 500 } });
-        if (price.price500To1500) query.$and[0].$or.push({ "price": { $gte: 500, $lte: 1500 } });
-        if (price.price1500To3500) query.$and[0].$or.push({ "price": { $gte: 1500, $lte: 3500 } });
-        if (price.price3500To6500) query.$and[0].$or.push({ "price": { $gte: 3500, $lte: 6500 } });
-        if (price.price6500AndAbove) query.$and[0].$or.push({ "price": { $gte: 6500 } });
+        if (price.price0To500) query.$and[0].$or.push({ "courseFee": { $gte: 0, $lte: 500 } });
+        if (price.price500To1500) query.$and[0].$or.push({ "courseFee": { $gte: 500, $lte: 1500 } });
+        if (price.price1500To3500) query.$and[0].$or.push({ "courseFee": { $gte: 1500, $lte: 3500 } });
+        if (price.price3500To6500) query.$and[0].$or.push({ "courseFee": { $gte: 3500, $lte: 6500 } });
+        if (price.price6500AndAbove) query.$and[0].$or.push({ "courseFee": { $gte: 6500 } });
     }
     // ///////////////////////////////
 
@@ -114,17 +114,45 @@ router.get('/', async (req, res) => {
     // ///////////////////////////////
 
     // //////for time searching//////
-    if (time.time6To8 || time.time8To10 || time.time10To12 || time.time12To14 || time.time14To16
-        || time.time16To18 || time.time18To20 || time.time20To22) {
+    let timeList = [6, 8, 10, 12, 14, 16, 18, 20, 22];
+    // let timeList = ["06.00-08.00", "08.00-10.00", "10.00-12.00",
+    //     "12.00-14.00", "14.00-16.00", "16.00-18.00", "18.00-20.00", "20.00-22.00"];
+    let times = [time.time6To8, time.time8To10, time.time10To12, time.time12To14, time.time14To16, time.time16To18, time.time18To20, time.time20To22];
+    console.log(times);
+
+    let timeRange = [];
+    min = 22; max = 6;
+    for (let i = 0; i < times.length; i++) {
+        if (times[i]) {
+            min = timeList[i] < min ? timeList[i] : min;
+            max = timeList[i + 1] > max ? timeList[i + 1] : max;
+        } else {
+            if (min < max) {
+                timeRange.push([min, max]);
+            }
+            min = timeList[i + 1];
+        }
+        if (i == times.length - 1 && min < max) {
+            timeRange.push([min, max]);
+        }
+    }
+    console.log(timeRange);
+
+    // if (time.time6To8 || time.time8To10 || time.time10To12 || time.time12To14 || time.time14To16
+    //     || time.time16To18 || time.time18To20 || time.time20To22) {
+    if (timeRange.length != 0) {
         query.$and.push({ $or: [] });
-        if (time.time6To8) query.$and[3].$or.push({ $and: [{ "dayAndStartTime.0": { $gte: 6 } }, { "dayAndEndTime.0": { $lte: 8 } }] });
-        if (time.time8To10) query.$and[3].$or.push({ $and: [{ "dayAndStartTime.1": { $gte: 8 } }, { "dayAndEndTime.1": { $lte: 10 } }] });
-        if (time.time10To12) query.$and[3].$or.push({ $and: [{ "dayAndStartTime.2": { $gte: 10 } }, { "dayAndEndTime.2": { $lte: 12 } }] });
-        if (time.time12To14) query.$and[3].$or.push({ $and: [{ "dayAndStartTime.3": { $gte: 12 } }, { "dayAndEndTime.3": { $lte: 14 } }] });
-        if (time.time14To16) query.$and[3].$or.push({ $and: [{ "dayAndStartTime.4": { $gte: 14 } }, { "dayAndEndTime.4": { $lte: 16 } }] });
-        if (time.time16To18) query.$and[3].$or.push({ $and: [{ "dayAndStartTime.5": { $gte: 16 } }, { "dayAndEndTime.5": { $lte: 18 } }] });
-        if (time.time18To20) query.$and[3].$or.push({ $and: [{ "dayAndStartTime.6": { $gte: 18 } }, { "dayAndEndTime.6": { $lte: 20 } }] });
-        if (time.time20To22) query.$and[3].$or.push({ $and: [{ "dayAndStartTime.7": { $gte: 20 } }, { "dayAndEndTime.7": { $lte: 22 } }] });
+        for (let i = 0; i < timeRange.length; i++) {
+            let start = timeRange[i][0];
+            let end = timeRange[i][1];
+            query.$and[3].$or.push({ $and: [{ "dayAndStartTime.0": { $gte: start } }, { "dayAndEndTime.0": { $lte: end } }] });
+            query.$and[3].$or.push({ $and: [{ "dayAndStartTime.1": { $gte: start } }, { "dayAndEndTime.1": { $lte: end } }] });
+            query.$and[3].$or.push({ $and: [{ "dayAndStartTime.2": { $gte: start } }, { "dayAndEndTime.2": { $lte: end } }] });
+            query.$and[3].$or.push({ $and: [{ "dayAndStartTime.3": { $gte: start } }, { "dayAndEndTime.3": { $lte: end } }] });
+            query.$and[3].$or.push({ $and: [{ "dayAndStartTime.4": { $gte: start } }, { "dayAndEndTime.4": { $lte: end } }] });
+            query.$and[3].$or.push({ $and: [{ "dayAndStartTime.5": { $gte: start } }, { "dayAndEndTime.5": { $lte: end } }] });
+            query.$and[3].$or.push({ $and: [{ "dayAndStartTime.6": { $gte: start } }, { "dayAndEndTime.6": { $lte: end } }] });
+        }
     }
     // ///////////////////////////////
     query.$and.push({ "endDate": { $gte: dateThailand._d } });
@@ -142,7 +170,7 @@ router.get('/', async (req, res) => {
         let err, tutor
 
         [err, tutor] = await to(tutorModel.find({
-            _id: courses[i].tutorId
+            userId: courses[i].tutorId
         }));
         if (err) {
             res.status(500).end();
