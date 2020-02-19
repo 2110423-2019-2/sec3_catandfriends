@@ -208,7 +208,7 @@ class Filter extends React.Component {
                 mathematics:  false,
                 science:  false,
                 social:  false,
-                language:  false,
+                language:  false
             },
             time: {
                 time6To8:  false,
