@@ -65,6 +65,30 @@ const Util = {
     });
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
+  },
+  getRequests: async userId => {
+    const URL = `http://localhost:8000/requests?tutorId=${userId}&token=${localStorage.getItem(
+      "token"
+    )}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors"
+    });
+    if (response.status == 404) return { error: true };
+    if (response.status == 200) return response.json();
+  },
+  updateRequest: async (requestId, status, studentId, courseId) => {
+    const URL = `http://localhost:8000/requests`;
+    const response = await fetch(URL, {
+      method: "PUT",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ requestId, status, studentId, courseId })
+    });
+    if (response.status == 500) return { error: true };
+    if (response.status == 200) return response.json();
   }
 };
 

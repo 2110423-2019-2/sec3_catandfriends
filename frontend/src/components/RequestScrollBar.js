@@ -1,40 +1,82 @@
-import React from 'react'
-import './RequestScrollBar.css'
-// import 'bootstrap'
+import React, { Component } from "react";
+import "./RequestScrollBar.css";
+import Util from "../apis/Util";
 
-const initialList=[
-  { id: 'a', name: 'Student Name',courseName:"Course Name" },
-  { id: 'b', name: 'Student Name',courseName:"Course Name" },
-  { id: 'c', name: 'Student Name',courseName:"Course Name" },
-];
-const RequestScrollBar=()=>{
-  const [list, setList] = React.useState(initialList);
-
-  const handleAccept = id =>{
-      setList(list.filter(item=>item.id !==id));
-      //add student to class
-  };
-
-  const handleReject = id =>{
-    setList(list.filter(item=>item.id !==id));
-    //do nothing
-};
-    return(
-        <div className="card" data-spy="scroll" id="overflowTest" > 
-              {list.map(item => (
-        <table class="table table-borderless" key={item.id}>
-          <td><label>{item.name}</label></td>
-          <td><label>{item.courseName}</label></td>
-          <td><button type="button" className="btn btn-success" onClick={() => handleAccept(item.id)}>
-            Accept
-          </button></td>
-          <td><button type="button" className="btn btn-danger" onClick={() => handleReject(item.id)}>
-            Reject
-          </button></td>
-        </table>
-      ))}
-        </div>
-    );
+export default class RequestScrollBar extends Component {
+  constructor(props) {
+    super(props);
   }
 
-export default RequestScrollBar
+  state = {};
+
+  handleButton = async (requestId, status, studentId, courseId) => {
+    let data = await Util.updateRequest(requestId, status, studentId, courseId);
+    data = await Util.getRequests(this.props.tutorId);
+    this.setState({ data });
+
+    //add student to class
+  };
+
+  render() {
+    if (this.state.data) {
+      return (
+        <div className="card" data-spy="scroll" id="overflowTest">
+          {this.state.data.map(item => {
+            if (item.status === 0) {
+              return (
+                <table class="table table-borderless" key={item.requestId}>
+                  <td>
+                    <label>{item.studentName}</label>
+                  </td>
+                  <td>
+                    <label>{item.courseName}</label>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      onClick={() =>
+                        this.handleButton(
+                          item.requestId,
+                          1,
+                          item.studentId,
+                          item.courseId
+                        )
+                      }
+                    >
+                      Accept
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() =>
+                        this.handleButton(
+                          item.requestId,
+                          0,
+                          item.studentId,
+                          item.courseId
+                        )
+                      }
+                    >
+                      Reject
+                    </button>
+                  </td>
+                </table>
+              );
+            }
+          })}
+        </div>
+      );
+    } else {
+      return <div>...Loading</div>;
+    }
+  }
+
+  async componentDidMount() {
+    let data = await Util.getRequests(this.props.tutorId);
+    this.setState({ data });
+    console.log(data);
+  }
+}
