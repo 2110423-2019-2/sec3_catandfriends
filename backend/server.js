@@ -1,7 +1,6 @@
 const express = require("express");
 const passport = require("passport");
 const app = express();
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const loginRoute = require("./login");
 const signupRoute = require("./signup");

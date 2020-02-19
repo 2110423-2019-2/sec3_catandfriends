@@ -56,14 +56,36 @@ router.get("/", async (req, res) => {
         }
       }
     }
-    console.log(s);
-    res.json(s);
-    res.status(200).end();
-  } else {
-    res.json("invalid");
-    course = await CourseModel.find({});
-    consol.log(course);
-    res.status(404).end();
+    if(courseId!=undefined||studentId!=undefined||tutorId!=undefined){
+        for(i=0;i<total_course.length;i++){
+            let s="";
+            for(j=0;j<7;j++){
+                if(total_course[i]['dayAndStartTime'][j]== null ) continue;
+                if(j==0) s+="Mon ";
+                else if(j==1) s+="Tue ";
+                else if (j==2) s+="Wed ";
+                else if (j==3) s+="Thu ";
+                else if (j==4) s+="Fri ";
+                else if (j==5) s+="Sat ";
+                else if (j==6) s+="Sun ";
+                s+=total_course[i]['dayAndStartTime'][j]+":00-"+total_course[i]['dayAndEndTime'][j]+":00/ ";
+            }
+            total_course[i]['dayAndStartTime']=undefined;
+            total_course[i]['dayAndEndTime']=undefined;
+            total_course[i]['day']=s.slice(0, s.length-2);;
+            s = "";
+            let dateSplit = ((total_course[i]['startDate'].toString()).split(" "));
+            s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
+            dateSplit = ((total_course[i]['endDate']).toString()).split(" ");
+            s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
+            
+            total_course[i].duration = s;
+            console.log(total_course);
+            
+        }
+        res.json(total_course);
+        res.status(200).end();
+    }
   }
 });
 

@@ -20,19 +20,20 @@ const requestSchema = new Schema({
         type: String,
         required: true,
     },
-    status: { 
-        type: Boolean,
-        default: false,
+    status: {
+        type: Number,
+        default: 0,
         required: true
     },
-    createdTime: { 
+    createdTime: {
         type: Date,
         required: true
     },
-    lastModified: { 
+    lastModified: {
         type: Date,
         required: true
-    }
+    },
+    isAvailable: { type: Boolean }
 }, {
     collection: collectionName,
     versionKey: false,
