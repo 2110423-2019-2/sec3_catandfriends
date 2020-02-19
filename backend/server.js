@@ -10,6 +10,7 @@ const requestRoute = require("./request");
 const profileRoute = require("./profile");
 const scheduleRoute = require("./schedule");
 const searchRoute = require("./search");
+const uploadRoute = require("./upload");
 const mongoose = require("mongoose");
 require("./auth/auth");
 require("dotenv").config();
@@ -41,29 +42,12 @@ app.use(
 );
 app.use("/schedule", scheduleRoute);
 app.use("/search", searchRoute);
+app.use(
+  "/upload",
+  passport.authenticate("jwt-profile", { session: false }),
+  uploadRoute
+);
 
 app.listen(8000, () => {
   console.log("Start server at port 8000.");
 });
-
-// var storage = multer.diskStorage({
-//   destination: function(req, file, cb) {
-//     cb(null, "public");
-//   },
-//   filename: function(req, file, cb) {
-//     cb(null, Date.now() + "-" + file.originalname);
-//   }
-// });
-
-// var upload = multer({ storage: storage }).single("file");
-
-// app.post("/upload", function(req, res) {
-//   upload(req, res, function(err) {
-//     if (err instanceof multer.MulterError) {
-//       return res.status(500).json(err);
-//     } else if (err) {
-//       return res.status(500).json(err);
-//     }
-//     return res.status(200).send(req.file);
-//   });
-// });
