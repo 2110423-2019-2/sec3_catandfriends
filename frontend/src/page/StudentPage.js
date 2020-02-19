@@ -13,7 +13,7 @@ export default class StudentPage extends Component {
         <div className="justify-content-center">
           <div className="row justify-content-center">
             <MyStudentCard data={this.props.data} />
-            <EnrollSchedule />
+            <EnrollSchedule userId={this.props.data._id} />
           </div>
         </div>
       );

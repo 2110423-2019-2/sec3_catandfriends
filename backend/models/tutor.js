@@ -5,7 +5,7 @@ const collectionName = "tutor";
 const tutorSchema = new Schema(
   {
     userId: {
-      type: mongoose.Types.ObjectId,
+      type: String,
       required: true,
       unique: true
     },

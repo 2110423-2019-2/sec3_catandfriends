@@ -30,6 +30,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
+app.use("/login", loginRoute);
+app.use("/signup", signupRoute);
 app.use("/courses", courseRoute);
 app.use("/requests", requestRoute);
 app.use(
@@ -38,8 +40,6 @@ app.use(
   profileRoute
 );
 app.use("/schedule", scheduleRoute);
-app.use("/login", loginRoute);
-app.use("/signup", signupRoute);
 app.use("/search", searchRoute);
 
 app.listen(8000, () => {

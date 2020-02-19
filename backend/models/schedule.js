@@ -1,18 +1,20 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-var collectionName = 'schedule';
+var collectionName = "schedule";
 
-const scheduleSchema = new Schema({
-    scheduleId: String,
+const scheduleSchema = new Schema(
+  {
     studentId: String,
     listOfCourse: Array,
     createdDate: { type: Date },
     lastModified: { type: Date }
-}, {
+  },
+  {
     collection: collectionName,
-    versionKey: false  
-});
+    versionKey: false
+  }
+);
 
-const ScheduleModel = mongoose.model('ScheduleModel', scheduleSchema);
+const ScheduleModel = mongoose.model("ScheduleModel", scheduleSchema);
 
 module.exports = ScheduleModel;
