@@ -55,8 +55,8 @@ const Util = {
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
   },
-  getMycourse: async userId => {
-    const URL = `http://localhost:8000/course?userId=${userId}&token=${localStorage.getItem(
+  getCourseByTutorId: async userId => {
+    const URL = `http://localhost:8000/courses?tutorId=${userId}&token=${localStorage.getItem(
       "token"
     )}`;
     const response = await fetch(URL, {

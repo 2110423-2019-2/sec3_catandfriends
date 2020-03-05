@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./VerifyCard.css";
+import history from "../history";
 export default class VerifyCard extends Component {
   constructor(props) {
     super(props);

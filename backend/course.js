@@ -6,7 +6,7 @@ const moment = require("moment-timezone");
 
 router.get("/", async (req, res) => {
   let courseId = req.query.courseId;
-  let tutorId = req.query.userId;
+  let tutorId = req.query.tutorId;
   let studentId = req.query.studentId;
   // console.log(await CourseModel.find({listOfStudentId:["987654321"]
   // }));
@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
     //console.log("print");
     let course = await CourseModel.find({ tutorId: tutorId });
     if (course.length == 0) {
-      var s = "tutor hasn't created any courses";
+      var s = "tutor hasn't created the courses";
       console.log(s);
       res.json(s);
     } else res.json(course);
@@ -62,7 +62,7 @@ router.get("/", async (req, res) => {
   } else {
     res.json("invalid");
     course = await CourseModel.find({});
-    consol.log(course);
+    console.log(course);
     res.status(404).end();
   }
 });

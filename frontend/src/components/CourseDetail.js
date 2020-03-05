@@ -46,11 +46,11 @@ export class CourseDetail extends Component {
                       }
                     }
                   >
-                    {this.state.courseName}
+                    {this.props.detail.courseName}
                   </h4>
                 </div>
                 <div className="col-md-6 border">
-                  <h4>{this.state.courseId}</h4>
+                  <h4>{this.props.detail._id}</h4>
                 </div>
 
                 <div className="col-md-4 border">
@@ -81,11 +81,15 @@ export class CourseDetail extends Component {
                   <br />
                   {/*Enter*/}
                   <br />
-                  <body>{this.state.TutorName}</body>
-                  <body>{this.state.tutorId}</body>
-                  <body>{this.state.dayAndtime}</body>
-                  <body>{this.state.startDate}</body>
-                  <body>{this.state.endDate}</body>
+                  <body>{this.props.detail.tutorName}</body>
+                  <body>{this.props.detail.tutorId}</body>
+                  <body>
+                    {this.props.detail.dayAndtime
+                      ? this.props.detail.dayAndtime
+                      : "none"}
+                  </body>
+                  <body>{this.props.detail.startDate}</body>
+                  <body>{this.props.detail.endDate}</body>
 
                   <br />
                   {/*Enter*/}
