@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const CourseModel = require('./models/course');
 const tutorModel = require('./models/tutor');
+const userModel = require('./models/user');
 const moment = require('moment-timezone');
 const to = require('await-to-js').default;
 
@@ -128,12 +129,12 @@ router.get('/', async (req, res) => {
             res.status(500).end();
         }
 
-        // console.log(courses);
+        console.log(courses);
 
         for (let i = 0; i < courses.length; i++) {
             let err, tutor
 
-            [err, tutor] = await to(tutorModel.find({
+            [err, tutor] = await to(userModel.find({
                 _id: courses[i].tutorId
             }));
             if (err) {

@@ -32,8 +32,8 @@ const requestSchema = new Schema({
     lastModified: {
         type: Date,
         required: true
-    },
-    isAvailable: { type: Boolean }
+    }
+    
 }, {
     collection: collectionName,
     versionKey: false,
