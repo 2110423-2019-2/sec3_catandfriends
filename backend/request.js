@@ -109,8 +109,8 @@ router.put('/', async (req, res) => {
 
     if (request.status != 0) {
         res.json({
-            'message': "Already response",
-            'operation': ""
+            "message": "Already response",
+            "operation": ""
         });
         res.status(201).end();
     } else {
@@ -181,10 +181,13 @@ router.put('/', async (req, res) => {
                 }
                 ///////////////////////////////////////////////////////
             }
-            let message = status == 1 ? "Request accepted" : "Request rejected";
+            let message;
+            if (status == -1) message = "Request rejected";
+            else if (status == 1) message = "Request accepted"
+            else message = 'Invalid "accept" attribute'
             res.json({
-                'message': message,
-                'operation': ""
+                "message": message,
+                "operation": ""
             });
         } else {
             const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
@@ -203,8 +206,8 @@ router.put('/', async (req, res) => {
                 res.status(500).end();
             }
             res.json({
-                'message': "Course is already full",
-                'operation': "Auto reject"
+                "message": "Course is already full",
+                "operation": "Auto reject"
             });
         }
         res.status(201).end();
