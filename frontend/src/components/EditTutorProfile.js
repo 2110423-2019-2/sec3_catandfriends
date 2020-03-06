@@ -17,11 +17,11 @@ export default class EditTutorProfile extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
+  // handleChange(e) {
+  //   this.setState({ [e.target.name]: e.target.value });
+  // }
 
-  handleSubmit(event) {
+  handleChange(event) {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
