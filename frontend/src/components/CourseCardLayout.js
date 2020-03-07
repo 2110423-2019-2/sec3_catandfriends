@@ -4,11 +4,10 @@ import CourseCard from "./CourseCard";
 class CourseCardLayout extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      data: [
+      data1: [
         {
-          courseID: "00001",
+          courseID: "1989",
           courseName: "a",
           image: "https://source.unsplash.com/user/erondu/600x400",
           category: "few",
@@ -17,51 +16,16 @@ class CourseCardLayout extends React.Component {
           date: "Mondays 8.00-10.00"
         },
         {
-          courseID: "00002",
-          courseName: "b",
+          courseID: "1989",
+          courseName: "a",
           image: "https://source.unsplash.com/user/erondu/600x400",
-          category: "more",
-          description: "TS",
+          category: "few",
+          description: "this is it",
           price: "4500",
-          date: "Tuedays 8.00-10.00"
-        },
-        {
-          courseID: "00003",
-          courseName: "c",
-          image: "https://source.unsplash.com/user/erondu/600x400",
-          category: "more",
-          description: "TS",
-          price: "4550",
-          date: "Tuedays 8.00-10.00"
-        },
-        {
-          courseID: "00004",
-          courseName: "d",
-          image: "https://source.unsplash.com/user/erondu/600x400",
-          category: "more",
-          description: "TS",
-          price: "4300",
-          date: "Tuedays 8.00-10.00"
-        },
-        {
-          courseID: "00006",
-          courseName: "e",
-          image: "https://source.unsplash.com/user/erondu/600x400",
-          category: "more",
-          description: "TS",
-          price: "4600",
-          date: "Tuedays 8.00-10.00"
-        },
-        {
-          courseID: "00002",
-          courseName: "b",
-          image: "https://source.unsplash.com/user/erondu/600x400",
-          category: "more",
-          description: "TS",
-          price: "4500",
-          date: "Tuedays 8.00-10.00"
+          date: "Mondays 8.00-10.00"
         }
-      ]
+      ],
+      data: [this.props.data]
     };
   }
   render() {

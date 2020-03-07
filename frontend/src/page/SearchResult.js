@@ -232,7 +232,16 @@ export default class SearchResult extends Component {
         price3500To6500: false,
         price6500AndAbove: false
       },
-      priceStr: "00000"
+      priceStr: "00000",
+      data: {
+        courseID: "1989",
+        courseName: "a",
+        image: "https://source.unsplash.com/user/erondu/600x400",
+        category: "few",
+        description: "this is it",
+        price: "4500",
+        date: "Mondays 8.00-10.00"
+      }
     };
     this.handleDayChange = this.handleDayChange.bind(this);
     this.handleSubjectChange = this.handleSubjectChange.bind(this);
