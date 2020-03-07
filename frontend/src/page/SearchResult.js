@@ -233,15 +233,7 @@ export default class SearchResult extends Component {
         price6500AndAbove: false
       },
       priceStr: "00000",
-      data: {
-        courseID: "1989",
-        courseName: "a",
-        image: "https://source.unsplash.com/user/erondu/600x400",
-        category: "few",
-        description: "this is it",
-        price: "4500",
-        date: "Mondays 8.00-10.00"
-      }
+      data: []
     };
     this.handleDayChange = this.handleDayChange.bind(this);
     this.handleSubjectChange = this.handleSubjectChange.bind(this);
@@ -329,6 +321,8 @@ export default class SearchResult extends Component {
       this.state.priceStr
     );
     this.setState({ data });
+    console.log(this.state);
+    console.log(JSON.stringify(this.state.data));
   };
   render() {
     return (
@@ -367,20 +361,41 @@ export default class SearchResult extends Component {
             </div>
           </div>
           <div className="col-md-10">
-            <CourseCardLayout data={this.state.data} />
+            <CourseCardLayout
+              data={[
+                {
+                  courseID: "1989",
+                  courseName: "a",
+                  image: "https://source.unsplash.com/user/erondu/600x400",
+                  category: "few",
+                  description: "this is it",
+                  price: "4500",
+                  date: "Mondays 8.00-10.00"
+                },
+                {
+                  courseID: "1989",
+                  courseName: "a",
+                  image: "https://source.unsplash.com/user/erondu/600x400",
+                  category: "few",
+                  description: "this is it",
+                  price: "4500",
+                  date: "Mondays 8.00-10.00"
+                }
+              ]}
+            />
           </div>
         </div>
       </div>
     );
   }
 
-  getFilter = () =>{
+  getFilter = () => {
     let day = "";
     let subject = "";
     let time = "";
     let price = "";
-    return
-  }
+    return;
+  };
   async componentDidMount() {
     console.log(window.location.search);
     let data = await Util.getSearchResult(window.location.search);

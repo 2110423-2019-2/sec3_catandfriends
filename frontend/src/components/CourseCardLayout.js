@@ -25,7 +25,7 @@ class CourseCardLayout extends React.Component {
           date: "Mondays 8.00-10.00"
         }
       ],
-      data: [this.props.data]
+      data: this.props.data
     };
   }
   render() {
