@@ -2,74 +2,70 @@ const express = require("express");
 const router = express.Router();
 const RequestModel = require("./models/request");
 const ScheduleModel = require("./models/schedule");
-const userModel = require("./models/user");
 const CourseModel = require("./models/course");
+const StudentModel = require("./models/student");
+const UserModel = require("./models/user");
 const to = require("await-to-js").default;
 const moment = require("moment-timezone");
 
-router.get("/", async (req, res) => {
-  console.log(req.query);
+function formatedTime(date) {
+  dateS = moment.tz(date, "Asia/Bangkok").format();
+  yearMonthDay = dateS.slice(0, 10).split("-");
+  dayMonthYear = yearMonthDay.reverse().join("-");
+  time = dateS.slice(11, 19);
+  return time + " " + dayMonthYear;
+}
 
-  let tutorId;
+router.get("/", async (req, res) => {
+  // console.log(req.query);
   if (req.query.tutorId == undefined) {
     res.status(400).end();
   } else {
-    tutorId = req.query.tutorId.toString();
-  }
-  let err, query;
+    let err, requests;
 
-  [err, query] = await to(
-    RequestModel.find({
-      tutorId: tutorId
-    })
-  );
-  if (err) {
-    res.status(500).end();
-  }
-
-  requests = [];
-  for (let i = 0; i < query.length; i++) {
-    let err, value;
-
-    [err, value] = await to(CourseModel.findById(query[i].courseId));
+    [err, requests] = await to(
+      RequestModel.find(
+        { tutorId: req.query.tutorId },
+        { _id: 0, lastModified: 0 }
+      )
+    );
     if (err) {
       res.status(500).end();
     }
+    // console.log(requests);
 
-    let student;
+    for (let i = 0; i < requests.length; i++) {
+      let err, course;
+      // console.log(requests[i].studentId);
 
-    [err, student] = await to(userModel.findById(query[i].studentId));
-    if (err) {
-      res.status(500).end();
+      [err, course] = await to(
+        CourseModel.findOne({
+          _id: requests[i].courseId
+        })
+      );
+      if (err) {
+        res.status(500).end();
+      }
+
+      [err, user] = await to(
+        UserModel.findOne({
+          _id: requests[i].studentId
+        })
+      );
+      if (err) {
+        res.status(500).end();
+      }
+
+      requests[i] = {
+        ...requests[i].toObject(),
+        isAvailable: course.amountOfStudent > 0 ? true : false,
+        studentName: user["firstName"] + " " + user["lastName"],
+        createdTime: formatedTime(requests[i].createdTime)
+      };
     }
-
-    let studentId, studentName, requestId, createdTime, isAvailable;
-    studentId = query[i].studentId;
-    requestId = query[i]._id;
-    createdTime = query[i].createdTime;
-    courseId = query[i].courseId;
-    courseName = value.courseName;
-    status = query[i].status;
-
-    studentName = student.firstName; //waiting for profile
-    isAvailable = value.amountOfStudent > 0 ? true : false;
-
-    aRequest = {
-      studentId: studentId,
-      studentName: studentName,
-      courseId: courseId,
-      courseName: courseName,
-      requestId: requestId,
-      createdTime: createdTime,
-      isAvailable: isAvailable,
-      status: status
-    };
-
-    requests.push(aRequest);
+    res.json(requests);
+    res.status(200).end();
   }
-
-  res.json(requests);
-  res.status(200).end();
 });
 
 router.post("/", async (req, res) => {
@@ -109,78 +105,148 @@ router.put("/", async (req, res) => {
   const payload = req.body;
   let err, request;
 
-  [err, request] = await to(RequestModel.findById(payload.requestId));
+  [err, request] = await to(
+    RequestModel.findOne({
+      tutorId: payload.tutorId,
+      studentId: payload.studentId,
+      courseId: payload.courseId
+    })
+  );
   if (err) {
     res.status(500).end();
   }
+
   if (request.status != 0) {
+    res.json({
+      message: "Already response",
+      operation: ""
+    });
     res.status(201).end();
   } else {
-    let err, value;
-    const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
-
-    [err, value] = await to(
-      RequestModel.findByIdAndUpdate(
-        payload.requestId,
-        {
-          status: payload.status,
-          lastModified: dateThailand._d
-        },
-        {
-          useFindAndModify: false
-        }
-      )
+    let err, course;
+    [err, course] = await to(
+      CourseModel.findOne({
+        _id: payload.courseId
+      })
     );
     if (err) {
       res.status(500).end();
     }
+    if (course.amountOfStudent > 0) {
+      let value;
+      const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
 
-    [err, value] = await to(
-      ScheduleModel.findOneAndUpdate(
-        {
-          studentId: payload.studentId
-        },
-        {
-          $push: {
-            listOfCourse: payload.courseId
+      let status = payload.accept;
+
+      [err, value] = await to(
+        RequestModel.findOneAndUpdate(
+          {
+            tutorId: payload.tutorId,
+            studentId: payload.studentId,
+            courseId: payload.courseId
           },
-          lastModified: dateThailand._d
-        },
-        {
-          useFindAndModify: false
-        }
-      )
-    );
-    if (err) {
-      res.status(500).end();
-    }
-    ///////////////////////////////////////////////////////
-    //UPDATE AMOUNTOFSTUDENT, LISTOFSTUDENT IN COURSE
-    [err, value] = await to(CourseModel.findById(payload.courseId));
-    if (err) {
-      res.status(500).end();
-    }
-    let currentAmountOfStudent = value.amountOfStudent;
-
-    [err, value] = await to(
-      CourseModel.findByIdAndUpdate(
-        payload.courseId,
-        {
-          $push: {
-            listOfStudentId: payload.studentId
+          {
+            status: status,
+            lastModified: dateThailand._d
           },
-          amountOfStudent: currentAmountOfStudent - 1,
-          lastModified: dateThailand._d
-        },
-        {
-          useFindAndModify: false
+          {
+            useFindAndModify: false
+          }
+        )
+      );
+      if (err) {
+        res.status(500).end();
+      }
+      if (status == 1) {
+        //TODO: UPDATE LISTOFCOURSE IN SCHEDULE
+        [err, value] = await to(
+          ScheduleModel.findOneAndUpdate(
+            {
+              studentId: payload.studentId
+            },
+            {
+              $push: {
+                listOfCourse: payload.courseId
+              },
+              lastModified: dateThailand._d
+            },
+            {
+              useFindAndModify: false
+            }
+          )
+        );
+        if (err) {
+          res.status(500).end();
         }
-      )
-    );
-    if (err) {
-      res.status(500).end();
+        ///////////////////////////////////////////////////////
+        //UPDATE AMOUNTOFSTUDENT, LISTOFSTUDENT IN COURSE
+        [err, value] = await to(
+          CourseModel.findOne({
+            _id: payload.courseId
+          })
+        );
+        if (err) {
+          res.status(500).end();
+        }
+        let currentAmountOfStudent = value.amountOfStudent;
+
+        [err, value] = await to(
+          CourseModel.findOneAndUpdate(
+            {
+              _id: payload.courseId
+            },
+            {
+              $push: {
+                listOfStudentId: payload.studentId
+              },
+              amountOfStudent: currentAmountOfStudent - 1,
+              lastModified: dateThailand._d
+            },
+            {
+              useFindAndModify: false
+            }
+          )
+        );
+        if (err) {
+          res.status(500).end();
+        }
+        ///////////////////////////////////////////////////////
+      }
+      let message;
+      if (status == -1) message = "Request rejected";
+      else if (status == 1) message = "Request accepted";
+      else message = 'Invalid "accept" attribute';
+      res.json({
+        message: message,
+        operation: ""
+      });
+    } else {
+      const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
+
+      [err, value] = await to(
+        RequestModel.findOneAndUpdate(
+          {
+            tutorId: payload.tutorId,
+            studentId: payload.studentId,
+            courseId: payload.courseId
+          },
+          {
+            status: -1,
+            lastModified: dateThailand._d
+          },
+          {
+            useFindAndModify: false
+          }
+        )
+      );
+      if (err) {
+        res.status(500).end();
+      }
+      res.json({
+        message: "Course is already full",
+        operation: "Auto reject"
+      });
     }
-    ///////////////////////////////////////////////////////
     res.status(201).end();
   }
 });

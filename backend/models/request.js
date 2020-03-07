@@ -23,7 +23,7 @@ const requestSchema = new Schema(
     },
     status: {
       type: Number,
-      default: false,
+      default: 0,
       required: true
     },
     createdTime: {
