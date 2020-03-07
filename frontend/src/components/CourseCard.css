@@ -1,0 +1,81 @@
+body,
+html {
+  font-family: "Montserrat", sans-serif;
+  background-color: #ffffff;
+}
+
+.CourseCard {
+  width: 200px;
+  height: 270px;
+  display: inline-block;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin-left: 5px;
+  margin-right: 5px;
+  box-shadow: 2px 2px 2px 2px rgb(224, 224, 224);
+  transition: 0.2s;
+  text-align: left;
+  border-radius: 12px 12px;
+}
+
+.CourseCard:hover {
+  box-shadow: 2px 2px 2px 2px #4e4e4e;
+  cursor: pointer;
+}
+.CourseCard:hover .button-primary {
+  transform: translate(10px, 0);
+}
+
+.mcard-header {
+  border-radius: 12px 12px 0px 0px;
+  height: 110px;
+  width: 100%;
+  padding: 0px;
+  background-size: cover;
+  color: #fff;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.mcard-header--title {
+  float: left;
+  text-transform: uppercase;
+  font-weight: 650;
+}
+
+.mcard-body {
+  height: 160px;
+  padding: 5px;
+  background-color: #ffffff;
+  width: auto;
+  border-radius: 0px 0px 12px 12px;
+}
+.course-name {
+  color: #000000;
+  font-weight: 600;
+}
+.date {
+  font-size: 10px;
+  font-weight: 700;
+  color: gray;
+}
+
+.body-content {
+  padding-bottom: 5px;
+  font-size: 10px;
+  line-height: 1;
+  color: #000000;
+}
+
+.button-primary {
+  border: none;
+  box-shadow: none;
+  font-family: inherit;
+  background-color: transparent;
+  color: rgb(97, 94, 94);
+  font-size: 12px;
+  transition: 0.25s;
+  font-weight: 600;
+}
+.button-primary i {
+  padding-right: 4px;
+}

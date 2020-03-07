@@ -1,0 +1,24 @@
+.title{
+    font-size: larger;
+    font-weight: bold;
+  }
+  .innerbox
+  {
+     width:450px; /* or whatever width you want. */
+     max-width:450px; /* or whatever width you want. */
+     /* display: inline-block; */
+  }
+  .pic
+  {
+     width:200px; /* or whatever width you want. */
+     max-width:150px; /* or whatever width you want. */
+     /* display: inline-block; */
+  }
+  .border
+  { 
+    border-style: solid;
+  }
+  .borderd
+  { 
+    border-style: solid;
+  }
