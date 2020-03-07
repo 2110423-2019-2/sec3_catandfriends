@@ -6,7 +6,7 @@ class CourseCardLayout extends React.Component {
     super(props);
 
     this.state = {
-      rows: [
+      data: [
         {
           courseID: "00001",
           courseName: "a",
@@ -70,7 +70,7 @@ class CourseCardLayout extends React.Component {
         className="row border"
         style={{ maxWidth: "1100px", paddingLeft: "22px", marginTop: "22px" }}
       >
-        {this.state.rows.map(item => (
+        {this.state.data.map(item => (
           <CourseCard detail={item} />
         ))}
       </div>

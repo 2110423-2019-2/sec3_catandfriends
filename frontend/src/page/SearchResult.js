@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Filter from "../components/Filter";
 import CourseCardLayout from "../components/CourseCardLayout";
+import Util from "../apis/Util";
 
 function CheckboxTemplate(props) {
   return (
@@ -205,14 +206,14 @@ export default class SearchResult extends Component {
         saturday: false,
         sunday: false
       },
-      dayStr: "",
+      dayStr: "0000000",
       subject: {
         mathematics: false,
         science: false,
         social: false,
         language: false
       },
-      subStr: "",
+      subStr: "0000",
       time: {
         time6To8: false,
         time8To10: false,
@@ -223,7 +224,7 @@ export default class SearchResult extends Component {
         time18To20: false,
         time20To22: false
       },
-      timeStr: "",
+      timeStr: "00000000",
       price: {
         price0To500: false,
         price500To1500: false,
@@ -231,7 +232,7 @@ export default class SearchResult extends Component {
         price3500To6500: false,
         price6500AndAbove: false
       },
-      priceStr: ""
+      priceStr: "00000"
     };
     this.handleDayChange = this.handleDayChange.bind(this);
     this.handleSubjectChange = this.handleSubjectChange.bind(this);
@@ -305,13 +306,20 @@ export default class SearchResult extends Component {
   }
   handleSubmit = async event => {
     event.preventDefault();
-    let a = await this.getDay();
-    let b = await this.getSub();
-    let c = await this.getTime();
-    let d = await this.getPrice();
+    let a = this.getDay();
+    let b = this.getSub();
+    let c = this.getTime();
+    let d = this.getPrice();
     await this.setState({ dayStr: a, subStr: b, timeStr: c, priceStr: d });
     console.log(a, b, c, d);
     console.log(JSON.stringify(this.state));
+    let data = await Util.getSearchResult(
+      this.state.dayStr,
+      this.state.subStr,
+      this.state.timeStr,
+      this.state.priceStr
+    );
+    this.setState({ data });
   };
   render() {
     return (
@@ -350,7 +358,7 @@ export default class SearchResult extends Component {
             </div>
           </div>
           <div className="col-md-10">
-            <CourseCardLayout />
+            <CourseCardLayout data={this.state.data} />
           </div>
         </div>
       </div>
