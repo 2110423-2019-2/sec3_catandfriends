@@ -6,7 +6,7 @@ const userModel = require('./models/user');
 const moment = require('moment-timezone');
 const to = require('await-to-js').default;
 
-function formatTime(time){
+function formatTime(time) {
     let timeS = time.toString();
     if (timeS.includes(".")) {
         hour = timeS.slice(0, timeS.indexOf("."));
@@ -25,72 +25,52 @@ function formatRangeOfTime(start, end) {
 }
 
 router.get('/', async (req, res) => {
-    let day = (req.query.day == undefined || req.query.day == {
-        sunday: false,
-        monday: false,
-        tuesday: false,
-        wednesday: false,
-        thursday: false,
-        friday: false,
-        saturday: false
-    }) ? {
-            sunday: true,
-            monday: true,
-            tuesday: true,
-            wednesday: true,
-            thursday: true,
-            friday: true,
-            saturday: true
-        } : req.query.day;
 
-    let category = (req.query.category == undefined || req.query.category == {
-        mathematics: false,
-        science: false,
-        social: false,
-        language: false,
-    }) ? {
-            mathematics: true,
-            science: true,
-            social: true,
-            language: true,
-        } : req.query.category;
-    let time = (req.query.time == undefined || req.query.time == {
-        time6To8: false,
-        time8To10: false,
-        time10To12: false,
-        time12To14: false,
-        time14To16: false,
-        time16To18: false,
-        time18To20: false,
-        time20To22: false
-    }) ? {
-            time6To8: true,
-            time8To10: true,
-            time10To12: true,
-            time12To14: true,
-            time14To16: true,
-            time16To18: true,
-            time18To20: true,
-            time20To22: true
-        } : req.query.time;
-    let price = (req.query.price == undefined || req.query.price == {
-        price0To500: false,
-        price500To1500: false,
-        price1500To3500: false,
-        price3500To6500: false,
-        price6500AndAbove: false
-    }) ? {
-            price0To500: true,
-            price500To1500: true,
-            price1500To3500: true,
-            price3500To6500: true,
-            price6500AndAbove: true
-        } : req.query.price;
+    let category = (req.query.category == undefined || req.query.category == "0000") ? "1111" : req.query.category;
+    let price = (req.query.price == undefined || req.query.price == "00000") ? "11111" : req.query.price;
+    let day = (req.query.day == undefined || req.query.day == "0000000") ? "1111111" : req.query.day;
+    let time = (req.query.time == undefined || req.query.time == "00000000") ? "11111111" : req.query.time;
 
-    console.log(time);
-    console.log(day);
-    console.log(category);
-    console.log(price);
+    day = {
+        monday: parseInt(day[0]),
+        tuesday: parseInt(day[1]),
+        wednesday: parseInt(day[2]),
+        thursday: parseInt(day[3]),
+        friday: parseInt(day[4]),
+        saturday: parseInt(day[5]),
+        sunday: parseInt(day[6])
+    };
+
+    category = {
+        mathematics: parseInt(category[0]),
+        science: parseInt(category[1]),
+        social: parseInt(category[2]),
+        language: parseInt(category[3])
+    };
+
+    time = {
+        time6To8: parseInt(time[0]),
+        time8To10: parseInt(time[1]),
+        time10To12: parseInt(time[2]),
+        time12To14: parseInt(time[3]),
+        time14To16: parseInt(time[4]),
+        time16To18: parseInt(time[5]),
+        time18To20: parseInt(time[6]),
+        time20To22: parseInt(time[7])
+    };
+
+    price = {
+        price0To500: parseInt(price[0]),
+        price500To1500: parseInt(price[1]),
+        price1500To3500: parseInt(price[2]),
+        price3500To6500: parseInt(price[3]),
+        price6500AndAbove: parseInt(price[4])
+    };
+
+    // console.log(time);
+    // console.log(day);
+    // console.log(category);
+    // console.log(price);
 
     const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
     let err, courses;
@@ -119,15 +99,15 @@ router.get('/', async (req, res) => {
     // ///////////////////////////////
 
     // //////for day searching//////
-    if (day.sunday || day.monday || day.tuesday || day.wednesday || day.thursday || day.friday || day.saturday) {
+    if (day.monday || day.tuesday || day.wednesday || day.thursday || day.friday || day.saturday || day.sunday) {
         query.$and.push({ $or: [] });
-        if (day.sunday) query.$and[2].$or.push({ "dayAndStartTime.0": { $ne: null } });
-        if (day.monday) query.$and[2].$or.push({ "dayAndStartTime.1": { $ne: null } });
-        if (day.tuesday) query.$and[2].$or.push({ "dayAndStartTime.2": { $ne: null } });
-        if (day.wednesday) query.$and[2].$or.push({ "dayAndStartTime.3": { $ne: null } });
-        if (day.thursday) query.$and[2].$or.push({ "dayAndStartTime.4": { $ne: null } });
-        if (day.friday) query.$and[2].$or.push({ "dayAndStartTime.5": { $ne: null } });
-        if (day.saturday) query.$and[2].$or.push({ "dayAndStartTime.6": { $ne: null } });
+        if (day.monday) query.$and[2].$or.push({ "dayAndStartTime.0": { $ne: null } });
+        if (day.tuesday) query.$and[2].$or.push({ "dayAndStartTime.1": { $ne: null } });
+        if (day.wednesday) query.$and[2].$or.push({ "dayAndStartTime.2": { $ne: null } });
+        if (day.thursday) query.$and[2].$or.push({ "dayAndStartTime.3": { $ne: null } });
+        if (day.friday) query.$and[2].$or.push({ "dayAndStartTime.4": { $ne: null } });
+        if (day.saturday) query.$and[2].$or.push({ "dayAndStartTime.5": { $ne: null } });
+        if (day.sunday) query.$and[2].$or.push({ "dayAndStartTime.6": { $ne: null } });
     }
     // ///////////////////////////////
 
@@ -136,7 +116,7 @@ router.get('/', async (req, res) => {
     // let timeList = ["06.00-08.00", "08.00-10.00", "10.00-12.00",
     //     "12.00-14.00", "14.00-16.00", "16.00-18.00", "18.00-20.00", "20.00-22.00"];
     let times = [time.time6To8, time.time8To10, time.time10To12, time.time12To14, time.time14To16, time.time16To18, time.time18To20, time.time20To22];
-    console.log(times);
+    // console.log(times);
 
     let timeRange = [];
     min = 22; max = 6;
@@ -154,7 +134,7 @@ router.get('/', async (req, res) => {
             timeRange.push([min, max]);
         }
     }
-    console.log(timeRange);
+    // console.log(timeRange);
 
     // if (time.time6To8 || time.time8To10 || time.time10To12 || time.time12To14 || time.time14To16
     //     || time.time16To18 || time.time18To20 || time.time20To22) {
@@ -174,37 +154,27 @@ router.get('/', async (req, res) => {
     }
     // ///////////////////////////////
     query.$and.push({ "endDate": { $gte: dateThailand._d } });
-    console.log(JSON.stringify(query));
+    // console.log(JSON.stringify(query));
 
     [err, courses] = await to(CourseModel.find(query));
     if (err) {
         res.status(500).end();
     }
-    console.log(courses);
-
     // console.log(courses);
 
-    // for (let i = 0; i < courses.length; i++) {
-    //     let err, tutor
-
-    //     [err, tutor] = await to(userModel.find({
-    //         userId: courses[i].tutorId
-    //     }));
-    //     if (err) {
-    //         res.status(500).end();
-    //     }
-
-    //     console.log(courses);
-
     for (let i = 0; i < courses.length; i++) {
-        let err, tutor
 
-        [err, tutor] = await to(userModel.find({
+        //add tutor information//
+        let err, tutor
+        [err, tutor] = await to(userModel.findOne({
             _id: courses[i].tutorId
         }));
         if (err) {
             res.status(500).end();
         }
+        courses[i].premiumTutorStatus = tutor.premiumStatus;
+        let tutorName = tutor.firstName + " " + tutor.lastName;
+        /////////////////////////
 
         let s = "";
         for (j = 0; j < 7; j++) {
@@ -220,7 +190,6 @@ router.get('/', async (req, res) => {
             s += formatRangeOfTime(courses[i]['dayAndStartTime'][j], courses[i]['dayAndEndTime'][j]) + "/ "
         }
         courses[i].day = s.slice(0, s.length - 2);
-        courses[i].premiumTutorStatus = tutor[0].premiumStatus;
         //[Mon Feb 10 2020 19:46:05 GMT+0700 (GMT+07:00)]
         s = "";
         let dateSplit = ((courses[i].startDate).toString()).split(" ");
@@ -229,46 +198,21 @@ router.get('/', async (req, res) => {
         s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
         courses[i].duration = s;
         courses[i].isAvailable = courses[i].amountOfStudent > 0 ? true : false;
-        // courseName
-        // courses[i].startDate = undefined;
+
+        courses[i].startDate = undefined;
         courses[i].endDate = undefined;
         courses[i].dayAndStartTime = undefined;
         courses[i].dayAndEndTime = undefined;
-        // courses[i].tutorId = undefined;
         courses[i].amountOfStudent = undefined;
         courses[i].listOfStudentId = undefined;
-        // description
-        // courseFee
         courses[i].createdTime = undefined;
         courses[i].lastModified = undefined;
-        // category
-        // day
+
+        courses[i] = {
+            ...courses[i].toObject(),
+            tutorName: tutorName
+        }
     }
-    // courses[i].day = s.slice(0, s.length - 2);
-    // courses[i].premiumTutorStatus = tutor[0].premiumStatus;
-    // //[Mon Feb 10 2020 19:46:05 GMT+0700 (GMT+07:00)]
-    // s = "";
-    // let dateSplit = ((courses[i].startDate).toString()).split(" ");
-    // s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
-    // dateSplit = ((courses[i].endDate).toString()).split(" ");
-    // s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
-    // courses[i].duration = s;
-    // courses[i].isAvailable = courses[i].amountOfStudent > 0 ? true : false;
-    // // courseName
-    // // courses[i].startDate = undefined;
-    // courses[i].endDate = undefined;
-    // courses[i].dayAndStartTime = undefined;
-    // courses[i].dayAndEndTime = undefined;
-    // // courses[i].tutorId = undefined;
-    // courses[i].amountOfStudent = undefined;
-    // courses[i].listOfStudentId = undefined;
-    // // description
-    // // courseFee
-    // courses[i].createdTime = undefined;
-    // courses[i].lastModified = undefined;
-    // category
-    // day
-    // }
 
     // console.log(courses);
     courses.sort((a, b) => {
