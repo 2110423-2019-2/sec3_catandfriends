@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const CourseModel = require('./models/course');
 const tutorModel = require('./models/tutor');
+const userModel = require('./models/user');
 const moment = require('moment-timezone');
 const to = require('await-to-js').default;
 
@@ -176,17 +177,55 @@ router.get('/', async (req, res) => {
             res.status(500).end();
         }
 
-        let s = "";
-        for (j = 0; j < 7; j++) {
-            if (courses[i]['dayAndStartTime'][j] == null) continue;
-            if (j == 0) s += "Mon ";
-            else if (j == 1) s += "Tue ";
-            else if (j == 2) s += "Wed ";
-            else if (j == 3) s += "Thu ";
-            else if (j == 4) s += "Fri ";
-            else if (j == 5) s += "Sat ";
-            else if (j == 6) s += "Sun ";
-            s += courses[i]['dayAndStartTime'][j] + ":00-" + courses[i]['dayAndEndTime'][j] + ":00/ ";
+        console.log(courses);
+
+        for (let i = 0; i < courses.length; i++) {
+            let err, tutor
+
+            [err, tutor] = await to(userModel.find({
+                _id: courses[i].tutorId
+            }));
+            if (err) {
+                res.status(500).end();
+            }
+
+            let s = "";
+            for (j = 0; j < 7; j++) {
+                if (courses[i]['dayAndStartTime'][j] == null) continue;
+                if (j == 0) s += "Mon ";
+                else if (j == 1) s += "Tue ";
+                else if (j == 2) s += "Wed ";
+                else if (j == 3) s += "Thu ";
+                else if (j == 4) s += "Fri ";
+                else if (j == 5) s += "Sat ";
+                else if (j == 6) s += "Sun ";
+                s += courses[i]['dayAndStartTime'][j] + ":00-" + courses[i]['dayAndEndTime'][j] + ":00/ ";
+            }
+            courses[i].day = s.slice(0, s.length - 2);
+            courses[i].premiumTutorStatus = tutor[0].premiumStatus;
+            //[Mon Feb 10 2020 19:46:05 GMT+0700 (GMT+07:00)]
+            s = "";
+            let dateSplit = ((courses[i].startDate).toString()).split(" ");
+            s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
+            dateSplit = ((courses[i].endDate).toString()).split(" ");
+            s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
+            courses[i].duration = s;
+            courses[i].isAvailable = courses[i].amountOfStudent > 0 ? true : false;
+            // courseName
+            // courses[i].startDate = undefined;
+            courses[i].endDate = undefined;
+            courses[i].dayAndStartTime = undefined;
+            courses[i].dayAndEndTime = undefined;
+            // courses[i].tutorId = undefined;
+            courses[i].amountOfStudent = undefined;
+            courses[i].listOfStudentId = undefined;
+            // description
+            // courseFee
+            courses[i].createdTime = undefined;
+            courses[i].lastModified = undefined;
+            
+            // category
+            // day
         }
         courses[i].day = s.slice(0, s.length - 2);
         courses[i].premiumTutorStatus = tutor[0].premiumStatus;
