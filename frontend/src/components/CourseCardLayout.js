@@ -1,6 +1,6 @@
 import React from "react";
 import CourseCard from "./CourseCard";
-
+import "./CourseCardLayout.css";
 class CourseCardLayout extends React.Component {
   constructor(props) {
     super(props);
@@ -10,10 +10,7 @@ class CourseCardLayout extends React.Component {
   }
   render() {
     return (
-      <div
-        className="row border"
-        style={{ maxWidth: "1100px", paddingLeft: "22px", marginTop: "22px" }}
-      >
+      <div className="row border cardblock">
         {this.state.data.map(item => (
           <CourseCard detail={item} key={item._id.toString()} />
         ))}
