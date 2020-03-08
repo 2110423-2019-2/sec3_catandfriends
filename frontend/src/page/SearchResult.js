@@ -311,18 +311,13 @@ export default class SearchResult extends Component {
     let b = this.getSub();
     let c = this.getTime();
     let d = this.getPrice();
-    await this.setState({ dayStr: a, subStr: b, timeStr: c, priceStr: d });
+    // await this.setState({ dayStr: a, subStr: b, timeStr: c, priceStr: d });
     console.log(a, b, c, d);
-    console.log(JSON.stringify(this.state));
-    let data = await Util.getSearchResult(
-      this.state.dayStr,
-      this.state.subStr,
-      this.state.timeStr,
-      this.state.priceStr
-    );
+    // console.log(JSON.stringify(this.state));
+    let data = await Util.getSearchResult(a, b, c, d);
     this.setState({ data });
-    console.log(this.state);
-    console.log(JSON.stringify(this.state.data));
+    // console.log(this.state);
+    // console.log(JSON.stringify(this.state.data));
   };
   render() {
     return (
@@ -361,28 +356,7 @@ export default class SearchResult extends Component {
             </div>
           </div>
           <div className="col-md-10">
-            <CourseCardLayout
-              data={[
-                {
-                  courseID: "1989",
-                  courseName: "a",
-                  image: "https://source.unsplash.com/user/erondu/600x400",
-                  category: "few",
-                  description: "this is it",
-                  price: "4500",
-                  date: "Mondays 8.00-10.00"
-                },
-                {
-                  courseID: "1989",
-                  courseName: "a",
-                  image: "https://source.unsplash.com/user/erondu/600x400",
-                  category: "few",
-                  description: "this is it",
-                  price: "4500",
-                  date: "Mondays 8.00-10.00"
-                }
-              ]}
-            />
+            <CourseCardLayout data={this.state.data} />
           </div>
         </div>
       </div>

@@ -5,27 +5,7 @@ class CourseCardLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data1: [
-        {
-          courseID: "1989",
-          courseName: "a",
-          image: "https://source.unsplash.com/user/erondu/600x400",
-          category: "few",
-          description: "this is it",
-          price: "4500",
-          date: "Mondays 8.00-10.00"
-        },
-        {
-          courseID: "1989",
-          courseName: "a",
-          image: "https://source.unsplash.com/user/erondu/600x400",
-          category: "few",
-          description: "this is it",
-          price: "4500",
-          date: "Mondays 8.00-10.00"
-        }
-      ],
-      data: this.props.data
+      data: []
     };
   }
   render() {
@@ -35,10 +15,19 @@ class CourseCardLayout extends React.Component {
         style={{ maxWidth: "1100px", paddingLeft: "22px", marginTop: "22px" }}
       >
         {this.state.data.map(item => (
-          <CourseCard detail={item} />
+          <CourseCard detail={item} key={item._id.toString()} />
         ))}
       </div>
     );
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ data: nextProps.data });
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.data != this.state.data;
+  }
+  componentDidUpdate(prevProps, prevState) {
+    console.log(`prevProps: ${JSON.stringify(prevProps.data)}`);
   }
 }
 

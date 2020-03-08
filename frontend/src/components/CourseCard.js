@@ -60,17 +60,22 @@ class Button extends React.Component {
 class CardBody extends React.Component {
   constructor(props) {
     super(props);
+    this.handleOnClick = this.handleOnClick.bind(this);
   }
+  handleOnClick(e) {}
   render() {
     return (
-      <div className="mcard-body">
-        <p className="date">{this.props.date}</p>
+      <div
+        className="mcard-body"
+        onClick={e => {
+          console.log("click");
+        }}
+      >
+        <article className="date">{this.props.date}</article>
         <h5 className="course-name">{this.props.title}</h5>
         <p className="body-content">{this.props.text}</p>
-        <body style={{ textAlign: "right" }}>{this.props.price + ".-"}</body>
-        <body>
-          <Button type="button" class="btn btn-primary"></Button>
-        </body>
+        <div style={{ textAlign: "right" }}>{this.props.price}</div>
+        <small className="name">{"by " + this.props.tutorname}</small>
       </div>
     );
   }
@@ -84,20 +89,26 @@ class CourseCard extends React.Component {
     const {
       courseID,
       courseName,
-      image,
-      category,
+      tutorid,
       description,
       price,
-      date
+      category,
+      day,
+      duration
     } = this.props.detail;
+    const name = this.props.detail.tutorName;
+    const image =
+      "https://i.kym-cdn.com/photos/images/newsfeed/001/535/446/1c5.jpg";
+    const priceS = this.props.detail.courseFee + ".-";
     return (
       <article className="CourseCard">
         <CardHeader imgsrc={image} category={category}></CardHeader>
         <CardBody
           title={courseName}
           text={description}
-          price={price}
-          date={date}
+          price={priceS}
+          date={day}
+          tutorname={name}
         ></CardBody>
       </article>
     );
