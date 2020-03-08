@@ -7,7 +7,7 @@ import Popper from "popper.js";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
-import StudentCTuProfile from "../src/components/Regis";
+import S from "../src/components/RegisPage";
 
 const AppWithRouter = () => (
   <BrowserRouter>
@@ -15,7 +15,7 @@ const AppWithRouter = () => (
   </BrowserRouter>
 );
 
-ReactDOM.render(<StudentCTuProfile />, document.getElementById("root"));
+ReactDOM.render(<S />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
