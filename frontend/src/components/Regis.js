@@ -1,84 +1,196 @@
 import React, { Component } from "react";
 import history from "../history";
 import Nav from "./NavBar";
-import "./Regis.css";
-import { Form, Button, FormGroup, FormControl, Col } from "react-bootstrap";
+import AddPhoto from "./AddPhoto";
 
 export class Regis extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      firstName: "",
+      lastName: "",
+      gender: "",
+      password: "",
+      email: "",
+      phoneNumber: "",
+      Utype: "",
+      Birthday: "",
+      SSN: ""
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  handleSubmit(event) {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value
+    });
   }
 
   render() {
     return (
-      <div
-        className="card mb-3"
-        /*style={{ maxWidth: "1000px", maxHeight: "400px" }}*/
-      >
-        <div className="row no-gutters">
-          <div className="col-md-8">
-            <div className="card-body">
-              <div className="row border text-center" className="myStyle">
-                <h3 className="card-title border">Create an account</h3>
-              </div>
-              <br />
-              <div className="col">
-                <Form>
-                  <Form.Group controlId="formGridAddress1">
-                    <Form.Label>Firstname</Form.Label>
-                    <Form.Control placeholder="Firstname" />
-                  </Form.Group>
-
-                  <Form.Group controlId="formGridAddress2">
-                    <Form.Label>Surname</Form.Label>
-                    <Form.Control placeholder="Surname" />
-                  </Form.Group>
-
-                  <Form.Row>
-                    <Form.Group as={Col} controlId="formGridEmail">
-                      <Form.Label>Email</Form.Label>
-                      <Form.Control type="email" placeholder="Enter email" />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridPassword">
-                      <Form.Label>Password</Form.Label>
-                      <Form.Control type="password" placeholder="Password" />
-                    </Form.Group>
-                  </Form.Row>
-
-                  <Form.Row>
-                    <Form.Group as={Col} controlId="formGridState">
-                      <Form.Label>user type</Form.Label>
-                      <Form.Control as="select">
-                        <option>student</option>
-                        <option>tutor</option>
-                      </Form.Control>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formGridState">
-                      <Form.Label>Gender</Form.Label>
-                      <Form.Control as="select">
-                        <option>custom</option>
-                        <option>Male</option>
-                        <option>Female</option>
-                      </Form.Control>
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridCity">
-                      <Form.Label>Birthday</Form.Label>
-                      <Form.Control placeholder="dd-mm-yyyy" />
-                    </Form.Group>
-                  </Form.Row>
-                  
-                  <Col className="myStyle">
-                    <Button type="submit">Sign in</Button>
-                  </Col>
-                </Form>
-              </div>
+      <div className="card mb-3 p-2" style={{ maxWidth: 800 }}>
+        <h3 className="card-title border text-center">Create an account</h3>
+        <br />
+        <form
+          onSubmit={e => {
+            alert(JSON.stringify(this.state));
+            console.log(this.state);
+            e.preventDefault();
+          }}
+          style={{ marginLeft: 30 }}
+        >
+          <div class="row">
+            <div class="col-md-6" width="100%">
+              <label>
+                First Name
+                <br />
+                <input
+                  type="text"
+                  value={this.state.firstName}
+                  name="firstName"
+                  style={{ width: 250 }}
+                  onChange={this.handleChange}
+                />
+              </label>
+            </div>
+            <div class="col-md-6">
+              <label>
+                Last Name
+                <br />
+                <input
+                  type="text"
+                  value={this.state.lastName}
+                  style={{ width: 250 }}
+                  name="lastName"
+                  onChange={this.handleChange}
+                />
+              </label>
             </div>
           </div>
-        </div>
+          <div class="row">
+            <div class="col-md-6" width="100%">
+              <label>
+                Password
+                <br />
+                <input
+                  type="password"
+                  value={this.state.password}
+                  style={{ width: 250 }}
+                  name="password"
+                  onChange={this.handleChange}
+                />
+              </label>
+            </div>
+            <div class="col-md-6" width="100%">
+              <label>
+                User type
+                <br />
+                <input
+                  type="text"
+                  value={this.state.Utype}
+                  placeholder="student,tutor"
+                  style={{ width: 250 }}
+                  name="Utype"
+                  onChange={this.handleChange}
+                />
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6" width="100%">
+              <label>
+                SSN
+                <br />
+                <input
+                  type="text"
+                  value={this.state.SSN}
+                  placeholder=""
+                  style={{ width: 250 }}
+                  name="SSN"
+                  onChange={this.handleChange}
+                />
+              </label>
+            </div>
+            <div class="col-md-6">
+              <label>
+                Gender
+                <br />
+                <input
+                  type="text"
+                  value={this.state.Gender}
+                  placeholder="male,female"
+                  style={{ width: 250 }}
+                  name="gender"
+                  onChange={this.handleChange}
+                />
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6" width="100%">
+              <label>
+                Birthday
+                <br />
+                <input
+                  type="text"
+                  value={this.state.Birthday}
+                  placeholder="dd-mm-yyyy"
+                  style={{ width: 250 }}
+                  name="birthday"
+                  onChange={this.handleChange}
+                />
+              </label>
+            </div>
+            <div class="col-md-6">
+              <label>
+                Email
+                <br />
+                <input
+                  type="text"
+                  value={this.state.email}
+                  style={{ width: 250 }}
+                  name="email"
+                  onChange={this.handleChange}
+                />
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6" width="100%">
+              <label>
+                Phone Number
+                <br />
+                <input
+                  type="tel"
+                  value={this.state.phoneNumber}
+                  placeholder="xxx-xxx-xxxx"
+                  style={{ width: 250 }}
+                  name="phoneNumber"
+                  onChange={this.handleChange}
+                />
+              </label>
+            </div>
+
+            <div class="col-md-6" width="100%">
+              <br />
+              <AddPhoto />
+            </div>
+          </div>
+          <br />
+          <div className="text-center" style={{ marginRight: 40 }}>
+            <input type="submit" value="Submit" className="btn btn-success" />
+          </div>
+        </form>
       </div>
     );
   }
