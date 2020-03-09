@@ -42,11 +42,12 @@ export class Regis extends Component {
         <h3 className="card-title border text-center">Create an account</h3>
         <br />
         <form
-          onSubmit={e => {
+          onSubmit={() => this.onclickGoToLogin()}
+          /*{e => {
             alert(JSON.stringify(this.state));
             console.log(this.state);
             e.preventDefault();
-          }}
+          }}*/
           style={{ marginLeft: 30 }}
         >
           <div className="row">
@@ -94,8 +95,10 @@ export class Regis extends Component {
             <div className="col-md-6" width="100%">
               <br />
               <label htmlFor="user">User type</label>
-              <select id="user">
-                <option value="tutor">tutor</option>
+              <select id="user" name="Utype" onChange={this.handleChange}>
+                <option value="tutor" selected>
+                  tutor
+                </option>
                 <option value="student">student</option>
               </select>
             </div>
@@ -118,12 +121,10 @@ export class Regis extends Component {
             <div className="col-md-6">
               <br />
               <label htmlFor="gender">Gender </label>
-              <select
-                id="gender"
-                value={this.state.gender}
-                onChange={this.handleChange}
-              >
-                <option value="Male">Male</option>
+              <select id="gender" name="gender" onChange={this.handleChange}>
+                <option value="Male" selected>
+                  Male
+                </option>
                 <option value="Female">Female</option>
               </select>
             </div>
@@ -180,6 +181,9 @@ export class Regis extends Component {
         </form>
       </div>
     );
+  }
+  onclickGoToLogin() {
+    history.push(`/login`);
   }
 }
 
