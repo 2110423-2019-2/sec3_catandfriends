@@ -11,6 +11,7 @@ const profileRoute = require("./profile");
 const scheduleRoute = require("./schedule");
 const searchRoute = require("./search");
 const uploadRoute = require("./upload");
+const verifyRoute = require("./verify");
 const mongoose = require("mongoose");
 require("./auth/auth");
 require("dotenv").config();
@@ -47,6 +48,7 @@ app.use(
   passport.authenticate("jwt-profile", { session: false }),
   uploadRoute
 );
+app.use("/verify", verifyRoute);
 
 app.listen(8000, () => {
   console.log("Start server at port 8000.");

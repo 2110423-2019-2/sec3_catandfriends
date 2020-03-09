@@ -13,7 +13,7 @@ const Util = {
       body: JSON.stringify({ email, password })
     });
     console.log(response.status);
-    if (response.status == 500) return { error: true };
+    if (response.status == 500) return response.json();
     if (response.status == 200) return response.json();
   },
   getProfile: async userId => {
