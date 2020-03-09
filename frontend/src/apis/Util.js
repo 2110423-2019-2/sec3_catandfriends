@@ -89,6 +89,15 @@ const Util = {
     });
     if (response.status == 500) return { error: true };
     if (response.status == 200) return response.json();
+  },
+  getSearchResult: async (day, subject, time, price) => {
+    const URL = `http://localhost:8000/search?day=${day}&time=${time}&category=${subject}&price=${price}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors"
+    });
+    if (response.status == 404) return { error: true };
+    if (response.status == 200) return response.json();
   }
 };
 
