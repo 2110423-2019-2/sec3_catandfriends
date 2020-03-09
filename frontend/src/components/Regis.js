@@ -49,8 +49,8 @@ export class Regis extends Component {
           }}
           style={{ marginLeft: 30 }}
         >
-          <div class="row">
-            <div class="col-md-6" width="100%">
+          <div className="row">
+            <div className="col-md-6" width="100%">
               <label>
                 First Name
                 <br />
@@ -63,7 +63,7 @@ export class Regis extends Component {
                 />
               </label>
             </div>
-            <div class="col-md-6">
+            <div className="col-md-6">
               <label>
                 Last Name
                 <br />
@@ -77,8 +77,8 @@ export class Regis extends Component {
               </label>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6" width="100%">
+          <div className="row">
+            <div className="col-md-6" width="100%">
               <label>
                 Password
                 <br />
@@ -91,23 +91,17 @@ export class Regis extends Component {
                 />
               </label>
             </div>
-            <div class="col-md-6" width="100%">
-              <label>
-                User type
-                <br />
-                <input
-                  type="text"
-                  value={this.state.Utype}
-                  placeholder="student,tutor"
-                  style={{ width: 250 }}
-                  name="Utype"
-                  onChange={this.handleChange}
-                />
-              </label>
+            <div className="col-md-6" width="100%">
+              <br />
+              <label htmlFor="user">User type</label>
+              <select id="user">
+                <option value="tutor">tutor</option>
+                <option value="student">student</option>
+              </select>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6" width="100%">
+          <div className="row">
+            <div className="col-md-6" width="100%">
               <label>
                 SSN
                 <br />
@@ -121,37 +115,35 @@ export class Regis extends Component {
                 />
               </label>
             </div>
-            <div class="col-md-6">
-              <label>
-                Gender
-                <br />
-                <input
-                  type="text"
-                  value={this.state.Gender}
-                  placeholder="male,female"
-                  style={{ width: 250 }}
-                  name="gender"
-                  onChange={this.handleChange}
-                />
-              </label>
+            <div className="col-md-6">
+              <br />
+              <label htmlFor="gender">Gender </label>
+              <select
+                id="gender"
+                value={this.state.gender}
+                onChange={this.handleChange}
+              >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6" width="100%">
+          <div className="row">
+            <div className="col-md-6" width="100%">
               <label>
                 Birthday
                 <br />
                 <input
-                  type="text"
+                  type="date"
                   value={this.state.Birthday}
-                  placeholder="dd-mm-yyyy"
+                  placeholder="yyyy-mm-dd"
                   style={{ width: 250 }}
-                  name="birthday"
+                  name="Birthday"
                   onChange={this.handleChange}
                 />
               </label>
             </div>
-            <div class="col-md-6">
+            <div className="col-md-6">
               <label>
                 Email
                 <br />
@@ -165,25 +157,20 @@ export class Regis extends Component {
               </label>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6" width="100%">
+          <div className="row">
+            <div className="col-md-6" width="100%">
               <label>
                 Phone Number
                 <br />
                 <input
                   type="tel"
                   value={this.state.phoneNumber}
-                  placeholder="xxx-xxx-xxxx"
+                  placeholder="0123456789"
                   style={{ width: 250 }}
                   name="phoneNumber"
                   onChange={this.handleChange}
                 />
               </label>
-            </div>
-
-            <div class="col-md-6" width="100%">
-              <br />
-              <AddPhoto />
             </div>
           </div>
           <br />
