@@ -78,7 +78,7 @@ router.get('/', async (req, res) => {
     let query = { $and: [] };
     // let andCount = 0;
     // //////for price searching//////
-    if (price.price0To500 || price.price500To1500 || price.price1500To3500 || price.price3500To6500 || price6500AndAbove) {
+    if (price.price0To500 || price.price500To1500 || price.price1500To3500 || price.price3500To6500 || price.price6500AndAbove) {
         query.$and.push({ $or: [] });
         if (price.price0To500) query.$and[0].$or.push({ "courseFee": { $gte: 0, $lte: 500 } });
         if (price.price500To1500) query.$and[0].$or.push({ "courseFee": { $gte: 500, $lte: 1500 } });
