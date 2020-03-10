@@ -1,3 +1,7 @@
-.myStyle{
+.myStyle {
   text-align: center;
+}
+.tutorname {
+  font-weight: 700;
+  color: gray;
 }
