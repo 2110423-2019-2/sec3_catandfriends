@@ -134,10 +134,64 @@ export class CourseDetail extends Component {
                       (this.props.detail.lastModified + "").substring(11, 19)}
                   </small>
                 </p>
+                <div className="col-md-12 border">
+                  <AllStudentList />
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    );
+  }
+}
+class AllStudentList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: [
+        { studentFname: "T", studentLname: "S", studentid: "19891" },
+        { studentFname: "A", studentLname: "W", studentid: "98919" },
+        { studentFname: "Y", studentLname: "I", studentid: "89198" },
+        { studentFname: "L", studentLname: "F", studentid: "91989" },
+        { studentFname: "O", studentLname: "T", studentid: "11111" },
+        { studentFname: "R", studentLname: "1989", studentid: "99999" }
+      ]
+    };
+  }
+
+  render() {
+    return (
+      <div className="text-center">
+        <h3>Student List</h3>
+        {this.state.data.map(item => (
+          <StudentList detail={item} key={item.studentid} />
+        ))}
+      </div>
+    );
+  }
+}
+class StudentList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div className="card slist">
+        <a
+          className="studentlist"
+          onClick={e => {
+            console.log("Click");
+          }}
+        >
+          {this.props.detail.studentFname +
+            "\t" +
+            this.props.detail.studentLname}
+        </a>
       </div>
     );
   }
