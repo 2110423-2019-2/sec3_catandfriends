@@ -4,6 +4,7 @@ const CourseModel = require("./models/course");
 const userModel = require("./models/user");
 const moment = require("moment-timezone");
 
+
 router.get("/", async (req, res) => {
   let courseId = req.query.courseId;
   let tutorId = req.query.tutorId;
@@ -101,7 +102,7 @@ router.post("/", async (req, res) => {
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
   payload.createdTime = dateThailand._d;
   payload.lastModified = dateThailand._d;
-  if (Object.keys(payload).length != 13) {
+  if (Object.keys(payload).length != 11) {
     console.log(Object.keys(payload).length);
     console.log("input is incomplete");
     res.json("input is incomplete");
@@ -115,8 +116,10 @@ router.post("/", async (req, res) => {
     res.json("dayAndEndTime is incorrect");
     res.status(400).end();
   } else {
+    payload.tutorId = req.user._id;
     const courses = new CourseModel(payload);
     console.log(courses);
+    res.json(courses);
     await courses.save();
     console.log("klfsal");
     res.status(201).end();

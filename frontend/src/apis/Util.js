@@ -23,8 +23,8 @@ const Util = {
     }
     const URL = userId
       ? `http://localhost:8000/profile?userId=${userId}&token=${localStorage.getItem(
-          "token"
-        )}`
+        "token"
+      )}`
       : `http://localhost:8000/profile?token=${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "GET",
