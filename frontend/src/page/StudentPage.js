@@ -9,6 +9,7 @@ export default class StudentPage extends Component {
 
   render() {
     if (this.props.owner) {
+      console.log(this.props.owner);
       return (
         <div className="justify-content-center">
           <div className="row justify-content-center">

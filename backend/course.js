@@ -4,9 +4,10 @@ const CourseModel = require("./models/course");
 const userModel = require("./models/user");
 const moment = require("moment-timezone");
 
+
 router.get("/", async (req, res) => {
   let courseId = req.query.courseId;
-  let tutorId = req.query.userId;
+  let tutorId = req.query.tutorId;
   let studentId = req.query.studentId;
   // console.log(await CourseModel.find({listOfStudentId:["987654321"]
   // }));
@@ -32,7 +33,7 @@ router.get("/", async (req, res) => {
     //console.log("print");
     let course = await CourseModel.find({ tutorId: tutorId });
     if (course.length == 0) {
-      var s = "tutor hasn't created any courses";
+      var s = "tutor hasn't created the courses";
       console.log(s);
       res.json(s);
     } else res.json(course);
@@ -56,36 +57,14 @@ router.get("/", async (req, res) => {
         }
       }
     }
-    if(courseId!=undefined||studentId!=undefined||tutorId!=undefined){
-        for(i=0;i<total_course.length;i++){
-            let s="";
-            for(j=0;j<7;j++){
-                if(total_course[i]['dayAndStartTime'][j]== null ) continue;
-                if(j==0) s+="Mon ";
-                else if(j==1) s+="Tue ";
-                else if (j==2) s+="Wed ";
-                else if (j==3) s+="Thu ";
-                else if (j==4) s+="Fri ";
-                else if (j==5) s+="Sat ";
-                else if (j==6) s+="Sun ";
-                s+=total_course[i]['dayAndStartTime'][j]+":00-"+total_course[i]['dayAndEndTime'][j]+":00/ ";
-            }
-            total_course[i]['dayAndStartTime']=undefined;
-            total_course[i]['dayAndEndTime']=undefined;
-            total_course[i]['day']=s.slice(0, s.length-2);;
-            s = "";
-            let dateSplit = ((total_course[i]['startDate'].toString()).split(" "));
-            s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
-            dateSplit = ((total_course[i]['endDate']).toString()).split(" ");
-            s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
-            
-            total_course[i].duration = s;
-            console.log(total_course);
-            
-        }
-        res.json(total_course);
-        res.status(200).end();
-    }
+    console.log(s);
+    res.json(s);
+    res.status(200).end();
+  } else {
+    res.json("invalid");
+    course = await CourseModel.find({});
+    console.log(course);
+    res.status(404).end();
   }
 });
 
@@ -94,7 +73,7 @@ router.post("/", async (req, res) => {
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
   payload.createdTime = dateThailand._d;
   payload.lastModified = dateThailand._d;
-  if (Object.keys(payload).length != 13) {
+  if (Object.keys(payload).length != 11) {
     console.log(Object.keys(payload).length);
     console.log("input is incomplete");
     res.json("input is incomplete");
@@ -108,8 +87,10 @@ router.post("/", async (req, res) => {
     res.json("dayAndEndTime is incorrect");
     res.status(400).end();
   } else {
+    payload.tutorId = req.user._id;
     const courses = new CourseModel(payload);
     console.log(courses);
+    res.json(courses);
     await courses.save();
     console.log("klfsal");
     res.status(201).end();

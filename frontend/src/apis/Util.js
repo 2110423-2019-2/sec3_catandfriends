@@ -55,8 +55,8 @@ const Util = {
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
   },
-  getMycourse: async userId => {
-    const URL = `http://localhost:8000/course?userId=${userId}&token=${localStorage.getItem(
+  getCourseByTutorId: async userId => {
+    const URL = `http://localhost:8000/courses?tutorId=${userId}&token=${localStorage.getItem(
       "token"
     )}`;
     const response = await fetch(URL, {
@@ -66,13 +66,28 @@ const Util = {
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
   },
-  getSearchResult: async (day, subject, time, price) => {
-    const URL = `http://localhost:8000/search?day=${day}&subject=${subject}&time=${time}&price=${price}`;
+  getRequests: async userId => {
+    const URL = `http://localhost:8000/requests?tutorId=${userId}&token=${localStorage.getItem(
+      "token"
+    )}`;
     const response = await fetch(URL, {
       method: "GET",
       mode: "cors"
     });
     if (response.status == 404) return { error: true };
+    if (response.status == 200) return response.json();
+  },
+  updateRequest: async (requestId, status, studentId, courseId) => {
+    const URL = `http://localhost:8000/requests`;
+    const response = await fetch(URL, {
+      method: "PUT",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ requestId, status, studentId, courseId })
+    });
+    if (response.status == 500) return { error: true };
     if (response.status == 200) return response.json();
   }
 };

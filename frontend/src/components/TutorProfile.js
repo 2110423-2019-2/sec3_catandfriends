@@ -79,13 +79,17 @@ export class TutorProfile extends Component {
                     </div>
                     <div className="col-md-8 border">
                       <body>{this.props.data.ssn}</body>
-                      <body>{this.props.data.birthDate}</body>
+                      <body>{this.props.data.birthDate.substring(0, 10)}</body>
                       <body>{this.props.data.gender}</body>
                       <body>{this.props.data.email}</body>
                       <body>
                         {this.props.data.premiumStatus ? "Yes" : "No"}
                       </body>
-                      <body>{"this.props.data.verificationDocument"}</body>
+                      <body>
+                        {this.props.data.verificationDocument
+                          ? this.props.data.verificationDocument
+                          : "None"}
+                      </body>
                       <body>{this.props.data.phoneNumber}</body>
                     </div>
                   </div>

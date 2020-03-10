@@ -8,6 +8,7 @@ import Cat from "./Cat";
 import Filter from "./Filter";
 import NavBar from "./NavBar";
 import StudentPage from "../page/StudentPage";
+import NewCourse from "./NewCourse";
 import CourseInformation from "../page/CourseInformation";
 import Profile from "./Profile";
 import Login from "./Login";
@@ -28,6 +29,7 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/search" component={SearchResult} />
           <Route path="/profile" component={Profile} />>
+          <Route path="/course/create" component={NewCourse} />
           <Route path="/course" component={CourseInformation} />
         </Switch>
       </Router>

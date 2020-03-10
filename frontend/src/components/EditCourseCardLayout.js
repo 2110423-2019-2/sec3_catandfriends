@@ -1,12 +1,14 @@
 import React from "react";
 import EditableCard from "./EditableCard";
-import BlankCouseCard from "./BlankCouseCard"
+import BlankCouseCard from "./BlankCouseCard";
+import Util from "../apis/Util";
+
 class EditCourseCardLayout extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      rows: [
+      data: [
         {
           courseID: "00001",
           courseName: "a",
@@ -70,12 +72,18 @@ class EditCourseCardLayout extends React.Component {
         className="row border"
         style={{ maxWidth: "1100px", paddingLeft: "22px", marginTop: "22px" }}
       >
-        {this.state.rows.map(item => (
+        {this.state.data.map(item => (
           <EditableCard detail={item} />
         ))}
-        <BlankCouseCard/>
+        <BlankCouseCard />
       </div>
     );
+  }
+
+  async componentDidMount() {
+    let data = await Util.getCourseByTutorId(this.props.tutorId);
+    this.setState({ data });
+    console.log(data);
   }
 }
 
