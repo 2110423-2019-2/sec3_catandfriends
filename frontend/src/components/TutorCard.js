@@ -5,8 +5,7 @@ export default class TutorCard extends Component {
     super(props);
 
     this.state = {
-      name: "Karnkitti Kittikamron",
-      link: "/Karnkitti",
+      tutorname: "",
       imgsrc: "https://i.ibb.co/8NHMg4K/pic.png"
     };
   }
@@ -19,10 +18,8 @@ export default class TutorCard extends Component {
       >
         <img src={this.state.imgsrc} className="card-img-top" alt="..." />
         <div className="card-body">
-          <h5 className="card-title">{this.state.name}</h5>
-          <a href={this.state.link} className="btn btn-info">
-            Tutor's Profile
-          </a>
+          <h5 className="card-title">{this.props.tutorname}</h5>
+          <a className="btn btn-info text-light">Tutor's Profile</a>
         </div>
       </div>
     );
