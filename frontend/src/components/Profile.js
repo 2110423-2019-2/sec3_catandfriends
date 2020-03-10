@@ -17,7 +17,8 @@ export class Home extends Component {
 
   async componentDidMount() {
     console.log(window.location.search);
-    let data = await Util.getProfile(window.location.search);
+    let params = new URLSearchParams(window.location.search);
+    let data = await Util.getProfile(params.get("userId"));
     await this.setState({ data });
     await console.log(data);
   }

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./CourseDetail.css";
 import TutorCard from "../components/TutorCard";
+import Util from "../apis/Util";
+import history from "../history";
 export class CourseDetail extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +25,16 @@ export class CourseDetail extends Component {
   render() {
     const date = (this.props.detail.lastModified + "").substring(0, 21);
     console.log(date);
+    let studentList;
+    if (this.props.detail.owner) {
+      studentList = (
+        <div className="col-md-12 border">
+          <AllStudentList data={this.props.detail} />
+        </div>
+      );
+    } else {
+      studentList = "";
+    }
     return (
       <div className="card mb-3" style={{ maxWidth: "1000px" }}>
         <div className="row no-gutters">
@@ -134,9 +146,7 @@ export class CourseDetail extends Component {
                       (this.props.detail.lastModified + "").substring(11, 19)}
                   </small>
                 </p>
-                <div className="col-md-12 border">
-                  <AllStudentList />
-                </div>
+                {studentList}
               </div>
             </div>
           </div>
@@ -150,26 +160,34 @@ class AllStudentList extends Component {
     super(props);
 
     this.state = {
-      data: [
-        { studentFname: "T", studentLname: "S", studentid: "19891" },
-        { studentFname: "A", studentLname: "W", studentid: "98919" },
-        { studentFname: "Y", studentLname: "I", studentid: "89198" },
-        { studentFname: "L", studentLname: "F", studentid: "91989" },
-        { studentFname: "O", studentLname: "T", studentid: "11111" },
-        { studentFname: "R", studentLname: "1989", studentid: "99999" }
-      ]
+      data: []
     };
   }
 
   render() {
+    if (!this.state.data) {
+      return <a></a>;
+    }
     return (
       <div className="text-center">
         <h3>Student List</h3>
         {this.state.data.map(item => (
-          <StudentList detail={item} key={item.studentid} />
+          <StudentList detail={item} key={item._id} />
         ))}
       </div>
     );
+  }
+
+  async componentDidMount() {
+    var studentList = [];
+    console.log(this.props.data);
+    this.props.data.listOfStudentId.forEach(studentId => {
+      let student = Util.getProfile(studentId);
+      studentList.push(student);
+    });
+    studentList = await Promise.all(studentList);
+    console.log(studentList);
+    this.setState({ data: studentList });
   }
 }
 class StudentList extends Component {
@@ -184,17 +202,17 @@ class StudentList extends Component {
       <div className="card slist">
         <a
           className="studentlist"
-          onClick={e => {
-            console.log("Click");
-          }}
+          onClick={() => this.onClick(this.props.detail._id)}
         >
-          {this.props.detail.studentFname +
-            "\t" +
-            this.props.detail.studentLname}
+          {this.props.detail.firstName + "\t" + this.props.detail.lastName}
         </a>
       </div>
     );
   }
+
+  onClick = studentId => {
+    history.push(`/profile?userId=${studentId}`);
+  };
 }
 
 export default CourseDetail;
