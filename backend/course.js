@@ -24,9 +24,9 @@ function formatRangeOfTime(start, end) {
 
 function formatDate(date) {
   s = "";
-  let dateSplit = ((date).toString()).split(" ");
+  let dateSplit = date.toString().split(" ");
   s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
-  return s
+  return s;
 }
 
 router.get("/", async (req, res) => {
@@ -48,10 +48,11 @@ router.get("/", async (req, res) => {
       let tutor = await userModel.findById(course.tutorId);
       course = { ...course.toObject() };
       course.tutorName = tutor.firstName + " " + tutor.lastName;
+      course.owner = course.tutorId == req.user._id;
       // console.log(course);
       let s = "";
       for (j = 0; j < 7; j++) {
-        if (course['dayAndStartTime'][j] == null) continue;
+        if (course["dayAndStartTime"][j] == null) continue;
         if (j == 0) s += "Mon ";
         else if (j == 1) s += "Tue ";
         else if (j == 2) s += "Wed ";
@@ -59,7 +60,11 @@ router.get("/", async (req, res) => {
         else if (j == 4) s += "Fri ";
         else if (j == 5) s += "Sat ";
         else if (j == 6) s += "Sun ";
-        s += formatRangeOfTime(course['dayAndStartTime'][j], course['dayAndEndTime'][j]) + "/ "
+        s +=
+          formatRangeOfTime(
+            course["dayAndStartTime"][j],
+            course["dayAndEndTime"][j]
+          ) + "/ ";
       }
       course.day = s.slice(0, s.length - 2);
 
