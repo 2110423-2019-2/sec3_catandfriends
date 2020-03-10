@@ -198,23 +198,25 @@ router.get('/', async (req, res) => {
         s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
         courses[i].duration = s;
         courses[i].isAvailable = courses[i].amountOfStudent > 0 ? true : false;
+        let remaining = courses[i].amountOfStudent;
 
         courses[i].startDate = undefined;
         courses[i].endDate = undefined;
         courses[i].dayAndStartTime = undefined;
         courses[i].dayAndEndTime = undefined;
-        courses[i].amountOfStudent = undefined;
         courses[i].listOfStudentId = undefined;
+        courses[i].amountOfStudent = undefined;
         courses[i].createdTime = undefined;
         courses[i].lastModified = undefined;
 
         courses[i] = {
             ...courses[i].toObject(),
-            tutorName: tutorName
+            tutorName: tutorName,
+            remaining: remaining
         }
     }
 
-    // console.log(courses);
+    console.log(courses);
     courses.sort((a, b) => {
         return b.isAvailable - a.isAvailable || b.premiumTutorStatus - a.premiumTutorStatus || a.startDate - b.startDate;
     });
