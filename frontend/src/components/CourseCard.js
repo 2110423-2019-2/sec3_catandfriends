@@ -69,7 +69,21 @@ class CardBody extends React.Component {
         <article className="date">{this.props.date}</article>
         <h5 className="course-name">{this.props.title}</h5>
         <p className="body-content">{this.props.text}</p>
-        <div style={{ textAlign: "right" }}>{this.props.price}</div>
+        <div class="row">
+          <div
+            class={
+              this.props.available
+                ? "col-md-6 amount notfull"
+                : "col-md-6 amount full"
+            }
+          >
+            <div>{this.props.remain + "/" + this.props.total}</div>
+          </div>
+          <div class="col-md-6 price">
+            <div>{this.props.price}</div>
+          </div>
+        </div>
+
         <small className="name">{"by " + this.props.tutorname}</small>
       </div>
     );
@@ -108,6 +122,9 @@ class CourseCard extends React.Component {
           price={priceS}
           date={day}
           tutorname={name}
+          remain={this.props.detail.remaining}
+          total={this.props.detail.totalAmountOfStudent}
+          available={this.props.detail.isAvailable}
         ></CardBody>
       </article>
     );

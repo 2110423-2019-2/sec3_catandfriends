@@ -90,3 +90,15 @@ html {
 .button-primary i {
   padding-right: 4px;
 }
+.amount {
+  font-weight: 600;
+}
+.price {
+  text-align: right;
+}
+.full {
+  color: red;
+}
+.notfull {
+  color: green;
+}
