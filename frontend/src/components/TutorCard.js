@@ -5,7 +5,6 @@ export default class TutorCard extends Component {
     super(props);
 
     this.state = {
-      tutorname: "",
       imgsrc: "https://i.ibb.co/8NHMg4K/pic.png"
     };
   }
@@ -14,7 +13,7 @@ export default class TutorCard extends Component {
     return (
       <div
         className="card "
-        style={{ width: "12rem", textAlign: "center", height: "350px" }}
+        style={{ width: "12rem", textAlign: "center", height: "330px" }}
       >
         <img src={this.state.imgsrc} className="card-img-top" alt="..." />
         <div className="card-body">
