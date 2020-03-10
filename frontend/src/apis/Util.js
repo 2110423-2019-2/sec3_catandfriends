@@ -1,5 +1,5 @@
 import history from "../history";
-
+//IceBranch
 const Util = {
   login: async (email, password) => {
     const URL = "http://localhost:8000/login";
@@ -11,6 +11,41 @@ const Util = {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ email, password })
+    });
+    console.log(response.status);
+    if (response.status == 500) return { error: true };
+    if (response.status == 200) return response.json();
+  },
+  register: async (
+    firstName,
+    lastName,
+    gender,
+    password,
+    email,
+    phoneNumber,
+    role,
+    birthDate,
+    ssn
+  ) => {
+    const URL = "http://localhost:8000/signup";
+    const response = await fetch(URL, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        gender,
+        password,
+        email,
+        phoneNumber,
+        role,
+        birthDate,
+        ssn
+      })
     });
     console.log(response.status);
     if (response.status == 500) return { error: true };
