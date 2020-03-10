@@ -60,14 +60,14 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  let tutorId = req.user._id;
+  let studentId = req.user._id;
   const payload = req.body;
   let err, request;
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
 
   [err, request] = await to(RequestModel.countDocuments({
-    tutorId: tutorId,
-    studentId: payload.studentId,
+    tutorId: payload.tutorId,
+    studentId: studentId,
     courseId: payload.courseId
   }));
 
