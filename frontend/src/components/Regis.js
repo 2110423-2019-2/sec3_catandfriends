@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import history from "../history";
 import Nav from "./NavBar";
 import AddPhoto from "./AddPhoto";
+import Util from "../apis/Util";
 
 export class Regis extends Component {
   constructor(props) {
@@ -35,6 +36,13 @@ export class Regis extends Component {
       [name]: value
     });
   }
+  validateForm() {
+    var x = document.forms["myForm"]["fname"].value;
+    if (x == "") {
+      alert("Name must be filled out");
+      return false;
+    }
+  }
 
   render() {
     return (
@@ -43,6 +51,10 @@ export class Regis extends Component {
         <br />
         <form
           onSubmit={() => this.onclickGoToLogin()}
+          /*name="myForm"
+          action="/action_page.php"
+          onsubmit = "return validateForm()"
+          method="post"*/
           /*{e => {
             alert(JSON.stringify(this.state));
             console.log(this.state);
@@ -61,6 +73,7 @@ export class Regis extends Component {
                   name="firstName"
                   style={{ width: 250 }}
                   onChange={this.handleChange}
+                  required
                 />
               </label>
             </div>
@@ -74,6 +87,7 @@ export class Regis extends Component {
                   style={{ width: 250 }}
                   name="lastName"
                   onChange={this.handleChange}
+                  required
                 />
               </label>
             </div>
@@ -89,6 +103,7 @@ export class Regis extends Component {
                   style={{ width: 250 }}
                   name="password"
                   onChange={this.handleChange}
+                  required
                 />
               </label>
             </div>
@@ -111,10 +126,13 @@ export class Regis extends Component {
                 <input
                   type="text"
                   value={this.state.SSN}
-                  placeholder=""
+                  placeholder="0123456789123"
                   style={{ width: 250 }}
                   name="SSN"
                   onChange={this.handleChange}
+                  required
+                  pattern="[0-9]{13}"
+                  maxlength="13"
                 />
               </label>
             </div>
@@ -141,6 +159,7 @@ export class Regis extends Component {
                   style={{ width: 250 }}
                   name="Birthday"
                   onChange={this.handleChange}
+                  required
                 />
               </label>
             </div>
@@ -149,11 +168,13 @@ export class Regis extends Component {
                 Email
                 <br />
                 <input
-                  type="text"
+                placeholder = "example@tutor.com"
+                  type="email"
                   value={this.state.email}
                   style={{ width: 250 }}
                   name="email"
                   onChange={this.handleChange}
+                  required
                 />
               </label>
             </div>
@@ -170,6 +191,9 @@ export class Regis extends Component {
                   style={{ width: 250 }}
                   name="phoneNumber"
                   onChange={this.handleChange}
+                  required
+                  pattern="[0-9]{10}"
+                  maxlength="10"
                 />
               </label>
             </div>
@@ -182,8 +206,22 @@ export class Regis extends Component {
       </div>
     );
   }
-  onclickGoToLogin() {
-    history.push(`/login`);
+  async onclickGoToLogin() {
+    {
+      
+      await Util.register(
+        this.state.firstName,
+        this.state.lastName,
+        this.state.gender,
+        this.state.password,
+        this.state.email,
+        this.state.phoneNumber,
+        this.state.Utype,
+        this.state.Birthday,
+        this.state.SSN
+      );
+      history.push(`./login`);
+    }
   }
 }
 
