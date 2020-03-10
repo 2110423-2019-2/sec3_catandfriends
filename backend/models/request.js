@@ -34,11 +34,11 @@ const requestSchema = new Schema(
       type: Date,
       required: true
     }
-  },
-  {
-    collection: collectionName,
-    versionKey: false
-  }
+
+  }, {
+  collection: collectionName,
+  versionKey: false
+}
 );
 
 const RequestModel = mongoose.model("RequestModel", requestSchema);
