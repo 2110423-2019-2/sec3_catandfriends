@@ -14,7 +14,7 @@ import Profile from "./Profile";
 import Login from "./Login";
 import history from "../history";
 import EditCourseCardLayout from "./EditCourseCardLayout";
-import Regis from "./Regis";
+import Regis from "./Register";
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;

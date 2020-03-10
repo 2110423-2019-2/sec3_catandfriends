@@ -4,7 +4,7 @@ import Nav from "./NavBar";
 import AddPhoto from "./AddPhoto";
 import Util from "../apis/Util";
 
-export class Regis extends Component {
+export class Register extends Component {
   constructor(props) {
     super(props);
 
@@ -229,4 +229,4 @@ export class Regis extends Component {
   }
 }
 
-export default Regis;
+export default Register;
