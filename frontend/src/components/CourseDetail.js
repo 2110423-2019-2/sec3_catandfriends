@@ -39,18 +39,12 @@ export class CourseDetail extends Component {
               <br />
               <div className="row">
                 <div className="col-md-6 border">
-                  <h4
-                    style={
-                      {
-                        /* textAlign: "center"*/
-                      }
-                    }
-                  >
-                    {this.props.detail.courseName}
-                  </h4>
+                  <h4>{this.props.detail.courseName}</h4>
                 </div>
                 <div className="col-md-6 border">
-                  <h4>{this.props.detail._id}</h4>
+                  <h5 className="tutorname">
+                    {"by" + this.props.detail.tutorName}
+                  </h5>
                 </div>
 
                 <div className="col-md-4 border">
@@ -58,19 +52,19 @@ export class CourseDetail extends Component {
                   {/*Enter*/}
                   <br />
                   <body>
-                    <strong>Tutor : </strong>
+                    <strong>Category : </strong>
                   </body>
                   <body>
-                    <strong>tutor Id : </strong>
+                    <strong>Start Date : </strong>
                   </body>
                   <body>
-                    <strong>Day and Time : </strong>
+                    <strong>End Date : </strong>
                   </body>
                   <body>
-                    <strong>Start day : </strong>
+                    <strong>Amount : </strong>
                   </body>
                   <body>
-                    <strong>End day : </strong>
+                    <strong>Price : </strong>
                   </body>
 
                   <br />
@@ -81,22 +75,31 @@ export class CourseDetail extends Component {
                   <br />
                   {/*Enter*/}
                   <br />
-                  <body>{this.props.detail.tutorName}</body>
-                  <body>{this.props.detail.tutorId}</body>
-                  <body>
-                    {this.props.detail.dayAndtime
-                      ? this.props.detail.dayAndtime
-                      : "none"}
-                  </body>
+                  <body>{this.props.detail.category}</body>
                   <body>{this.props.detail.startDate}</body>
                   <body>{this.props.detail.endDate}</body>
-
+                  <body>
+                    {this.props.detail.amountOfStudent +
+                      "/" +
+                      this.props.detail.totalAmountOfStudent}
+                  </body>
+                  <body>{this.props.detail.courseFee}</body>
                   <br />
                   {/*Enter*/}
 
                   <br />
                 </div>
 
+                <div className="col-md-12 border">
+                  <br />
+                  <strong>Class Time :</strong>
+                  <p className="card-text">
+                    {this.props.detail.dayAndtime
+                      ? this.props.detail.dayAndtime
+                      : "none"}
+                  </p>
+                  <br />
+                </div>
                 <div className="col-md-12 border">
                   <br />
                   <strong>description :</strong>
