@@ -14,7 +14,7 @@ import Profile from "./Profile";
 import Login from "./Login";
 import history from "../history";
 import EditCourseCardLayout from "./EditCourseCardLayout";
-import Regis from "./Register";
+import RegisterPage from "../page/RegisterPage";
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;
@@ -27,7 +27,7 @@ class App extends Component {
       <Router history={history}>
         <NavBar />
         <Switch>
-          <Route path="/register" component={Regis} />
+          <Route path="/register" component={RegisterPage} />
           <Route path="/login" component={Login} />
           <Route path="/search" component={SearchResult} />
           <Route path="/profile" component={Profile} />>

@@ -36,35 +36,22 @@ export class Register extends Component {
       [name]: value
     });
   }
-  validateForm() {
-    var x = document.forms["myForm"]["fname"].value;
-    if (x == "") {
-      alert("Name must be filled out");
-      return false;
-    }
-  }
 
   render() {
     return (
-      <div className="card mb-3 p-2" style={{ maxWidth: 800 }}>
-        <h3 className="card-title border text-center">Create an account</h3>
+      <div className="card mb-3 p-4 bg-light border-secondary mb-1 " style={{ maxWidth: 800 }}>
+        <h3 className="card-title border text-center bg-dark text-white ">
+          Create an account
+        </h3>
         <br />
         <form
           onSubmit={event => this.onclickGoToLogin(event)}
-          /*name="myForm"
-          action="/action_page.php"
-          onsubmit = "return validateForm()"
-          method="post"*/
-          /*{e => {
-            alert(JSON.stringify(this.state));
-            console.log(this.state);
-            e.preventDefault();
-          }}*/
           style={{ marginLeft: 30 }}
+         
         >
           <div className="row">
             <div className="col-md-6" width="100%">
-              <label>
+              <label className= "text-dark">
                 First Name
                 <br />
                 <input
@@ -78,7 +65,7 @@ export class Register extends Component {
               </label>
             </div>
             <div className="col-md-6">
-              <label>
+              <label className= "text-dark">
                 Last Name
                 <br />
                 <input
@@ -94,7 +81,7 @@ export class Register extends Component {
           </div>
           <div className="row">
             <div className="col-md-6" width="100%">
-              <label>
+              <label className= "text-dark">
                 Password
                 <br />
                 <input
@@ -109,7 +96,7 @@ export class Register extends Component {
             </div>
             <div className="col-md-6" width="100%">
               <br />
-              <label htmlFor="user">User type</label>
+              <label htmlFor="user" className= "text-dark">User type</label>
               <select id="user" name="Utype" onChange={this.handleChange}>
                 <option value="tutor">tutor</option>
                 <option value="student">student</option>
@@ -118,7 +105,7 @@ export class Register extends Component {
           </div>
           <div className="row">
             <div className="col-md-6" width="100%">
-              <label>
+              <label className= "text-dark">
                 SSN
                 <br />
                 <input
@@ -136,7 +123,7 @@ export class Register extends Component {
             </div>
             <div className="col-md-6">
               <br />
-              <label htmlFor="gender">Gender </label>
+              <label htmlFor="gender" className= "text-dark">Gender </label>
               <select id="gender" name="gender" onChange={this.handleChange}>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -145,7 +132,7 @@ export class Register extends Component {
           </div>
           <div className="row">
             <div className="col-md-6" width="100%">
-              <label>
+              <label className= "text-dark">
                 Birthday
                 <br />
                 <input
@@ -160,7 +147,7 @@ export class Register extends Component {
               </label>
             </div>
             <div className="col-md-6">
-              <label>
+              <label className= "text-dark">
                 Email
                 <br />
                 <input
@@ -176,11 +163,12 @@ export class Register extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-6" width="100%">
-              <label>
+            <div className="col-md-6 " width="100%">
+              <label className= "text-dark">
                 Phone Number
                 <br />
                 <input
+                  /*className = " border-secondary mb-1"*/
                   type="tel"
                   value={this.state.phoneNumber}
                   placeholder="0123456789"
@@ -190,6 +178,7 @@ export class Register extends Component {
                   required
                   pattern="[0-9]{10}"
                   maxlength="10"
+                 
                 />
               </label>
             </div>
@@ -198,6 +187,7 @@ export class Register extends Component {
           <div className="text-center" style={{ marginRight: 40 }}>
             <input type="submit" value="Submit" className="btn btn-success" />
           </div>
+          
         </form>
       </div>
     );
