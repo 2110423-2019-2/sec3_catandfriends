@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./TutorCard.css";
+import history from "../history";
 export default class TutorCard extends Component {
   constructor(props) {
     super(props);
@@ -10,6 +11,7 @@ export default class TutorCard extends Component {
   }
 
   render() {
+    // console.log(this.props.tutorid);
     return (
       <div
         className="card "
@@ -18,9 +20,18 @@ export default class TutorCard extends Component {
         <img src={this.state.imgsrc} className="card-img-top" alt="..." />
         <div className="card-body">
           <h5 className="card-title">{this.props.tutorname}</h5>
-          <a className="btn btn-info text-light">Tutor's Profile</a>
+          {/* <h3>{this.props.tutorid}</h3> */}
+          <a
+            className="btn btn-info text-light"
+            onClick={() => this.onClickGotoTutorProfile(this.props.tutorid)}
+          >
+            Tutor's Profile
+          </a>
         </div>
       </div>
     );
   }
+  onClickGotoTutorProfile = tutorid => {
+    history.push(`./profile?tutorid=${tutorid}`);
+  };
 }

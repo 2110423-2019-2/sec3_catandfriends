@@ -25,10 +25,11 @@ export default class TutorPage extends Component {
         </div>
       );
     } else {
+      console.log(this.props.data);
       return (
         <div className="justify-content-center">
           <div className="row justify-content-center">
-            <StudentCTuProfile />
+            <StudentCTuProfile data={this.props.data} />
           </div>
           <div className="row justify-content-center">
             <CourseCardLayout />
