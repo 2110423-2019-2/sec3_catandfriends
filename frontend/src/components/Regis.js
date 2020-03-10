@@ -11,11 +11,11 @@ export class Regis extends Component {
     this.state = {
       firstName: "",
       lastName: "",
-      gender: "",
+      gender: "Male",
       password: "",
       email: "",
       phoneNumber: "",
-      Utype: "",
+      Utype: "tutor",
       Birthday: "",
       SSN: ""
     };
@@ -50,7 +50,7 @@ export class Regis extends Component {
         <h3 className="card-title border text-center">Create an account</h3>
         <br />
         <form
-          onSubmit={() => this.onclickGoToLogin()}
+          onSubmit={event => this.onclickGoToLogin(event)}
           /*name="myForm"
           action="/action_page.php"
           onsubmit = "return validateForm()"
@@ -111,9 +111,7 @@ export class Regis extends Component {
               <br />
               <label htmlFor="user">User type</label>
               <select id="user" name="Utype" onChange={this.handleChange}>
-                <option value="tutor" selected>
-                  tutor
-                </option>
+                <option value="tutor">tutor</option>
                 <option value="student">student</option>
               </select>
             </div>
@@ -140,9 +138,7 @@ export class Regis extends Component {
               <br />
               <label htmlFor="gender">Gender </label>
               <select id="gender" name="gender" onChange={this.handleChange}>
-                <option value="Male" selected>
-                  Male
-                </option>
+                <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
             </div>
@@ -168,7 +164,7 @@ export class Regis extends Component {
                 Email
                 <br />
                 <input
-                placeholder = "example@tutor.com"
+                  placeholder="example@tutor.com"
                   type="email"
                   value={this.state.email}
                   style={{ width: 250 }}
@@ -206,21 +202,29 @@ export class Regis extends Component {
       </div>
     );
   }
-  async onclickGoToLogin() {
-    {
-      
-      await Util.register(
-        this.state.firstName,
-        this.state.lastName,
-        this.state.gender,
-        this.state.password,
-        this.state.email,
-        this.state.phoneNumber,
-        this.state.Utype,
-        this.state.Birthday,
-        this.state.SSN
-      );
-      history.push(`./login`);
+
+  /*onClickSubmit = () =>{
+    
+  }*/
+  async onclickGoToLogin(event) {
+    console.log(this.state);
+    event.preventDefault();
+    let data = await Util.register(
+      this.state.firstName,
+      this.state.lastName,
+      this.state.gender,
+      this.state.password,
+      this.state.email,
+      this.state.phoneNumber,
+      this.state.Utype,
+      this.state.Birthday,
+      this.state.SSN
+    );
+    console.log(data);
+    if (data.error) {
+      window.alert("cannot register");
+    } else {
+      history.push(`/login`);
     }
   }
 }

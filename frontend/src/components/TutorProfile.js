@@ -71,7 +71,7 @@ export class TutorProfile extends Component {
                         <strong>Premium status : </strong>
                       </body>
                       <body>
-                        <strong>Verification document : </strong>
+                        <strong>Verification doc. : </strong>
                       </body>
                       <body>
                         <strong>Phone number : </strong>
