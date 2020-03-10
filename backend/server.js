@@ -34,7 +34,7 @@ app.use(cors());
 app.use("/login", loginRoute);
 app.use("/signup", signupRoute);
 app.use("/courses",
-  // passport.authenticate("jwt-profile", { session: false }),
+  passport.authenticate("jwt-profile", { session: false }),
   courseRoute);
 app.use("/requests", requestRoute);
 app.use(
