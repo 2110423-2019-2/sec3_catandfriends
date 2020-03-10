@@ -31,8 +31,9 @@ export class Login extends Component {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
     let data = await Util.login(email, password);
-    if (data.error) {
-      window.alert("email or password invalid");
+    await console.log(data);
+    if (data.errmsg) {
+      window.alert(data.errmsg);
       document.getElementById("password").value = "";
     } else {
       await localStorage.setItem("token", data.token);
