@@ -62,6 +62,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   let studentId = req.user._id;
   const payload = req.body;
+  payload.studentId = req.user._id;
   let err, request;
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
 
@@ -72,6 +73,7 @@ router.post('/', async (req, res) => {
   }));
 
   if (err) {
+    console.log(err);
     res.status(500).end();
   }
   if (!request) {
@@ -83,6 +85,7 @@ router.post('/', async (req, res) => {
 
     [err, save] = await to(requests.save());
     if (err) {
+      console.log(err)
       res.status(500).end();
     }
     res.status(201).end();
