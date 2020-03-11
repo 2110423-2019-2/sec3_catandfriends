@@ -58,7 +58,7 @@ const Util = {
     }
     console.log(userId);
     const URL = userId
-      ? `http://localhost:8000/profile${userId}&token=${localStorage.getItem(
+      ? `http://localhost:8000/profile?userId=${userId}&token=${localStorage.getItem(
           "token"
         )}`
       : `http://localhost:8000/profile?token=${localStorage.getItem("token")}`;

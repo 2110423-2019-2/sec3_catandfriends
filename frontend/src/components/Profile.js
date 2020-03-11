@@ -31,7 +31,7 @@ export class Home extends Component {
 
   async componentDidMount() {
     console.log(window.location.search);
-    let data = await Util.getProfile(window.location.search);
+    let data = await Util.getProfile(window.location.search.substring(8));
     await this.setState({ data });
     await console.log(data);
   }
