@@ -153,6 +153,84 @@ const Util = {
     console.log(response.status);
     if (response.status == 500) return { error: true };
     if (response.status == 200) return response.json();
+  },
+  createCourse: async (
+    courseName,
+    dayAndStartTime,
+    dayAndEndTime,
+    startDate,
+    endDate,
+    token,
+    totalAmountOfStudent,
+    description,
+    courseFee,
+    category
+  ) => {
+    const URL = `http://localhost:8000/courses?token=${token}`;
+    const amountOfStudent = totalAmountOfStudent;
+    const response = await fetch(URL, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        courseName,
+        dayAndStartTime,
+        dayAndEndTime,
+        startDate,
+        endDate,
+        amountOfStudent,
+        totalAmountOfStudent,
+        description,
+        courseFee,
+        category
+      })
+    });
+    console.log(response.status);
+    if (response.status == 500) return { error: true };
+    if (response.status == 200) return response.json();
+  },
+  editCourse: async (
+    _id,
+    courseName,
+    dayAndStartTime,
+    dayAndEndTime,
+    startDate,
+    endDate,
+    token,
+    totalAmountOfStudent,
+    description,
+    courseFee,
+    category
+  ) => {
+    const URL = `http://localhost:8000/courses?token=${token}`;
+    const amountOfStudent = totalAmountOfStudent;
+    const response = await fetch(URL, {
+      method: "PUT",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        _id,
+        courseName,
+        dayAndStartTime,
+        dayAndEndTime,
+        startDate,
+        endDate,
+        amountOfStudent,
+        totalAmountOfStudent,
+        description,
+        courseFee,
+        category
+      })
+    });
+    console.log(response.status);
+    if (response.status == 500) return { error: true };
+    if (response.status == 200) return response.json();
   }
 };
 

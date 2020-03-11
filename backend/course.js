@@ -189,14 +189,16 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  let tutorId = req.user._id;
   const payload = req.body;
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
   payload.createdTime = dateThailand._d;
   payload.lastModified = dateThailand._d;
-  if (Object.keys(payload).length != 11) {
+  payload.tutorId = tutorId;
+  if (Object.keys(payload).length != 13) {
     console.log(Object.keys(payload).length);
-    console.log("input is incomplete");
-    res.json("input is incomplete");
+    console.log("input is incomplete"+ Object.keys(payload).length );
+    res.json("input is incomplete" + Object.keys(payload).length );
     res.status(400).end();
   } else if (payload["dayAndStartTime"].length != 7) {
     console.log("dayAndStartTime is incorrect");
@@ -222,7 +224,7 @@ router.put("/", async (req, res) => {
   const course = await CourseModel.find({ _id: payload["_id"] });
   // console.log(course[0]);
   console.log(payload);
-  // console.log(course.length);
+   //console.log(course.length);
   if (course == undefined || course.length == 0) {
     var s = "this course isn't create yet";
     console.log(s);

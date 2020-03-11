@@ -2,6 +2,25 @@ import React from "react";
 import history from "./../history";
 import "./CourseCard.css";
 import "./EditableCard.css";
+
+class EditBtn extends React.Component {
+  render() {
+    return (
+      
+        <button
+         
+          class="button button-secondary"
+          // data-toggle="modal"
+          // data-target="#editModal"
+          onclick={() => {console.log("click")}}
+        >
+          <i className="fa fa-edit"> edit</i>
+        </button>
+
+    );
+  }
+}
+
 class CardHeader extends React.Component {
   render() {
     return (
@@ -18,10 +37,12 @@ class CardHeader extends React.Component {
         >
           {this.props.category}
         </h6>
-        <EditBtn
-          onclick={() => history.push("/EditCourse")}
-          style={{ paddingLeft: "100px" }}
-        ></EditBtn>
+        <button
+          class="button button-secondary"
+          onClick={() => {history.push(`/course/edit?courseId=${this.props.courseid}`)}}
+        >
+          <i className="fa fa-edit"> edit</i>
+        </button>
       </header>
     );
   }
@@ -31,28 +52,19 @@ class Button extends React.Component {
   render() {
     return (
       <div>
-        <i className="fa fa-chevron-right">Course detail</i>
-      </div>
-    );
-  }
-}
-class EditBtn extends React.Component {
-  render() {
-    return (
-      <div>
         <button
           type="button"
-          class="button button-secondary"
+          class="button button-primary"
           data-toggle="modal"
-          data-target="#editModal"
+          data-target="#myModal"
         >
-          <i className="fa fa-edit"> edit</i>
+          <i className="fa fa-chevron-right">Course detail</i>
         </button>
-        <div class="modal fade" id="editModal" role="dialog">
+        <div class="modal fade" id="myModal" role="dialog">
           <div class="modal-dialog modal-sm">
             <div class="modal-content">
               <div class="modal-body">
-                <p>go to edit course.</p>
+                <p>go to course detail.</p>
               </div>
               <div class="modal-footer">
                 <button
@@ -70,59 +82,77 @@ class EditBtn extends React.Component {
     );
   }
 }
+
 class CardBody extends React.Component {
   constructor(props) {
     super(props);
+    //this.handleOnClick = this.handleOnClick.bind(this);
   }
   render() {
     return (
-      <div className="mcard-body">
-        <p className="date">{this.props.date}</p>
+      <div className="mcard-body"  onClick={() => this.onClickGotoCourseInform(this.props.courseid)}>
+        <article className="date">{this.props.date}</article>
         <h5 className="course-name">{this.props.title}</h5>
         <p className="body-content">{this.props.text}</p>
-        <body style={{ textAlign: "right" }}>{this.props.price + ".-"}</body>
-        <body>
-          <Button onclick={() => history.push("/Course")}></Button>
-        </body>
+        <div class="row">
+          <div
+            class={
+              this.props.available
+                ? "col-md-6 amount notfull"
+                : "col-md-6 amount full"
+            }
+          >
+            <div>{this.props.remain + "/" + this.props.total}</div>
+          </div>
+          <div class="col-md-6 price">
+            <div>{this.props.price}</div>
+          </div>
+        </div>
       </div>
     );
   }
+  onClickGotoCourseInform = courseId => {
+    history.push(`/course?courseId=${courseId}`);
+  };
 }
 
 class EditableCard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      courseID: "00002",
-      courseName: "b",
-      image: "https://source.unsplash.com/user/erondu/600x400",
-      category: "more",
-      description: "TS",
-      price: "4500",
-      date: "Tuedays 8.00-10.00"
-    };
   }
   render() {
     const {
-      _id,
+      courseID,
       courseName,
-      image,
-      category,
+      tutorid,
       description,
-      courseFee,
-      date
+      price,
+      category,
+      day,
+      duration
     } = this.props.detail;
+    // console.log(this.props.detail);
+    const name = this.props.detail.tutorName
+      ? "by " + this.props.detail.tutorName
+      : "";
+    const image =
+      "https://i.kym-cdn.com/photos/images/newsfeed/001/535/446/1c5.jpg";
+    const priceS = this.props.detail.courseFee + ".-";
+    const courseid = this.props.detail._id;
     return (
       <article
         className="CourseCard"
-        onClick={() => this.onClickGotoCourseInform(_id)}
       >
-        <CardHeader imgsrc={image} category={category}></CardHeader>
+        <CardHeader courseid={courseid} imgsrc={image} category={category}></CardHeader>
         <CardBody
           title={courseName}
           text={description}
-          price={courseFee}
-          date={date}
+          price={priceS}
+          date={day}
+          tutorname={name}
+          remain={this.props.detail.amountOfStudent}
+          total={this.props.detail.totalAmountOfStudent}
+          available={this.props.detail.isAvailable}
         ></CardBody>
       </article>
     );
@@ -131,5 +161,7 @@ class EditableCard extends React.Component {
     history.push(`/course?courseId=${courseId}`);
   };
 }
+//ll
+
 
 export default EditableCard;
