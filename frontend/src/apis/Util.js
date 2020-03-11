@@ -58,7 +58,7 @@ const Util = {
     }
     console.log(userId);
     const URL = userId
-      ? `http://localhost:8000/profile${userId}&token=${localStorage.getItem(
+      ? `http://localhost:8000/profile?userId=${userId}&token=${localStorage.getItem(
           "token"
         )}`
       : `http://localhost:8000/profile?token=${localStorage.getItem("token")}`;
@@ -114,7 +114,9 @@ const Util = {
     if (response.status == 200) return response.json();
   },
   updateRequest: async (requestId, status, studentId, courseId) => {
-    const URL = `http://localhost:8000/requests`;
+    const URL = `http://localhost:8000/requests?token=${localStorage.getItem(
+      "token"
+    )}`;
     const response = await fetch(URL, {
       method: "PUT",
       mode: "cors",
