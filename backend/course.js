@@ -78,8 +78,8 @@ router.get("/", async (req, res) => {
         _id: req.user._id,
         role: "tutor"
       });
-      if (!!requestCount || !!userCount) requestable = false;
-
+      if (!!requestCount || !!userCount || course.amountOfStudent == 0)
+        requestable = false;
 
       course.startDate = formatDate(course.startDate);
       course.endDate = formatDate(course.endDate);
@@ -87,7 +87,7 @@ router.get("/", async (req, res) => {
       course = {
         ...course,
         requestable: requestable
-      }
+      };
 
       res.json(course);
     }
@@ -197,8 +197,8 @@ router.post("/", async (req, res) => {
   payload.tutorId = tutorId;
   if (Object.keys(payload).length != 13) {
     console.log(Object.keys(payload).length);
-    console.log("input is incomplete"+ Object.keys(payload).length );
-    res.json("input is incomplete" + Object.keys(payload).length );
+    console.log("input is incomplete" + Object.keys(payload).length);
+    res.json("input is incomplete" + Object.keys(payload).length);
     res.status(400).end();
   } else if (payload["dayAndStartTime"].length != 7) {
     console.log("dayAndStartTime is incorrect");
@@ -224,7 +224,7 @@ router.put("/", async (req, res) => {
   const course = await CourseModel.find({ _id: payload["_id"] });
   // console.log(course[0]);
   console.log(payload);
-   //console.log(course.length);
+  //console.log(course.length);
   if (course == undefined || course.length == 0) {
     var s = "this course isn't create yet";
     console.log(s);

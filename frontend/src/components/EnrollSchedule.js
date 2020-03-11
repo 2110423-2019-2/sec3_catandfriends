@@ -106,12 +106,12 @@ class RowInformation extends Component {
           </div>
           <div class="col-md-2 border">
             <body style={{ textAlign: "center" }}>
-              {startDate.substring(0, 10)}
+              {startDate.substring(0, 11)}
             </body>
           </div>
           <div class="col-md-2 border">
             <body style={{ textAlign: "center" }}>
-              {endDate.substring(0, 10)}
+              {endDate.substring(0, 11)}
             </body>
           </div>
         </div>
