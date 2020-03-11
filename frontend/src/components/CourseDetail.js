@@ -7,7 +7,7 @@ import Util from "../apis/Util";
 export class CourseDetail extends Component {
   constructor(props) {
     super(props);
-
+    console.log(props);
     this.state = {
       imgsrc:
         "https://www.img.in.th/images/ced52db8eb1c2a59ab18b803b25e80c9.jpg",
@@ -28,6 +28,7 @@ export class CourseDetail extends Component {
   render() {
     const date = (this.props.detail.lastModified + "").substring(0, 21);
     console.log(date);
+    console.log(this.state.requestable);
     //console.log(this.props.detail);
     let showbutton;
     if (this.state.requestable) {
@@ -173,10 +174,16 @@ export class CourseDetail extends Component {
     );
   }
 
+  async componentDidMount() {
+    this.setState({ requestable: this.props.detail.requestable });
+  }
+
   async onClick(event) {
     //console.log(this.state);
     // event.preventDefault();
+    // this.state.requestable = false
 
+    this.setState({ requestable: false });
     let data = await Util.createRequests(
       this.props.detail.tutorId,
       this.props.detail._id

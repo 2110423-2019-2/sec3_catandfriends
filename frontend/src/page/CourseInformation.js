@@ -4,7 +4,7 @@ import CourseDetail from "../components/CourseDetail";
 import Comment from "../components/Comment";
 import Util from "../apis/Util";
 export default class CourseInformation extends Component {
-  state = { data: {} };
+  state = { data: null };
 
   render() {
     if (this.state.data) {

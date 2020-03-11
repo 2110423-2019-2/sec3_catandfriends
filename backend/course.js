@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const CourseModel = require("./models/course");
 const userModel = require("./models/user");
+const requestModel = require("./models/request");
 const moment = require("moment-timezone");
 const to = require("await-to-js").default;
 function formatTime(time) {
@@ -67,9 +68,27 @@ router.get("/", async (req, res) => {
           ) + "/ ";
       }
       course.day = s.slice(0, s.length - 2);
+      let requestable = true;
+
+      let requestCount = await requestModel.countDocuments({
+        studentId: req.user._id,
+        courseId: course._id
+      });
+      let userCount = await userModel.countDocuments({
+        userId: req.user._id,
+        role: "tutor"
+      });
+      if (!!requestCount || !!userCount) requestable = false;
+
 
       course.startDate = formatDate(course.startDate);
       course.endDate = formatDate(course.endDate);
+
+      course = {
+        ...course,
+        requestable: requestable
+      }
+
       res.json(course);
     }
     res.status(200).end();
