@@ -195,6 +195,7 @@ router.post("/", async (req, res) => {
   payload.createdTime = dateThailand._d;
   payload.lastModified = dateThailand._d;
   payload.tutorId = tutorId;
+  payload.category = payload.category.toLowerCase();
   if (Object.keys(payload).length != 13) {
     console.log(Object.keys(payload).length);
     console.log("input is incomplete" + Object.keys(payload).length);
