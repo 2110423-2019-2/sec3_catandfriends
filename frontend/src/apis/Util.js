@@ -91,22 +91,22 @@ const Util = {
     if (response.status == 200) return response.json();
   },
   createCourse: async(courseName,dayAndStartTime,dayAndEndTime,startDate,EndDate,amountOfStudent,description,courseFee,category) => {
-    const URL = `http://localhost:8000/course/create`;
+    const URL = `http://localhost:8000/courses`;
     const response = await fetch(URL, {
-      method: "GET",
+      method: "POST",
       mode: "cors",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({courseName,dayAndStartTime,dayAndEndTime,startDate,EndDate,amountOfStudent,description,courseFee,category})
+      body: JSON.stringify({courseName,dayAndStartTime,dayAndEndTime,startDate,EndDate,amountOfStudent,description,courseFee,category,listOfStudentId:[]})
     });
-    if (response.status == 500) return { error: true };
+    if (response.status == 400) return { error: true };
     if (response.status == 200) return response.json();
   },
   editCourse: async(courseName,dayAndStartTime,dayAndEndTime,startDate,EndDate,amountOfStudent,description,courseFee,category) => {
     const URL = `http://localhost:8000/course/create`;
     const response = await fetch(URL, {
-      method: "GET",
+      method: "PUT",
       mode: "cors",
       headers: {
         "Content-Type": "application/json"

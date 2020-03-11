@@ -67,15 +67,18 @@ export default class NewCourse extends Component {
         this.enableTime();
       }
       
-      handleSubmit(event) {
+      async handleSubmit(event) {
+        event.preventDefault();
         if(!this.compareDate()){
           alert("Start Date must be before End Date");
         }else{
           alert(JSON.stringify(this.state))
-          console.log(this.state)
+          let data = await Util.createCourse(this.state.courseName,this.state.dayAndStartTime,this.state.dayAndEndTime,this.state.startDate,this.state.endDate,this.state.amountOfStudent,this.state.description,this.state.courseFee,this.state.category);
+     
+          console.log(data);
           console.log(localStorage.getItem("token"));
         }
-        event.preventDefault();
+        
       }
 
       // hanndleCancel(event){
@@ -213,7 +216,7 @@ export default class NewCourse extends Component {
           <div className="card mb-4 p-3" style={{maxWidth:1000}}>
               <h3 className="card-title border text-center">New Course</h3>
               <br/>
-              <form onSubmit={this.handleSubmit}
+              <form onSubmit={event =>this.handleSubmit(event)}
                style={{marginLeft:30}}>
               <div class="row">
                   <div class="col-md-6" width="100%">
@@ -300,7 +303,7 @@ export default class NewCourse extends Component {
               <div class="row">
                   <div class="col-md-6" width="100%" height="100px">
                     <label>Description<br/>
-                  <textarea type="text" required value={this.state.description} onChange={this.handleChange} style={{width:900,height:200,resize:"none"}} name="description" onChange={this.handleChange} /> 
+                  <textarea type="text" required value={this.state.description} onChange={this.handleChange} style={{width:900,height:200,resize:"none"}} name="description"  /> 
                  </label> 
                  </div>
               </div>
