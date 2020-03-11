@@ -1,3 +1,11 @@
 .myStyle {
   text-align: center;
 }
+.verified {
+  color: navy;
+  font-weight: 700;
+}
+.notverified {
+  color: lightslategray;
+  font-weight: 700;
+}

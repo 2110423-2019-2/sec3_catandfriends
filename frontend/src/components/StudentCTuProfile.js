@@ -58,6 +58,9 @@ export class StudentCTuProfile extends Component {
                   <body>
                     <strong>Email : </strong>
                   </body>
+                  <body>
+                    <strong>Verify Status : </strong>
+                  </body>
                   <br />
                   {/*Enter*/}
                   <br />
@@ -69,6 +72,13 @@ export class StudentCTuProfile extends Component {
                   <body> {this.props.data.gender}</body>
                   <body> {this.props.data.phoneNumber}</body>
                   <body> {this.props.data.email}</body>
+                  <body
+                    className={
+                      this.props.data.verifyStatus ? "verified" : "notverified"
+                    }
+                  >
+                    {this.props.data.verifyStatus ? "VERIFIED" : "NOT VERIFIED"}
+                  </body>
                   <br />
                   {/*Enter*/}
                   <br />
