@@ -39,10 +39,10 @@ export class StudentCTuProfile extends Component {
               <br />
               <div className="row ">
                 <div className="col-md-6 border">
-                  <h4 style={{}}>{this.state.FirstName}</h4>
+                  <h4 style={{}}>{this.props.data.firstName}</h4>
                 </div>
                 <div className="col-md-6 border">
-                  <h4>{this.state.LastName}</h4>
+                  <h4>{this.props.data.lastName}</h4>
                 </div>
 
                 <div className="col-md-4 border">
@@ -50,16 +50,13 @@ export class StudentCTuProfile extends Component {
                   {/*Enter*/}
                   <br />
                   <body>
-                    <strong>Bio : </strong>
-                  </body>
-                  <body>
                     <strong>Gender : </strong>
                   </body>
                   <body>
-                    <strong>Email : </strong>
+                    <strong>Phone number : </strong>
                   </body>
                   <body>
-                    <strong>Phone number : </strong>
+                    <strong>Email : </strong>
                   </body>
                   <br />
                   {/*Enter*/}
@@ -69,10 +66,9 @@ export class StudentCTuProfile extends Component {
                   <br />
                   {/*Enter*/}
                   <br />
-                  <body> {this.state.bio}</body>
-                  <body> {this.state.gender}</body>
-                  <body> {this.state.email}</body>
-                  <body> {this.state.PhoneNumber}</body>
+                  <body> {this.props.data.gender}</body>
+                  <body> {this.props.data.phoneNumber}</body>
+                  <body> {this.props.data.email}</body>
                   <br />
                   {/*Enter*/}
                   <br />

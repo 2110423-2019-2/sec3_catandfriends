@@ -79,7 +79,10 @@ export class NavBar extends Component {
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" onClick={() => this.onClickNavBar("/")}>
+              <a
+                class="nav-link"
+                onClick={() => this.onClickNavBar("/register")}
+              >
                 Home <span class="sr-only">(current)</span>
               </a>
             </li>

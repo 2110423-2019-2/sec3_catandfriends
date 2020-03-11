@@ -85,6 +85,8 @@ class CardBody extends React.Component {
         </div>
 
         <small className="name">{"by " + this.props.tutorname}</small>
+        <div style={{ textAlign: "right" }}>{this.props.price}</div>
+        <small className="name">{this.props.tutorname}</small>
       </div>
     );
   }
@@ -105,7 +107,10 @@ class CourseCard extends React.Component {
       day,
       duration
     } = this.props.detail;
-    const name = this.props.detail.tutorName;
+    // console.log(this.props.detail);
+    const name = this.props.detail.tutorName
+      ? "by " + this.props.detail.tutorName
+      : "";
     const image =
       "https://i.kym-cdn.com/photos/images/newsfeed/001/535/446/1c5.jpg";
     const priceS = this.props.detail.courseFee + ".-";
