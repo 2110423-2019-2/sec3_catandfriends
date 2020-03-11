@@ -5,7 +5,9 @@ import Util from "../apis/Util";
 
 export class Home extends Component {
   state = { data: {} };
+
   render() {
+    console.log(this.state.data);
     if (this.state.data.role == "tutor") {
       return <TutorPage owner={this.state.data.owner} data={this.state.data} />;
     } else {

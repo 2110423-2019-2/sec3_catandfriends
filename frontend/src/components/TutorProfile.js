@@ -71,10 +71,10 @@ export class TutorProfile extends Component {
                         <strong>Premium status : </strong>
                       </body>
                       <body>
-                        <strong>Verification document : </strong>
+                        <strong>Phone number : </strong>
                       </body>
                       <body>
-                        <strong>Phone number : </strong>
+                        <strong>VerifiedDoc : </strong>
                       </body>
                     </div>
                     <div className="col-md-8 border">
@@ -85,12 +85,12 @@ export class TutorProfile extends Component {
                       <body>
                         {this.props.data.premiumStatus ? "Yes" : "No"}
                       </body>
+                      <body>{this.props.data.phoneNumber}</body>
                       <body>
                         {this.props.data.verificationDocument
                           ? this.props.data.verificationDocument
                           : "None"}
                       </body>
-                      <body>{this.props.data.phoneNumber}</body>
                     </div>
                   </div>
                   <br />

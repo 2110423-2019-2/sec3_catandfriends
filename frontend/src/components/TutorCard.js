@@ -32,6 +32,6 @@ export default class TutorCard extends Component {
     );
   }
   onClickGotoTutorProfile = tutorid => {
-    history.push(`./profile?tutorid=${tutorid}`);
+    history.push(`/profile?userId=${tutorid}`);
   };
 }
