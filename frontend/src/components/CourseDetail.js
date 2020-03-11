@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./CourseDetail.css";
 import TutorCard from "../components/TutorCard";
+import history from "../history";
+import Util from "../apis/Util";
+
 export class CourseDetail extends Component {
   constructor(props) {
     super(props);
@@ -16,13 +19,28 @@ export class CourseDetail extends Component {
       endDate: "1970-01-29 T17:00:00.000+00:00",
       tutorId: "123456789",
       amountOfStudent: "5",
-      description: "just enroll this course and you will get nothing"
+      description: "just enroll this course and you will get nothing",
+      requestable: true
     };
+    this.onClick = this.onClick.bind(this);
   }
 
   render() {
     const date = (this.props.detail.lastModified + "").substring(0, 21);
     console.log(date);
+    //console.log(this.props.detail);
+    if (this.state.requestable) {
+      select = (
+        <button
+          type="button"
+          className="btn btn-outline-success"
+          onClick={event => this.onClick(event)}
+        >
+          Request
+        </button>
+      );
+    } else {
+    }
     return (
       <div className="card mb-3" style={{ maxWidth: "1000px" }}>
         <div className="row no-gutters">
@@ -120,7 +138,11 @@ export class CourseDetail extends Component {
                     course, you can not cancel.
                   </div>
                   <div className="myStyle">
-                    <button type="button" className="btn btn-outline-success">
+                    <button
+                      type="button"
+                      className="btn btn-outline-success"
+                      onClick={event => this.onClick(event)}
+                    >
                       Request
                     </button>
                   </div>
@@ -141,6 +163,21 @@ export class CourseDetail extends Component {
       </div>
     );
   }
-}
 
+  async onClick(event) {
+    //console.log(this.state);
+    // event.preventDefault();
+
+    let data = await Util.createRequests(
+      this.props.detail.tutorId,
+      this.props.detail._id
+    );
+    // console.log(data);
+    // if (data.error) {
+    //   window.alert("cannot request");
+    // } else {
+    //   //history.push(`/login`);
+    // }
+  }
+}
 export default CourseDetail;
