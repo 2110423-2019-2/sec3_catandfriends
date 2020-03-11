@@ -13,7 +13,7 @@ export default class RequestScrollBar extends Component {
     let data = await Util.updateRequest(requestId, status, studentId, courseId);
     data = await Util.getRequests(this.props.tutorId);
     this.setState({ data });
-
+    console.log(data);
     //add student to class
   };
 
@@ -54,7 +54,7 @@ export default class RequestScrollBar extends Component {
                       onClick={() =>
                         this.handleButton(
                           item.requestId,
-                          0,
+                          -1,
                           item.studentId,
                           item.courseId
                         )
