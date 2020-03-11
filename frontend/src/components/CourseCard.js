@@ -83,6 +83,7 @@ class CardBody extends React.Component {
             <div>{this.props.price}</div>
           </div>
         </div>
+        <small className="name">{this.props.tutorname}</small>
       </div>
     );
   }
