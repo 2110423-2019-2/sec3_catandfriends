@@ -75,7 +75,7 @@ router.get("/", async (req, res) => {
         courseId: course._id
       });
       let userCount = await userModel.countDocuments({
-        userId: req.user._id,
+        _id: req.user._id,
         role: "tutor"
       });
       if (!!requestCount || !!userCount) requestable = false;
