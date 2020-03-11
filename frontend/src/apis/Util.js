@@ -47,8 +47,8 @@ const Util = {
         ssn
       })
     });
-    console.log(response.status);
-    if (response.status == 500) return { error: true };
+    console.log(response);
+    if (response.status == 400) return response.json();
     if (response.status == 200) return response.json();
   },
   getProfile: async userId => {

@@ -80,11 +80,11 @@ passport.use(
       } catch (error) {
         console.log(error);
         if (error.errmsg && error.errmsg.includes("email")) {
-          done("email is not valid");
+          return done("email is not valid");
         } else if (error.errmsg && error.errmsg.includes("ssn")) {
-          done("ssn is not valid");
+          return done("ssn is not valid");
         }
-        done(error);
+        return done(error);
       }
     }
   )
