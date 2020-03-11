@@ -20,7 +20,7 @@ export class CourseDetail extends Component {
       tutorId: "123456789",
       amountOfStudent: "5",
       description: "just enroll this course and you will get nothing",
-      requestable: true
+      requestable: false
     };
     this.onClick = this.onClick.bind(this);
   }
@@ -29,8 +29,9 @@ export class CourseDetail extends Component {
     const date = (this.props.detail.lastModified + "").substring(0, 21);
     console.log(date);
     //console.log(this.props.detail);
+    let showbutton;
     if (this.state.requestable) {
-      select = (
+      showbutton = (
         <button
           type="button"
           className="btn btn-outline-success"
@@ -40,6 +41,11 @@ export class CourseDetail extends Component {
         </button>
       );
     } else {
+      showbutton = (
+        <button variant="dark" type="button" disabled={true}>
+          Requested
+        </button>
+      );
     }
     return (
       <div className="card mb-3" style={{ maxWidth: "1000px" }}>
@@ -137,15 +143,7 @@ export class CourseDetail extends Component {
                     <strong>Warning!</strong> If you request to enroll this
                     course, you can not cancel.
                   </div>
-                  <div className="myStyle">
-                    <button
-                      type="button"
-                      className="btn btn-outline-success"
-                      onClick={event => this.onClick(event)}
-                    >
-                      Request
-                    </button>
-                  </div>
+                  <div className="myStyle">{showbutton}</div>
                   <br />
                 </div>
                 <p className="card-text">
