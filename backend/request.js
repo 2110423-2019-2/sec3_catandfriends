@@ -51,7 +51,8 @@ router.get('/', async (req, res) => {
       ...requests[i].toObject(),
       isAvailable: (course.amountOfStudent > 0 ? true : false),
       studentName: (user['firstName'] + " " + user['lastName']),
-      createdTime: (formatedTime(requests[i].createdTime))
+      createdTime: (formatedTime(requests[i].createdTime)),
+      courseName: course.courseName
     }
   }
   res.json(requests);
@@ -61,13 +62,12 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   let studentId = req.user._id;
-  const payload = req.body;
-  payload.studentId = req.user._id;
+  let payload = req.body;
+  // payload.studentId = req.user._id;
   let err, request;
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
 
   [err, request] = await to(RequestModel.countDocuments({
-    tutorId: payload.tutorId,
     studentId: studentId,
     courseId: payload.courseId
   }));
@@ -78,10 +78,21 @@ router.post('/', async (req, res) => {
   }
   if (!request) {
     // payload.requestId = Date.now() + payload.tutorId;
+    let course;
+    [err, course] = await to(CourseModel.findById(payload.courseId));
+
+    if (err) {
+      console.log(err);
+      res.status(500).end();
+    }
+
+    payload.tutorId = course.tutorId;
+    payload.studentId = studentId;
     payload.createdTime = dateThailand._d;
     payload.lastModified = dateThailand._d;
+
     const requests = new RequestModel(payload);
-    let err, save;
+    let save;
 
     [err, save] = await to(requests.save());
     if (err) {
@@ -100,6 +111,9 @@ router.put('/', async (req, res) => {
   let tutorId = req.user._id;
   let err, request;
 
+  console.log(tutorId + "  " + payload.studentId + "  " + payload.courseId);
+
+
   [err, request] = await to(RequestModel.findOne({
     tutorId: tutorId,
     studentId: payload.studentId,
@@ -109,10 +123,9 @@ router.put('/', async (req, res) => {
     res.status(500).end();
   }
 
-  if (request.status != 0) {
+  if (request.status == 1) {
     res.json({
       "message": "Already response",
-      "operation": ""
     });
     res.status(201).end();
   } else {
@@ -127,22 +140,21 @@ router.put('/', async (req, res) => {
       let value;
       const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
 
-      let status = payload.accept;
+      if (payload.accept == 1) {
+        [err, value] = await to(RequestModel.findOneAndUpdate({
+          tutorId: tutorId,
+          studentId: payload.studentId,
+          courseId: payload.courseId
+        }, {
+          status: payload.accept,
+          lastModified: dateThailand._d
+        }, {
+          useFindAndModify: false
+        }));
+        if (err) {
+          res.status(500).end();
+        }
 
-      [err, value] = await to(RequestModel.findOneAndUpdate({
-        tutorId: tutorId,
-        studentId: payload.studentId,
-        courseId: payload.courseId
-      }, {
-        status: status,
-        lastModified: dateThailand._d
-      }, {
-        useFindAndModify: false
-      }));
-      if (err) {
-        res.status(500).end();
-      }
-      if (status == 1) {
         //TODO: UPDATE LISTOFCOURSE IN SCHEDULE
         [err, value] = await to(ScheduleModel.findOneAndUpdate({
           studentId: payload.studentId
@@ -182,14 +194,20 @@ router.put('/', async (req, res) => {
           res.status(500).end();
         }
         ///////////////////////////////////////////////////////
+      } else if (payload.accept == -1) {
+        [err, value] = await to(RequestModel.deleteOne({
+          tutorId: tutorId,
+          studentId: payload.studentId,
+          courseId: payload.courseId
+        }))
       }
+
       let message;
-      if (status == -1) message = "Request rejected";
-      else if (status == 1) message = "Request accepted"
+      if (payload.accept == -1) message = "Request rejected"
+      else if (payload.accept == 1) message = "Request accepted"
       else message = 'Invalid "accept" attribute'
       res.json({
         "message": message,
-        "operation": ""
       });
     } else {
       const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
@@ -209,7 +227,6 @@ router.put('/', async (req, res) => {
       }
       res.json({
         "message": "Course is already full",
-        "operation": "Auto reject"
       });
     }
     res.status(201).end();
