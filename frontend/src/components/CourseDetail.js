@@ -20,7 +20,7 @@ export class CourseDetail extends Component {
       tutorId: "123456789",
       amountOfStudent: "5",
       description: "just enroll this course and you will get nothing",
-      requestable: false
+      requestable: true
     };
     this.onClick = this.onClick.bind(this);
   }
