@@ -189,14 +189,16 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  let tutorId = req.user._id;
   const payload = req.body;
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
   payload.createdTime = dateThailand._d;
   payload.lastModified = dateThailand._d;
-  if (Object.keys(payload).length != 11) {
+  payload.tutorId = tutorId;
+  if (Object.keys(payload).length != 13) {
     console.log(Object.keys(payload).length);
-    console.log("input is incomplete");
-    res.json("input is incomplete");
+    console.log("input is incomplete"+ Object.keys(payload).length );
+    res.json("input is incomplete" + Object.keys(payload).length );
     res.status(400).end();
   } else if (payload["dayAndStartTime"].length != 7) {
     console.log("dayAndStartTime is incorrect");

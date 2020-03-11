@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import "./NewCourse.css";
 import Util from "../apis/Util";
 export default class NewCourse extends Component {
     constructor(props) {
@@ -7,17 +6,12 @@ export default class NewCourse extends Component {
         this.state = {
           courseID:"",
           courseName:"",
-          image:"",
-          category:"",
+          category:"Language",
           description:"",
-          courseFee:"",
-          amountOfStudent:"",
+          price:"",
+          totalAm0ountOfStudent:"",
           startDate:"",
           endDate:"",
-          tutorId:"",
-          listOfStudentID:[],
-          createdTime:"",
-          lastModified:"",
           Monday:false,
           ST0:null,
           ET0:null,
@@ -39,8 +33,8 @@ export default class NewCourse extends Component {
           Sunday:false,
           ST6:null,
           ET6:null,
-          dayAndStartTime:[],
-          dayAndEndTime:[]
+          dayAndStartTime:[6.3,null,null,null,null,null,null],
+          dayAndEndTime:[9.3,null,null,null,null,null,null]
         }
     
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -53,16 +47,23 @@ export default class NewCourse extends Component {
       //   console.log(localStorage.getItem("token"));
 
       //   e.preventDefault()
-      
+      timeToFloat(time){
+        if (!time) return null;
+        let a = time.substring(0,2);
+        let b = time.substring(3,5);
+        let c = a+b;
+        let d = parseInt(c)/100;
+        return d;
+      }
       handleChange(event) {
         const target = event.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name;
         this.setState({
           [name]: value,
-          dayAndStartTime:[this.state.ST0,this.state.ST1,this.state.ST2,this.state.ST3,this.state.ST4,this.state.ST5,this.state.ST6],
-          dayAndEndTime:[this.state.ET0,this.state.ET1,this.state.ET2,this.state.ET3,this.state.ET4,this.state.ET5,this.state.ET6],
-          //มันต้องclickที่inputอื่นก่อนถึงจะอัปเดต
+          dayAndStartTime:[this.timeToFloat(this.state.ST0),this.timeToFloat(this.state.ST1),this.timeToFloat(this.state.ST2),this.timeToFloat(this.state.ST3),this.timeToFloat(this.state.ST4),this.timeToFloat(this.state.ST5),this.timeToFloat(this.state.ST6)],
+          dayAndEndTime:[this.timeToFloat(this.state.ET0),this.timeToFloat(this.state.ET1),this.timeToFloat(this.state.ET2),this.timeToFloat(this.state.ET3),this.timeToFloat(this.state.ET4),this.timeToFloat(this.state.ET5),this.timeToFloat(this.state.ET6)],
+          
         });
         this.enableTime();
       }
@@ -72,11 +73,10 @@ export default class NewCourse extends Component {
         if(!this.compareDate()){
           alert("Start Date must be before End Date");
         }else{
-          alert(JSON.stringify(this.state))
-          let data = await Util.createCourse(this.state.courseName,this.state.dayAndStartTime,this.state.dayAndEndTime,this.state.startDate,this.state.endDate,this.state.amountOfStudent,this.state.description,this.state.courseFee,this.state.category);
-     
-          console.log(data);
-          console.log(localStorage.getItem("token"));
+          // alert(JSON.stringify(this.state))
+         let data = await Util.createCourse(this.state.courseName,this.state.dayAndStartTime,this.state.dayAndEndTime,this.state.startDate,this.state.endDate,localStorage.getItem("token"),this.state.totalAmountOfStudent,this.state.description,this.state.price,this.state.category);
+          //let data = await Util.createCourse("ff",[6.3,null,null,null,null,null,null],[8.3,null,null,null,null,null,null],this.state.startDate,this.state.endDate,localStorage.getItem("token"),13,"dfsdfsdf",11111,"language");
+          console.log(data);         
         }
         
       }
@@ -84,20 +84,6 @@ export default class NewCourse extends Component {
       // hanndleCancel(event){
 
       // }
-      updateStartArray= () =>{
-        var dayAndStartTime2 = [];
-        dayAndStartTime2.push(this.ST0);
-        dayAndStartTime2.push(this.ST1);
-        dayAndStartTime2.push(this.ST2);
-        dayAndStartTime2.push(this.ST3);
-        dayAndStartTime2.push(this.ST4);
-        dayAndStartTime2.push(this.ST5);
-        dayAndStartTime2.push(this.ST6);
-        dayAndStartTime2.push("Fuckkkkk");
-        this.setState({
-          dayAndStartTime:dayAndStartTime2,
-        })
-      }
 
       enableTime(){
         var Mon = document.getElementById('Monday').checked;
@@ -199,6 +185,8 @@ export default class NewCourse extends Component {
             ET6:null
           })
         }
+
+        document.getElementById('Monday').required=false;//!(Mon||Tue||Wed||Thu||Fri||Sat||Sun);
       }
 
       compareDate(){
@@ -225,8 +213,13 @@ export default class NewCourse extends Component {
                  </label> 
                  </div>
                   <div class="col-md-6">
-                      <label>Category<br/>
-                  <input type="text" required value={this.state.category} onChange={this.handleChange}  style={{width:262}} name="category" />
+                    <label>Category<br/>
+                    <select name="category" onChange={this.handleChange} required>
+                    <option value="Language">Language</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Science">Science</option>
+                    <option value="Social">Social</option>
+                    </select>
                   </label>
                   </div>
               </div>
@@ -248,7 +241,7 @@ export default class NewCourse extends Component {
                   </div>
                   <div class="col-md-3" width="100%">
                       <label>Student amount<br/>
-                  <input type="Number" min="0" required value={this.state.amountOfStudent} onChange={this.handleChange} name="amountOfStudent"/>
+                  <input type="Number" min="0" required value={this.state.totalAmountOfStudent} onChange={this.handleChange} name="totalAmountOfStudent"/>
                   </label>
                   </div>
               </div>
@@ -310,15 +303,11 @@ export default class NewCourse extends Component {
               <br/>
              <div className="text-center" style={{marginRight:40}}>
                 <input type="submit" value="Submit" className="btn btn-success" style={{marginRight:20}} />
-                <input type="cancel" value="Cancel" className="btn btn-danger" style={{width:76.5, height:38}}/>
+                {/* <input type="cancel" value="Cancel" className="btn btn-danger" style={{width:76.5, height:38}}/> */}
               </div>
           </form> 
            </div>
         );
       }
-      async componentDidMount() {
-        let data = await Util.createCourse(this.props.courseName,this.props.dayAndStartTime,this.props.dayAndEndTime,this.props.startDate,this.props.endDate,this.props.amountOfStudent,this.props.description,this.props.courseFee,this.props.category);
-        this.setState({ data });
-        console.log(data);
-      }
+      
 }
