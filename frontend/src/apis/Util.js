@@ -89,7 +89,34 @@ const Util = {
     });
     if (response.status == 500) return { error: true };
     if (response.status == 200) return response.json();
+  },
+  createCourse: async(courseName,dayAndStartTime,dayAndEndTime,startDate,EndDate,amountOfStudent,description,courseFee,category) => {
+    const URL = `http://localhost:8000/course/create`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({courseName,dayAndStartTime,dayAndEndTime,startDate,EndDate,amountOfStudent,description,courseFee,category})
+    });
+    if (response.status == 500) return { error: true };
+    if (response.status == 200) return response.json();
+  },
+  editCourse: async(courseName,dayAndStartTime,dayAndEndTime,startDate,EndDate,amountOfStudent,description,courseFee,category) => {
+    const URL = `http://localhost:8000/course/create`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({courseName,dayAndStartTime,dayAndEndTime,startDate,EndDate,amountOfStudent,description,courseFee,category})
+    });
+    if (response.status == 500) return { error: true };
+    if (response.status == 200) return response.json();
   }
-};
+
+  };
 
 export default Util;
