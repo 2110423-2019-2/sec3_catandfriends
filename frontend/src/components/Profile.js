@@ -8,13 +8,19 @@ export class Home extends Component {
 
   render() {
     console.log(this.state.data);
-    if (this.state.data.role == "tutor") {
-      return <TutorPage owner={this.state.data.owner} data={this.state.data} />;
+    if (!this.state.data.role) {
+      return <div>Loading...</div>;
     } else {
-      console.log("This is me!");
-      return (
-        <StudentPage owner={this.state.data.owner} data={this.state.data} />
-      );
+      if (this.state.data.role == "tutor") {
+        return (
+          <TutorPage owner={this.state.data.owner} data={this.state.data} />
+        );
+      } else {
+        console.log("This is me!");
+        return (
+          <StudentPage owner={this.state.data.owner} data={this.state.data} />
+        );
+      }
     }
   }
 
