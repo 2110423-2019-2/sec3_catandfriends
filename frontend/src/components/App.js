@@ -26,7 +26,7 @@ class App extends Component {
   render() {
     return (
       <Router history={history}>
-        <NavBar />
+        <NavBar loggedin={localStorage.getItem("token")} />
         <Switch>
           <Route path="/register" component={RegisterPage} />
           <Route path="/login" component={Login} />
@@ -35,7 +35,6 @@ class App extends Component {
           <Route path="/course/edit" component={EditCourse} />
           <Route path="/course/create" component={NewCourse} />
           <Route path="/course" component={CourseInformation} />
-          
         </Switch>
       </Router>
     );

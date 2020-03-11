@@ -7,14 +7,18 @@ export class NavBar extends Component {
 
     this.state = {
       imgjaa:
-        "https://www.img.in.th/images/8517bda5f5991478fb667d1d086145ac.jpg"
+        "https://www.img.in.th/images/8517bda5f5991478fb667d1d086145ac.jpg",
+      loggedin: ""
     };
   }
 
   render() {
     return (
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" onClick={() => this.onClickNavBar("/")}>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a
+          className="navbar-brand"
+          onClick={() => this.onClickNavBar("/register")}
+        >
           <img
             style={{ marginRight: "10px" }}
             className="logoImg"
@@ -24,7 +28,7 @@ export class NavBar extends Component {
           TutorHere
         </a>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNavDropdown"
@@ -34,32 +38,40 @@ export class NavBar extends Component {
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item">
+        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul className="navbar-nav">
+            <li className="nav-item">
               <a
-                class="nav-link"
+                className="nav-link"
                 onClick={() => this.onClickNavBar("/register")}
               >
                 Home <span class="sr-only">(current)</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" onClick={() => this.onClickNavBar("/search")}>
+            <li className="nav-item">
+              <a
+                className="nav-link"
+                onClick={() => this.onClickNavBar("/search")}
+              >
                 Search<span className="sr-only">(current)</span>
               </a>
             </li>
-            <li class="nav-item dropdown" style={{ float: "right" }}>
+            <li
+              className="nav-item dropdown"
+              id="MyAccount"
+              style={{ float: "right" }}
+            >
               <a
-                class="nav-link dropdown-toggle"
+                className="nav-link dropdown-toggle"
                 href="#"
                 id="navbarDropdownMenuLink"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                Profile<span className="sr-only">(current)</span>
+                My Account<span className="sr-only">(current)</span>
               </a>
+
               <div
                 class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
@@ -75,17 +87,26 @@ export class NavBar extends Component {
                 </a>
               </div>
             </li>
+            <li id="Login">
+              <a
+                className="nav-link"
+                onClick={() => this.onClickNavBar("/login")}
+              >
+                Login <span className="sr-only">(current)</span>
+              </a>
+            </li>
           </ul>
         </div>
       </nav>
     );
   }
   onClickNavBar = page => {
-    if (page == "/register") {
+    if (page == "/register" || page == "/login") {
       history.push(page);
     } else if (page == "/logout") {
       localStorage.clear();
       history.push("/");
+      window.location.reload();
     } else if (!localStorage.getItem("token")) {
       window.alert("Please login first!");
       return history.push("./login");
@@ -93,6 +114,23 @@ export class NavBar extends Component {
       history.push(page);
     }
   };
+  componentDidMount() {
+    var x = document.getElementById("MyAccount");
+    var y = document.getElementById("Login");
+    if (this.props.loggedin) {
+      x.style.display = "block";
+      y.style.display = "none";
+    } else {
+      x.style.display = "none";
+      y.style.display = "block";
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ loggedin: nextProps.loggedin });
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.loggedin != this.state.loggedin;
+  }
 }
 
 export default NavBar;
