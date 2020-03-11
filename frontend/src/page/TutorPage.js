@@ -5,9 +5,13 @@ import RequestScrollBar from "../components/RequestScrollBar";
 import EditCourseCardLayout from "../components/EditCourseCardLayout";
 import CourseCardLayout from "../components/CourseCardLayout";
 import StudentCTuProfile from "../components/StudentCTuProfile";
+import Util from "../apis/Util";
 export default class TutorPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      detail: {}
+    };
   }
 
   render() {
@@ -32,10 +36,16 @@ export default class TutorPage extends Component {
             <StudentCTuProfile data={this.props.data} />
           </div>
           <div className="row justify-content-center">
-            <CourseCardLayout />
+            <CourseCardLayout data={this.state.detail} />
           </div>
         </div>
       );
     }
+  }
+  async componentDidMount() {
+    console.log(this.props.data._id);
+    let detail = await Util.getCourseByTutorId(this.props.data._id);
+    console.log(detail);
+    this.setState({ detail });
   }
 }
