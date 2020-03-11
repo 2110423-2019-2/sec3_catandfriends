@@ -15,6 +15,19 @@ function formatedTime(date) {
   return time + " " + dayMonthYear;
 }
 
+function isIntersect(a, b) {
+  x = [a, b].sort((a, b) => {
+    if (a[0] === b[0]) {
+      return 0;
+    }
+    else {
+      return (a[0] < b[0]) ? -1 : 1;
+    }
+  });
+  a = x[0]; b = x[1];
+  return (a[1] > b[0]);
+}
+
 router.get("/", async (req, res) => {
   // console.log(req.query);
   let tutorId = req.user._id;
@@ -66,6 +79,8 @@ router.post("/", async (req, res) => {
   let studentId = req.user._id;
   let payload = req.body;
   // payload.studentId = req.user._id;
+  // console.log(studentId + "  " + payload.courseId);
+
   let err, request;
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
 
@@ -90,21 +105,70 @@ router.post("/", async (req, res) => {
       res.status(500).end();
     }
 
-    payload.tutorId = course.tutorId;
-    payload.studentId = studentId;
-    payload.createdTime = dateThailand._d;
-    payload.lastModified = dateThailand._d;
-
-    const requests = new RequestModel(payload);
-    let save;
-
-    [err, save] = await to(requests.save());
+    let courses;
+    [err, courses] = await to(ScheduleModel.findOne({
+      studentId: studentId
+    }, {
+      _id: 0,
+      studentId: 0,
+      createdDate: 0,
+      lastModified: 0
+    }));
     if (err) {
       console.log(err);
       res.status(500).end();
     }
-    res.status(201).end();
+    // console.log(courses);
+
+    //check overlapping//
+    let listOfCourse = courses.listOfCourse;
+    // console.log(listOfCourse);
+    let available = true;
+    for (let i = 0; i < listOfCourse.length; i++) {
+      let courseQ;
+      [err, courseQ] = await to(CourseModel.findOne({
+        _id: listOfCourse[i]
+      }, {
+        _id: 0,
+        dayAndStartTime: 1,
+        dayAndEndTime: 1
+      }));
+
+      for (let j = 0; j < 7; j++) {
+        if (courseQ.dayAndStartTime[j] == null || course.dayAndStartTime[j] == null) continue
+        let a = [courseQ.dayAndStartTime[j], courseQ.dayAndEndTime[j]];
+        let b = [course.dayAndStartTime[j], course.dayAndEndTime[j]];
+        // console.log(a);
+        // console.log(b);
+        if (isIntersect(a, b)) available = false;
+      }
+    }
+    console.log(available);
+    /////////////////////
+
+    if (available) {
+      payload.tutorId = course.tutorId;
+      payload.studentId = studentId;
+      payload.createdTime = dateThailand._d;
+      payload.lastModified = dateThailand._d;
+
+      const requests = new RequestModel(payload);
+      let save;
+
+      [err, save] = await to(requests.save());
+      if (err) {
+        console.log(err);
+        res.status(500).end();
+      }
+      res.send({ status: 1 });
+      res.status(201).end();
+    } else {
+      res.send({ status: 0 });
+      res.status(201).end();
+    }
+
   } else {
+    res.send({ status: 1 });
     res.status(201).end();
   }
 });
@@ -114,7 +178,7 @@ router.put("/", async (req, res) => {
   let tutorId = req.user._id;
   let err, request;
 
-  console.log(tutorId + "  " + payload.studentId + "  " + payload.courseId);
+  // console.log(tutorId + "  " + payload.studentId + "  " + payload.courseId);
 
   [err, request] = await to(
     RequestModel.findOne({
