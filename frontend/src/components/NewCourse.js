@@ -73,7 +73,7 @@ export default class NewCourse extends Component {
         if(!this.compareDate()){
           alert("Start Date must be before End Date");
         }else{
-          // alert(JSON.stringify(this.state))
+           alert(JSON.stringify(this.state))
          let data = await Util.createCourse(this.state.courseName,this.state.dayAndStartTime,this.state.dayAndEndTime,this.state.startDate,this.state.endDate,localStorage.getItem("token"),this.state.totalAmountOfStudent,this.state.description,this.state.courseFee,this.state.category);
           //let data = await Util.createCourse("ff",[6.3,null,null,null,null,null,null],[8.3,null,null,null,null,null,null],this.state.startDate,this.state.endDate,localStorage.getItem("token"),13,"dfsdfsdf",11111,"language");
           console.log(data);         
@@ -201,7 +201,7 @@ export default class NewCourse extends Component {
 
       render() {
         return (
-          <div className="card mb-4 p-3" style={{maxWidth:1000}}>
+          <div className="card mb-4 p-3" style={{maxWidth:1000}} >
               <h3 className="card-title border text-center">New Course</h3>
               <br/>
               <form onSubmit={event =>this.handleSubmit(event)}
