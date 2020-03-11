@@ -106,10 +106,7 @@ export class NavBar extends Component {
                 class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <a
-                  class="dropdown-item"
-                  onClick={() => this.onClickNavBar(`/profile`)}
-                >
+                <a class="dropdown-item" href="/profile">
                   My Profile<span className="sr-only">(current)</span>
                 </a>
                 <a
