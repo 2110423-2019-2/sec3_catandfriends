@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./CourseDetail.css";
+import TutorCard from "../components/TutorCard";
 export class CourseDetail extends Component {
   constructor(props) {
     super(props);
@@ -20,37 +21,41 @@ export class CourseDetail extends Component {
   }
 
   render() {
+    const date = (this.props.detail.lastModified + "").substring(0, 21);
+    console.log(date);
     return (
       <div className="card mb-3" style={{ maxWidth: "1000px" }}>
         <div className="row no-gutters">
           <div className="col-md-4">
-            <img
-              src={this.state.imgsrc}
-              className="card-img p-3"
-              style={{ maxWidth: "300px" }}
-              alt="..."
-            />
+            <div align="center">
+              <img
+                src={this.state.imgsrc}
+                className="card-img p-3"
+                style={{ maxWidth: "300px" }}
+                alt="..."
+              />
+            </div>
+            <div align="center">
+              <TutorCard
+                tutorname={this.props.detail.tutorName}
+                tutorid={this.props.detail.tutorId}
+              />
+            </div>
           </div>
           <div className="col-md-8">
             <div className="card-body">
               <div className="row border text-center" className="myStyle">
-                <h3 className="card-title border">Course Details</h3>
+                <h3 className="card-title border">Course Detail</h3>
               </div>
               <br />
               <div className="row">
                 <div className="col-md-6 border">
-                  <h4
-                    style={
-                      {
-                        /* textAlign: "center"*/
-                      }
-                    }
-                  >
-                    {this.props.detail.courseName}
-                  </h4>
+                  <h4>{this.props.detail.courseName}</h4>
                 </div>
                 <div className="col-md-6 border">
-                  <h4>{this.props.detail._id}</h4>
+                  <h5 className="tutorname">
+                    {" by " + this.props.detail.tutorName}
+                  </h5>
                 </div>
 
                 <div className="col-md-4 border">
@@ -58,19 +63,19 @@ export class CourseDetail extends Component {
                   {/*Enter*/}
                   <br />
                   <body>
-                    <strong>Tutor : </strong>
+                    <strong>Category : </strong>
                   </body>
                   <body>
-                    <strong>tutor Id : </strong>
+                    <strong>Start Date : </strong>
                   </body>
                   <body>
-                    <strong>Day and Time : </strong>
+                    <strong>End Date : </strong>
                   </body>
                   <body>
-                    <strong>Start day : </strong>
+                    <strong>Amount Left : </strong>
                   </body>
                   <body>
-                    <strong>End day : </strong>
+                    <strong>Price : </strong>
                   </body>
 
                   <br />
@@ -81,16 +86,15 @@ export class CourseDetail extends Component {
                   <br />
                   {/*Enter*/}
                   <br />
-                  <body>{this.props.detail.tutorName}</body>
-                  <body>{this.props.detail.tutorId}</body>
-                  <body>
-                    {this.props.detail.dayAndtime
-                      ? this.props.detail.dayAndtime
-                      : "none"}
-                  </body>
+                  <body>{this.props.detail.category}</body>
                   <body>{this.props.detail.startDate}</body>
                   <body>{this.props.detail.endDate}</body>
-
+                  <body>
+                    {this.props.detail.amountOfStudent +
+                      "/" +
+                      this.props.detail.totalAmountOfStudent}
+                  </body>
+                  <body>{this.props.detail.courseFee}</body>
                   <br />
                   {/*Enter*/}
 
@@ -99,7 +103,13 @@ export class CourseDetail extends Component {
 
                 <div className="col-md-12 border">
                   <br />
-                  <strong>description :</strong>
+                  <strong>Class Time :</strong>
+                  <p className="card-text">{this.props.detail.day}</p>
+                  <br />
+                </div>
+                <div className="col-md-12 border">
+                  <br />
+                  <strong>Description :</strong>
                   <p className="card-text">{this.state.description}</p>
                   <br />
                 </div>
@@ -117,7 +127,12 @@ export class CourseDetail extends Component {
                   <br />
                 </div>
                 <p className="card-text">
-                  <small className="text-muted">Last updated 3 mins ago</small>
+                  <small className="text-muted">
+                    {"Last updated " +
+                      (this.props.detail.lastModified + "").substring(0, 10) +
+                      " " +
+                      (this.props.detail.lastModified + "").substring(11, 19)}
+                  </small>
                 </p>
               </div>
             </div>

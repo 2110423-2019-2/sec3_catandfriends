@@ -1,7 +1,7 @@
 const express = require("express");
 const passport = require("passport");
+const bodyParser = require("body-parser")
 const app = express();
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const loginRoute = require("./login");
 const signupRoute = require("./signup");
@@ -35,8 +35,12 @@ app.use("/login", loginRoute);
 app.use("/signup", signupRoute);
 app.use("/courses",
   passport.authenticate("jwt-profile", { session: false }),
-  courseRoute);
-app.use("/requests", requestRoute);
+  courseRoute
+);
+app.use("/requests",
+  passport.authenticate("jwt-profile", { session: false }),
+  requestRoute
+);
 app.use(
   "/profile",
   passport.authenticate("jwt-profile", { session: false }),

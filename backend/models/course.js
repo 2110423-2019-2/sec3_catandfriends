@@ -20,7 +20,9 @@ const courseSchema = new Schema({
     lastModified: {type: Date,required: true},
     category: {type: String,required: true},
     day: String,
-    duration: String
+    duration: String,
+    premiumTutorStatus: Boolean,
+    isAvailable: Boolean
 }, {
     collection: collectionName, versionKey: false  
 });
