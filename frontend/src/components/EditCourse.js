@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import Util from "../apis/Util";
-export default class NewCourse extends Component {
+export default class EditCourse extends Component {
     constructor(props) {
         super(props);
         this.state = {
           courseID:"",
-          courseName:"test",
-          category:"Language",
+          courseName:"",
+          category:"",
           description:"",
-          price:"100",
-          totalAmountOfStudent:"12",
+          courseFee:"",
+          totalAmountOfStudent:"",
           startDate:"",
           endDate:"",
           Monday:false,
@@ -33,8 +33,9 @@ export default class NewCourse extends Component {
           Sunday:false,
           ST6:null,
           ET6:null,
-          dayAndStartTime:[6.3,null,null,null,null,null,null],
-          dayAndEndTime:[9.3,null,null,null,null,null,null]
+          dayAndStartTime:[null,null,null,null,null,null,null],
+          dayAndEndTime:[null,null,null,null,null,null,null],
+          day:""
         }
     
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -74,7 +75,7 @@ export default class NewCourse extends Component {
           alert("Start Date must be before End Date");
         }else{
           alert(JSON.stringify(this.state))
-         let data = await Util.createCourse(this.state.courseName,this.state.dayAndStartTime,this.state.dayAndEndTime,this.state.startDate,this.state.endDate,localStorage.getItem("token"),this.state.totalAmountOfStudent,this.state.description,this.state.price,this.state.category);
+         let data = await Util.editCourse(this.state._id,this.state.courseName,this.state.dayAndStartTime,this.state.dayAndEndTime,this.state.startDate,this.state.endDate,localStorage.getItem("token"),this.state.totalAmountOfStudent,this.state.description,this.state.price,this.state.category);
           //let data = await Util.createCourse("ff",[6.3,null,null,null,null,null,null],[8.3,null,null,null,null,null,null],this.state.startDate,this.state.endDate,localStorage.getItem("token"),13,"dfsdfsdf",11111,"language");
           console.log(data);         
         }
@@ -215,28 +216,30 @@ export default class NewCourse extends Component {
                   <div class="col-md-6">
                     <label>Category<br/>
                     <select name="category" onChange={this.handleChange} required>
-                    <option value="Language">Language</option>
-                    <option value="Mathematics">Mathematics</option>
-                    <option value="Science">Science</option>
-                    <option value="Social">Social</option>
+                    <option value="language">Language</option>
+                    <option value="mathematics">Mathematics</option>
+                    <option value="science">Science</option>
+                    <option value="social">Social</option>
                     </select>
                   </label>
                   </div>
               </div>
               <div class="row">
                   <div class="col-md-3" width="100%" >
-                    <label>Start Date<br/>
+                    <label>Start Date
+                      <div style={{fontSize:11, color:"red"}}>old start date : {this.state.startDate}</div>
                   <input type="Date" required value={this.state.startDate} onChange={this.handleChange} name="startDate" id="startDate" /> 
                  </label> 
                  </div>
                  <div class="col-md-3" width="100%" >
                     <label>End Date<br/>
+                    <div style={{fontSize:11, color:"red"}}>old end date : {this.state.endDate}</div>
                   <input type="Date" required value={this.state.endDate} onChange={this.handleChange} name="endDate" id="endDate" /> 
                  </label> 
                  </div>
                   <div class="col-md-3" width="100%">
                       <label>Price<br/>
-                  <input type="Number" min="0" required value={this.state.price} onChange={this.handleChange} name="price" />
+                  <input type="Number" min="0" required value={this.state.courseFee} onChange={this.handleChange} name="courseFee" />
                   </label>
                   </div>
                   <div class="col-md-3" width="100%">
@@ -291,6 +294,10 @@ export default class NewCourse extends Component {
                     <input type="Time" name="ET6" id="ET6" min="06:00" max="22:00" value={this.ET6} style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
                   </div>
                 </div>
+                <div class="col-md-3" width="100%">
+                  <label htmlFor="OldTime" style={{color:"red"}}>Previous time</label>
+                  <div style={{fontSize:13, color:"red"}}>{this.state.day}</div>
+                </div>
               </div>
               
               <div class="row">
@@ -309,5 +316,11 @@ export default class NewCourse extends Component {
            </div>
         );
       }
-      
+      async componentDidMount(){
+        console.log(window.location.search);
+        let data = await Util.getCourseById(window.location.search.substring(10));
+        console.log(data)
+        this.setState(data)
+        console.log(this.state)
+      }
 }

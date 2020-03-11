@@ -151,17 +151,17 @@ const Util = {
     if (response.status == 500) return { error: true };
     if (response.status == 200) return response.json();
   },
-  editCourse: async (courseName,dayAndStartTime,dayAndEndTime,startDate,endDate,token,totalAmountOfStudent,description,courseFee,category) => {
+  editCourse: async (_id,courseName,dayAndStartTime,dayAndEndTime,startDate,endDate,token,totalAmountOfStudent,description,courseFee,category) => {
     const URL = `http://localhost:8000/courses?token=${token}`;
     const amountOfStudent = totalAmountOfStudent;
     const response = await fetch(URL, {
-      method: "POST",
+      method: "PUT",
       mode: "cors",
       cache: "no-cache",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({courseName,dayAndStartTime,dayAndEndTime,startDate,endDate,amountOfStudent,totalAmountOfStudent,description,courseFee,category})
+      body: JSON.stringify({_id,courseName,dayAndStartTime,dayAndEndTime,startDate,endDate,amountOfStudent,totalAmountOfStudent,description,courseFee,category})
     });
     console.log(response.status);
     if (response.status == 500) return { error: true };

@@ -8,7 +8,7 @@ export default class NewCourse extends Component {
           courseName:"",
           category:"Language",
           description:"",
-          price:"",
+          courseFee:"",
           totalAm0ountOfStudent:"",
           startDate:"",
           endDate:"",
@@ -33,8 +33,8 @@ export default class NewCourse extends Component {
           Sunday:false,
           ST6:null,
           ET6:null,
-          dayAndStartTime:[6.3,null,null,null,null,null,null],
-          dayAndEndTime:[9.3,null,null,null,null,null,null]
+          dayAndStartTime:[null,null,null,null,null,null,null],
+          dayAndEndTime:[null,null,null,null,null,null,null]
         }
     
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -74,7 +74,7 @@ export default class NewCourse extends Component {
           alert("Start Date must be before End Date");
         }else{
           // alert(JSON.stringify(this.state))
-         let data = await Util.createCourse(this.state.courseName,this.state.dayAndStartTime,this.state.dayAndEndTime,this.state.startDate,this.state.endDate,localStorage.getItem("token"),this.state.totalAmountOfStudent,this.state.description,this.state.price,this.state.category);
+         let data = await Util.createCourse(this.state.courseName,this.state.dayAndStartTime,this.state.dayAndEndTime,this.state.startDate,this.state.endDate,localStorage.getItem("token"),this.state.totalAmountOfStudent,this.state.description,this.state.courseFee,this.state.category);
           //let data = await Util.createCourse("ff",[6.3,null,null,null,null,null,null],[8.3,null,null,null,null,null,null],this.state.startDate,this.state.endDate,localStorage.getItem("token"),13,"dfsdfsdf",11111,"language");
           console.log(data);         
         }
@@ -236,7 +236,7 @@ export default class NewCourse extends Component {
                  </div>
                   <div class="col-md-3" width="100%">
                       <label>Price<br/>
-                  <input type="Number" min="0" required value={this.state.price} onChange={this.handleChange} name="price" />
+                  <input type="Number" min="0" required value={this.state.courseFee} onChange={this.handleChange} name="courseFee" />
                   </label>
                   </div>
                   <div class="col-md-3" width="100%">

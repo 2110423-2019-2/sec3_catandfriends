@@ -224,7 +224,7 @@ router.put("/", async (req, res) => {
   const course = await CourseModel.find({ _id: payload["_id"] });
   // console.log(course[0]);
   console.log(payload);
-  // console.log(course.length);
+   //console.log(course.length);
   if (course == undefined || course.length == 0) {
     var s = "this course isn't create yet";
     console.log(s);
