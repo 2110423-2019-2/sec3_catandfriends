@@ -3,7 +3,7 @@ const router = express.Router();
 const CourseModel = require("./models/course");
 const userModel = require("./models/user");
 const moment = require("moment-timezone");
-
+const to = require("await-to-js").default;
 function formatTime(time) {
   let timeS = time.toString();
   if (timeS.includes(".")) {
@@ -24,9 +24,9 @@ function formatRangeOfTime(start, end) {
 
 function formatDate(date) {
   s = "";
-  let dateSplit = ((date).toString()).split(" ");
+  let dateSplit = date.toString().split(" ");
   s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
-  return s
+  return s;
 }
 
 router.get("/", async (req, res) => {
@@ -51,7 +51,7 @@ router.get("/", async (req, res) => {
       // console.log(course);
       let s = "";
       for (j = 0; j < 7; j++) {
-        if (course['dayAndStartTime'][j] == null) continue;
+        if (course["dayAndStartTime"][j] == null) continue;
         if (j == 0) s += "Mon ";
         else if (j == 1) s += "Tue ";
         else if (j == 2) s += "Wed ";
@@ -59,7 +59,11 @@ router.get("/", async (req, res) => {
         else if (j == 4) s += "Fri ";
         else if (j == 5) s += "Sat ";
         else if (j == 6) s += "Sun ";
-        s += formatRangeOfTime(course['dayAndStartTime'][j], course['dayAndEndTime'][j]) + "/ "
+        s +=
+          formatRangeOfTime(
+            course["dayAndStartTime"][j],
+            course["dayAndEndTime"][j]
+          ) + "/ ";
       }
       course.day = s.slice(0, s.length - 2);
 
@@ -73,10 +77,66 @@ router.get("/", async (req, res) => {
     //console.log("print");
     let course = await CourseModel.find({ tutorId: tutorId });
     if (course.length == 0) {
-      // var s = "tutor hasn't created the courses";
+      // var s = "tutor hasn't created the course";
       // console.log(s);
       res.json([]);
-    } else res.json(course);
+    } else {
+      for (let i = 0; i < course.length; i++) {
+        let err, tutor;
+        [err, tutor] = await to(
+          userModel.findOne({
+            _id: course[i].tutorId
+          })
+        );
+        if (err) {
+          res.status(500).end();
+        }
+        course[i].premiumTutorStatus = tutor.premiumStatus;
+        let tutorName = tutor.firstName + " " + tutor.lastName;
+        let s = "";
+        for (j = 0; j < 7; j++) {
+          if (course[i]["dayAndStartTime"][j] == null) continue;
+          if (j == 0) s += "Mon ";
+          else if (j == 1) s += "Tue ";
+          else if (j == 2) s += "Wed ";
+          else if (j == 3) s += "Thu ";
+          else if (j == 4) s += "Fri ";
+          else if (j == 5) s += "Sat ";
+          else if (j == 6) s += "Sun ";
+          // s += course[i]['dayAndStartTime'][j] + "-" + course[i]['dayAndEndTime'][j] + "/ ";
+          s +=
+            formatRangeOfTime(
+              course[i]["dayAndStartTime"][j],
+              course[i]["dayAndEndTime"][j]
+            ) + "/ ";
+        }
+        course[i].day = s.slice(0, s.length - 2);
+        s = "";
+        let dateSplit = course[i].startDate.toString().split(" ");
+        s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
+        dateSplit = course[i].endDate.toString().split(" ");
+        s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
+        course[i].duration = s;
+        course[i].isAvailable = course[i].amountOfStudent > 0 ? true : false;
+        // let remaining = course[i].amountOfStudent;
+
+        course[i].startDate = undefined;
+        course[i].endDate = undefined;
+        course[i].dayAndStartTime = undefined;
+        course[i].dayAndEndTime = undefined;
+        course[i].listOfStudentId = undefined;
+        // course[i].amountOfStudent = undefined;
+        course[i].createdTime = undefined;
+        course[i].lastModified = undefined;
+
+        course[i] = {
+          ...course[i].toObject(),
+          tutorName: tutorName
+          // remaining: remaining
+        };
+      }
+      res.json(course);
+    }
     res.status(200).end();
   } else if (studentId != undefined) {
     // console.log(studentId);
@@ -128,10 +188,10 @@ router.post("/", async (req, res) => {
     res.status(400).end();
   } else {
     payload.tutorId = req.user._id;
-    const courses = new CourseModel(payload);
-    console.log(courses);
-    res.json(courses);
-    await courses.save();
+    const course = new CourseModel(payload);
+    console.log(course);
+    res.json(course);
+    await course.save();
     console.log("klfsal");
     res.status(201).end();
   }

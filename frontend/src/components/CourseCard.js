@@ -83,10 +83,6 @@ class CardBody extends React.Component {
             <div>{this.props.price}</div>
           </div>
         </div>
-
-        <small className="name">{"by " + this.props.tutorname}</small>
-        <div style={{ textAlign: "right" }}>{this.props.price}</div>
-        <small className="name">{this.props.tutorname}</small>
       </div>
     );
   }
@@ -127,7 +123,7 @@ class CourseCard extends React.Component {
           price={priceS}
           date={day}
           tutorname={name}
-          remain={this.props.detail.remaining}
+          remain={this.props.detail.amountOfStudent}
           total={this.props.detail.totalAmountOfStudent}
           available={this.props.detail.isAvailable}
         ></CardBody>
