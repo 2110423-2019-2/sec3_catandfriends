@@ -26,7 +26,9 @@ export default class RequestScrollBar extends Component {
               return (
                 <table class="table table-borderless" key={item.requestId}>
                   <td>
-                    <label>{item.studentName}</label>
+                    <a href={`/profile?userId=${item.studentId}`}>
+                      {item.studentName}
+                    </a>
                   </td>
                   <td>
                     <label>{item.courseName}</label>
