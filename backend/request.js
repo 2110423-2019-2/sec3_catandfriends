@@ -51,7 +51,8 @@ router.get('/', async (req, res) => {
       ...requests[i].toObject(),
       isAvailable: (course.amountOfStudent > 0 ? true : false),
       studentName: (user['firstName'] + " " + user['lastName']),
-      createdTime: (formatedTime(requests[i].createdTime))
+      createdTime: (formatedTime(requests[i].createdTime)),
+      courseName: course.courseName
     }
   }
   res.json(requests);
