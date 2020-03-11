@@ -11,12 +11,14 @@ const tutorSchema = new Schema(
     },
     premiumStatus: {
       type: Boolean,
-      required: true
+      required: true,
+      default: false
     },
     verificationDocument: {
       type: String,
       unique: true,
-      sparse: true
+      sparse: true,
+      default: null
     }
   },
   {

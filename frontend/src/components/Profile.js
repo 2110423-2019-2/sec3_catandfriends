@@ -34,6 +34,7 @@ export class Home extends Component {
     let data = await Util.getProfile(window.location.search.substring(8));
     await this.setState({ data });
     await console.log(data);
+    console.log(localStorage.getItem("token"));
   }
 }
 

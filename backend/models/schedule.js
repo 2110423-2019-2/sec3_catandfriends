@@ -4,8 +4,8 @@ var collectionName = "schedule";
 
 const scheduleSchema = new Schema(
   {
-    studentId: String,
-    listOfCourse: Array,
+    studentId: { type: String, required: true, unique: true },
+    listOfCourse: { type: Array, default: [] },
     createdDate: { type: Date },
     lastModified: { type: Date }
   },
