@@ -133,5 +133,5 @@ class CourseCard extends React.Component {
     history.push(`/course?courseId=${courseId}`);
   };
 }
-
+//ll
 export default CourseCard;
