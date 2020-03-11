@@ -35,7 +35,9 @@ export class Login extends Component {
       window.alert("email or password invalid");
       document.getElementById("password").value = "";
     } else {
-      await localStorage.setItem("token", data.token);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", data.user);
+      console.log(data);
       history.push("/profile");
     }
   };

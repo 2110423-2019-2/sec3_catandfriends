@@ -50,6 +50,7 @@ html {
   border-radius: 0px 0px 12px 12px;
 }
 .course-name {
+  margin-top: 8px;
   color: #000000;
   font-weight: 600;
 }
@@ -57,13 +58,23 @@ html {
   font-size: 10px;
   font-weight: 700;
   color: gray;
+  overflow: auto;
+  height: 20px;
 }
-
+.name {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: gray;
+}
 .body-content {
   padding-bottom: 5px;
   font-size: 10px;
   line-height: 1;
   color: #000000;
+  overflow: auto;
+  height: 30px;
+  text-indent: 15px;
 }
 
 .button-primary {
@@ -78,4 +89,16 @@ html {
 }
 .button-primary i {
   padding-right: 4px;
+}
+.amount {
+  font-weight: 600;
+}
+.price {
+  text-align: right;
+}
+.full {
+  color: red;
+}
+.notfull {
+  color: green;
 }

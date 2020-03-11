@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import CourseDetail from "../components/CourseDetail";
-import TutorCard from "../components/TutorCard";
+// import TutorCard from "../components/TutorCard";
 import Comment from "../components/Comment";
 import Util from "../apis/Util";
 export default class CourseInformation extends Component {
@@ -11,7 +11,7 @@ export default class CourseInformation extends Component {
       return (
         <div className="justify-content-center">
           <div className="row justify-content-center">
-            <TutorCard />
+            {/* <TutorCard /> */}
             <CourseDetail detail={this.state.data} />
           </div>
           <div className="row justify-content-center"></div>

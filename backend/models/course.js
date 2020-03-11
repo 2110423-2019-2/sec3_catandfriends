@@ -12,12 +12,17 @@ const courseSchema = new Schema({
     endDate: {type: Date,required: true},
     tutorId: {type: String,required: true},
     amountOfStudent: {type: Number,required: true},
-    listOfStudentId: {type: [String],required: true},
+    totalAmountOfStudent: {type: Number,required: true, default: 0},
+    listOfStudentId: {type: [String]},
     description: {type: String,required: true},
     courseFee: {type: Number,required: true},
     createdTime: {type: Date,required: true},
     lastModified: {type: Date,required: true},
-    category: {type: String,required: true}
+    category: {type: String,required: true},
+    day: String,
+    duration: String,
+    premiumTutorStatus: Boolean,
+    isAvailable: Boolean
 }, {
     collection: collectionName, versionKey: false  
 });

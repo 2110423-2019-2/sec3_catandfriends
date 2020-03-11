@@ -208,17 +208,17 @@ class Filter extends React.Component {
                 mathematics:  false,
                 science:  false,
                 social:  false,
-                language:  false,
+                language:  false
             },
             time: {
                 time6To8:  false,
-                time8To1false:  false,
-                time1falseTo12:  false,
+                time8To10:  false,
+                time10To12:  false,
                 time12To14:  false,
                 time14To16:  false,
                 time16To18:  false,
-                time18To2false:  false,
-                time2falseTo22:  false
+                time18To20:  false,
+                time20To22:  false
             },
             price: {
                 price0To500:  false,
