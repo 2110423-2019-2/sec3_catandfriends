@@ -11,6 +11,7 @@ export class Home extends Component {
     if (this.state.data.role == "tutor") {
       return <TutorPage owner={this.state.data.owner} data={this.state.data} />;
     } else {
+      console.log("This is me!");
       return (
         <StudentPage owner={this.state.data.owner} data={this.state.data} />
       );
