@@ -186,7 +186,7 @@ export default class NewCourse extends Component {
           })
         }
 
-        document.getElementById('Monday').required=false;//!(Mon||Tue||Wed||Thu||Fri||Sat||Sun);
+        document.getElementById('Monday').required=!(Mon||Tue||Wed||Thu||Fri||Sat||Sun);
       }
 
       compareDate(){
