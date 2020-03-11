@@ -104,7 +104,7 @@ const Util = {
     if (response.status == 200) return response.json();
   },
   editCourse: async(courseName,dayAndStartTime,dayAndEndTime,startDate,EndDate,amountOfStudent,description,courseFee,category) => {
-    const URL = `http://localhost:8000/course/create`;
+    const URL = `http://localhost:8000/courses`;
     const response = await fetch(URL, {
       method: "PUT",
       mode: "cors",
@@ -113,7 +113,7 @@ const Util = {
       },
       body: JSON.stringify({courseName,dayAndStartTime,dayAndEndTime,startDate,EndDate,amountOfStudent,description,courseFee,category})
     });
-    if (response.status == 500) return { error: true };
+    if (response.status == 400) return { error: true };
     if (response.status == 200) return response.json();
   }
 
