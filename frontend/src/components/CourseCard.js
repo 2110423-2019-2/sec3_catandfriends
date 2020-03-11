@@ -1,5 +1,6 @@
 import React from "react";
 import "./CourseCard.css";
+import history from "./../history";
 //import '@fortawesome/fontawesome-free';
 class CardHeader extends React.Component {
   render() {
@@ -60,21 +61,29 @@ class Button extends React.Component {
 class CardBody extends React.Component {
   constructor(props) {
     super(props);
-    this.handleOnClick = this.handleOnClick.bind(this);
+    //this.handleOnClick = this.handleOnClick.bind(this);
   }
-  handleOnClick(e) {}
   render() {
     return (
-      <div
-        className="mcard-body"
-        onClick={e => {
-          console.log("click");
-        }}
-      >
+      <div className="mcard-body">
         <article className="date">{this.props.date}</article>
         <h5 className="course-name">{this.props.title}</h5>
         <p className="body-content">{this.props.text}</p>
-        <div style={{ textAlign: "right" }}>{this.props.price}</div>
+        <div class="row">
+          <div
+            class={
+              this.props.available
+                ? "col-md-6 amount notfull"
+                : "col-md-6 amount full"
+            }
+          >
+            <div>{this.props.remain + "/" + this.props.total}</div>
+          </div>
+          <div class="col-md-6 price">
+            <div>{this.props.price}</div>
+          </div>
+        </div>
+
         <small className="name">{"by " + this.props.tutorname}</small>
       </div>
     );
@@ -100,8 +109,12 @@ class CourseCard extends React.Component {
     const image =
       "https://i.kym-cdn.com/photos/images/newsfeed/001/535/446/1c5.jpg";
     const priceS = this.props.detail.courseFee + ".-";
+    const courseid = this.props.detail._id;
     return (
-      <article className="CourseCard">
+      <article
+        className="CourseCard"
+        onClick={() => this.onClickGotoCourseInform(courseid)}
+      >
         <CardHeader imgsrc={image} category={category}></CardHeader>
         <CardBody
           title={courseName}
@@ -109,10 +122,16 @@ class CourseCard extends React.Component {
           price={priceS}
           date={day}
           tutorname={name}
+          remain={this.props.detail.remaining}
+          total={this.props.detail.totalAmountOfStudent}
+          available={this.props.detail.isAvailable}
         ></CardBody>
       </article>
     );
   }
+  onClickGotoCourseInform = courseId => {
+    history.push(`/course?courseId=${courseId}`);
+  };
 }
-
+//ll
 export default CourseCard;

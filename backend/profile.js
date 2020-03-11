@@ -58,5 +58,4 @@ router.get("/", async (req, res, next) => {
   }
   return res.status(200).send(profile);
 });
-
 module.exports = router;
