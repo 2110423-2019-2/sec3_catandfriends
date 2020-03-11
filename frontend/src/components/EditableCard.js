@@ -6,17 +6,16 @@ import "./EditableCard.css";
 class EditBtn extends React.Component {
   render() {
     return (
-      
-        <button
-         
-          class="button button-secondary"
-          // data-toggle="modal"
-          // data-target="#editModal"
-          onclick={() => {console.log("click")}}
-        >
-          <i className="fa fa-edit"> edit</i>
-        </button>
-
+      <button
+        class="button button-secondary"
+        // data-toggle="modal"
+        // data-target="#editModal"
+        onclick={() => {
+          console.log("click");
+        }}
+      >
+        <i className="fa fa-edit"> edit</i>
+      </button>
     );
   }
 }
@@ -39,7 +38,9 @@ class CardHeader extends React.Component {
         </h6>
         <button
           class="button button-secondary"
-          onClick={() => {history.push(`/course/edit?courseId=${this.props.courseid}`)}}
+          onClick={() => {
+            history.push(`/course/edit?courseId=${this.props.courseid}`);
+          }}
         >
           <i className="fa fa-edit"> edit</i>
         </button>
@@ -90,7 +91,10 @@ class CardBody extends React.Component {
   }
   render() {
     return (
-      <div className="mcard-body"  onClick={() => this.onClickGotoCourseInform(this.props.courseid)}>
+      <div
+        className="mcard-body"
+        onClick={() => this.onClickGotoCourseInform(this.props.courseid)}
+      >
         <article className="date">{this.props.date}</article>
         <h5 className="course-name">{this.props.title}</h5>
         <p className="body-content">{this.props.text}</p>
@@ -140,11 +144,14 @@ class EditableCard extends React.Component {
     const priceS = this.props.detail.courseFee + ".-";
     const courseid = this.props.detail._id;
     return (
-      <article
-        className="CourseCard"
-      >
-        <CardHeader courseid={courseid} imgsrc={image} category={category}></CardHeader>
+      <article className="CourseCard">
+        <CardHeader
+          courseid={courseid}
+          imgsrc={image}
+          category={category}
+        ></CardHeader>
         <CardBody
+          courseid={courseid}
           title={courseName}
           text={description}
           price={priceS}
@@ -162,6 +169,5 @@ class EditableCard extends React.Component {
   };
 }
 //ll
-
 
 export default EditableCard;
