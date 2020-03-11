@@ -114,7 +114,9 @@ const Util = {
     if (response.status == 200) return response.json();
   },
   updateRequest: async (requestId, status, studentId, courseId) => {
-    const URL = `http://localhost:8000/requests`;
+    const URL = `http://localhost:8000/requests?token=${localStorage.getItem(
+      "token"
+    )}`;
     const response = await fetch(URL, {
       method: "PUT",
       mode: "cors",

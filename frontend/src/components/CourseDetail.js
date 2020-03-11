@@ -245,7 +245,7 @@ class StudentList extends Component {
   }
 
   onClick = studentId => {
-    history.push(`/profile?us erId=${studentId}`);
+    history.push(`/profile?userId=${studentId}`);
   };
 }
 
