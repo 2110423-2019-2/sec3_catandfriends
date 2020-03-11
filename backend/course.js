@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
     if (course.length == 0) {
       var s = "tutor hasn't created the courses";
       console.log(s);
-      res.json(s);
+      res.json([]);
     } else res.json(course);
     res.status(200).end();
   } else if (studentId != undefined) {

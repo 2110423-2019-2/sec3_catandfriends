@@ -4,18 +4,18 @@ import Nav from "./NavBar";
 import AddPhoto from "./AddPhoto";
 import Util from "../apis/Util";
 
-export class Regis extends Component {
+export class Register extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       firstName: "",
       lastName: "",
-      gender: "",
+      gender: "Male",
       password: "",
       email: "",
       phoneNumber: "",
-      Utype: "",
+      Utype: "tutor",
       Birthday: "",
       SSN: ""
     };
@@ -36,35 +36,22 @@ export class Regis extends Component {
       [name]: value
     });
   }
-  validateForm() {
-    var x = document.forms["myForm"]["fname"].value;
-    if (x == "") {
-      alert("Name must be filled out");
-      return false;
-    }
-  }
 
   render() {
     return (
-      <div className="card mb-3 p-2" style={{ maxWidth: 800 }}>
-        <h3 className="card-title border text-center">Create an account</h3>
+      <div className="card mb-3 p-4 bg-light border-secondary mb-1 " style={{ maxWidth: 800 }}>
+        <h3 className="card-title border text-center bg-dark text-white ">
+          Create an account
+        </h3>
         <br />
         <form
-          onSubmit={() => this.onclickGoToLogin()}
-          /*name="myForm"
-          action="/action_page.php"
-          onsubmit = "return validateForm()"
-          method="post"*/
-          /*{e => {
-            alert(JSON.stringify(this.state));
-            console.log(this.state);
-            e.preventDefault();
-          }}*/
+          onSubmit={event => this.onclickGoToLogin(event)}
           style={{ marginLeft: 30 }}
+         
         >
           <div className="row">
             <div className="col-md-6" width="100%">
-              <label>
+              <label className= "text-dark">
                 First Name
                 <br />
                 <input
@@ -78,7 +65,7 @@ export class Regis extends Component {
               </label>
             </div>
             <div className="col-md-6">
-              <label>
+              <label className= "text-dark">
                 Last Name
                 <br />
                 <input
@@ -94,7 +81,7 @@ export class Regis extends Component {
           </div>
           <div className="row">
             <div className="col-md-6" width="100%">
-              <label>
+              <label className= "text-dark">
                 Password
                 <br />
                 <input
@@ -109,18 +96,16 @@ export class Regis extends Component {
             </div>
             <div className="col-md-6" width="100%">
               <br />
-              <label htmlFor="user">User type</label>
+              <label htmlFor="user" className= "text-dark">User type</label>
               <select id="user" name="Utype" onChange={this.handleChange}>
-                <option value="tutor" selected>
-                  tutor
-                </option>
+                <option value="tutor">tutor</option>
                 <option value="student">student</option>
               </select>
             </div>
           </div>
           <div className="row">
             <div className="col-md-6" width="100%">
-              <label>
+              <label className= "text-dark">
                 SSN
                 <br />
                 <input
@@ -138,18 +123,16 @@ export class Regis extends Component {
             </div>
             <div className="col-md-6">
               <br />
-              <label htmlFor="gender">Gender </label>
+              <label htmlFor="gender" className= "text-dark">Gender </label>
               <select id="gender" name="gender" onChange={this.handleChange}>
-                <option value="Male" selected>
-                  Male
-                </option>
+                <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
             </div>
           </div>
           <div className="row">
             <div className="col-md-6" width="100%">
-              <label>
+              <label className= "text-dark">
                 Birthday
                 <br />
                 <input
@@ -164,11 +147,11 @@ export class Regis extends Component {
               </label>
             </div>
             <div className="col-md-6">
-              <label>
+              <label className= "text-dark">
                 Email
                 <br />
                 <input
-                placeholder = "example@tutor.com"
+                  placeholder="example@tutor.com"
                   type="email"
                   value={this.state.email}
                   style={{ width: 250 }}
@@ -180,11 +163,12 @@ export class Regis extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-6" width="100%">
-              <label>
+            <div className="col-md-6 " width="100%">
+              <label className= "text-dark">
                 Phone Number
                 <br />
                 <input
+                  /*className = " border-secondary mb-1"*/
                   type="tel"
                   value={this.state.phoneNumber}
                   placeholder="0123456789"
@@ -194,6 +178,7 @@ export class Regis extends Component {
                   required
                   pattern="[0-9]{10}"
                   maxlength="10"
+                 
                 />
               </label>
             </div>
@@ -202,27 +187,36 @@ export class Regis extends Component {
           <div className="text-center" style={{ marginRight: 40 }}>
             <input type="submit" value="Submit" className="btn btn-success" />
           </div>
+          
         </form>
       </div>
     );
   }
-  async onclickGoToLogin() {
-    {
-      
-      await Util.register(
-        this.state.firstName,
-        this.state.lastName,
-        this.state.gender,
-        this.state.password,
-        this.state.email,
-        this.state.phoneNumber,
-        this.state.Utype,
-        this.state.Birthday,
-        this.state.SSN
-      );
-      history.push(`./login`);
+
+  /*onClickSubmit = () =>{
+    
+  }*/
+  async onclickGoToLogin(event) {
+    console.log(this.state);
+    event.preventDefault();
+    let data = await Util.register(
+      this.state.firstName,
+      this.state.lastName,
+      this.state.gender,
+      this.state.password,
+      this.state.email,
+      this.state.phoneNumber,
+      this.state.Utype,
+      this.state.Birthday,
+      this.state.SSN
+    );
+    console.log(data);
+    if (data.error) {
+      window.alert("cannot register");
+    } else {
+      history.push(`/login`);
     }
   }
 }
 
-export default Regis;
+export default Register;

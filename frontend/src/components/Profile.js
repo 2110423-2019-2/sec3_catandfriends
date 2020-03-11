@@ -20,6 +20,7 @@ export class Home extends Component {
     let data = await Util.getProfile(window.location.search);
     await this.setState({ data });
     await console.log(data);
+    console.log(localStorage.getItem("token"));
   }
 }
 

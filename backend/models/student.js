@@ -10,7 +10,7 @@ const studentSchema = new Schema(
       unique: true
     },
     scheduleId: {
-      type: mongoose.Types.ObjectId,
+      type: String,
       required: true,
       unique: true
     }
