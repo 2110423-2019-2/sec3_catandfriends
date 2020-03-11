@@ -69,8 +69,20 @@ class CardBody extends React.Component {
         <article className="date">{this.props.date}</article>
         <h5 className="course-name">{this.props.title}</h5>
         <p className="body-content">{this.props.text}</p>
-        <div style={{ textAlign: "right" }}>{this.props.price}</div>
-        <small className="name">{"by " + this.props.tutorname}</small>
+        <div class="row">
+          <div
+            class={
+              this.props.available
+                ? "col-md-6 amount notfull"
+                : "col-md-6 amount full"
+            }
+          >
+            <div>{this.props.remain + "/" + this.props.total}</div>
+          </div>
+          <div class="col-md-6 price">
+            <div>{this.props.price}</div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -91,7 +103,10 @@ class CourseCard extends React.Component {
       day,
       duration
     } = this.props.detail;
-    const name = this.props.detail.tutorName;
+    // console.log(this.props.detail);
+    const name = this.props.detail.tutorName
+      ? "by " + this.props.detail.tutorName
+      : "";
     const image =
       "https://i.kym-cdn.com/photos/images/newsfeed/001/535/446/1c5.jpg";
     const priceS = this.props.detail.courseFee + ".-";
@@ -108,6 +123,9 @@ class CourseCard extends React.Component {
           price={priceS}
           date={day}
           tutorname={name}
+          remain={this.props.detail.amountOfStudent}
+          total={this.props.detail.totalAmountOfStudent}
+          available={this.props.detail.isAvailable}
         ></CardBody>
       </article>
     );
@@ -116,5 +134,5 @@ class CourseCard extends React.Component {
     history.push(`/course?courseId=${courseId}`);
   };
 }
-
+//ll
 export default CourseCard;

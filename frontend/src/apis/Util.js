@@ -56,8 +56,9 @@ const Util = {
       window.alert("Please login first!");
       return history.push("./login");
     }
+    console.log(userId);
     const URL = userId
-      ? `http://localhost:8000/profile?userId=${userId}&token=${localStorage.getItem(
+      ? `http://localhost:8000/profile${userId}&token=${localStorage.getItem(
           "token"
         )}`
       : `http://localhost:8000/profile?token=${localStorage.getItem("token")}`;

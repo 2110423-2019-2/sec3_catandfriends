@@ -165,7 +165,6 @@ export class CourseDetail extends Component {
   async onClick(event) {
     //console.log(this.state);
     // event.preventDefault();
-
     let data = await Util.createRequests(
       this.props.detail.tutorId,
       this.props.detail._id
