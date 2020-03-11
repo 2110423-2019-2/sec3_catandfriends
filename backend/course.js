@@ -48,6 +48,7 @@ router.get("/", async (req, res) => {
       let tutor = await userModel.findById(course.tutorId);
       course = { ...course.toObject() };
       course.tutorName = tutor.firstName + " " + tutor.lastName;
+      course.owner = course.tutorId == req.user._id;
       // console.log(course);
       let s = "";
       for (j = 0; j < 7; j++) {

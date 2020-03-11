@@ -8,3 +8,12 @@
 .center {
   text-align: center;
 }
+.studentlist:hover {
+  background-color: beige;
+}
+.studentlist {
+  height: 30px;
+}
+.slist {
+  vertical-align: middle;
+}

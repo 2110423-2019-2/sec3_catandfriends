@@ -47,6 +47,16 @@ export class CourseDetail extends Component {
         </button>
       );
     }
+    let studentList;
+    if (this.props.detail.owner) {
+      studentList = (
+        <div className="col-md-12 border">
+          <AllStudentList data={this.props.detail} />
+        </div>
+      );
+    } else {
+      studentList = "";
+    }
     return (
       <div className="card mb-3" style={{ maxWidth: "1000px" }}>
         <div className="row no-gutters">
@@ -154,6 +164,7 @@ export class CourseDetail extends Component {
                       (this.props.detail.lastModified + "").substring(11, 19)}
                   </small>
                 </p>
+                {studentList}
               </div>
             </div>
           </div>
@@ -178,4 +189,64 @@ export class CourseDetail extends Component {
     // }
   }
 }
+class AllStudentList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: []
+    };
+  }
+
+  render() {
+    if (!this.state.data) {
+      return <a></a>;
+    }
+    return (
+      <div className="text-center">
+        <h3>Student List</h3>
+        {this.state.data.map(item => (
+          <StudentList detail={item} key={item._id} />
+        ))}
+      </div>
+    );
+  }
+
+  async componentDidMount() {
+    var studentList = [];
+    console.log(this.props.data);
+    this.props.data.listOfStudentId.forEach(studentId => {
+      let student = Util.getProfile(studentId);
+      studentList.push(student);
+    });
+    studentList = await Promise.all(studentList);
+    console.log(studentList);
+    this.setState({ data: studentList });
+  }
+}
+class StudentList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div className="card slist">
+        <a
+          className="studentlist"
+          onClick={() => this.onClick(this.props.detail._id)}
+        >
+          {this.props.detail.firstName + "\t" + this.props.detail.lastName}
+        </a>
+      </div>
+    );
+  }
+
+  onClick = studentId => {
+    history.push(`/profile?us erId=${studentId}`);
+  };
+}
+
 export default CourseDetail;
