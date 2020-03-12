@@ -61,10 +61,10 @@ router.get("/", async (req, res) => {
     res.json(s);
     res.status(200).end();
   } else {
-    res.json("invalid");
+    res.status(404).json("invalid");
     course = await CourseModel.find({});
     console.log(course);
-    res.status(404).end();
+    //res.status(404).end();
   }
 });
 
@@ -80,20 +80,29 @@ router.post("/", async (req, res) => {
     res.status(400).end();
   } else if (payload["dayAndStartTime"].length != 7) {
     console.log("dayAndStartTime is incorrect");
-    res.json("dayAndStartTime is incorrect");
-    res.status(400).end();
+    res.status(400).json("dayAndStartTime is incorrect");
+    //res.status(400).end();
   } else if (payload["dayAndEndTime"].length != 7) {
     console.log("dayAndEndTime is incorrect");
-    res.json("dayAndEndTime is incorrect");
-    res.status(400).end();
+    res.status(400).json("dayAndEndTime is incorrect");
+    //res.status(400).end();
+  } else if(CourseModel.findOne({ courseName: payload["courseName"] }) ){
+      res.status(400).json("it's already has this courseName");
+
   } else {
+    for(i=0;i<7;i++){
+      if (payload["dayAndStartTime"][i] > payload["dayAndEndTime"][i]){
+        res.status(400).json("StartTime must be before endTime");
+        return ;
+      }
+    }
     payload.tutorId = req.user._id;
     const courses = new CourseModel(payload);
     console.log(courses);
-    res.json(courses);
+    res.status(201).json(courses);
     await courses.save();
     console.log("klfsal");
-    res.status(201).end();
+    //res.status(201).end();
   }
 });
 
@@ -106,31 +115,38 @@ router.put("/", async (req, res) => {
   if (course == undefined || course.length == 0) {
     var s = "this course isn't create yet";
     console.log(s);
-    res.json(s);
+    res.status(201).json(s);
   } else if (
     payload["dayAndStartTime"] != undefined &&
     payload["dayAndStartTime"].length != 7
   ) {
     console.log("dayAndStartTime is incorrect");
-    res.json("dayAndStartTime is incorrect");
-    res.status(400).end();
+    res.status(400).json("dayAndStartTime is incorrect");
+    //res.status(400).end();
   } else if (
     payload["dayAndEndTime"] != undefined &&
     payload["dayAndEndTime"].length != 7
   ) {
     console.log("dayAndEndTime is incorrect");
-    res.json("dayAndEndTime is incorrect");
-    res.status(400).end();
+    res.status(400).json("dayAndEndTime is incorrect");
+    //res.status(400).end();
+  } else if(CourseModel.findOne({ courseName: payload["courseName"] }) ){
+    res.status(400).json("it's already has this courseName");
+
   } else {
-    console.log("jasdlkjf");
+    for(i=0;i<7;i++){
+      if (payload["dayAndStartTime"][i] > payload["dayAndEndTime"][i]){
+        res.status(400).json("StartTime must be before endTime");
+      }
+    }
     const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
     /*for(var k in payload)
             course[0][k] = payload[k];*/
     payload.lastModified = dateThailand._d;
     await CourseModel.updateOne({ _id: payload["_id"] }, { $set: payload });
-    res.json("update complete");
+    res.status(201).json("update complete");
   }
-  res.status(201).end();
+  //res.status(201).end();
 });
 
 module.exports = router;
