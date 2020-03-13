@@ -3,32 +3,9 @@ const router = express.Router();
 const CourseModel = require("./models/course");
 const userModel = require("./models/user");
 const requestModel = require("./models/request");
+const format = require("./commonFunc/format");
 const moment = require("moment-timezone");
 const to = require("await-to-js").default;
-function formatTime(time) {
-  let timeS = time.toString();
-  if (timeS.includes(".")) {
-    hour = timeS.slice(0, timeS.indexOf("."));
-    min = timeS.slice(timeS.indexOf(".") + 1, timeS.length);
-  } else {
-    hour = timeS;
-    min = "0";
-  }
-  if (hour.length == 1) hour = "0" + hour;
-  if (min.length == 1) min = min + "0";
-  return hour + ":" + min;
-}
-
-function formatRangeOfTime(start, end) {
-  return formatTime(start) + "-" + formatTime(end);
-}
-
-function formatDate(date) {
-  s = "";
-  let dateSplit = date.toString().split(" ");
-  s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
-  return s;
-}
 
 router.get("/", async (req, res) => {
   let courseId = req.query.courseId;
@@ -62,7 +39,7 @@ router.get("/", async (req, res) => {
         else if (j == 5) s += "Sat ";
         else if (j == 6) s += "Sun ";
         s +=
-          formatRangeOfTime(
+          format.formatRangeOfTime(
             course["dayAndStartTime"][j],
             course["dayAndEndTime"][j]
           ) + "/ ";
@@ -81,8 +58,8 @@ router.get("/", async (req, res) => {
       if (!!requestCount || !!userCount || course.amountOfStudent == 0)
         requestable = false;
 
-      course.startDate = formatDate(course.startDate);
-      course.endDate = formatDate(course.endDate);
+      course.startDate = format.formatDate(course.startDate);
+      course.endDate = format.formatDate(course.endDate);
 
       course = {
         ...course,
@@ -125,7 +102,7 @@ router.get("/", async (req, res) => {
           else if (j == 6) s += "Sun ";
           // s += course[i]['dayAndStartTime'][j] + "-" + course[i]['dayAndEndTime'][j] + "/ ";
           s +=
-            formatRangeOfTime(
+            format.formatRangeOfTime(
               course[i]["dayAndStartTime"][j],
               course[i]["dayAndEndTime"][j]
             ) + "/ ";

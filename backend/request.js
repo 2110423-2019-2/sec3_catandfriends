@@ -4,29 +4,10 @@ const RequestModel = require("./models/request");
 const ScheduleModel = require("./models/schedule");
 const CourseModel = require("./models/course");
 const UserModel = require("./models/user");
+const set = require("./commonFunc/set");
+const format = require("./commonFunc/format");
 const to = require("await-to-js").default;
 const moment = require("moment-timezone");
-
-function formatedTime(date) {
-  dateS = moment.tz(date, "Asia/Bangkok").format();
-  yearMonthDay = dateS.slice(0, 10).split("-");
-  dayMonthYear = yearMonthDay.reverse().join("-");
-  time = dateS.slice(11, 19);
-  return time + " " + dayMonthYear;
-}
-
-function isIntersect(a, b) {
-  x = [a, b].sort((a, b) => {
-    if (a[0] === b[0]) {
-      return 0;
-    }
-    else {
-      return (a[0] < b[0]) ? -1 : 1;
-    }
-  });
-  a = x[0]; b = x[1];
-  return (a[1] > b[0]);
-}
 
 router.get("/", async (req, res) => {
   // console.log(req.query);
@@ -67,7 +48,7 @@ router.get("/", async (req, res) => {
       ...requests[i].toObject(),
       isAvailable: course.amountOfStudent > 0 ? true : false,
       studentName: user["firstName"] + " " + user["lastName"],
-      createdTime: formatedTime(requests[i].createdTime),
+      createdTime: format.formatTimeDate(requests[i].createdTime),
       courseName: course.courseName
     };
   }
@@ -138,9 +119,9 @@ router.post("/", async (req, res) => {
         if (courseQ.dayAndStartTime[j] == null || course.dayAndStartTime[j] == null) continue
         let a = [courseQ.dayAndStartTime[j], courseQ.dayAndEndTime[j]];
         let b = [course.dayAndStartTime[j], course.dayAndEndTime[j]];
-        // console.log(a);
-        // console.log(b);
-        if (isIntersect(a, b)) available = false;
+        console.log(a);
+        console.log(b);
+        if (set.isIntersect(a, b)) available = false;
       }
     }
     console.log(available);
