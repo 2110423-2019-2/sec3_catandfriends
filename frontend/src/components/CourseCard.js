@@ -1,5 +1,6 @@
 import React from "react";
 import "./CourseCard.css";
+import history from "./../history";
 //import '@fortawesome/fontawesome-free';
 class CardHeader extends React.Component {
   render() {
@@ -60,17 +61,28 @@ class Button extends React.Component {
 class CardBody extends React.Component {
   constructor(props) {
     super(props);
+    //this.handleOnClick = this.handleOnClick.bind(this);
   }
   render() {
     return (
       <div className="mcard-body">
-        <p className="date">{this.props.date}</p>
+        <article className="date">{this.props.date}</article>
         <h5 className="course-name">{this.props.title}</h5>
         <p className="body-content">{this.props.text}</p>
-        <body style={{ textAlign: "right" }}>{this.props.price + ".-"}</body>
-        <body>
-          <Button type="button" class="btn btn-primary"></Button>
-        </body>
+        <div class="row">
+          <div
+            class={
+              this.props.available
+                ? "col-md-6 amount notfull"
+                : "col-md-6 amount full"
+            }
+          >
+            <div>{this.props.remain + "/" + this.props.total}</div>
+          </div>
+          <div class="col-md-6 price">
+            <div>{this.props.price}</div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -84,24 +96,43 @@ class CourseCard extends React.Component {
     const {
       courseID,
       courseName,
-      image,
-      category,
+      tutorid,
       description,
       price,
-      date
+      category,
+      day,
+      duration
     } = this.props.detail;
+    // console.log(this.props.detail);
+    const name = this.props.detail.tutorName
+      ? "by " + this.props.detail.tutorName
+      : "";
+    const image =
+      "https://i.kym-cdn.com/photos/images/newsfeed/001/535/446/1c5.jpg";
+    const priceS = this.props.detail.courseFee + ".-";
+    const courseid = this.props.detail._id;
     return (
-      <article className="CourseCard">
+      <article
+        className="CourseCard"
+        onClick={() => this.onClickGotoCourseInform(courseid)}
+      >
         <CardHeader imgsrc={image} category={category}></CardHeader>
         <CardBody
           title={courseName}
           text={description}
-          price={price}
-          date={date}
+          price={priceS}
+          date={day}
+          tutorname={name}
+          remain={this.props.detail.amountOfStudent}
+          total={this.props.detail.totalAmountOfStudent}
+          available={this.props.detail.isAvailable}
         ></CardBody>
       </article>
     );
   }
+  onClickGotoCourseInform = courseId => {
+    history.push(`/course?courseId=${courseId}`);
+  };
 }
-
+//ll
 export default CourseCard;

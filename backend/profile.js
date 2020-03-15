@@ -37,7 +37,7 @@ router.get("/", async (req, res, next) => {
           { _id: 0, userId: 0 }
         );
         profile = { ...profile.toObject(), ...tutorProfile.toObject() };
-        profile.email = undefined;
+        // profile.email = undefined;
         profile.ssn = undefined;
         profile.premiumStatus = undefined;
         profile.verificationDocument = undefined;
@@ -49,7 +49,7 @@ router.get("/", async (req, res, next) => {
           { _id: 0, userId: 0 }
         );
         profile = { ...profile.toObject(), ...studentProfile.toObject() };
-        profile.email = undefined;
+        // profile.email = undefined;
         profile.ssn = undefined;
         profile.scheduleId = undefined;
         profile.owner = false;
