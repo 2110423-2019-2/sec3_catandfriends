@@ -39,7 +39,7 @@ export class NavBar extends Component {
           <span class="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav">
+          <ul className="navbar-nav mr-auto">
             <li className="nav-item">
               <a
                 className="nav-link"
@@ -56,11 +56,9 @@ export class NavBar extends Component {
                 Search<span className="sr-only">(current)</span>
               </a>
             </li>
-            <li
-              className="nav-item dropdown"
-              id="MyAccount"
-              style={{ float: "right" }}
-            >
+          </ul>
+          <ul className="navbar-nav ml-auto">
+            <li className="nav-item dropdown" id="MyAccount">
               <a
                 className="nav-link dropdown-toggle"
                 href="#"
