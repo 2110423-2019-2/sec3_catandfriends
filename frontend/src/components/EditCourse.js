@@ -103,13 +103,13 @@ export default class EditCourse extends Component {
         this.state.category
       );
       //let data = await Util.createCourse("ff",[6.3,null,null,null,null,null,null],[8.3,null,null,null,null,null,null],this.state.startDate,this.state.endDate,localStorage.getItem("token"),13,"dfsdfsdf",11111,"language");
+      console.log(data);
       if (!data.error) {
         alert("A course is edited");
         console.log(data);
         history.push("/profile");
       } else {
         window.alert("Cannot Edit Course");
-
       }
     }
   }

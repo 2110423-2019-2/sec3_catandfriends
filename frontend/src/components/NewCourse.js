@@ -101,14 +101,13 @@ export default class NewCourse extends Component {
         this.state.category
       );
       //let data = await Util.createCourse("ff",[6.3,null,null,null,null,null,null],[8.3,null,null,null,null,null,null],this.state.startDate,this.state.endDate,localStorage.getItem("token"),13,"dfsdfsdf",11111,"language");
-      if (data.error) {
-        window.alert("Cannot Create Course");
-      } else {
+      if (!data.error) {
         alert("New course created");
         history.push("/profile");
+      } else {
+        window.alert("Cannot Create Course");
       }
       console.log(data);
-
     }
   }
 
