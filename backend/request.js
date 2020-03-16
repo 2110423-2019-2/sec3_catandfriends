@@ -52,8 +52,7 @@ router.get("/", async (req, res) => {
       courseName: course.courseName
     };
   }
-  res.json(requests);
-  res.status(200).end();
+  res.status(200).json(requests).end();
 });
 
 router.post("/", async (req, res) => {
@@ -141,16 +140,12 @@ router.post("/", async (req, res) => {
         console.log(err);
         res.status(500).end();
       }
-      res.send({ status: 1 });
-      res.status(201).end();
+      res.status(201).send({ status: 1 }).end();
     } else {
-      res.send({ status: 0 });
-      res.status(201).end();
+      res.status(201).send({ status: 0 }).end();
     }
-
   } else {
-    res.send({ status: 1 });
-    res.status(201).end();
+    res.status(201).send({ status: 1 }).end();
   }
 });
 
@@ -158,6 +153,7 @@ router.put("/", async (req, res) => {
   const payload = req.body;
   let tutorId = req.user._id;
   let err, request;
+  let message;
 
   // console.log(tutorId + "  " + payload.studentId + "  " + payload.courseId);
 
@@ -173,10 +169,9 @@ router.put("/", async (req, res) => {
   }
 
   if (request.status == 1) {
-    res.json({
+    res.status(201).json({
       message: "Already response"
-    });
-    res.status(201).end();
+    }).end();
   } else {
     let err, course;
     [err, course] = await to(
@@ -275,13 +270,10 @@ router.put("/", async (req, res) => {
         );
       }
 
-      let message;
       if (payload.status == -1) message = "Request rejected";
-      else if (payload.status == 1) message = "Reqstatused";
-      else message = 'Invastatus" attribute';
-      res.json({
-        message: message
-      });
+      else if (payload.status == 1) message = "Request accepted";
+      else message = '"status" attribute is invalid';
+
     } else {
       const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
 
@@ -304,11 +296,11 @@ router.put("/", async (req, res) => {
       if (err) {
         res.status(500).end();
       }
-      res.json({
-        message: "Course is already full"
-      });
+      message = "Course is already full";
     }
-    res.status(201).end();
+    res.status(201).json({
+      message: message
+    }).end();
   }
 });
 

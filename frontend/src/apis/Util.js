@@ -111,7 +111,7 @@ const Util = {
       mode: "cors"
     });
     if (response.status == 404) return { error: true };
-    if (response.status == 201) return response.json();
+    if (response.status == 200) return response.json();
   },
   updateRequest: async (requestId, status, studentId, courseId) => {
     const URL = `http://localhost:8000/requests?token=${localStorage.getItem(
