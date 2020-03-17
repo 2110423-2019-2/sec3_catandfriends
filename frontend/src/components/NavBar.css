@@ -12,9 +12,7 @@ h1 {
 .primaryBtn:focus {
   outline: none;
 }
-.primaryBtn:hover {
-  text-decoration: none;
-  color: white;
+.demo {
   background: rgb(25, 108, 70);
   background: linear-gradient(
     90deg,
@@ -22,16 +20,21 @@ h1 {
     rgba(19, 204, 169, 1) 100%
   );
 }
-.primaryBtn {
-  color: black;
-  transition: 0.3s;
-  /* background: rgb(180, 55, 250);
+.primaryBtn:hover {
+  text-decoration: none;
+  color: white;
+  background: rgb(180, 55, 250);
   background: linear-gradient(
     90deg,
     rgba(180, 55, 250, 1) 0%,
     rgba(0, 212, 255, 1) 100%
-  ); */
-  background-color: rgb(19, 204, 169);
+  );
+}
+.primaryBtn {
+  color: black;
+  transition: 0.3s;
+  /* background-color: rgb(75, 202, 249); */
+  background-color: rgb(172, 195, 207);
   font-size: 1.1em;
   outline: none;
   font-weight: 500;

@@ -5,10 +5,12 @@ import Util from "../apis/Util";
 export class NavBar extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       imgjaa:
-        "https://www.img.in.th/images/8517bda5f5991478fb667d1d086145ac.jpg"
+        "https://www.img.in.th/images/8517bda5f5991478fb667d1d086145ac.jpg",
+      logoLight:
+        "https://www.img.in.th/images/e67008d54a3a3f0bccaa782f25348e87.png",
+      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png"
     };
   }
 
@@ -22,7 +24,7 @@ export class NavBar extends Component {
           <img
             style={{ marginRight: "10px" }}
             className="logoImg"
-            src={this.state.imgjaa}
+            src={this.state.logoLight}
             alt="Logo"
           />
           TutorHere
