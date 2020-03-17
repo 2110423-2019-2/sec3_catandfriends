@@ -240,7 +240,7 @@ export default class NewCourse extends Component {
               <label>
                 Category
                 <br />
-                <select name="category" onChange={this.handleChange} required>
+                <select name="category" onChange={this.handleChange} value={this.state.category} required>
                   <option value="Language">Language</option>
                   <option value="Mathematics">Mathematics</option>
                   <option value="Science">Science</option>
@@ -393,7 +393,9 @@ export default class NewCourse extends Component {
                     Sunday
                   </label>
                   <br />
-                </div>
+                  </div>
+                  </label>
+                  </div>
                 <div class="col-md-3" width="100%">
                   <label htmlFor="StartTime">Start Time</label>
                   <div id="StartTime">
@@ -405,8 +407,8 @@ export default class NewCourse extends Component {
                     <input type="Time" name="ST5" id="ST5" min="06:00" max="22:00" value={this.state.StartTimes[5]}style={{marginBottom:"2px"}} onChange={this.handleDayAndStartTimeChange} disabled/><br/>
                     <input type="Time" name="ST6" id="ST6" min="06:00" max="22:00" value={this.state.StartTimes[6]}style={{marginBottom:"2px"}} onChange={this.handleDayAndStartTimeChange} disabled/><br/>
                   </div>
-        
                 </div>
+
                 <div class="col-md-3" width="100%">
                 <label htmlFor="EndTime">End Time</label>
                   <div id="EndTime">
@@ -419,8 +421,8 @@ export default class NewCourse extends Component {
                     <input type="Time" name="ET6" id="ET6" min="06:00" max="22:00" value={this.state.EndTimes[6]} style={{marginBottom:"2px"}} onChange={this.handleDayAndEndTimeChange} disabled/><br/>
                   </div>
                 </div>
-              </label>
-              
+              </div>
+
               <div class="row">
                   <div class="col-md-6" width="100%" height="100px">
                     <label>Description<br/>
@@ -428,114 +430,7 @@ export default class NewCourse extends Component {
                  </label> 
                  </div>
               </div>
-            </div>
-            <div class="col-md-3" width="100%">
-              <label htmlFor="EndTime">End Time</label>
-              <div id="EndTime">
-                <input
-                  type="Time"
-                  name="ET0"
-                  id="ET0"
-                  min="06:00"
-                  max="22:00"
-                  value={this.ET0}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ET1"
-                  id="ET1"
-                  min="06:00"
-                  max="22:00"
-                  value={this.ET1}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ET2"
-                  id="ET2"
-                  min="06:00"
-                  max="22:00"
-                  value={this.ET2}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ET3"
-                  id="ET3"
-                  min="06:00"
-                  max="22:00"
-                  value={this.ET3}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ET4"
-                  id="ET4"
-                  min="06:00"
-                  max="22:00"
-                  value={this.ET4}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ET5"
-                  id="ET5"
-                  min="06:00"
-                  max="22:00"
-                  value={this.ET5}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ET6"
-                  id="ET6"
-                  min="06:00"
-                  max="22:00"
-                  value={this.ET6}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
-                  disabled
-                />
-                <br />
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6" width="100%" height="100px">
-              <label>
-                Description
-                <br />
-                <textarea
-                  type="text"
-                  required
-                  value={this.state.description}
-                  onChange={this.handleChange}
-                  style={{ width: 900, height: 200, resize: "none" }}
-                  name="description"
-                />
-              </label>
-            </div>
-          </div>
+          
           <br />
           <div className="text-center" style={{ marginRight: 40 }}>
             <input
