@@ -9,30 +9,18 @@ export default class NewCourse extends Component {
           category:"Language",
           description:"",
           courseFee:"",
-          totalAm0ountOfStudent:"",
+          totalAmountOfStudent:"",
           startDate:"",
           endDate:"",
           Monday:false,
-          ST0:null,
-          ET0:null,
           Tuesday:false,
-          ST1:null,
-          ET1:null,
           Wednesday:false,
-          ST2:null,
-          ET2:null,
           Thursday:false,
-          ST3:null,
-          ET3:null,
           Friday:false,
-          ST4:null,
-          ET4:null,
           Saturday:false,
-          ST5:null,
-          ET5:null,
           Sunday:false,
-          ST6:null,
-          ET6:null,
+          StartTimes:[null,null,null,null,null,null,null],
+          EndTimes:[null,null,null,null,null,null,null],
           dayAndStartTime:[null,null,null,null,null,null,null],
           dayAndEndTime:[null,null,null,null,null,null,null]
         }
@@ -59,10 +47,15 @@ export default class NewCourse extends Component {
         const target = event.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name;
+        // if(name=("startDate" || "endDate")){
+        //   this.setState({
+            
+        //   })
+        // }
         this.setState({
           [name]: value,
-          dayAndStartTime:[this.timeToFloat(this.state.ST0),this.timeToFloat(this.state.ST1),this.timeToFloat(this.state.ST2),this.timeToFloat(this.state.ST3),this.timeToFloat(this.state.ST4),this.timeToFloat(this.state.ST5),this.timeToFloat(this.state.ST6)],
-          dayAndEndTime:[this.timeToFloat(this.state.ET0),this.timeToFloat(this.state.ET1),this.timeToFloat(this.state.ET2),this.timeToFloat(this.state.ET3),this.timeToFloat(this.state.ET4),this.timeToFloat(this.state.ET5),this.timeToFloat(this.state.ET6)],
+          // dayAndStartTime:[this.timeToFloat(this.state.ST0),this.timeToFloat(this.state.ST1),this.timeToFloat(this.state.ST2),this.timeToFloat(this.state.ST3),this.timeToFloat(this.state.ST4),this.timeToFloat(this.state.ST5),this.timeToFloat(this.state.ST6)],
+          // dayAndEndTime:[this.timeToFloat(this.state.ET0),this.timeToFloat(this.state.ET1),this.timeToFloat(this.state.ET2),this.timeToFloat(this.state.ET3),this.timeToFloat(this.state.ET4),this.timeToFloat(this.state.ET5),this.timeToFloat(this.state.ET6)],
           
         });
         this.enableTime();
@@ -73,6 +66,7 @@ export default class NewCourse extends Component {
         if(!this.compareDate()){
           alert("Start Date must be before End Date");
         }else{
+            console.log(this.state)
            alert(JSON.stringify(this.state))
          let data = await Util.createCourse(this.state.courseName,this.state.dayAndStartTime,this.state.dayAndEndTime,this.state.startDate,this.state.endDate,localStorage.getItem("token"),this.state.totalAmountOfStudent,this.state.description,this.state.courseFee,this.state.category);
           //let data = await Util.createCourse("ff",[6.3,null,null,null,null,null,null],[8.3,null,null,null,null,null,null],this.state.startDate,this.state.endDate,localStorage.getItem("token"),13,"dfsdfsdf",11111,"language");
@@ -80,6 +74,37 @@ export default class NewCourse extends Component {
         }
         
       }
+      handleDayAndStartTimeChange = () => {
+        var newArray = new Array();
+        var j=0;
+        for(j=0; j<7;j++){
+          var InputValue = document.getElementById('ST'+j).value;
+          if(InputValue=="") {
+            newArray.push(null);
+          }else {
+            newArray.push(this.timeToFloat(InputValue));
+          }
+        }
+        this.setState({
+          dayAndStartTime:newArray
+        })
+      };
+
+      handleDayAndEndTimeChange = () => {
+        var newArray = new Array();
+        var j=0;
+        for(j=0; j<7;j++){
+          var InputValue = document.getElementById('ET'+j).value;
+          if(InputValue=="") {
+            newArray.push(null);
+          }else {
+            newArray.push(this.timeToFloat(InputValue));
+          }
+        }
+        this.setState({
+          dayAndEndTime:newArray
+        })                            
+      };
 
       // hanndleCancel(event){
 
@@ -269,26 +294,26 @@ export default class NewCourse extends Component {
                 <div class="col-md-3" width="100%">
                   <label htmlFor="StartTime">Start Time</label>
                   <div id="StartTime">
-                    <input type="Time" name="ST0" id="ST0" min="06:00" max="22:00" value={this.ST0}style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
-                    <input type="Time" name="ST1" id="ST1" min="06:00" max="22:00" value={this.ST1}style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
-                    <input type="Time" name="ST2" id="ST2" min="06:00" max="22:00" value={this.ST2}style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
-                    <input type="Time" name="ST3" id="ST3" min="06:00" max="22:00" value={this.ST3}style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
-                    <input type="Time" name="ST4" id="ST4" min="06:00" max="22:00" value={this.ST4}style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
-                    <input type="Time" name="ST5" id="ST5" min="06:00" max="22:00" value={this.ST5}style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
-                    <input type="Time" name="ST6" id="ST6" min="06:00" max="22:00" value={this.ST6}style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
+                    <input type="Time" name="ST0" id="ST0" min="06:00" max="22:00" value={this.state.StartTimes[0]}style={{marginBottom:"2px"}} onChange={this.handleDayAndStartTimeChange} disabled/><br/>
+                    <input type="Time" name="ST1" id="ST1" min="06:00" max="22:00" value={this.state.StartTimes[1]}style={{marginBottom:"2px"}} onChange={this.handleDayAndStartTimeChange} disabled/><br/>
+                    <input type="Time" name="ST2" id="ST2" min="06:00" max="22:00" value={this.state.StartTimes[2]}style={{marginBottom:"2px"}} onChange={this.handleDayAndStartTimeChange} disabled/><br/>
+                    <input type="Time" name="ST3" id="ST3" min="06:00" max="22:00" value={this.state.StartTimes[3]}style={{marginBottom:"2px"}} onChange={this.handleDayAndStartTimeChange} disabled/><br/>
+                    <input type="Time" name="ST4" id="ST4" min="06:00" max="22:00" value={this.state.StartTimes[4]}style={{marginBottom:"2px"}} onChange={this.handleDayAndStartTimeChange} disabled/><br/>
+                    <input type="Time" name="ST5" id="ST5" min="06:00" max="22:00" value={this.state.StartTimes[5]}style={{marginBottom:"2px"}} onChange={this.handleDayAndStartTimeChange} disabled/><br/>
+                    <input type="Time" name="ST6" id="ST6" min="06:00" max="22:00" value={this.state.StartTimes[6]}style={{marginBottom:"2px"}} onChange={this.handleDayAndStartTimeChange} disabled/><br/>
                   </div>
         
                 </div>
                 <div class="col-md-3" width="100%">
                 <label htmlFor="EndTime">End Time</label>
                   <div id="EndTime">
-                    <input type="Time" name="ET0" id="ET0" min="06:00" max="22:00" value={this.ET0} style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
-                    <input type="Time" name="ET1" id="ET1" min="06:00" max="22:00" value={this.ET1} style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
-                    <input type="Time" name="ET2" id="ET2" min="06:00" max="22:00" value={this.ET2} style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
-                    <input type="Time" name="ET3" id="ET3" min="06:00" max="22:00" value={this.ET3} style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
-                    <input type="Time" name="ET4" id="ET4" min="06:00" max="22:00" value={this.ET4} style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
-                    <input type="Time" name="ET5" id="ET5" min="06:00" max="22:00" value={this.ET5} style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
-                    <input type="Time" name="ET6" id="ET6" min="06:00" max="22:00" value={this.ET6} style={{marginBottom:"2px"}} onChange={this.handleChange} disabled/><br/>
+                    <input type="Time" name="ET0" id="ET0" min="06:00" max="22:00" value={this.state.EndTimes[0]} style={{marginBottom:"2px"}} onChange={this.handleDayAndEndTimeChange} disabled/><br/>
+                    <input type="Time" name="ET1" id="ET1" min="06:00" max="22:00" value={this.state.EndTimes[1]} style={{marginBottom:"2px"}} onChange={this.handleDayAndEndTimeChange} disabled/><br/>
+                    <input type="Time" name="ET2" id="ET2" min="06:00" max="22:00" value={this.state.EndTimes[2]} style={{marginBottom:"2px"}} onChange={this.handleDayAndEndTimeChange} disabled/><br/>
+                    <input type="Time" name="ET3" id="ET3" min="06:00" max="22:00" value={this.state.EndTimes[3]} style={{marginBottom:"2px"}} onChange={this.handleDayAndEndTimeChange} disabled/><br/>
+                    <input type="Time" name="ET4" id="ET4" min="06:00" max="22:00" value={this.state.EndTimes[4]} style={{marginBottom:"2px"}} onChange={this.handleDayAndEndTimeChange} disabled/><br/>
+                    <input type="Time" name="ET5" id="ET5" min="06:00" max="22:00" value={this.state.EndTimes[5]} style={{marginBottom:"2px"}} onChange={this.handleDayAndEndTimeChange} disabled/><br/>
+                    <input type="Time" name="ET6" id="ET6" min="06:00" max="22:00" value={this.state.EndTimes[6]} style={{marginBottom:"2px"}} onChange={this.handleDayAndEndTimeChange} disabled/><br/>
                   </div>
                 </div>
               </div>
