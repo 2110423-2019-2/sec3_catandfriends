@@ -183,11 +183,15 @@ export class CourseDetail extends Component {
     // event.preventDefault();
     // this.state.requestable = false
 
-    this.setState({ requestable: false });
     let data = await Util.createRequests(
       this.props.detail.tutorId,
       this.props.detail._id
     );
+    if (data.status == 0) {
+      window.alert("Course Time Overlap");
+    } else {
+      this.setState({ requestable: false });
+    }
     // console.log(data);
     // if (data.error) {
     //   window.alert("cannot request");

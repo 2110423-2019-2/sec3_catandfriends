@@ -24,6 +24,8 @@ export default class TutorPage extends Component {
           <div className="row justify-content-center">
             <VerifyCard />
             <RequestScrollBar tutorId={this.props.data._id} />
+          </div>
+          <div className="row justify-content-center">
             <EditCourseCardLayout tutorId={this.props.data._id} />
           </div>
         </div>

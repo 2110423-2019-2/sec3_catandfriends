@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import Util from "../apis/Util";
+import history from "../history";
 export default class EditCourse extends Component {
     constructor(props) {
         super(props);
@@ -29,11 +30,13 @@ export default class EditCourse extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
 
-      }
-      // onSubmit={e=>{
-      //   alert(JSON.stringify(this.state))
-      //   console.log(this.state)
-      //   console.log(localStorage.getItem("token"));
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  // onSubmit={e=>{
+  //   alert(JSON.stringify(this.state))
+  //   console.log(this.state)
+  //   console.log(localStorage.getItem("token"));
 
       //   e.preventDefault()
       timeToFloat(time) {
@@ -140,120 +143,97 @@ export default class EditCourse extends Component {
       };
       // hanndleCancel(event){
 
-      // }
+  // }
 
-      enableTime(){
-        var Mon = document.getElementById('Monday').checked;
-        var Tue = document.getElementById('Tuesday').checked;
-        var Wed = document.getElementById('Wednesday').checked;
-        var Thu = document.getElementById('Thursday').checked;
-        var Fri = document.getElementById('Friday').checked;
-        var Sat = document.getElementById('Saturday').checked;
-        var Sun = document.getElementById('Sunday').checked;
+      enableTime() {
+        var Mon = document.getElementById("Monday").checked;
+        var Tue = document.getElementById("Tuesday").checked;
+        var Wed = document.getElementById("Wednesday").checked;
+        var Thu = document.getElementById("Thursday").checked;
+        var Fri = document.getElementById("Friday").checked;
+        var Sat = document.getElementById("Saturday").checked;
+        var Sun = document.getElementById("Sunday").checked;
 
-        document.getElementById('ST0').disabled= !(Mon);
-        document.getElementById('ET0').disabled=!Mon;
-        document.getElementById('ST0').required= Mon;
-        document.getElementById('ET0').required= Mon;
-        
-        if(!Mon){
-          document.getElementById('ST0').value=null;
-          document.getElementById('ET0').value=null;
-          this.setState({
-            ST0:null,
-            ET0:null
-          })
+        document.getElementById("ST0").disabled = !Mon;
+        document.getElementById("ET0").disabled = !Mon;
+        document.getElementById("ST0").required = Mon;
+        document.getElementById("ET0").required = Mon;
+
+        if (!Mon) {
+          document.getElementById("ST0").value = null;
+          document.getElementById("ET0").value = null;
+          
         }
 
-        document.getElementById('ST1').disabled= !(Tue);
-        document.getElementById('ET1').disabled=!Tue;
-        document.getElementById('ST1').required= (Tue);
-        document.getElementById('ET1').required=Tue;
-        if(!Tue){
-          document.getElementById('ST1').value=null;
-          document.getElementById('ET1').value=null;
-          this.setState({
-            ST1:null,
-            ET1:null
-          })
+        document.getElementById("ST1").disabled = !Tue;
+        document.getElementById("ET1").disabled = !Tue;
+        document.getElementById("ST1").required = Tue;
+        document.getElementById("ET1").required = Tue;
+        if (!Tue) {
+          document.getElementById("ST1").value = null;
+          document.getElementById("ET1").value = null;
+          
         }
 
-        document.getElementById('ST2').disabled= !(Wed);
-        document.getElementById('ET2').disabled=!Wed;
-        document.getElementById('ST2').required=(Wed);
-        document.getElementById('ET2').required=Wed;
-        if(!Wed){
-          document.getElementById('ST2').value=null;
-          document.getElementById('ET2').value=null;
-          this.setState({
-            ST2:null,
-            ET2:null
-          })
+        document.getElementById("ST2").disabled = !Wed;
+        document.getElementById("ET2").disabled = !Wed;
+        document.getElementById("ST2").required = Wed;
+        document.getElementById("ET2").required = Wed;
+        if (!Wed) {
+          document.getElementById("ST2").value = null;
+          document.getElementById("ET2").value = null;
+          
         }
 
-        document.getElementById('ST3').disabled= !(Thu);
-        document.getElementById('ET3').disabled=!Thu;
-        document.getElementById('ST3').required= (Thu);
-        document.getElementById('ET3').required=Thu;
-        if(!Thu){
-          document.getElementById('ST3').value=null;
-          document.getElementById('ET3').value=null;
-          this.setState({
-            ST3:null,
-            ET3:null
-          })
+        document.getElementById("ST3").disabled = !Thu;
+        document.getElementById("ET3").disabled = !Thu;
+        document.getElementById("ST3").required = Thu;
+        document.getElementById("ET3").required = Thu;
+        if (!Thu) {
+          document.getElementById("ST3").value = null;
+          document.getElementById("ET3").value = null;
+          
         }
 
-        document.getElementById('ST4').disabled= !(Fri);
-        document.getElementById('ET4').disabled=!Fri;
-        document.getElementById('ST4').required=(Fri);
-        document.getElementById('ET4').required=Fri;
-        if(!Fri){
-          document.getElementById('ST4').value=null;
-          document.getElementById('ET4').value=null;
-          this.setState({
-            ST4:null,
-            ET4:null
-          })
+        document.getElementById("ST4").disabled = !Fri;
+        document.getElementById("ET4").disabled = !Fri;
+        document.getElementById("ST4").required = Fri;
+        document.getElementById("ET4").required = Fri;
+        if (!Fri) {
+          document.getElementById("ST4").value = null;
+          document.getElementById("ET4").value = null;
+          
         }
 
-        document.getElementById('ST5').disabled= !(Sat);
-        document.getElementById('ET5').disabled=!Sat;
-        document.getElementById('ST5').required= (Sat);
-        document.getElementById('ET5').required=Sat;
-        if(!Sat){
-          document.getElementById('ST5').value=null;
-          document.getElementById('ET5').value=null;
-          this.setState({
-            ST5:null,
-            ET5:null
-          })
+        document.getElementById("ST5").disabled = !Sat;
+        document.getElementById("ET5").disabled = !Sat;
+        document.getElementById("ST5").required = Sat;
+        document.getElementById("ET5").required = Sat;
+        if (!Sat) {
+          document.getElementById("ST5").value = null;
+          document.getElementById("ET5").value = null;
+          
         }
 
-        document.getElementById('ST6').disabled= !(Sun);
-        document.getElementById('ET6').disabled=!Sun;
-        document.getElementById('ST6').required=(Sun);
-        document.getElementById('ET6').required=Sun;
-        if(!Sun){
-          document.getElementById('ST6').value=null;
-          document.getElementById('ET6').value=null;
-          this.setState({
-            ST6:null,
-            ET6:null
-          })
+        document.getElementById("ST6").disabled = !Sun;
+        document.getElementById("ET6").disabled = !Sun;
+        document.getElementById("ST6").required = Sun;
+        document.getElementById("ET6").required = Sun;
+        if (!Sun) {
+          document.getElementById("ST6").value = null;
+          document.getElementById("ET6").value = null;
+          
         }
 
-        document.getElementById('Monday').required=!(Mon||Tue||Wed||Thu||Fri||Sat||Sun);
-      }
-
-      compareDate(){
-        var a=document.getElementById('startDate').value;
-        var b=document.getElementById('endDate').value;
-        var splitA = a.split('/');
-        var splitB = b.split('/');
-        var aDate = Date.parse(splitA[0],splitA[1]-1, splitA[2]);
-        var bDate = Date.parse(splitB[0],splitB[1]-1, splitB[2]);
-        return aDate<bDate
+        document.getElementById("Monday").required = !(
+          Mon ||
+          Tue ||
+          Wed ||
+          Thu ||
+          Fri ||
+          Sat ||
+          Sun
+        );
       }
 
       render() {
@@ -295,33 +275,62 @@ export default class EditCourse extends Component {
                       <label>Price<br/>
                   <input type="Number" min="0" required value={this.state.courseFee} onChange={this.handleChange} name="courseFee" />
                   </label>
-                  </div>
-                  <div class="col-md-3" width="100%">
-                      <label>Student amount<br/>
-                  <input type="Number" min="0" required value={this.state.totalAmountOfStudent} onChange={this.handleChange} name="totalAmountOfStudent"/>
+                  <br />
+                  <input
+                    type="checkbox"
+                    name="Wednesday"
+                    id="Wednesday"
+                    value={this.Wednesday}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor="Wednesday" style={{ marginLeft: "10px" }}>
+                    Wednesday
                   </label>
-                  </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3" width="100%">
-                  <label htmlFor="Weekday">Week day
-                    <div id="Weekday" style={{paddingTop:"5px"}}>
-                      <input required type="checkbox" name="Monday" id="Monday" value={this.Monday} onChange={this.handleChange}/>
-                      <label htmlFor="Monday" style={{marginLeft:"10px", paddingTop:"2px" }}>Monday</label><br/>
-                      <input type="checkbox" name="Tuesday" id="Tuesday" value={this.Tuesday} onChange={this.handleChange}/>
-                      <label htmlFor="Tuesday" style={{marginLeft:"10px"}}>Tuesday</label><br/>
-                      <input type="checkbox" name="Wednesday" id="Wednesday" value={this.Wednesday} onChange={this.handleChange}/>
-                      <label htmlFor="Wednesday" style={{marginLeft:"10px"}}>Wednesday</label><br/>
-                      <input type="checkbox" name="Thursday" id="Thursday" value={this.Thursday} onChange={this.handleChange}/>
-                      <label htmlFor="Thursday" style={{marginLeft:"10px"}}>Thursday</label><br/>
-                      <input type="checkbox" name="Friday" id="Friday" value={this.Friday} onChange={this.handleChange}/>
-                      <label htmlFor="Friday" style={{marginLeft:"10px"}}>Friday</label><br/>
-                      <input type="checkbox" name="Saturday" id="Saturday" value={this.Saturday} onChange={this.handleChange}/>
-                      <label htmlFor="Saturday" style={{marginLeft:"10px"}}>Saturday</label><br/>
-                      <input type="checkbox" name="Sunday" id="Sunday" value={this.Sunday} onChange={this.handleChange}/>
-                      <label htmlFor="Sunday" style={{marginLeft:"10px"}}>Sunday</label><br/>
-                    </div>
+                  <br />
+                  <input
+                    type="checkbox"
+                    name="Thursday"
+                    id="Thursday"
+                    value={this.Thursday}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor="Thursday" style={{ marginLeft: "10px" }}>
+                    Thursday
                   </label>
+                  <br />
+                  <input
+                    type="checkbox"
+                    name="Friday"
+                    id="Friday"
+                    value={this.Friday}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor="Friday" style={{ marginLeft: "10px" }}>
+                    Friday
+                  </label>
+                  <br />
+                  <input
+                    type="checkbox"
+                    name="Saturday"
+                    id="Saturday"
+                    value={this.Saturday}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor="Saturday" style={{ marginLeft: "10px" }}>
+                    Saturday
+                  </label>
+                  <br />
+                  <input
+                    type="checkbox"
+                    name="Sunday"
+                    id="Sunday"
+                    value={this.Sunday}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor="Sunday" style={{ marginLeft: "10px" }}>
+                    Sunday
+                  </label>
+                  <br />
                 </div>
                 <div class="col-md-3" width="100%">
                   <label htmlFor="StartTime">Start Time</label>
@@ -357,26 +366,11 @@ export default class EditCourse extends Component {
                  </label> 
                  </div>
               </div>
-              <br/>
-             <div className="text-center" style={{marginRight:40}}>
-                <input type="submit" value="Submit" className="btn btn-success" style={{marginRight:20}} />
-                {/* <input type="cancel" value="Cancel" className="btn btn-danger" style={{width:76.5, height:38}}/> */}
-              </div>
           </form> 
            </div>
         );
       }
       async componentDidMount(){
-        // const target = event.target;
-        // const value = target.type === "checkbox" ? target.checked : target.value;
-        // const name = target.name;
-        // this.setState({
-        //   [name]: value,
-        //   dayAndStartTime:[this.timeToFloat(this.state.ST0),this.timeToFloat(this.state.ST1),this.timeToFloat(this.state.ST2),this.timeToFloat(this.state.ST3),this.timeToFloat(this.state.ST4),this.timeToFloat(this.state.ST5),this.timeToFloat(this.state.ST6)],
-        //   dayAndEndTime:[this.timeToFloat(this.state.ET0),this.timeToFloat(this.state.ET1),this.timeToFloat(this.state.ET2),this.timeToFloat(this.state.ET3),this.timeToFloat(this.state.ET4),this.timeToFloat(this.state.ET5),this.timeToFloat(this.state.ET6)],
-          
-        // });
-
         console.log(window.location.search);
         let data = await Util.getCourseById(window.location.search.substring(10));
         let startDate = new Date(data.startDate);
@@ -389,7 +383,5 @@ export default class EditCourse extends Component {
           endDate:endDate
         })
         this.setObject();
-        console.log(data)
-        console.log(this.state)
       }
-}
+    }

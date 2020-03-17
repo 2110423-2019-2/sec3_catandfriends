@@ -13,7 +13,7 @@ const Util = {
       body: JSON.stringify({ email, password })
     });
     console.log(response.status);
-    if (response.status == 500) return { error: true };
+    if (response.status == 500) return response.json();
     if (response.status == 200) return response.json();
   },
   register: async (
@@ -126,7 +126,7 @@ const Util = {
       body: JSON.stringify({ requestId, status, studentId, courseId })
     });
     if (response.status == 500) return { error: true };
-    if (response.status == 200) return response.json();
+    if (response.status == 201) return response.json();
   },
   getSearchResult: async (day, subject, time, price) => {
     const URL = `http://localhost:8000/search?day=${day}&time=${time}&category=${subject}&price=${price}`;
@@ -152,7 +152,7 @@ const Util = {
     });
     console.log(response.status);
     if (response.status == 500) return { error: true };
-    if (response.status == 200) return response.json();
+    if (response.status == 201) return response.json();
   },
   createCourse: async (
     courseName,
@@ -189,8 +189,8 @@ const Util = {
       })
     });
     console.log(response.status);
-    if (response.status == 500) return { error: true };
-    if (response.status == 200) return response.json();
+    if (response.status == 400) return { error: true };
+    if (response.status == 201) return response.json();
   },
   editCourse: async (
     _id,
@@ -229,8 +229,8 @@ const Util = {
       })
     });
     console.log(response.status);
-    if (response.status == 500) return { error: true };
-    if (response.status == 200) return response.json();
+    if (response.status == 400) return { error: true };
+    if (response.status == 201) return response.json();
   }
 };
 

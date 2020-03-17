@@ -7,6 +7,7 @@ export class Home extends Component {
   state = { data: {} };
 
   render() {
+    // window.location.reload();
     console.log(this.state.data);
     if (!this.state.data.role) {
       return (

@@ -40,6 +40,7 @@ export class Login extends Component {
       localStorage.setItem("user", data.user);
       console.log(data);
       history.push("/profile");
+      window.location.reload();
     }
   };
 
