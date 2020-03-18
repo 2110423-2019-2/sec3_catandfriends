@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-export class PaymentPage extends Component {
+export class PremiumPayment extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       imgsrc:
-        "https://p4.wallpaperbetter.com/wallpaper/780/94/519/animal-baby-dog-fall-wallpaper-2f202d2e4adc1cfb735377924f2c1d43.jpg",
-      premium: "การชำระเงินเพื่อเป็นผู้ใช้ระดับพรีเมียม",
-      course: "การชำระเงินวิชา ... ",
-      price: "จำนวนเงิน 100 บาท"
+        "https://p4.wallpaperbetter.com/wallpaper/780/94/519/animal-baby-dog-fall-wallpaper-2f202d2e4adc1cfb735377924f2c1d43.jpg"
     };
   }
 
@@ -50,8 +47,8 @@ export class PaymentPage extends Component {
 
               <div className="col-md-8 border bg-light text-dark">
                 <br />
-                <div className="bg-warning text-dark">{this.state.premium}</div>
-                <div className="bg-danger text-white">{this.state.price}</div>
+                <div className="bg-warning text-dark">การชำระเงินเพื่อเป็นผู้ใช้ระดับพรีเมียม</div>
+                <div className="bg-danger text-white">จำนวนเงิน 350 บาท</div>
                 <br />
                 <br />
                 <div>เมื่อชำระเงินสำเร็จ กรุณายืนยันโดยกดส่งสลิปที่นี่</div>
@@ -98,4 +95,4 @@ export class PaymentPage extends Component {
   }
 }
 
-export default PaymentPage;
+export default PremiumPayment;

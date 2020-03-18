@@ -6,7 +6,7 @@ import EditCourseCardLayout from "../components/EditCourseCardLayout";
 import CourseCardLayout from "../components/CourseCardLayout";
 import StudentCTuProfile from "../components/StudentCTuProfile";
 import Util from "../apis/Util";
-import PaymentCard from "../components/PaymentCard";
+import PremiumCard from "../components/PremiumCard";
 export default class TutorPage extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +23,7 @@ export default class TutorPage extends Component {
             <TutorProfile data={this.props.data} />
           </div>
           <div className="row justify-content-center">
-            <PaymentCard />
+            <PremiumCard />
             <VerifyCard />
 
             <RequestScrollBar tutorId={this.props.data._id} />

@@ -7,8 +7,6 @@ import Popper from "popper.js";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
-import PaymentPage from "./components/PaymentPage";
-import PaymentCard from "./components/PaymentCard";
 
 const AppWithRouter = () => (
   <BrowserRouter>

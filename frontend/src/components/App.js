@@ -16,6 +16,8 @@ import Login from "./Login";
 import history from "../history";
 import EditCourseCardLayout from "./EditCourseCardLayout";
 import RegisterPage from "../page/RegisterPage";
+import PremiumPayment from "./PremiumPayment";
+import DocPayment from "./DocPayment";
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;
@@ -35,6 +37,8 @@ class App extends Component {
           <Route path="/course/edit" component={EditCourse} />
           <Route path="/course/create" component={NewCourse} />
           <Route path="/course" component={CourseInformation} />
+          <Route path="/premiumPayment" component={PremiumPayment} />
+          <Route path="/DocPayment" component={DocPayment} />
         </Switch>
       </Router>
     );

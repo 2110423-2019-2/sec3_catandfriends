@@ -9,6 +9,7 @@ export default class VerifyCard extends Component {
     this.state = {
       selectedFile: null
     };
+    this.onClick = this.onClick.bind(this);
   }
 
   onChangeHandler = event => {
@@ -58,6 +59,7 @@ export default class VerifyCard extends Component {
             <button
               type="button"
               className="btn btn-block btn-success btn-sm p-1"
+              onClick={event => this.onClick(event)}
             >
               Pay
             </button>
@@ -65,5 +67,9 @@ export default class VerifyCard extends Component {
         </div>
       </div>
     );
+  }
+
+  async onClick(event) {
+    history.push(`/docPayment`);
   }
 }
