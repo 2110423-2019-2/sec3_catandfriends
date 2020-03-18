@@ -356,6 +356,15 @@ export default class SearchResult extends Component {
             </div>
           </div>
           <div className="col-md-10">
+            <h2
+              style={{
+                marginTop: "15px",
+                display: "block",
+                textAlign: "center"
+              }}
+            >
+              Search Result
+            </h2>
             <CourseCardLayout data={this.state.data} />
           </div>
         </div>

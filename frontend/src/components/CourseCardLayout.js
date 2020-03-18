@@ -10,7 +10,7 @@ class CourseCardLayout extends React.Component {
   }
   render() {
     return (
-      <div className="row border cardblock">
+      <div className="row cardblock">
         {this.state.data.map(item => (
           <CourseCard detail={item} key={item._id.toString()} />
         ))}

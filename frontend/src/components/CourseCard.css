@@ -1,7 +1,7 @@
 .mycard {
   width: 200px;
   height: 350px;
-  margin: 6px;
+  margin: 15px;
   transition: 0.2s;
   text-align: center;
   border-radius: 12px !important;
@@ -15,13 +15,14 @@
   transform: translate(5px, 0);
 }
 .mcard-header {
+  background-color: rgb(56, 87, 153);
   border-radius: 12px 12px 0px 0px;
   width: 200px;
   height: 150px;
   padding: 5px;
   background-size: cover;
   color: #fff;
-  text-shadow: 2px 2px 4px #000000;
+  text-shadow: 4px 4px 4px #000000;
 }
 
 .mcard-header--title {

@@ -31,6 +31,9 @@ const Button = styled.button`
 class CourseCard extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png"
+    };
   }
   dayToString(day) {
     if (!day) {
@@ -67,7 +70,11 @@ class CourseCard extends React.Component {
       <div className="card mycard">
         <div
           style={{
-            backgroundImage: `url(${image})`
+            backgroundImage: `url(${
+              this.props.detail.image
+                ? this.props.detail.image
+                : this.state.logoDark
+            })`
           }}
           id="image"
           className="mcard-header"
