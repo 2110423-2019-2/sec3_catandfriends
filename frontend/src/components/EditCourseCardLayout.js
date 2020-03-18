@@ -2,7 +2,7 @@ import React from "react";
 import EditableCard from "./EditableCard";
 import BlankCouseCard from "./BlankCouseCard";
 import Util from "../apis/Util";
-
+import "./CourseCardLayout.css";
 class EditCourseCardLayout extends React.Component {
   constructor(props) {
     super(props);

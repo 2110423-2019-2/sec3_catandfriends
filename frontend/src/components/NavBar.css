@@ -2,6 +2,10 @@
 .logoImg {
   width: 60px;
 }
+.bg-custom {
+  background-color: rgb(216, 224, 233);
+  /* background-color: rgb(172, 195, 207); */
+}
 .navbar-brand {
   font-family: "Merienda One", cursive;
   font-size: 1.7em !important;

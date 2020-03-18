@@ -39,7 +39,7 @@ export class NavBar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-custom">
         <a
           className="navbar-brand"
           onClick={() => this.onClickNavBar("/register")}
@@ -107,6 +107,9 @@ export class NavBar extends Component {
                 >
                   <a class="dropdown-item" href="/profile">
                     My Profile<span className="sr-only">(current)</span>
+                  </a>
+                  <a class="dropdown-item" href="/mycourse">
+                    My Course<span className="sr-only">(current)</span>
                   </a>
                   <a
                     class="dropdown-item"
