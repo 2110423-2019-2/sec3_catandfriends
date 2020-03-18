@@ -1,51 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-body,
-html {
-  font-family: "Montserrat", sans-serif;
-  background-color: #ffffff;
-}
-.app {
-  height: 18px;
-  width: 140px;
-  padding: 0;
-  overflow: hidden;
-  position: relative;
-  display: inline-block;
-  margin: 0 5px 0 5px;
-  text-align: center;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: #000;
-}
-
-.coursecard {
+.mycard {
   width: 200px;
-  height: 270px;
-  /* display: inline-block; */
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 5px;
-  margin-right: 5px;
-  /* box-shadow: 2px 2px 2px 2px rgb(224, 224, 224); */
+  height: 350px;
+  margin: 6px;
   transition: 0.2s;
-  text-align: left;
+  text-align: center;
   border-radius: 12px !important;
 }
 
-.coursecard:hover {
-  box-shadow: 2px 2px 2px 2px #4e4e4e;
-  cursor: pointer;
+.mycard:hover {
+  box-shadow: 2px 2px 2px 2px #888888;
+  /* cursor: pointer; */
 }
-.coursecard:hover .button-primary {
-  transform: translate(10px, 0);
+.mycard:hover .button-primary {
+  transform: translate(5px, 0);
 }
-
 .mcard-header {
   border-radius: 12px 12px 0px 0px;
   width: 200px;
-  height: 120px;
-  padding: 0px;
+  height: 150px;
+  padding: 5px;
   background-size: cover;
   color: #fff;
   text-shadow: 2px 2px 4px #000000;
@@ -56,108 +30,22 @@ html {
   text-transform: uppercase;
   font-weight: 650;
 }
-
-.m-title {
-  width: 200px;
-  height: 30px;
+.mycard-title {
+  height: 25px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  /* or 0% */
-  display: inline-block;
-  align-items: center;
-  text-transform: capitalize;
-  color: #000000;
-  position: relative;
-  padding: 10px;
-  text-decoration: none;
-  color: #000;
+  display: block;
 }
-.m-name {
-  width: 200px;
-  height: 10px;
-
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 9px;
-  line-height: 0px;
-  /* or 0% */
-
-  display: flex;
-  align-items: center;
-  text-indent: 19px;
-  text-transform: capitalize;
-
-  color: #000000;
+.tutorname {
+  height: 22px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
-.m-text {
-  width: 200px;
+.day {
+  text-align: center;
+  width: 130px;
   height: 45px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 9px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  text-indent: 8px;
-  text-transform: capitalize;
-  color: #000000;
   overflow: auto;
-}
-.m-date {
-  padding: 16px;
-  width: 200px;
-  height: 35px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 9px;
-  display: flex;
-  align-items: center;
-  text-indent: 9px;
-  text-transform: capitalize;
-  overflow: auto;
-  color: #555252;
-}
-.m-foot {
-  width: 200px;
-  height: 30px;
-
-  font-family: Roboto Mono;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 0px;
-  /* or 0% */
-
-  display: flex;
-  align-items: center;
-  text-align: right;
-  text-transform: capitalize;
-
-  color: #000000;
-}
-.amount {
-  padding-left: 5px;
-  width: 100px;
-  font-weight: 600;
-  text-align: left;
-}
-.price {
-  padding-right: 5px;
-  width: 100px;
-  font-weight: 600;
-  text-align: right;
-}
-.full {
-  color: red;
-}
-.notfull {
-  color: green;
 }

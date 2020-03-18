@@ -1,97 +1,45 @@
 import React from "react";
 import "./CourseCard.css";
 import history from "./../history";
-//import '@fortawesome/fontawesome-free';
-class CardHeader extends React.Component {
-  render() {
-    return (
-      <header
-        style={{
-          backgroundImage: `url(${this.props.imgsrc})`
-        }}
-        id="image"
-        className="mcard-header"
-      >
-        <h6
-          className="mcard-header--title"
-          style={{ paddingLeft: "7px", paddingTop: "4px" }}
-        >
-          {this.props.category}
-        </h6>
-      </header>
-    );
+import styled from "styled-components";
+const Button = styled.button`
+  color: black;
+  transition: 0.3s;
+  background-color: ${props =>
+    props.full ? "rgb(214,111,110)" : "rgb(19, 204, 169)"};
+  font-size: 1.1em;
+  outline: none;
+  font-weight: 500;
+  padding: 0.25em 0.5em;
+  border-radius: 10px;
+  &:hover {
+    text-decoration: none;
+    color: white;
+    background: ${props =>
+      props.full
+        ? `linear-gradient(90deg, rgba(134,31,31,1) 0%, rgba(214,111,110,1) 100%);`
+        : `linear-gradient(
+      90deg,
+      rgba(25, 108, 70, 1) 0%,
+      rgba(19, 204, 169, 1) 100%
+    )`};
   }
-}
-
-class Button extends React.Component {
-  render() {
-    return (
-      <div>
-        <button
-          type="button"
-          class="button button-primary"
-          data-toggle="modal"
-          data-target="#myModal"
-        >
-          <i className="fa fa-chevron-right">Course detail</i>
-        </button>
-        <div class="modal fade" id="myModal" role="dialog">
-          <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-              <div class="modal-body">
-                <p>go to course detail.</p>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-default"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  &:focus {
+    outline: none;
   }
-}
-
-class CardBody extends React.Component {
-  constructor(props) {
-    super(props);
-    //this.handleOnClick = this.handleOnClick.bind(this);
-  }
-  render() {
-    return (
-      <div className="mcard-body">
-        <article className="date">{this.props.date}</article>
-        <h5 className="course-name">{this.props.title}</h5>
-        <p className="body-content">{this.props.text}</p>
-        <div class="row">
-          <div
-            class={
-              this.props.available
-                ? "col-md-6 amount notfull"
-                : "col-md-6 amount full"
-            }
-          >
-            <div>{this.props.remain + "/" + this.props.total}</div>
-          </div>
-          <div class="col-md-6 price">
-            <div>{this.props.price}</div>
-          </div>
-        </div>
-        <small className="name">{this.props.tutorname}</small>
-      </div>
-    );
-  }
-}
-
+`;
 class CourseCard extends React.Component {
   constructor(props) {
     super(props);
+  }
+  dayToString(day) {
+    let dayL = day.split("/");
+    let dayS = "";
+    let e;
+    for (e of dayL) {
+      dayS = dayS + e;
+    }
+    return dayS;
   }
   render() {
     const {
@@ -110,10 +58,10 @@ class CourseCard extends React.Component {
       : "";
     const image =
       "https://i.kym-cdn.com/photos/images/newsfeed/001/535/446/1c5.jpg";
-    const priceS = this.props.detail.courseFee + ".-";
+    const priceS = this.props.detail.courseFee + "฿";
     const courseid = this.props.detail._id;
     return (
-      <div className="card coursecard">
+      <div className="card mycard">
         <div
           style={{
             backgroundImage: `url(${image})`
@@ -123,48 +71,24 @@ class CourseCard extends React.Component {
         >
           <h6 className="mcard-header--title">{category}</h6>
         </div>
-
-        <div>
-          <div className="m-title">{courseName}</div>
-        </div>
-        <div className="m-name ">{fullname}</div>
-        <div className="m-date ">{day}</div>
-        <div className="m-text ">
-          {description}
-          {/* Some quick example text to build on the card title and make up the
-            bulk of the card's content.Some quick example text to build on the
-            card title and make up the bulk of the card's content. */}
-        </div>
-        <div className="m-foot ">
-          <span
-            className={
-              this.props.detail.isAvailable ? "amount notfull" : "amount full"
-            }
+        <div className="card-body mycard-body">
+          <h5 className="card-title mycard-title">{courseName}</h5>
+          <p className="card-text tutorname">{fullname}</p>
+          <div align="center" style={{ marginBottom: "15px" }}>
+            <p className="card-text day border">{this.dayToString(day)}</p>
+          </div>
+          <Button
+            onClick={() => this.onClickGotoCourseInform(courseid)}
+            full={!this.props.detail.isAvailable}
           >
             {this.props.detail.amountOfStudent +
               "/" +
-              this.props.detail.totalAmountOfStudent}
-          </span>
-          <span className="price">{priceS}</span>
+              this.props.detail.totalAmountOfStudent +
+              " | " +
+              priceS}
+          </Button>
         </div>
       </div>
-
-      // <article
-      //   className="CourseCard"
-      //   onClick={() => this.onClickGotoCourseInform(courseid)}
-      // >
-      //   <CardHeader imgsrc={image} category={category}></CardHeader>
-      //   <CardBody
-      //     title={courseName}
-      //     text={description}
-      //     price={priceS}
-      //     date={day}
-      //     tutorname={name}
-      //     remain={this.props.detail.amountOfStudent}
-      //     total={this.props.detail.totalAmountOfStudent}
-      //     available={this.props.detail.isAvailable}
-      //   ></CardBody>
-      // </article>
     );
   }
   onClickGotoCourseInform = courseId => {
