@@ -6,7 +6,7 @@ import styled from "styled-components";
 const Button = styled.button`
   color: black;
   transition: 0.3s;
-  background-color: rgb(172, 195, 207);
+  background-color: rgb(0, 212, 255);
   font-size: 1.1em;
   outline: none;
   font-weight: 500;
@@ -15,7 +15,6 @@ const Button = styled.button`
   &:hover {
     text-decoration: none;
     color: white;
-    background: rgb(180, 55, 250);
     background: linear-gradient(
       90deg,
       rgba(180, 55, 250, 1) 0%,
@@ -98,7 +97,7 @@ export class NavBar extends Component {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  {this.state.fullName}
+                  {"㋛  " + this.state.fullName}
                   <span className="sr-only">(current)</span>
                 </Button>
 
