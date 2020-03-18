@@ -65,13 +65,34 @@ export default class EditCourse extends Component {
     }
 
       setObject(){
-        if(this.state.dayAndStartTime[0]!=null) document.getElementById('Monday').checked=true;
-        if(this.state.dayAndStartTime[1]!=null) document.getElementById('Tuesday').checked=true;
-        if(this.state.dayAndStartTime[2]!=null) document.getElementById('Wednesday').checked=true;
-        if(this.state.dayAndStartTime[3]!=null) document.getElementById('Thursday').checked=true;
-        if(this.state.dayAndStartTime[4]!=null) document.getElementById('Friday').checked=true;
-        if(this.state.dayAndStartTime[5]!=null) document.getElementById('Saturday').checked=true;
-        if(this.state.dayAndStartTime[6]!=null) document.getElementById('Sunday').checked=true;
+        if(this.state.dayAndStartTime[0]!=null) {
+          this.state.Monday=true;
+          document.getElementById('Monday').checked=true;
+        }
+        if(this.state.dayAndStartTime[1]!=null){
+          this.state.Tuesday=true;
+          document.getElementById('Tuesday').checked=true;
+        }       
+        if(this.state.dayAndStartTime[2]!=null){
+          this.state.Wednesday=true;
+          document.getElementById('Wednesday').checked=true;
+        }
+        if(this.state.dayAndStartTime[3]!=null){
+          this.state.Thursday=true;
+          document.getElementById('Thursday').checked=true;
+        }        
+        if(this.state.dayAndStartTime[4]!=null){
+          this.state.Friday=true;
+          document.getElementById('Friday').checked=true;
+        }      
+        if(this.state.dayAndStartTime[5]!=null){
+          this.state.Saturday=true;
+          document.getElementById('Saturday').checked=true;
+        }        
+        if(this.state.dayAndStartTime[6]!=null){
+          this.state.Sunday=true;
+          document.getElementById('Sunday').checked=true;
+        }      
         this.enableTime();
         var i=0;
         for(i=0;i<7;i++){
