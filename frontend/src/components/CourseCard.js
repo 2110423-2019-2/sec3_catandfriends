@@ -33,6 +33,9 @@ class CourseCard extends React.Component {
     super(props);
   }
   dayToString(day) {
+    if (!day) {
+      return "";
+    }
     let dayL = day.split("/");
     let dayS = "";
     let e;
