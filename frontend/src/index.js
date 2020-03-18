@@ -7,7 +7,8 @@ import Popper from "popper.js";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
-import Payment from "./components/Payment";
+import PaymentPage from "./components/PaymentPage";
+import PaymentCard from "./components/PaymentCard";
 
 const AppWithRouter = () => (
   <BrowserRouter>
@@ -15,7 +16,7 @@ const AppWithRouter = () => (
   </BrowserRouter>
 );
 
-ReactDOM.render(<Payment />, document.getElementById("root"));
+ReactDOM.render(<AppWithRouter />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

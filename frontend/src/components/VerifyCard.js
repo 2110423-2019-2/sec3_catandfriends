@@ -46,12 +46,20 @@ export default class VerifyCard extends Component {
               name="file"
               onChange={this.onChangeHandler}
             />
+            <br />
+            <button
+              type="button"
+              className="btn btn-block btn-outline-primary btn-sm p-1"
+              onClick={this.onClickHandler}
+            >
+              Upload file
+            </button>
+
             <button
               type="button"
               className="btn btn-block btn-success btn-sm p-1"
-              onClick={this.onClickHandler}
             >
-              Upload
+              Pay
             </button>
           </div>
         </div>

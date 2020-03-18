@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import axios from "axios";
 
-export class Payment extends Component {
+export class PaymentPage extends Component {
   constructor(props) {
     super(props);
 
@@ -13,6 +14,28 @@ export class Payment extends Component {
     };
   }
 
+  onChangeHandler = event => {
+    this.setState({
+      selectedFile: event.target.files[0],
+      loaded: 0
+    });
+  };
+  onClickHandler = () => {
+    const data = new FormData();
+    data.append("file", this.state.selectedFile);
+    axios
+      .post(
+        `http://localhost:8000/upload?token=${localStorage.getItem("token")}`,
+        data,
+        {
+          // receive two    parameter endpoint url ,form data
+        }
+      )
+      .then(res => {
+        // then print response status
+        console.log(res.statusText);
+      });
+  };
   render() {
     return (
       <div className="card mb-3" style={{ maxWidth: "1000px" }}>
@@ -33,8 +56,22 @@ export class Payment extends Component {
                 <br />
                 <div>เมื่อชำระเงินสำเร็จ กรุณายืนยันโดยกดส่งสลิปที่นี่</div>
                 <div class="container">
-                  <label className="bg-success text-white">
-                    <input type="file" />
+                  <label /*className="bg-success text-white"*/>
+                    <input
+                      id="bill"
+                      className="bg-primary text-white"
+                      //className="form-control-file p-1"
+                      type="file"
+                      name="file"
+                      onChange={this.onChangeHandler}
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-block btn btn-outline-success btn-sm p-1"
+                      onClick={this.onClickHandler}
+                    >
+                      send
+                    </button>
                   </label>
                 </div>
                 <br />
@@ -61,4 +98,4 @@ export class Payment extends Component {
   }
 }
 
-export default Payment;
+export default PaymentPage;
