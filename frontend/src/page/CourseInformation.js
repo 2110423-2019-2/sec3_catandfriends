@@ -18,7 +18,7 @@ export default class CourseInformation extends Component {
         </div>
       );
     } else {
-      return <div>Loading...</div>;
+      return <div align="center">Loading...</div>;
     }
   }
 
