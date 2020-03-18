@@ -1,35 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 body,
 html {
   font-family: "Montserrat", sans-serif;
   background-color: #ffffff;
 }
+.app {
+  height: 18px;
+  width: 140px;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  margin: 0 5px 0 5px;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #000;
+}
 
-.CourseCard {
+.coursecard {
   width: 200px;
   height: 270px;
-  display: inline-block;
+  /* display: inline-block; */
   margin-top: 12px;
   margin-bottom: 12px;
   margin-left: 5px;
   margin-right: 5px;
-  box-shadow: 2px 2px 2px 2px rgb(224, 224, 224);
+  /* box-shadow: 2px 2px 2px 2px rgb(224, 224, 224); */
   transition: 0.2s;
   text-align: left;
-  border-radius: 12px 12px;
+  border-radius: 12px !important;
 }
 
-.CourseCard:hover {
+.coursecard:hover {
   box-shadow: 2px 2px 2px 2px #4e4e4e;
   cursor: pointer;
 }
-.CourseCard:hover .button-primary {
+.coursecard:hover .button-primary {
   transform: translate(10px, 0);
 }
 
 .mcard-header {
   border-radius: 12px 12px 0px 0px;
-  height: 110px;
-  width: 100%;
+  width: 200px;
+  height: 120px;
   padding: 0px;
   background-size: cover;
   color: #fff;
@@ -42,58 +57,102 @@ html {
   font-weight: 650;
 }
 
-.mcard-body {
-  height: 160px;
-  padding: 5px;
-  background-color: #ffffff;
-  width: auto;
-  border-radius: 0px 0px 12px 12px;
-}
-.course-name {
-  margin-top: 8px;
-  color: #000000;
-  font-weight: 600;
-}
-.date {
-  font-size: 10px;
-  font-weight: 700;
-  color: gray;
-  overflow: auto;
-  height: 20px;
-}
-.name {
-  text-align: center;
-  font-size: 13px;
-  font-weight: 500;
-  color: gray;
-}
-.body-content {
-  padding-bottom: 5px;
-  font-size: 10px;
-  line-height: 1;
-  color: #000000;
-  overflow: auto;
+.m-title {
+  width: 200px;
   height: 30px;
-  text-indent: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  /* or 0% */
+  display: inline-block;
+  align-items: center;
+  text-transform: capitalize;
+  color: #000000;
+  position: relative;
+  padding: 10px;
+  text-decoration: none;
+  color: #000;
 }
+.m-name {
+  width: 200px;
+  height: 10px;
 
-.button-primary {
-  border: none;
-  box-shadow: none;
-  font-family: inherit;
-  background-color: transparent;
-  color: rgb(97, 94, 94);
-  font-size: 12px;
-  transition: 0.25s;
-  font-weight: 600;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 9px;
+  line-height: 0px;
+  /* or 0% */
+
+  display: flex;
+  align-items: center;
+  text-indent: 19px;
+  text-transform: capitalize;
+
+  color: #000000;
 }
-.button-primary i {
-  padding-right: 4px;
+.m-text {
+  width: 200px;
+  height: 45px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 9px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  text-indent: 8px;
+  text-transform: capitalize;
+  color: #000000;
+  overflow: auto;
+}
+.m-date {
+  padding: 16px;
+  width: 200px;
+  height: 35px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  text-indent: 9px;
+  text-transform: capitalize;
+  overflow: auto;
+  color: #555252;
+}
+.m-foot {
+  width: 200px;
+  height: 30px;
+
+  font-family: Roboto Mono;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 0px;
+  /* or 0% */
+
+  display: flex;
+  align-items: center;
+  text-align: right;
+  text-transform: capitalize;
+
+  color: #000000;
 }
 .amount {
+  padding-left: 5px;
+  width: 100px;
   font-weight: 600;
+  text-align: left;
 }
 .price {
+  padding-right: 5px;
+  width: 100px;
+  font-weight: 600;
   text-align: right;
 }
 .full {

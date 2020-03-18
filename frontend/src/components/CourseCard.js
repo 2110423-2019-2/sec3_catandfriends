@@ -105,7 +105,7 @@ class CourseCard extends React.Component {
       duration
     } = this.props.detail;
     // console.log(this.props.detail);
-    const name = this.props.detail.tutorName
+    const fullname = this.props.detail.tutorName
       ? "by " + this.props.detail.tutorName
       : "";
     const image =
@@ -113,22 +113,58 @@ class CourseCard extends React.Component {
     const priceS = this.props.detail.courseFee + ".-";
     const courseid = this.props.detail._id;
     return (
-      <article
-        className="CourseCard"
-        onClick={() => this.onClickGotoCourseInform(courseid)}
-      >
-        <CardHeader imgsrc={image} category={category}></CardHeader>
-        <CardBody
-          title={courseName}
-          text={description}
-          price={priceS}
-          date={day}
-          tutorname={name}
-          remain={this.props.detail.amountOfStudent}
-          total={this.props.detail.totalAmountOfStudent}
-          available={this.props.detail.isAvailable}
-        ></CardBody>
-      </article>
+      <div className="card coursecard">
+        <div
+          style={{
+            backgroundImage: `url(${image})`
+          }}
+          id="image"
+          className="mcard-header"
+        >
+          <h6 className="mcard-header--title">{category}</h6>
+        </div>
+
+        <div>
+          <div className="m-title">{courseName}</div>
+        </div>
+        <div className="m-name ">{fullname}</div>
+        <div className="m-date ">{day}</div>
+        <div className="m-text ">
+          {description}
+          {/* Some quick example text to build on the card title and make up the
+            bulk of the card's content.Some quick example text to build on the
+            card title and make up the bulk of the card's content. */}
+        </div>
+        <div className="m-foot ">
+          <span
+            className={
+              this.props.detail.isAvailable ? "amount notfull" : "amount full"
+            }
+          >
+            {this.props.detail.amountOfStudent +
+              "/" +
+              this.props.detail.totalAmountOfStudent}
+          </span>
+          <span className="price">{priceS}</span>
+        </div>
+      </div>
+
+      // <article
+      //   className="CourseCard"
+      //   onClick={() => this.onClickGotoCourseInform(courseid)}
+      // >
+      //   <CardHeader imgsrc={image} category={category}></CardHeader>
+      //   <CardBody
+      //     title={courseName}
+      //     text={description}
+      //     price={priceS}
+      //     date={day}
+      //     tutorname={name}
+      //     remain={this.props.detail.amountOfStudent}
+      //     total={this.props.detail.totalAmountOfStudent}
+      //     available={this.props.detail.isAvailable}
+      //   ></CardBody>
+      // </article>
     );
   }
   onClickGotoCourseInform = courseId => {
