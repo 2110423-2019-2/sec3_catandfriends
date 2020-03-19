@@ -1,23 +1,39 @@
 .mycard {
-  width: 200px;
+  width: 230px;
   height: 350px;
-  margin: 15px;
-  transition: 0.2s;
+  margin: 10px;
   text-align: center;
   border-radius: 12px !important;
+  /*normal*/
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s; */
+  /*normal*/
+  /*new*/
+  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
+  transition: all 0.5s ease; /* back to normal */
+  /*new*/
 }
 
 .mycard:hover {
-  box-shadow: 2px 2px 2px 2px #888888;
-  /* cursor: pointer; */
+  /*normal*/
+  /* box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); */
+  /*normal*/
+  /*new*/
+  transform: translate3D(0, -1px, 0) scale(1.03); /* move up slightly and zoom in */
+  box-shadow: 8px 28px 50px rgba(39, 44, 49, 0.07),
+    1px 6px 12px rgba(39, 44, 49, 0.04);
+  transition: all 0.4s ease; /* zoom in */
+  /*new*/
 }
-.mycard:hover .button-primary {
-  transform: translate(5px, 0);
+.clickable:hover {
+  cursor: pointer;
 }
+
 .mcard-header {
   background-color: rgb(56, 87, 153);
   border-radius: 12px 12px 0px 0px;
-  width: 200px;
+  width: 228px;
   height: 150px;
   padding: 5px;
   background-size: cover;
