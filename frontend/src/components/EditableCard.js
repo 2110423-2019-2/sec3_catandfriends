@@ -74,8 +74,8 @@ export default class EditableCard extends React.Component {
         <div
           style={{
             backgroundImage: `url(${
-              this.props.detail.image
-                ? this.props.detail.image
+              this.props.detail.courseImg
+                ? this.props.detail.courseImg
                 : this.state.logoDark
             })`
           }}
