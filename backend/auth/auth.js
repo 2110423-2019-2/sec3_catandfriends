@@ -120,6 +120,8 @@ passport.use(
           });
         }
         //Send the user information to the next middleware
+        console.log("aaaa");
+
         return done(null, user, {
           message: "Logged in Successfully"
         });

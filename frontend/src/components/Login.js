@@ -4,6 +4,20 @@ import "./Login.css";
 import Util from "../apis/Util";
 
 export class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: "",
+      password: ""
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
   render() {
     return (
       <div className="container">
@@ -16,14 +30,14 @@ export class Login extends Component {
           <div className="container">
             <div className="col">
               <label for="email" style={{ fontSize: "1.5em" }}>Email address</label>
-              <input type="email" className="form-control" style={{ maxWidth: "350px" }} id="email" placeholder="Enter email" width="50%" required></input>
+              <input onChange={this.handleChange} name="email" value={this.state.email} type="email" className="form-control" style={{ maxWidth: "350px" }} id="email" placeholder="Enter email" required></input>
             </div>
           </div>
 
           <div className="container">
             <div className="col">
               <label for="password" style={{ fontSize: "1.5em" }}>Password</label>
-              <input type="password" className="form-control" style={{ maxWidth: "350px" }} id="password" placeholder="Password" onKeyDown={this.handleOnKeyDown} required></input>
+              <input onChange={this.handleChange} name="password" value={this.state.password} type="password" className="form-control" style={{ maxWidth: "350px" }} id="password" placeholder="Password" onKeyDown={this.handleOnKeyDown} required></input>
             </div>
           </div>
 
@@ -33,7 +47,7 @@ export class Login extends Component {
 
           <div className="container">
             <div className="col">
-              <button type="submit" id="button" className="btn btn-primary" >Login</button>
+              <button type="submit" id="Submit" className="btn btn-primary" >Login</button>
             </div>
           </div>
 
@@ -43,6 +57,8 @@ export class Login extends Component {
   }
 
   onClickLogin = async () => {
+    console.log("click");
+
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
     let data = await Util.login(email, password);
