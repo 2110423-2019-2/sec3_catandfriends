@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
   err = theRequests[0];
   let requests = theRequests[1];
   if (err) {
-    res.status(400).end();
+    res.status(500).end();
     return;
   }
   res.status(200).json(requests).end();
@@ -46,6 +46,10 @@ router.post("/", async (req, res) => {
     }
   } else {
     message = `requested`;
+  }
+  if (err) {
+    res.status(500).end();
+    return;
   }
   res.status(201).json({
     message: message
