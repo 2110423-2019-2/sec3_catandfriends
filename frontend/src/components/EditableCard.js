@@ -43,11 +43,7 @@ export default class EditableCard extends React.Component {
       return "";
     }
     let dayL = day.split("/");
-    let dayS = "";
-    let e;
-    for (e of dayL) {
-      dayS = dayS + e;
-    }
+    let dayS = dayL.join("\n");
     return dayS;
   }
   render() {
@@ -74,25 +70,35 @@ export default class EditableCard extends React.Component {
         <div
           style={{
             backgroundImage: `url(${
-              this.props.detail.image
-                ? this.props.detail.image
+              this.props.detail.courseImg
+                ? this.props.detail.courseImg
                 : this.state.logoDark
             })`
           }}
           id="image"
           className="mcard-header"
         >
-          <h6 className="mcard-header--title">{category}</h6>
-          <button
-            class="button button-secondary"
-            onClick={() => {
-              history.push(`/course/edit?courseId=${this.props.courseid}`);
-            }}
-          >
-            <h6>
-              <i className="fa fa-edit">Edit</i>
-            </h6>
-          </button>
+          <div style={{ height: "120px", paddingLeft: "5px" }}>
+            <div className="mcard-header--title">{category}</div>{" "}
+            <button
+              class="button button-secondary"
+              onClick={() => {
+                history.push(`/course/edit?courseId=${this.props.courseid}`);
+              }}
+            >
+              <h6>
+                <i className="fa fa-edit">Edit</i>
+              </h6>
+            </button>
+          </div>
+          <div style={{ height: "30px" }}>
+            <div
+              className="mcard-header--title"
+              style={{ fontSize: "small", width: "100%" }}
+            >
+              {duration}
+            </div>
+          </div>
         </div>
         <div className="card-body mycard-body">
           <h5 className="card-title mycard-title">{courseName}</h5>
