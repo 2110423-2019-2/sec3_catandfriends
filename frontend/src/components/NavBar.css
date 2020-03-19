@@ -27,27 +27,6 @@ h1 {
     rgba(19, 204, 169, 1) 100%
   );
 }
-.primaryBtn:hover {
-  text-decoration: none;
-  color: white;
-  background: rgb(180, 55, 250);
-  background: linear-gradient(
-    90deg,
-    rgba(180, 55, 250, 1) 0%,
-    rgba(0, 212, 255, 1) 100%
-  );
-}
-.primaryBtn {
-  color: black;
-  transition: 0.3s;
-  /* background-color: rgb(75, 202, 249); */
-  background-color: rgb(172, 195, 207);
-  font-size: 1.1em;
-  outline: none;
-  font-weight: 500;
-  padding: 0.25em 1em;
-  border-radius: 30px;
-}
 .nav-link {
   font-size: 1.1em;
   font-weight: 500;

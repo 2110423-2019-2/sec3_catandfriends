@@ -1,33 +1,8 @@
 import React from "react";
 import "./CourseCard.css";
+import "./EditableCard.css";
 import history from "./../history";
-import styled from "styled-components";
-const Button = styled.button`
-  color: black;
-  transition: 0.3s;
-  background-color: ${props =>
-    props.full ? "rgb(214,111,110)" : "rgb(19, 204, 169)"};
-  font-size: 1.1em;
-  outline: none;
-  font-weight: 500;
-  padding: 0.25em 0.5em;
-  border-radius: 10px;
-  &:hover {
-    text-decoration: none;
-    color: white;
-    background: ${props =>
-      props.full
-        ? `linear-gradient(90deg, rgba(134,31,31,1) 0%, rgba(214,111,110,1) 100%);`
-        : `linear-gradient(
-      90deg,
-      rgba(25, 108, 70, 1) 0%,
-      rgba(19, 204, 169, 1) 100%
-    )`};
-  }
-  &:focus {
-    outline: none;
-  }
-`;
+import CourseButton from "./CourseButton";
 class CourseCard extends React.Component {
   constructor(props) {
     super(props);
@@ -62,6 +37,30 @@ class CourseCard extends React.Component {
       "https://i.kym-cdn.com/photos/images/newsfeed/001/535/446/1c5.jpg";
     const priceS = this.props.detail.courseFee + "฿";
     const courseid = this.props.detail._id;
+    var Editable;
+    if (!this.props.editable) {
+      Editable = (
+        <div style={{ height: "120px", paddingLeft: "5px" }}>
+          <div className="mcard-header--title">{category}</div>
+        </div>
+      );
+    } else {
+      Editable = (
+        <div style={{ height: "120px", paddingLeft: "5px" }}>
+          <div className="mcard-header--title">{category}</div>
+          <button
+            class="button button-secondary"
+            onClick={() => {
+              history.push(`/course/edit?courseId=${this.props.courseid}`);
+            }}
+          >
+            <h6>
+              <i className="fa fa-edit">Edit</i>
+            </h6>
+          </button>
+        </div>
+      );
+    }
     return (
       <div
         className="card mycard clickable"
@@ -78,9 +77,7 @@ class CourseCard extends React.Component {
           id="image"
           className="mcard-header"
         >
-          <div style={{ height: "120px", paddingLeft: "5px" }}>
-            <div className="mcard-header--title">{category}</div>
-          </div>
+          {Editable}
           <div style={{ height: "30px" }}>
             <div
               className="mcard-header--title"
@@ -99,13 +96,13 @@ class CourseCard extends React.Component {
               {this.dayToString(day)}
             </textarea>
           </div>
-          <Button full={!this.props.detail.isAvailable}>
+          <CourseButton full={!this.props.detail.isAvailable}>
             {this.props.detail.amountOfStudent +
               "/" +
               this.props.detail.totalAmountOfStudent +
               " | " +
               priceS}
-          </Button>
+          </CourseButton>
         </div>
       </div>
     );

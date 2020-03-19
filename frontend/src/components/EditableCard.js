@@ -2,33 +2,7 @@ import React, { Component } from "react";
 import history from "./../history";
 import "./CourseCard.css";
 import "./EditableCard.css";
-import styled from "styled-components";
-const Button = styled.button`
-  color: black;
-  transition: 0.3s;
-  background-color: ${props =>
-    props.full ? "rgb(214,111,110)" : "rgb(19, 204, 169)"};
-  font-size: 1.1em;
-  outline: none;
-  font-weight: 500;
-  padding: 0.25em 0.5em;
-  border-radius: 10px;
-  &:hover {
-    text-decoration: none;
-    color: white;
-    background: ${props =>
-      props.full
-        ? `linear-gradient(90deg, rgba(134,31,31,1) 0%, rgba(214,111,110,1) 100%);`
-        : `linear-gradient(
-      90deg,
-      rgba(25, 108, 70, 1) 0%,
-      rgba(19, 204, 169, 1) 100%
-    )`};
-  }
-  &:focus {
-    outline: none;
-  }
-`;
+import CourseButton from "./CourseButton";
 
 export default class EditableCard extends React.Component {
   constructor(props) {
@@ -106,7 +80,7 @@ export default class EditableCard extends React.Component {
           <div align="center" style={{ marginBottom: "15px" }}>
             <p className="card-text day border">{this.dayToString(day)}</p>
           </div>
-          <Button
+          <CourseButton
             onClick={() => this.onClickGotoCourseInform(courseid)}
             full={!this.props.detail.isAvailable}
           >
@@ -115,7 +89,7 @@ export default class EditableCard extends React.Component {
               this.props.detail.totalAmountOfStudent +
               " | " +
               priceS}
-          </Button>
+          </CourseButton>
         </div>
       </div>
     );
