@@ -58,4 +58,11 @@ router.get("/", async (req, res, next) => {
   }
   return res.status(200).send(profile);
 });
+router.put("/", async (req, res) => {
+  const userId = req.user._id;
+  const payload = req.body;
+  await CourseModel.updateOne({ _id: userId }, { $set: payload });
+  res.status(201).json("update complete");
+
+});
 module.exports = router;
