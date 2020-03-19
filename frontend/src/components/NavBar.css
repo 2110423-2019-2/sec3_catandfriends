@@ -16,6 +16,9 @@ h1 {
 .primaryBtn:focus {
   outline: none;
 }
+.brandName {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
 .demo {
   background: rgb(25, 108, 70);
   background: linear-gradient(

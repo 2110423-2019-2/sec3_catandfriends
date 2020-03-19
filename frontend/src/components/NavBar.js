@@ -12,6 +12,7 @@ const Button = styled.button`
   font-weight: 500;
   padding: 0.25em 1em;
   border-radius: 30px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   &:hover {
     text-decoration: none;
     color: white;
@@ -39,7 +40,7 @@ export class NavBar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-custom">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <a
           className="navbar-brand"
           onClick={() => this.onClickNavBar("/register")}
@@ -50,7 +51,7 @@ export class NavBar extends Component {
             src={this.state.logoLight}
             alt="Logo"
           />
-          TutorHere
+          <span className="brandName">TutorHere</span>
         </a>
         <button
           className="navbar-toggler"

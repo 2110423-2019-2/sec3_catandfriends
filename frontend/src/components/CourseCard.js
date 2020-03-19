@@ -67,7 +67,10 @@ class CourseCard extends React.Component {
     const priceS = this.props.detail.courseFee + "฿";
     const courseid = this.props.detail._id;
     return (
-      <div className="card mycard">
+      <div
+        className="card mycard clickable"
+        onClick={() => this.onClickGotoCourseInform(courseid)}
+      >
         <div
           style={{
             backgroundImage: `url(${
@@ -87,10 +90,7 @@ class CourseCard extends React.Component {
           <div align="center" style={{ marginBottom: "15px" }}>
             <p className="card-text day border">{this.dayToString(day)}</p>
           </div>
-          <Button
-            onClick={() => this.onClickGotoCourseInform(courseid)}
-            full={!this.props.detail.isAvailable}
-          >
+          <Button full={!this.props.detail.isAvailable}>
             {this.props.detail.amountOfStudent +
               "/" +
               this.props.detail.totalAmountOfStudent +

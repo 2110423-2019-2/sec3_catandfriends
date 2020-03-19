@@ -355,10 +355,14 @@ export default class SearchResult extends Component {
               </div>
             </div>
           </div>
-          <div className="col-md-10">
+          <div
+            className="col-md-10"
+            align="center"
+            style={{ maxWidth: "1200px" }}
+          >
             <h2
               style={{
-                marginTop: "15px",
+                margin: "15px",
                 display: "block",
                 textAlign: "center"
               }}

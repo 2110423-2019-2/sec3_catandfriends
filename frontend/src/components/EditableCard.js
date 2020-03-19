@@ -33,6 +33,9 @@ const Button = styled.button`
 export default class EditableCard extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png"
+    };
   }
 
   dayToString(day) {
@@ -70,7 +73,11 @@ export default class EditableCard extends React.Component {
       <div className="card mycard">
         <div
           style={{
-            backgroundImage: `url(${image})`
+            backgroundImage: `url(${
+              this.props.detail.image
+                ? this.props.detail.image
+                : this.state.logoDark
+            })`
           }}
           id="image"
           className="mcard-header"
@@ -82,9 +89,10 @@ export default class EditableCard extends React.Component {
               history.push(`/course/edit?courseId=${this.props.courseid}`);
             }}
           >
-            <i className="fa fa-edit"> edit</i>
+            <h6>
+              <i className="fa fa-edit">Edit</i>
+            </h6>
           </button>
-          ;
         </div>
         <div className="card-body mycard-body">
           <h5 className="card-title mycard-title">{courseName}</h5>
