@@ -47,7 +47,7 @@ export class Login extends Component {
 
           <div className="container">
             <div className="col">
-              <button type="submit" id="Submit" className="btn btn-primary" >Login</button>
+              <button type="submit" id="submit" className="btn btn-primary" >Login</button>
             </div>
           </div>
 
@@ -65,6 +65,7 @@ export class Login extends Component {
     await console.log(data);
     if (data.errmsg) {
       window.alert(data.errmsg);
+      window.location.reload();
       document.getElementById("password").value = "";
     } else {
       localStorage.setItem("token", data.token);
@@ -77,7 +78,7 @@ export class Login extends Component {
 
   handleOnKeyDown = event => {
     if (event.keyCode === 13) {
-      document.getElementById("Submit").click();
+      document.getElementById("submit").click();
     }
   };
 }
