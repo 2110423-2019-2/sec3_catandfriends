@@ -1,7 +1,10 @@
-.login{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.login {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+h1 {
+  color: #0d0080;
 }
