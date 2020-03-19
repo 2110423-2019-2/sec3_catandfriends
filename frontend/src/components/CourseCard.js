@@ -40,11 +40,7 @@ class CourseCard extends React.Component {
       return "";
     }
     let dayL = day.split("/");
-    let dayS = "";
-    let e;
-    for (e of dayL) {
-      dayS = dayS + e;
-    }
+    let dayS = dayL.join("\n");
     return dayS;
   }
   render() {
@@ -82,13 +78,26 @@ class CourseCard extends React.Component {
           id="image"
           className="mcard-header"
         >
-          <h6 className="mcard-header--title">{category}</h6>
+          <div style={{ height: "120px", paddingLeft: "5px" }}>
+            <div className="mcard-header--title">{category}</div>
+          </div>
+          <div style={{ height: "30px" }}>
+            <div
+              className="mcard-header--title"
+              style={{ fontSize: "small", width: "100%" }}
+            >
+              {duration}
+            </div>
+          </div>
         </div>
         <div className="card-body mycard-body">
           <h5 className="card-title mycard-title">{courseName}</h5>
           <p className="card-text tutorname">{fullname}</p>
-          <div align="center" style={{ marginBottom: "15px" }}>
-            <p className="card-text day border">{this.dayToString(day)}</p>
+          {/* <p className="card-text date">{duration}</p> */}
+          <div align="center" style={{ marginBottom: "5px" }}>
+            <textarea className="card-text day" disabled>
+              {this.dayToString(day)}
+            </textarea>
           </div>
           <Button full={!this.props.detail.isAvailable}>
             {this.props.detail.amountOfStudent +

@@ -35,7 +35,7 @@
   border-radius: 12px 12px 0px 0px;
   width: 228px;
   height: 150px;
-  padding: 5px;
+  /* padding: 5px; */
   background-size: cover;
   color: #fff;
   text-shadow: 4px 4px 4px #000000;
@@ -53,6 +53,12 @@
   text-overflow: ellipsis;
   display: block;
 }
+.date {
+  font-size: small;
+  display: inline-block;
+  height: 100%;
+  vertical-align: bottom;
+}
 .tutorname {
   height: 22px;
   overflow: hidden;
@@ -61,7 +67,19 @@
 }
 .day {
   text-align: center;
-  width: 130px;
+  width: 150px;
   height: 45px;
   overflow: auto;
+  border: none;
+  resize: none;
+  border-right: 3px double rgb(215, 215, 215);
+}
+.dayK {
+  text-align: center;
+  width: 150px;
+  height: 45px;
+  overflow: auto;
+  /* border: none;
+  resize: none; */
+  border-right: 3px double rgb(215, 215, 215);
 }
