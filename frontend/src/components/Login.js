@@ -6,24 +6,39 @@ import Util from "../apis/Util";
 export class Login extends Component {
   render() {
     return (
-      <div className="login">
-        <div>
-          <span>{"Email : "}</span>
-          <input type="text" id="email" placeholder="email"></input>
-        </div>
-        <div>
-          <span>{"Password : "}</span>
-          <input
-            type="password"
-            id="password"
-            placeholder="password"
-            onKeyDown={this.handleOnKeyDown}
-          ></input>
-        </div>
-        <button id="Submit" onClick={this.onClickLogin}>
-          Login
-        </button>
-      </div>
+      <div className="container">
+
+        <form onSubmit={event => this.onClickLogin(event)}>
+          <div className="container">
+            <h1>Log in to your account</h1>
+          </div>
+
+          <div className="container">
+            <div className="col">
+              <label for="email" style={{ fontSize: "1.5em" }}>Email address</label>
+              <input type="email" className="form-control" style={{ maxWidth: "350px" }} id="email" placeholder="Enter email" width="50%" required></input>
+            </div>
+          </div>
+
+          <div className="container">
+            <div className="col">
+              <label for="password" style={{ fontSize: "1.5em" }}>Password</label>
+              <input type="password" className="form-control" style={{ maxWidth: "350px" }} id="password" placeholder="Password" onKeyDown={this.handleOnKeyDown} required></input>
+            </div>
+          </div>
+
+          <div className="container">
+            <br></br>
+          </div>
+
+          <div className="container">
+            <div className="col">
+              <button type="submit" id="button" className="btn btn-primary" >Login</button>
+            </div>
+          </div>
+
+        </form >
+      </div >
     );
   }
 
