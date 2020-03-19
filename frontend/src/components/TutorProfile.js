@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./TutorProfile.css";
+import Util from "../apis/Util";
+import history from "../history";
 export class TutorProfile extends Component {
   constructor(props) {
     super(props);
@@ -99,7 +101,15 @@ export class TutorProfile extends Component {
               </div>
               <br />
               <div className="myStyle">
-                <button type="button" className="btn btn-outline-primary">
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  onClick={() => {
+                    history.push(
+                      `/profile/edit?token=${localStorage.getItem("token")}`
+                    );
+                  }}
+                >
                   Edit Information
                 </button>
               </div>
