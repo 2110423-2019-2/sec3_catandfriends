@@ -8,7 +8,7 @@ class format {
         let yearMonthDay = dateS.slice(0, 10).split("-");
         let dayMonthYear = yearMonthDay.reverse().join("-");
         let time = dateS.slice(11, 19);
-        return time + " " + dayMonthYear;
+        return `${time} ${dayMonthYear}`;
     }
 
     formatTime(time) {
@@ -23,7 +23,7 @@ class format {
         }
         if (hour.length == 1) hour = "0" + hour;
         if (min.length == 1) min = min + "0";
-        return hour + ":" + min;
+        return `${hour}:${min}`;
     }
 
     formatRangeOfTime(start, end) {
