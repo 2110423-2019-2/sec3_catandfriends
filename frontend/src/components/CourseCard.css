@@ -1,39 +1,28 @@
-body,
-html {
-  font-family: "Montserrat", sans-serif;
-  background-color: #ffffff;
-}
-
-.CourseCard {
+.mycard {
   width: 200px;
-  height: 270px;
-  display: inline-block;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 5px;
-  margin-right: 5px;
-  box-shadow: 2px 2px 2px 2px rgb(224, 224, 224);
+  height: 350px;
+  margin: 15px;
   transition: 0.2s;
-  text-align: left;
-  border-radius: 12px 12px;
+  text-align: center;
+  border-radius: 12px !important;
 }
 
-.CourseCard:hover {
-  box-shadow: 2px 2px 2px 2px #4e4e4e;
-  cursor: pointer;
+.mycard:hover {
+  box-shadow: 2px 2px 2px 2px #888888;
+  /* cursor: pointer; */
 }
-.CourseCard:hover .button-primary {
-  transform: translate(10px, 0);
+.mycard:hover .button-primary {
+  transform: translate(5px, 0);
 }
-
 .mcard-header {
+  background-color: rgb(56, 87, 153);
   border-radius: 12px 12px 0px 0px;
-  height: 110px;
-  width: 100%;
-  padding: 0px;
+  width: 200px;
+  height: 150px;
+  padding: 5px;
   background-size: cover;
   color: #fff;
-  text-shadow: 2px 2px 4px #000000;
+  text-shadow: 4px 4px 4px #000000;
 }
 
 .mcard-header--title {
@@ -41,64 +30,22 @@ html {
   text-transform: uppercase;
   font-weight: 650;
 }
-
-.mcard-body {
-  height: 160px;
-  padding: 5px;
-  background-color: #ffffff;
-  width: auto;
-  border-radius: 0px 0px 12px 12px;
+.mycard-title {
+  height: 25px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
 }
-.course-name {
-  margin-top: 8px;
-  color: #000000;
-  font-weight: 600;
+.tutorname {
+  height: 22px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
-.date {
-  font-size: 10px;
-  font-weight: 700;
-  color: gray;
-  overflow: auto;
-  height: 20px;
-}
-.name {
+.day {
   text-align: center;
-  font-size: 13px;
-  font-weight: 500;
-  color: gray;
-}
-.body-content {
-  padding-bottom: 5px;
-  font-size: 10px;
-  line-height: 1;
-  color: #000000;
+  width: 130px;
+  height: 45px;
   overflow: auto;
-  height: 30px;
-  text-indent: 15px;
-}
-
-.button-primary {
-  border: none;
-  box-shadow: none;
-  font-family: inherit;
-  background-color: transparent;
-  color: rgb(97, 94, 94);
-  font-size: 12px;
-  transition: 0.25s;
-  font-weight: 600;
-}
-.button-primary i {
-  padding-right: 4px;
-}
-.amount {
-  font-weight: 600;
-}
-.price {
-  text-align: right;
-}
-.full {
-  color: red;
-}
-.notfull {
-  color: green;
 }

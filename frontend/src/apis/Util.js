@@ -59,8 +59,8 @@ const Util = {
     console.log(userId);
     const URL = userId
       ? `http://localhost:8000/profile?userId=${userId}&token=${localStorage.getItem(
-        "token"
-      )}`
+          "token"
+        )}`
       : `http://localhost:8000/profile?token=${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "GET",
@@ -126,7 +126,7 @@ const Util = {
       body: JSON.stringify({ requestId, status, studentId, courseId })
     });
     if (response.status == 500) return { error: true };
-    if (response.status == 200) return response.json();
+    if (response.status == 201) return response.json();
   },
   getSearchResult: async (day, subject, time, price) => {
     const URL = `http://localhost:8000/search?day=${day}&time=${time}&category=${subject}&price=${price}`;
@@ -152,7 +152,7 @@ const Util = {
     });
     console.log(response.status);
     if (response.status == 500) return { error: true };
-    if (response.status == 200) return response.json();
+    if (response.status == 201) return response.json();
   },
   createCourse: async (
     courseName,

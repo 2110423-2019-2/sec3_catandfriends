@@ -26,7 +26,7 @@ class App extends Component {
   render() {
     return (
       <Router history={history}>
-        <NavBar loggedin={localStorage.getItem("token")} />
+        <NavBar />
         <Switch>
           <Route path="/register" component={RegisterPage} />
           <Route path="/login" component={Login} />

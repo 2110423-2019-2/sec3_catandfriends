@@ -10,17 +10,7 @@ export class CourseDetail extends Component {
     console.log(props);
     this.state = {
       imgsrc:
-        "https://www.img.in.th/images/ced52db8eb1c2a59ab18b803b25e80c9.jpg",
-      TutorName: "jonh",
-      courseId: "123456789",
-      courseName: "A",
-      dayAndtime: "friday 10:00-12:00",
-      startDate: "1970-01-20 T17:00:00.000+00:00",
-      endDate: "1970-01-29 T17:00:00.000+00:00",
-      tutorId: "123456789",
-      amountOfStudent: "5",
-      description: "just enroll this course and you will get nothing",
-      requestable: true
+        "https://www.img.in.th/images/ced52db8eb1c2a59ab18b803b25e80c9.jpg"
     };
     this.onClick = this.onClick.bind(this);
   }
@@ -145,7 +135,7 @@ export class CourseDetail extends Component {
                 <div className="col-md-12 border">
                   <br />
                   <strong>Description :</strong>
-                  <p className="card-text">{this.state.description}</p>
+                  <p className="card-text">{this.props.detail.description}</p>
                   <br />
                 </div>
 
