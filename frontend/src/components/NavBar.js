@@ -2,30 +2,7 @@ import React, { Component } from "react";
 import history from "../history";
 import "./NavBar.css";
 import Util from "../apis/Util";
-import styled from "styled-components";
-const Button = styled.button`
-  color: black;
-  transition: 0.3s;
-  background-color: rgb(0, 212, 255);
-  font-size: 1.1em;
-  outline: none;
-  font-weight: 500;
-  padding: 0.25em 1em;
-  border-radius: 30px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-  &:hover {
-    text-decoration: none;
-    color: white;
-    background: linear-gradient(
-      90deg,
-      rgba(180, 55, 250, 1) 0%,
-      rgba(0, 212, 255, 1) 100%
-    );
-  }
-  &:focus {
-    outline: none;
-  }
-`;
+import AccountButton from "./AccountButton";
 export class NavBar extends Component {
   constructor(props) {
     super(props);
@@ -90,7 +67,7 @@ export class NavBar extends Component {
           <ul className="navbar-nav ml-auto">
             {localStorage.getItem("token") ? (
               <li className="nav-item dropdown">
-                <Button
+                <AccountButton
                   className="dropdown-toggle "
                   href="#"
                   id="navbarDropdownMenuLink"
@@ -100,7 +77,7 @@ export class NavBar extends Component {
                 >
                   {"㋛  " + this.state.fullName}
                   <span className="sr-only">(current)</span>
-                </Button>
+                </AccountButton>
 
                 <div
                   class="dropdown-menu"
