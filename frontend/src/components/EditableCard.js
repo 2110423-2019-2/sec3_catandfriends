@@ -57,7 +57,7 @@ export default class EditableCard extends React.Component {
             <button
               class="button button-secondary"
               onClick={() => {
-                history.push(`/course/edit?courseId=${this.props.courseid}`);
+                history.push(`/course/edit?courseId=${courseid}`);
               }}
             >
               <h6>
