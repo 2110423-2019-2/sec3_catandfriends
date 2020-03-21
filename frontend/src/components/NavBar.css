@@ -1,7 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Merienda+One&display=swap");
 .logoImg {
   width: 60px;
 }
-
+.bg-custom {
+  background-color: rgb(216, 224, 233);
+  /* background-color: rgb(172, 195, 207); */
+}
+.navbar-brand {
+  font-family: "Merienda One", cursive;
+  font-size: 1.7em !important;
+}
 h1 {
   color: green;
+}
+.primaryBtn:focus {
+  outline: none;
+}
+.brandName {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+.demo {
+  background: rgb(25, 108, 70);
+  background: linear-gradient(
+    90deg,
+    rgba(25, 108, 70, 1) 0%,
+    rgba(19, 204, 169, 1) 100%
+  );
+}
+.nav-link {
+  font-size: 1.1em;
+  font-weight: 500;
 }

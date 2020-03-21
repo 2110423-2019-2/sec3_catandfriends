@@ -1,97 +1,22 @@
 import React from "react";
 import "./CourseCard.css";
+import "./EditableCard.css";
 import history from "./../history";
-//import '@fortawesome/fontawesome-free';
-class CardHeader extends React.Component {
-  render() {
-    return (
-      <header
-        style={{
-          backgroundImage: `url(${this.props.imgsrc})`
-        }}
-        id="image"
-        className="mcard-header"
-      >
-        <h6
-          className="mcard-header--title"
-          style={{ paddingLeft: "7px", paddingTop: "4px" }}
-        >
-          {this.props.category}
-        </h6>
-      </header>
-    );
-  }
-}
-
-class Button extends React.Component {
-  render() {
-    return (
-      <div>
-        <button
-          type="button"
-          class="button button-primary"
-          data-toggle="modal"
-          data-target="#myModal"
-        >
-          <i className="fa fa-chevron-right">Course detail</i>
-        </button>
-        <div class="modal fade" id="myModal" role="dialog">
-          <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-              <div class="modal-body">
-                <p>go to course detail.</p>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-default"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-class CardBody extends React.Component {
-  constructor(props) {
-    super(props);
-    //this.handleOnClick = this.handleOnClick.bind(this);
-  }
-  render() {
-    return (
-      <div className="mcard-body">
-        <article className="date">{this.props.date}</article>
-        <h5 className="course-name">{this.props.title}</h5>
-        <p className="body-content">{this.props.text}</p>
-        <div class="row">
-          <div
-            class={
-              this.props.available
-                ? "col-md-6 amount notfull"
-                : "col-md-6 amount full"
-            }
-          >
-            <div>{this.props.remain + "/" + this.props.total}</div>
-          </div>
-          <div class="col-md-6 price">
-            <div>{this.props.price}</div>
-          </div>
-        </div>
-        <small className="name">{this.props.tutorname}</small>
-      </div>
-    );
-  }
-}
-
+import CourseButton from "./CourseButton";
 class CourseCard extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png"
+    };
+  }
+  dayToString(day) {
+    if (!day) {
+      return "";
+    }
+    let dayL = day.split("/");
+    let dayS = dayL.join("\n");
+    return dayS;
   }
   render() {
     const {
@@ -105,30 +30,81 @@ class CourseCard extends React.Component {
       duration
     } = this.props.detail;
     // console.log(this.props.detail);
-    const name = this.props.detail.tutorName
+    const fullname = this.props.detail.tutorName
       ? "by " + this.props.detail.tutorName
       : "";
     const image =
       "https://i.kym-cdn.com/photos/images/newsfeed/001/535/446/1c5.jpg";
-    const priceS = this.props.detail.courseFee + ".-";
+    const priceS = this.props.detail.courseFee + "฿";
     const courseid = this.props.detail._id;
+    var Editable;
+    if (!this.props.editable) {
+      Editable = (
+        <div style={{ height: "120px", paddingLeft: "5px" }}>
+          <div className="mcard-header--title">{category}</div>
+        </div>
+      );
+    } else {
+      Editable = (
+        <div style={{ height: "120px", paddingLeft: "5px" }}>
+          <div className="mcard-header--title">{category}</div>
+          <button
+            class="button button-secondary"
+            onClick={() => {
+              history.push(`/course/edit?courseId=${this.props.courseid}`);
+            }}
+          >
+            <h6>
+              <i className="fa fa-edit">Edit</i>
+            </h6>
+          </button>
+        </div>
+      );
+    }
     return (
-      <article
-        className="CourseCard"
+      <div
+        className="card mycard clickable"
         onClick={() => this.onClickGotoCourseInform(courseid)}
       >
-        <CardHeader imgsrc={image} category={category}></CardHeader>
-        <CardBody
-          title={courseName}
-          text={description}
-          price={priceS}
-          date={day}
-          tutorname={name}
-          remain={this.props.detail.amountOfStudent}
-          total={this.props.detail.totalAmountOfStudent}
-          available={this.props.detail.isAvailable}
-        ></CardBody>
-      </article>
+        <div
+          style={{
+            backgroundImage: `url(${
+              this.props.detail.courseImg
+                ? this.props.detail.courseImg
+                : this.state.logoDark
+            })`
+          }}
+          id="image"
+          className="mcard-header"
+        >
+          {Editable}
+          <div style={{ height: "30px" }}>
+            <div
+              className="mcard-header--title"
+              style={{ fontSize: "small", width: "100%" }}
+            >
+              {duration}
+            </div>
+          </div>
+        </div>
+        <div className="card-body mycard-body">
+          <h5 className="card-title mycard-title">{courseName}</h5>
+          <p className="card-text tutorname">{fullname}</p>
+          {/* <p className="card-text date">{duration}</p> */}
+          <div align="center" style={{ marginBottom: "5px" }}>
+            <textarea className="card-text day" disabled>
+              {this.dayToString(day)}
+            </textarea>
+          </div>
+          <CourseButton full={!this.props.detail.isAvailable}>
+            {this.props.detail.amountOfStudent +
+              "/" +
+              this.props.detail.totalAmountOfStudent +
+              " | " +
+              priceS}
+          </CourseButton>
+        </div>
+      </div>
     );
   }
   onClickGotoCourseInform = courseId => {

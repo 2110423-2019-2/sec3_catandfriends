@@ -10,10 +10,12 @@ class CourseCardLayout extends React.Component {
   }
   render() {
     return (
-      <div className="row border cardblock">
-        {this.state.data.map(item => (
-          <CourseCard detail={item} key={item._id.toString()} />
-        ))}
+      <div className="container-fluid">
+        <div className="row cardblock ">
+          {this.state.data.map(item => (
+            <CourseCard detail={item} key={item._id.toString()} />
+          ))}
+        </div>
       </div>
     );
   }

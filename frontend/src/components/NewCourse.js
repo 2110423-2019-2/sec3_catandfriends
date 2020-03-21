@@ -69,6 +69,8 @@ export default class NewCourse extends Component {
         event.preventDefault();
         if(!this.compareDate()){
           alert("Start Date must be before End Date");
+        } else if(!this.compareTime){
+          alert("Start Time must be before End Time");
         }else{
             console.log(this.state)
            alert(JSON.stringify(this.state))
@@ -223,6 +225,15 @@ export default class NewCourse extends Component {
     return aDate < bDate;
   }
 
+  compareTime(){
+    var i=0;
+    var invalid=false;
+    for (i=0;i<7;i++){
+      invalid = this.state.dayAndEndTime<this.state.dayAndStartTime;
+    }
+    return invalid;
+  }
+  
   render() {
     return (
       <div className="card mb-4 p-3" style={{ maxWidth: 1000 }}>

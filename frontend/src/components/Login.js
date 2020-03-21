@@ -30,6 +30,10 @@ export class Login extends Component {
   onClickLogin = async () => {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
+    if (!email || !password) {
+      alert("Email or password is not filled")
+      return;
+    }
     let data = await Util.login(email, password);
     await console.log(data);
     if (data.errmsg) {
