@@ -1,42 +1,85 @@
 const express = require("express");
 const router = express.Router();
+const path = require('path');
+const crypto = require('crypto');
 const multer = require("multer");
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const mongoose2 = require('mongoose');
 const tutorModel = require("./models/tutor");
+const UserModel = require("./models/user");
 
-var storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, "public");
-  },
-  filename: async function(req, file, cb) {
-    let fileName = `${req.user.email}.jpg`;
-    try {
-      let data = await tutorModel.findOneAndUpdate(
-        { userId: req.user._id },
-        {
-          verificationDocument: fileName
-        },
-        {
-          useFindAndModify: false
+require("dotenv").config();
+mongoose2.set("useNewUrlParser", true);
+mongoose2.set("useUnifiedTopology", true);
+
+const mongoURIUpload = process.env.MONGO_DB_UPLOAD;
+const conn = mongoose2.createConnection(mongoURIUpload);
+
+let gfs;
+conn.once('open', () => {
+  gfs = Grid(conn.db, mongoose2.mongo);
+  gfs.collection('verify_documents');
+});
+
+const storage = new GridFsStorage({
+  url: mongoURIUpload,
+  options: { useUnifiedTopology: true },
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, async (err, buf) => {
+        if (err) {
+          return reject(err);
         }
-      );
-    } catch (err) {
-      res.status(500).end();
-    }
-    cb(null, fileName);
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'verify_documents'
+        };
+        await tutorModel.findOneAndUpdate(
+          { userId: req.user._id },
+          {
+            verificationDocument: filename
+          },
+          {
+            useFindAndModify: false
+          }
+        );
+
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+const upload = multer({ storage });
+
+router.get('/file/:filename', async (req, res) => {
+  let userId = req.user._id;
+  let count = await UserModel.countDocuments({
+    _id: userId,
+    role: "admin"
+  });
+
+  if (count) {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+      if (!file || file.length === 0) {
+        return res.status(404).json({
+          err: 'No file exist'
+        });
+      }
+      const readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+    });
+  } else {
+    res.status(401).send('Permission denied')
   }
 });
 
-var upload = multer({ storage: storage }).single("file");
-
-router.post("/", async function(req, res) {
-  await upload(req, res, function(err) {
-    if (err instanceof multer.MulterError) {
-      return res.status(500).json(err);
-    } else if (err) {
-      return res.status(500).json(err);
-    }
-    return res.status(200).send(req.file);
-  });
+router.post('/', upload.single('file'), async (req, res) => {
+  // console.log("Received");
+  res.status(200).send(req.file);
 });
+
+
 
 module.exports = router;
