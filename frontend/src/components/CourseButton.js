@@ -9,6 +9,7 @@ const CourseButton = styled.button`
   font-weight: 500;
   padding: 0.25em 0.5em;
   border-radius: 10px;
+  border: none;
   &:hover {
     text-decoration: none;
     color: white;
