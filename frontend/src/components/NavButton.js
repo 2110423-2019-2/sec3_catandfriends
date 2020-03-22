@@ -3,7 +3,7 @@ const NavButton = styled.button`
   color: ${props => (props.isOn ? "white" : "grey")};
   transition: 0.3s;
   background-color: black;
-  font-size: 1.1em;
+  font-size: 1.2em;
   outline: none;
   font-weight: 500;
   padding: 0.25em 1em;

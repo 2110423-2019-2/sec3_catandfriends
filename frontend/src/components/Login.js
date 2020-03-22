@@ -42,6 +42,7 @@ export class Login extends Component {
           <div className="row" style={{ marginTop: "10px" }}>
             <div class="col-md-12" align="right">
               <button
+                id="Submit"
                 type="button"
                 class="btn btn-success loginBtn"
                 onClick={this.onClickLogin}
