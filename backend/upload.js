@@ -32,10 +32,20 @@ const storage = new GridFsStorage({
           return reject(err);
         }
         const filename = buf.toString('hex') + path.extname(file.originalname);
+        // console.log(filename);
+
         const fileInfo = {
           filename: filename,
           bucketName: 'verify_documents'
         };
+
+        let tutorInfo = await tutorModel.findOne({ userId: req.user._id });
+        // console.log(tutorInfo.verificationDocument);
+        if (tutorInfo.verificationDocument !== null) {
+          await gfs.remove({ filename: tutorInfo.verificationDocument, root: 'verify_documents' });
+          // console.log('Remove old');
+        }
+
         await tutorModel.findOneAndUpdate(
           { userId: req.user._id },
           {
@@ -45,6 +55,7 @@ const storage = new GridFsStorage({
             useFindAndModify: false
           }
         );
+        // console.log('Updated');
 
         resolve(fileInfo);
       });
@@ -75,7 +86,7 @@ router.get('/file/:filename', async (req, res) => {
   }
 });
 
-router.post('/', upload.single('file'), async (req, res) => {
+router.post('/', upload.single('file'), (req, res) => {
   // console.log("Received");
   res.status(200).send(req.file);
 });
