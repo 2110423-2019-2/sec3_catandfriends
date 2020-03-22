@@ -33,7 +33,6 @@ const storage = new GridFsStorage({
         }
         const filename = buf.toString('hex') + path.extname(file.originalname);
         // console.log(filename);
-
         const fileInfo = {
           filename: filename,
           bucketName: 'verify_documents'
@@ -45,7 +44,6 @@ const storage = new GridFsStorage({
           await gfs.remove({ filename: tutorInfo.verificationDocument, root: 'verify_documents' });
           // console.log('Remove old');
         }
-
         await tutorModel.findOneAndUpdate(
           { userId: req.user._id },
           {
@@ -56,7 +54,6 @@ const storage = new GridFsStorage({
           }
         );
         // console.log('Updated');
-
         resolve(fileInfo);
       });
     });
@@ -64,15 +61,23 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
-router.get('/file/:filename', async (req, res) => {
-  let userId = req.user._id;
-  let count = await UserModel.countDocuments({
+router.get('/verifyFile', async (req, res) => {
+  const tutorId = req.query.tutorId;
+  const userId = req.user._id;
+
+  let owner = tutorId == userId ? true : false;
+  let admin = await UserModel.countDocuments({
     _id: userId,
     role: "admin"
   });
 
-  if (count) {
-    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+  if (admin || owner) {
+    let tutorInfo = await tutorModel.findOne({
+      userId: tutorId,
+    });
+    const filename = tutorInfo.verificationDocument;
+
+    gfs.files.findOne({ filename: filename }, (err, file) => {
       if (!file || file.length === 0) {
         return res.status(404).json({
           err: 'No file exist'
@@ -86,8 +91,8 @@ router.get('/file/:filename', async (req, res) => {
   }
 });
 
-router.post('/', upload.single('file'), (req, res) => {
-  // console.log("Received");
+router.post('/upload', upload.single('file'), (req, res) => {
+  console.log("Received");
   res.status(200).send(req.file);
 });
 
