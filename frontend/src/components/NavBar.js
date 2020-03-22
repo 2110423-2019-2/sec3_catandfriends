@@ -3,6 +3,7 @@ import history from "../history";
 import "./NavBar.css";
 import Util from "../apis/Util";
 import AccountButton from "./AccountButton";
+import NavButton from "./NavButton";
 export class NavBar extends Component {
   constructor(props) {
     super(props);
@@ -13,20 +14,32 @@ export class NavBar extends Component {
         "https://www.img.in.th/images/e67008d54a3a3f0bccaa782f25348e87.png",
       logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png"
     };
+    this.hover = this.hover.bind(this);
+    this.unhover = this.unhover.bind(this);
   }
-
+  hover() {
+    document
+      .getElementById("imgLogo")
+      .setAttribute("src", this.state.logoLight);
+  }
+  unhover() {
+    document.getElementById("imgLogo").setAttribute("src", this.state.logoDark);
+  }
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-custom">
         <a
           className="navbar-brand"
           onClick={() => this.onClickNavBar("/register")}
         >
           <img
+            src={this.state.logoDark}
             style={{ marginRight: "10px" }}
             className="logoImg"
-            src={this.state.logoLight}
             alt="Logo"
+            id="imgLogo"
+            onMouseOver={this.hover}
+            onMouseOut={this.unhover}
           />
           <span className="brandName">TutorHere</span>
         </a>
@@ -44,21 +57,15 @@ export class NavBar extends Component {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <a
-                className="nav-link"
-                onClick={() => this.onClickNavBar("/register")}
-              >
+              <NavButton onClick={() => this.onClickNavBar("/register")}>
                 Home <span class="sr-only">(current)</span>
-              </a>
+              </NavButton>
             </li>
             {localStorage.getItem("token") ? (
               <li className="nav-item">
-                <a
-                  className="nav-link"
-                  onClick={() => this.onClickNavBar("/search")}
-                >
-                  Search<span className="sr-only">(current)</span>
-                </a>
+                <NavButton onClick={() => this.onClickNavBar("/search")}>
+                  Search
+                </NavButton>
               </li>
             ) : (
               <div></div>
@@ -93,18 +100,15 @@ export class NavBar extends Component {
                     class="dropdown-item"
                     onClick={() => this.onClickNavBar("/logout")}
                   >
-                    Log out<span className="sr-only">(current)</span>
+                    Sign Out<span className="sr-only">(current)</span>
                   </a>
                 </div>
               </li>
             ) : (
               <li className="nav-item">
-                <a
-                  className="nav-link"
-                  onClick={() => this.onClickNavBar("/login")}
-                >
-                  Login <span className="sr-only">(current)</span>
-                </a>
+                <NavButton onClick={() => this.onClickNavBar("/login")} isOn>
+                  Sign In
+                </NavButton>
               </li>
             )}
           </ul>
