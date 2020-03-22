@@ -14,12 +14,20 @@ mongoose2.set("useNewUrlParser", true);
 mongoose2.set("useUnifiedTopology", true);
 
 const mongoURIUpload = process.env.MONGO_DB_UPLOAD;
+const VERIFY_DOCUMENTS = 'verify_documents';
+const PAYMENT_DOCUMENTS = 'payment_documents';
+const VERIFY_DOCUMENTS_PATH = '/verifyFile/upload';
+const PAYMENT_VERIFY_DOCUMENTS_PATH = '/paymentFile/verify/upload';
+const PAYMENT_PREMUIM_DOCUMENTS_PATH = '/paymentFile/premium/upload';
 const conn = mongoose2.createConnection(mongoURIUpload);
 
-let gfs;
+let verifyDocumentsGFS;
 conn.once('open', () => {
-  gfs = Grid(conn.db, mongoose2.mongo);
-  gfs.collection('verify_documents');
+  verifyDocumentsGFS = Grid(conn.db, mongoose2.mongo);
+  verifyDocumentsGFS.collection(VERIFY_DOCUMENTS);
+
+  // paymentDocumentsGFS = Grid(conn.db, mongoose2.mongo);
+  // paymentDocumentsGFS.collection(PAYMENT_DOCUMENTS);
 });
 
 const storage = new GridFsStorage({
@@ -33,27 +41,83 @@ const storage = new GridFsStorage({
         }
         const filename = buf.toString('hex') + path.extname(file.originalname);
         // console.log(filename);
+        let routePath = req.route.path;
+        let collection;
+        switch (routePath) {
+          case (VERIFY_DOCUMENTS_PATH):
+            collection = VERIFY_DOCUMENTS;
+            break;
+          case (PAYMENT_VERIFY_DOCUMENTS_PATH):
+            collection = PAYMENT_DOCUMENTS;
+            break;
+          case (PAYMENT_PREMUIM_DOCUMENTS_PATH):
+            collection = PAYMENT_DOCUMENTS;
+            break;
+          default:
+            return reject(err);
+        }
+
         const fileInfo = {
           filename: filename,
-          bucketName: 'verify_documents'
+          bucketName: collection
         };
 
         let tutorInfo = await tutorModel.findOne({ userId: req.user._id });
-        // console.log(tutorInfo.verificationDocument);
-        if (tutorInfo.verificationDocument !== null) {
-          await gfs.remove({ filename: tutorInfo.verificationDocument, root: 'verify_documents' });
-          // console.log('Remove old');
+
+        switch (routePath) {
+          case (VERIFY_DOCUMENTS_PATH):
+            if (tutorInfo.verificationDocument !== null) {
+              await verifyDocumentsGFS.remove({ filename: tutorInfo.verificationDocument, root: collection });
+              console.log('old verifyFile removed');
+            }
+            await tutorModel.findOneAndUpdate(
+              { userId: req.user._id },
+              {
+                verificationDocument: filename
+              },
+              {
+                useFindAndModify: false
+              }
+            );
+            console.log('verifyFile Updated');
+            break;
+          case (PAYMENT_VERIFY_DOCUMENTS_PATH):
+            if (tutorInfo.verificationPayment !== null) {
+              await gfs.remove({ filename: tutorInfo.verificationPayment, root: collection });
+              console.log('old verify paymentFile removed');
+            }
+            await tutorModel.findOneAndUpdate(
+              { userId: req.user._id },
+              {
+                verificationPayment: filename
+              },
+              {
+                useFindAndModify: false
+              }
+            );
+            console.log('verify paymentFile updated');
+            break;
+          case (PAYMENT_PREMUIM_DOCUMENTS_PATH):
+            if (tutorInfo.premiumPayment !== null) {
+              await gfs.remove({ filename: tutorInfo.premiumPayment, root: collection });
+              console.log('old premium paymentFile removed');
+            }
+            await tutorModel.findOneAndUpdate(
+              { userId: req.user._id },
+              {
+                premiumPayment: filename
+              },
+              {
+                useFindAndModify: false
+              }
+            );
+            console.log('premium paymentFile updated');
+            break;
+          default:
+            console.log("No route");
+            return reject(err);
         }
-        await tutorModel.findOneAndUpdate(
-          { userId: req.user._id },
-          {
-            verificationDocument: filename
-          },
-          {
-            useFindAndModify: false
-          }
-        );
-        // console.log('Updated');
+
         resolve(fileInfo);
       });
     });
@@ -77,13 +141,13 @@ router.get('/verifyFile', async (req, res) => {
     });
     const filename = tutorInfo.verificationDocument;
 
-    gfs.files.findOne({ filename: filename }, (err, file) => {
+    verifyDocumentsGFS.files.findOne({ filename: filename }, (err, file) => {
       if (!file || file.length === 0) {
         return res.status(404).json({
           err: 'No file exist'
         });
       }
-      const readstream = gfs.createReadStream(file.filename);
+      const readstream = verifyDocumentsGFS.createReadStream(file.filename);
       readstream.pipe(res);
       res.status(200);
     });
@@ -92,8 +156,18 @@ router.get('/verifyFile', async (req, res) => {
   }
 });
 
-router.post('/upload', upload.single('file'), (req, res) => {
-  console.log("Received");
+router.post('/verifyFile/upload', upload.single('file'), (req, res) => {
+  console.log("verifyFile Received");
+  res.status(201).send(req.file);
+});
+
+router.post('/paymentFile/verify/upload', upload.single('file'), (req, res) => {
+  console.log("verify paymentFile Received");
+  res.status(201).send(req.file);
+});
+
+router.post('/paymentFile/premium/upload', upload.single('file'), (req, res) => {
+  console.log("premium paymentFile Received");
   res.status(201).send(req.file);
 });
 
