@@ -85,6 +85,7 @@ router.get('/verifyFile', async (req, res) => {
       }
       const readstream = gfs.createReadStream(file.filename);
       readstream.pipe(res);
+      res.status(200);
     });
   } else {
     res.status(401).send('Permission denied')
@@ -93,9 +94,7 @@ router.get('/verifyFile', async (req, res) => {
 
 router.post('/upload', upload.single('file'), (req, res) => {
   console.log("Received");
-  res.status(200).send(req.file);
+  res.status(201).send(req.file);
 });
-
-
 
 module.exports = router;
