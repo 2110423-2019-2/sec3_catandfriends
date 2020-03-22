@@ -21,13 +21,13 @@ const PAYMENT_VERIFY_DOCUMENTS_PATH = '/paymentFile/verify/upload';
 const PAYMENT_PREMUIM_DOCUMENTS_PATH = '/paymentFile/premium/upload';
 const conn = mongoose2.createConnection(mongoURIUpload);
 
-let verifyDocumentsGFS;
+let verifyDocumentsGFS, paymentDocumentsGFS;
 conn.once('open', () => {
   verifyDocumentsGFS = Grid(conn.db, mongoose2.mongo);
   verifyDocumentsGFS.collection(VERIFY_DOCUMENTS);
 
-  // paymentDocumentsGFS = Grid(conn.db, mongoose2.mongo);
-  // paymentDocumentsGFS.collection(PAYMENT_DOCUMENTS);
+  paymentDocumentsGFS = Grid(conn.db, mongoose2.mongo);
+  paymentDocumentsGFS.collection(PAYMENT_DOCUMENTS);
 });
 
 const storage = new GridFsStorage({
@@ -83,7 +83,7 @@ const storage = new GridFsStorage({
             break;
           case (PAYMENT_VERIFY_DOCUMENTS_PATH):
             if (tutorInfo.verificationPayment !== null) {
-              await gfs.remove({ filename: tutorInfo.verificationPayment, root: collection });
+              await paymentDocumentsGFS.remove({ filename: tutorInfo.verificationPayment, root: collection });
               console.log('old verify paymentFile removed');
             }
             await tutorModel.findOneAndUpdate(
@@ -99,7 +99,7 @@ const storage = new GridFsStorage({
             break;
           case (PAYMENT_PREMUIM_DOCUMENTS_PATH):
             if (tutorInfo.premiumPayment !== null) {
-              await gfs.remove({ filename: tutorInfo.premiumPayment, root: collection });
+              await paymentDocumentsGFS.remove({ filename: tutorInfo.premiumPayment, root: collection });
               console.log('old premium paymentFile removed');
             }
             await tutorModel.findOneAndUpdate(
@@ -153,6 +153,70 @@ router.get('/verifyFile', async (req, res) => {
     });
   } else {
     res.status(401).send('Permission denied')
+  }
+});
+
+router.get('/paymentFile/verify', async (req, res) => {
+  const tutorId = req.query.tutorId;
+  const userId = req.user._id;
+
+  let owner = tutorId == userId ? true : false;
+  let admin = await UserModel.countDocuments({
+    _id: userId,
+    role: "admin"
+  });
+
+  if (admin || owner) {
+    let tutorInfo = await tutorModel.findOne({
+      userId: tutorId,
+    });
+    const filename = tutorInfo.verificationPayment;
+
+    paymentDocumentsGFS.files.findOne({ filename: filename }, (err, file) => {
+      if (!file || file.length === 0) {
+        return res.status(404).json({
+          err: 'No file exist'
+        });
+      }
+      const readstream = paymentDocumentsGFS.createReadStream(file.filename);
+      readstream.pipe(res);
+      res.status(200);
+    });
+  } else {
+    res.status(401).send('Permission denied')
+  }
+});
+
+router.get('/paymentFile/premium', async (req, res) => {
+  const tutorId = req.query.tutorId;
+  const userId = req.user._id;
+
+  let owner = tutorId == userId ? true : false;
+  let admin = await UserModel.countDocuments({
+    _id: userId,
+    role: "admin"
+  });
+
+  if (admin || owner) {
+    let tutorInfo = await tutorModel.findOne({
+      userId: tutorId,
+    });
+    const filename = tutorInfo.premiumPayment;
+
+    paymentDocumentsGFS.files.findOne({ filename: filename }, (err, file) => {
+      if (!file || file.length === 0) {
+        return res.status(404).json({
+          err: 'No file exist'
+        });
+      }
+      const readstream = paymentDocumentsGFS.createReadStream(file.filename);
+      readstream.pipe(res);
+      res.status(200);
+    });
+  } else {
+    res.status(401).json({
+      err: 'Permission denied'
+    });
   }
 });
 
