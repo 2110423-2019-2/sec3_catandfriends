@@ -3,7 +3,7 @@ const AccountButton = styled.button`
   color: black;
   transition: 0.3s;
   background-color: rgb(0, 212, 255);
-  font-size: 1.1em;
+  font-size: 1.2em;
   outline: none;
   font-weight: 500;
   padding: 0.25em 1em;
