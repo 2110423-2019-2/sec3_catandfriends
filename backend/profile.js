@@ -60,8 +60,20 @@ router.get("/", async (req, res, next) => {
 });
 router.put("/", async (req, res) => {
   const userId = req.user._id;
+  profile = await userModel.findById(userId);
+  console.log(profile);
   const payload = req.body;
-  await CourseModel.updateOne({ _id: userId }, { $set: payload });
+  if(payload.role != undefined){
+    res.status(400).json("you can't change your role");
+    return ;
+  }
+  if(payload.ssn != undefined){
+    res.status(400).json("you can't chage your ssn");
+    return ;
+  }
+  await userModel.updateOne({ _id: userId }, { $set: payload });
+  console.log("after update");
+  console.log(profile);
   res.status(201).json("update complete");
 
 });
