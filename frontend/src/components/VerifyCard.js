@@ -22,7 +22,7 @@ export default class VerifyCard extends Component {
     data.append("file", this.state.selectedFile);
     axios
       .post(
-        `http://localhost:8000/upload?token=${localStorage.getItem("token")}`,
+        `http://localhost:8000/file/verifyFile/upload?token=${localStorage.getItem("token")}`,
         data,
         {
           // receive two    parameter endpoint url ,form data
