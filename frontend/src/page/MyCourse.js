@@ -11,7 +11,7 @@ export default class MyCourse extends Component {
 
   render() {
     if (!this.state.data) {
-      return <div></div>;
+      return <div className=" wholeB justify-content-center"></div>;
     } else if (this.state.data.role == "student") {
       return (
         <div className=" wholeB justify-content-center">
