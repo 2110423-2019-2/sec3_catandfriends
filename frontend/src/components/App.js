@@ -17,6 +17,7 @@ import history from "../history";
 import EditCourseCardLayout from "./EditCourseCardLayout";
 import RegisterPage from "../page/RegisterPage";
 import EditProfile from "../page/EditProfile";
+import MyCourse from "../page/MyCourse";
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;
@@ -37,6 +38,7 @@ class App extends Component {
           <Route path="/course/edit" component={EditCourse} />
           <Route path="/course/create" component={NewCourse} />
           <Route path="/course" component={CourseInformation} />
+          <Route path="/mycourse" component={MyCourse} />
         </Switch>
       </Router>
     );
