@@ -119,11 +119,26 @@ export default class EditCourse extends Component {
     this.enableTime();
   }
 
+      handleChange(event) {
+        const target = event.target;
+        const value = target.type === "checkbox" ? target.checked : target.value;
+        const name = target.name;
+        this.setState({
+          [name]: value,
+          // dayAndStartTime:[this.timeToFloat(this.state.ST0),this.timeToFloat(this.state.ST1),this.timeToFloat(this.state.ST2),this.timeToFloat(this.state.ST3),this.timeToFloat(this.state.ST4),this.timeToFloat(this.state.ST5),this.timeToFloat(this.state.ST6)],
+          // dayAndEndTime:[this.timeToFloat(this.state.ET0),this.timeToFloat(this.state.ET1),this.timeToFloat(this.state.ET2),this.timeToFloat(this.state.ET3),this.timeToFloat(this.state.ET4),this.timeToFloat(this.state.ET5),this.timeToFloat(this.state.ET6)],
+          
+        });
+        this.enableTime();
+      }
+      
   async handleSubmit(event) {
     event.preventDefault();
     if (!this.compareDate()) {
       alert("Start Date must be before End Date");
-    } else {
+    } else if(!this.compareTime){
+      alert("Start Time must be before End Time");
+    }else {
       alert(JSON.stringify(this.state));
       let data = await Util.editCourse(
         this.state._id,
@@ -140,6 +155,13 @@ export default class EditCourse extends Component {
       );
       //let data = await Util.createCourse("ff",[6.3,null,null,null,null,null,null],[8.3,null,null,null,null,null,null],this.state.startDate,this.state.endDate,localStorage.getItem("token"),13,"dfsdfsdf",11111,"language");
       console.log(data);
+      if (!data.error) {
+        alert("A course is edited");
+        console.log(data);
+        history.push("/profile");
+      } else {
+        window.alert("Cannot Edit Course");     
+      }
     }
   }
 
@@ -262,6 +284,25 @@ export default class EditCourse extends Component {
     );
   }
 
+      compareDate() {
+        var a = document.getElementById("startDate").value;
+        var b = document.getElementById("endDate").value;
+        var splitA = a.split("/");
+        var splitB = b.split("/");
+        var aDate = Date.parse(splitA[0], splitA[1] - 1, splitA[2]);
+        var bDate = Date.parse(splitB[0], splitB[1] - 1, splitB[2]);
+        return aDate < bDate;
+      }
+
+      compareTime(){
+        var i=0;
+        var invalid=false;
+        for (i=0;i<7;i++){
+          invalid = this.state.dayAndEndTime<this.state.dayAndStartTime;
+        }
+        return invalid;
+      }
+      
   render() {
     return (
       <div className="card mb-4 p-3" style={{ maxWidth: 1000 }}>
