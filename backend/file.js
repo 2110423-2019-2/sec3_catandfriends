@@ -16,18 +16,24 @@ mongoose2.set("useUnifiedTopology", true);
 const mongoURIUpload = process.env.MONGO_DB_UPLOAD;
 const VERIFY_DOCUMENTS = 'verify_documents';
 const PAYMENT_DOCUMENTS = 'payment_documents';
+const IMAGES = 'images';
 const VERIFY_DOCUMENTS_PATH = '/verifyFile/upload';
 const PAYMENT_VERIFY_DOCUMENTS_PATH = '/paymentFile/verify/upload';
 const PAYMENT_PREMUIM_DOCUMENTS_PATH = '/paymentFile/premium/upload';
+const USER_IMAGES_PATH = '/images/user/upload';
+const COURSE_IMAGES_PATH = '/images/course/upload';
 const conn = mongoose2.createConnection(mongoURIUpload);
 
-let verifyDocumentsGFS, paymentDocumentsGFS;
+let verifyDocumentsGFS, paymentDocumentsGFS, imagesGFS;
 conn.once('open', () => {
   verifyDocumentsGFS = Grid(conn.db, mongoose2.mongo);
   verifyDocumentsGFS.collection(VERIFY_DOCUMENTS);
 
   paymentDocumentsGFS = Grid(conn.db, mongoose2.mongo);
   paymentDocumentsGFS.collection(PAYMENT_DOCUMENTS);
+
+  imagesGFS = Grid(conn.db, mongoose2.mongo);
+  imagesGFS.collection(IMAGES);
 });
 
 const storage = new GridFsStorage({
@@ -53,6 +59,9 @@ const storage = new GridFsStorage({
           case (PAYMENT_PREMUIM_DOCUMENTS_PATH):
             collection = PAYMENT_DOCUMENTS;
             break;
+          case (USER_IMAGES_PATH):
+            collection = IMAGES;
+            break;
           default:
             return reject(err);
         }
@@ -72,12 +81,8 @@ const storage = new GridFsStorage({
             }
             await tutorModel.findOneAndUpdate(
               { userId: req.user._id },
-              {
-                verificationDocument: filename
-              },
-              {
-                useFindAndModify: false
-              }
+              { verificationDocument: filename },
+              { useFindAndModify: false }
             );
             console.log('verifyFile Updated');
             break;
@@ -88,12 +93,8 @@ const storage = new GridFsStorage({
             }
             await tutorModel.findOneAndUpdate(
               { userId: req.user._id },
-              {
-                verificationPayment: filename
-              },
-              {
-                useFindAndModify: false
-              }
+              { verificationPayment: filename },
+              { useFindAndModify: false }
             );
             console.log('verify paymentFile updated');
             break;
@@ -104,14 +105,24 @@ const storage = new GridFsStorage({
             }
             await tutorModel.findOneAndUpdate(
               { userId: req.user._id },
-              {
-                premiumPayment: filename
-              },
-              {
-                useFindAndModify: false
-              }
+              { premiumPayment: filename },
+              { useFindAndModify: false }
             );
             console.log('premium paymentFile updated');
+            break;
+          case (USER_IMAGES_PATH):
+            let userInfo = await UserModel.findOne({ _id: req.user._id });
+
+            if (userInfo.profileImage !== null) {
+              await imagesGFS.remove({ filename: userInfo.profileImage, root: collection });
+              console.log('old profile image removed');
+            }
+            await UserModel.findOneAndUpdate(
+              { _id: req.user._id },
+              { profileImage: filename },
+              { useFindAndModify: false }
+            );
+            console.log('profile image updated');
             break;
           default:
             console.log("No route");
@@ -152,7 +163,7 @@ router.get('/verifyFile', async (req, res) => {
       res.status(200);
     });
   } else {
-    res.status(401).send('Permission denied')
+    res.status(401).json({ err: 'permission denied' });
   }
 });
 
@@ -183,7 +194,7 @@ router.get('/paymentFile/verify', async (req, res) => {
       res.status(200);
     });
   } else {
-    res.status(401).send('Permission denied')
+    res.status(401).json({ err: 'permission denied' });
   }
 });
 
@@ -214,24 +225,48 @@ router.get('/paymentFile/premium', async (req, res) => {
       res.status(200);
     });
   } else {
-    res.status(401).json({
-      err: 'Permission denied'
-    });
+    res.status(401).json({ err: 'permission denied' });
   }
 });
 
-router.post('/verifyFile/upload', upload.single('file'), (req, res) => {
+router.get('/images/user', async (req, res) => {
+  const userId = req.query.userId;
+
+  let userInfo = await UserModel.findOne({
+    _id: userId,
+  });
+  const filename = userInfo.profileImage;
+
+  imagesGFS.files.findOne({ filename: filename }, (err, file) => {
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exist'
+      });
+    }
+    const readstream = imagesGFS.createReadStream(file.filename);
+    readstream.pipe(res);
+    res.status(200);
+  });
+
+});
+
+router.post(VERIFY_DOCUMENTS_PATH, upload.single('file'), (req, res) => {
   console.log("verifyFile Received");
   res.status(201).send(req.file);
 });
 
-router.post('/paymentFile/verify/upload', upload.single('file'), (req, res) => {
+router.post(PAYMENT_VERIFY_DOCUMENTS_PATH, upload.single('file'), (req, res) => {
   console.log("verify paymentFile Received");
   res.status(201).send(req.file);
 });
 
-router.post('/paymentFile/premium/upload', upload.single('file'), (req, res) => {
+router.post(PAYMENT_PREMUIM_DOCUMENTS_PATH, upload.single('file'), (req, res) => {
   console.log("premium paymentFile Received");
+  res.status(201).send(req.file);
+});
+
+router.post(USER_IMAGES_PATH, upload.single('file'), (req, res) => {
+  console.log("profile image Received");
   res.status(201).send(req.file);
 });
 
