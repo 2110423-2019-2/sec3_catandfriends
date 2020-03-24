@@ -6,6 +6,7 @@ import EditCourseCardLayout from "../components/EditCourseCardLayout";
 import CourseCardLayout from "../components/CourseCardLayout";
 import StudentCTuProfile from "../components/StudentCTuProfile";
 import Util from "../apis/Util";
+import "./TutorPage.css";
 export default class TutorPage extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +18,7 @@ export default class TutorPage extends Component {
   render() {
     if (this.props.owner) {
       return (
-        <div className="justify-content-center">
+        <div className=" wholeB justify-content-center">
           <div className="row justify-content-center">
             <TutorProfile data={this.props.data} />
           </div>

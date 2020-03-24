@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./TutorProfile.css";
 import Util from "../apis/Util";
 import history from "../history";
+import NormalButton from "./NormalButton";
 export class TutorProfile extends Component {
   constructor(props) {
     super(props);
@@ -25,96 +26,150 @@ export class TutorProfile extends Component {
 
   render() {
     return (
-      <div className="card mb-3" style={{ maxWidth: "1000px" }}>
-        <div className="row no-gutters">
-          <div className="col-md-4">
-            <img
-              src={this.state.imgsrc}
-              className="card-img p-3"
-              style={{ maxWidth: "300px" }}
-              alt="..."
-            />
+      <div className="bigCard border">
+        <div className="row">
+          <div className="col-md-4 border">
+            <div className="row justify-content-center">
+              <img className="picPro border p-3" src={this.state.imgsrc} />{" "}
+            </div>
           </div>
-          <div className="col-md-8">
-            <div className="card-body">
-              <div className="row border text-center" className="myStyle">
-                <h3 className="card-title border">My Profile</h3>
+          <div className="col-md-8 border">
+            <div
+              className="row"
+              style={{ marginTop: "10px", marginBottom: "20px" }}
+            >
+              <div className="col-md-12 border">
+                <div className="headerB">My Profile</div>
               </div>
-              <br />
-              <div className="row ">
-                <div className="col-md-4 border">
-                  <h4 style={{}}>{this.props.data.firstName}</h4>
+            </div>
+            <div
+              className="row"
+              style={{ marginTop: "10px", marginBottom: "20px" }}
+            >
+              <div className="col-md-6 border">
+                <div className="nameB" style={{ fontSize: "24px" }}>
+                  {this.props.data.firstName}
                 </div>
-                <div className="col-md-4 border">
-                  <h4>{this.props.data.lastName}</h4>
+              </div>
+              <div className="col-md-6 border">
+                <div className="nameB" style={{ fontSize: "24px" }}>
+                  {this.props.data.lastName}
                 </div>
-                <div className="col-md-4 border">
-                  <h4></h4>
+              </div>
+            </div>
+
+            <div className="row border" style={{ padding: "20px" }}>
+              <div className="col-md-12 border infoC">
+                <div className="row border">
+                  <div className="col-md-4 border">
+                    <div className="nameB">SSN:</div>
+                  </div>
+                  <div className="col-md-8 border">
+                    <div className="valueB">{this.props.data.ssn}</div>
+                  </div>
                 </div>
-                <div className="col-md-12 border">
-                  <br />
-                  {/*Enter*/}
-                  <br />
-                  <div className="row ">
-                    <div className="col-md-4 border">
-                      <body>
-                        <strong>SSN : </strong>
-                      </body>
-                      <body>
-                        <strong>Birth date : </strong>
-                      </body>
-                      <body>
-                        <strong>Gender : </strong>
-                      </body>
-                      <body>
-                        <strong>Email : </strong>
-                      </body>
-                      <body>
-                        <strong>Premium status : </strong>
-                      </body>
-                      <body>
-                        <strong>Phone number : </strong>
-                      </body>
-                      <body>
-                        <strong>VerifiedDoc : </strong>
-                      </body>
-                    </div>
-                    <div className="col-md-8 border">
-                      <body>{this.props.data.ssn}</body>
-                      <body>{this.props.data.birthDate.substring(0, 10)}</body>
-                      <body>{this.props.data.gender}</body>
-                      <body>{this.props.data.email}</body>
-                      <body>
-                        {this.props.data.premiumStatus ? "Yes" : "No"}
-                      </body>
-                      <body>{this.props.data.phoneNumber}</body>
-                      <body>
-                        {this.props.data.verificationDocument
-                          ? this.props.data.verificationDocument
-                          : "None"}
-                      </body>
+                <div className="row border">
+                  <div className="col-md-4 border">
+                    <div className="nameB">Birth Date:</div>
+                  </div>
+                  <div className="col-md-8 b{order">
+                    <div className="valueB">{this.props.data.birthDate}</div>
+                  </div>
+                </div>
+                <div className="row border">
+                  <div className="col-md-4 border">
+                    <div className="nameB">Gender:</div>
+                  </div>
+                  <div className="col-md-8 border">
+                    <div className="valueB">{this.props.data.gender}</div>
+                  </div>
+                </div>
+                <div className="row border">
+                  <div className="col-md-4 border">
+                    <div className="nameB">Email:</div>
+                  </div>
+                  <div className="col-md-8 border">
+                    <div className="valueB">
+                      {this.props.data.email + " "}
+                      <span style={{ fontWeight: "bold", color: "blue" }}>
+                        {this.props.data.verified
+                          ? "[verified]"
+                          : "not verified"}
+                      </span>
                     </div>
                   </div>
-                  <br />
-                  <br />
+                </div>
+                <div className="row border">
+                  <div className="col-md-4 border">
+                    <div className="nameB">Phone Number:</div>
+                  </div>
+                  <div className="col-md-8 border">
+                    <div className="valueB">{this.props.data.phoneNumber}</div>
+                  </div>
+                </div>
+                <div className="row border">
+                  <div className="col-md-4 border">
+                    <div className="nameB">Verify status:</div>
+                  </div>
+                  <div className="col-md-8 border">
+                    <div className="valueB">
+                      {this.props.data.verifyStatus
+                        ? "verified"
+                        : "not verified"}
+                    </div>
+                  </div>
+                </div>
+                <div className="row border">
+                  <div className="col-md-4 border">
+                    <div className="nameB">Verify document:</div>
+                  </div>
+                  <div className="col-md-8 border">
+                    <div className="valueB">
+                      {this.props.data.verificationDocument
+                        ? this.props.data.verificationDocument
+                        : "-"}
+                    </div>
+                  </div>
+                </div>
+                <div className="row border">
+                  <div className="col-md-4 border">
+                    <div className="nameB">Verify payment: ยังไม่มี back</div>
+                  </div>
+                  <div className="col-md-8 border">
+                    <div className="valueB">
+                      {this.props.data.verifyPayment}
+                    </div>
+                  </div>
+                </div>
+                <div className="row border">
+                  <div className="col-md-4 border">
+                    <div className="nameB">Premium status:</div>
+                  </div>
+                  <div className="col-md-8 border">
+                    <div className="valueB">
+                      {this.props.data.premiumStatus ? "Premium" : "Standard"}
+                    </div>
+                  </div>
+                </div>
+                <div className="row border">
+                  <div className="col-md-4 border">
+                    <div className="nameB">Premium payment: ยังไม่มี back</div>
+                  </div>
+                  <div className="col-md-8 border">
+                    <div className="valueB">
+                      {this.props.data.premiumPayment}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <br />
-              <div className="myStyle">
-                <button
-                  type="button"
-                  className="btn btn-outline-primary"
-                  onClick={() => {
-                    history.push(
-                      `/profile/edit?token=${localStorage.getItem("token")}`
-                    );
-                  }}
-                >
-                  Edit Information
-                </button>
-              </div>
-              {/*Enter*/}
-              <br />
+            </div>
+            <div
+              className="row border justify-content-center"
+              style={{ marginBottom: "10px" }}
+            >
+              <NormalButton color="rgba(107, 63, 233, 0.8)">
+                Edit Profile
+              </NormalButton>
             </div>
           </div>
         </div>
