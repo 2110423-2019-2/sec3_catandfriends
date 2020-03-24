@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./TutorProfile.css";
 import Util from "../apis/Util";
 import history from "../history";
+import VerifyCard from "./VerifyCard";
 import NormalButton from "./NormalButton";
 export class TutorProfile extends Component {
   constructor(props) {
@@ -29,43 +30,74 @@ export class TutorProfile extends Component {
       <div className="bigCard border">
         <div className="row">
           <div className="col-md-4 border">
+            {/* <div className="row justify-content-center">
+              <img className="picPro border p-3" src={this.state.imgsrc} />
+            </div> */}
             <div className="row justify-content-center">
-              <img className="picPro border p-3" src={this.state.imgsrc} />{" "}
+              <VerifyCard />
+            </div>
+            <div className="row justify-content-center">
+              <VerifyCard />
+            </div>
+            <div className="row justify-content-center">
+              <button type="button" className="btn btn-warning btn-block">
+                Upgrade to Premium
+              </button>
+            </div>
+            <div className="row justify-content-center">
+              <VerifyCard />
+            </div>
+
+            <div className="row justify-content-center">
+              <div>
+                !!!!!!!!!!!ต้องเพิ่ม สำคัญ!!!!!!!!!! upload file/upload
+                slip/payment button qr/upload payment slip
+              </div>
             </div>
           </div>
           <div className="col-md-8 border">
-            <div
-              className="row"
-              style={{ marginTop: "10px", marginBottom: "20px" }}
-            >
-              <div className="col-md-12 border">
+            <div className="row">
+              <div className="col-md-12 border infoC">
                 <div className="headerB">My Profile</div>
               </div>
             </div>
-            <div
-              className="row"
-              style={{ marginTop: "10px", marginBottom: "20px" }}
-            >
-              <div className="col-md-6 border">
+            <div className="row">
+              <div className="col-md-4 border" align="center">
+                <img className="picPro border" src={this.state.imgsrc} />
+              </div>
+              <div className="col-md-4 border">
                 <div
                   className="nameB"
-                  style={{ fontSize: "26px", textAlign: "center" }}
+                  style={{
+                    fontSize: "26px",
+                    textAlign: "center",
+                    position: "absolute",
+                    bottom: "40%"
+                  }}
                 >
                   {this.props.data.firstName}
                 </div>
               </div>
-              <div className="col-md-6 border">
+              <div className="col-md-4 border">
                 <div
                   className="nameB"
-                  style={{ fontSize: "26px", textAlign: "center" }}
+                  style={{
+                    fontSize: "26px",
+                    textAlign: "center",
+                    position: "absolute",
+                    bottom: "40%"
+                  }}
                 >
                   {this.props.data.lastName}
                 </div>
               </div>
             </div>
 
-            <div className="row border" style={{ padding: "20px" }}>
-              <div className="col-md-12 border infoC">
+            <div className="row border" style={{ padding: "5px" }}>
+              <div
+                className="col-md-12 border infoC"
+                style={{ marginTop: "5px", marginBottom: "5px" }}
+              >
                 <div className="row border">
                   <div className="col-md-4 border">
                     <div className="nameB">SSN:</div>
@@ -79,7 +111,9 @@ export class TutorProfile extends Component {
                     <div className="nameB">Birth Date:</div>
                   </div>
                   <div className="col-md-8 b{order">
-                    <div className="valueB">{this.props.data.birthDate}</div>
+                    <div className="valueB">
+                      {this.props.data.birthDate.substring(0, 10)}
+                    </div>
                   </div>
                 </div>
                 <div className="row border">
@@ -139,11 +173,11 @@ export class TutorProfile extends Component {
                 </div>
                 <div className="row border">
                   <div className="col-md-4 border">
-                    <div className="nameB">Verify payment: ยังไม่มี back</div>
+                    <div className="nameB">Verify payment:</div>
                   </div>
                   <div className="col-md-8 border">
                     <div className="valueB">
-                      {this.props.data.verifyPayment}
+                      {this.props.data.verifyPayment + " ยังไม่มี back"}
                     </div>
                   </div>
                 </div>
@@ -159,11 +193,11 @@ export class TutorProfile extends Component {
                 </div>
                 <div className="row border">
                   <div className="col-md-4 border">
-                    <div className="nameB">Premium payment: ยังไม่มี back</div>
+                    <div className="nameB">Premium payment:</div>
                   </div>
                   <div className="col-md-8 border">
                     <div className="valueB">
-                      {this.props.data.premiumPayment}
+                      {this.props.data.premiumPayment + " ยังไม่มี back"}
                     </div>
                   </div>
                 </div>
@@ -171,7 +205,7 @@ export class TutorProfile extends Component {
             </div>
             <div
               className="row border justify-content-center"
-              style={{ marginBottom: "10px" }}
+              style={{ marginTop: "10px" }}
             >
               <NormalButton
                 color="rgba(107, 63, 233, 0.8)"

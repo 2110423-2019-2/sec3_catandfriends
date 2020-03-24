@@ -31,7 +31,7 @@ export default class EditTutorProfile extends Component {
 
   render() {
     return (
-      <div className="card mb-3 p-2" style={{ maxWidth: 800 }}>
+      <div className="bigCard border" style={{ maxWidth: 800 }}>
         <h3 className="card-title border text-center">Edit Tutor Profile</h3>
         <br />
         <form

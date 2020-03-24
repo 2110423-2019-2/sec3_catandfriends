@@ -9,6 +9,9 @@ const NormalButton = styled.button`
   padding: 0.25em 1em;
   border-radius: 60px;
   border: 2px solid ${props => props.color};
+  &:hover {
+    box-shadow: 0 2px 8px ${props => props.color};
+  }
   &:focus {
     outline: none;
   }

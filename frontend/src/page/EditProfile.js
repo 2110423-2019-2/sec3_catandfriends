@@ -19,7 +19,11 @@ export default class EditProfile extends Component {
       tt = <EditStudentProfile />;
     }
     // console.log(this.state.data);
-    return <p>{tt}</p>;
+    return (
+      <div className="wholeB justify-content-center">
+        <div className="row justify-content-center">{tt}</div>
+      </div>
+    );
   }
   async componentDidMount() {
     // console.log(window.location.search);
