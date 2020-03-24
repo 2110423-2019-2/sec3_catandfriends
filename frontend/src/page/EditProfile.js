@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Util from "../apis/Util";
 import history from "../history";
+import "./TutorPage.css";
 import EditStudentProfile from "../components/EditStudentProfile";
 import EditTutorProfile from "../components/EditTutorProfile";
 export default class EditProfile extends Component {
