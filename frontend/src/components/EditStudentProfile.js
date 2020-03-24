@@ -1,27 +1,22 @@
 import React, { Component } from "react";
-
+import "./EditStudentProfile.css";
+import Util from "../apis/Util";
+import NormalButton from "./NormalButton";
 export default class EditStudentProfile extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      studentId: "",
       firstName: "",
       lastName: "",
+      gender: "",
       password: "",
       newPassword: "",
-      phoneNumber: "",
-      bio: "",
-      facebook: ""
+      phoneNumber: ""
     };
-
     this.handleChange = this.handleChange.bind(this);
     // this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  // handleChange(e) {
-  //   this.setState({ [e.target.name]: e.target.value });
-  // }
-
   handleChange(event) {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -33,8 +28,8 @@ export default class EditStudentProfile extends Component {
 
   render() {
     return (
-      <div className="card mb-3 p-2" style={{ maxWidth: 800 }}>
-        <h3 className="card-title border text-center">Edit Student Profile</h3>
+      <div className="editStudentProfileCard">
+        <h3 className="editProfileS text-center">Edit Student Profile</h3>
         <br />
         <form
           onSubmit={e => {
@@ -42,14 +37,14 @@ export default class EditStudentProfile extends Component {
             console.log(this.state);
             e.preventDefault();
           }}
-          style={{ marginLeft: 30 }}
         >
-          <div class="row">
-            <div class="col-md-6" width="100%">
-              <label>
+          <div class="row ">
+            <div class="col-md-6">
+              <label htmlFor="firstName" className="nameS">
                 First Name
                 <br />
                 <input
+                  id="firstName"
                   type="text"
                   value={this.state.firstName}
                   name="firstName"
@@ -58,11 +53,13 @@ export default class EditStudentProfile extends Component {
                 />
               </label>
             </div>
+
             <div class="col-md-6">
-              <label>
+              <label className="nameS" htmlFor="lastName">
                 Last Name
                 <br />
                 <input
+                  id="lastName"
                   type="text"
                   value={this.state.lastName}
                   style={{ width: 250 }}
@@ -74,7 +71,7 @@ export default class EditStudentProfile extends Component {
           </div>
           <div class="row">
             <div class="col-md-6" width="100%">
-              <label>
+              <label className="nameS">
                 Password
                 <br />
                 <input
@@ -87,7 +84,7 @@ export default class EditStudentProfile extends Component {
               </label>
             </div>
             <div class="col-md-6">
-              <label>
+              <label className="nameS">
                 New Password
                 <br />
                 <input
@@ -102,7 +99,7 @@ export default class EditStudentProfile extends Component {
           </div>
           <div class="row">
             <div class="col-md-6" width="100%">
-              <label>
+              <label className="nameS">
                 Phone Number
                 <br />
                 <input
@@ -115,40 +112,40 @@ export default class EditStudentProfile extends Component {
               </label>
             </div>
             <div class="col-md-6">
-              <label>
-                Facebook
+              <label className="nameS">
+                Gender
                 <br />
                 <input
-                  type="url"
-                  value={this.state.facebook}
-                  style={{ width: 250 }}
-                  name="facebook"
-                  onChange={this.handleChange}
-                />
-              </label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6" width="100%">
-              <label>
-                Bio
-                <br />
-                <textarea
                   type="text"
-                  value={this.state.bio}
+                  value={this.state.Gender}
                   style={{ width: 250 }}
-                  name="bio"
+                  name="gender"
                   onChange={this.handleChange}
                 />
               </label>
             </div>
           </div>
-          <br />
-          <div className="text-center" style={{ marginRight: 40 }}>
-            <input type="submit" value="Submit" className="btn btn-success" />
+          <div className="row text-center" style={{ marginTop: "20px" }}>
+            <div className="col-md-12">
+              <NormalButton
+                color="rgb(76, 90, 203)"
+                type="submit"
+                value="Submit"
+              >
+                Submit
+              </NormalButton>
+            </div>
           </div>
         </form>
       </div>
     );
+  }
+  async componentDidMount() {
+    console.log(window.location.search);
+    let params = new URLSearchParams(window.location.search);
+    let data = await Util.getProfile(params.get("userId"));
+    await this.setState({ data });
+    await console.log(data);
+    console.log(localStorage.getItem("token"));
   }
 }

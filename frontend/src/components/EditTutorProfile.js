@@ -48,8 +48,8 @@ export default class EditTutorProfile extends Component {
   }
   render() {
     return (
-      <div className="editTutorProfileCard border">
-        <h3 className="editProfileH border text-center">Edit Tutor Profile</h3>
+      <div className="editTutorProfileCard">
+        <h3 className="editProfileH text-center">Edit Tutor Profile</h3>
         <br />
         <form
           onSubmit={e => this.handleSubmit(e)}
@@ -153,7 +153,11 @@ export default class EditTutorProfile extends Component {
           </div>
           <div className="row text-center" style={{ marginTop: "20px" }}>
             <div className="col-md-12">
-              <NormalButton color="green" type="submit" value="Submit">
+              <NormalButton
+                color="rgb(76, 182, 181)"
+                type="submit"
+                value="Submit"
+              >
                 Submit
               </NormalButton>
             </div>

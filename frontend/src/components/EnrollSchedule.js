@@ -20,35 +20,39 @@ export default class EnrollSchedule extends Component {
     //this.setState({rows: dataArray})
     if (this.state.courses) {
       return (
-        <div className="card" style={{ maxWidth: 1000 }}>
-          <div className="card-body">
-            <h4 className="card-title" style={{ textAlign: "center" }}>
-              Enrollment and Schedule
-            </h4>
-            <br />
-            <div className="row">
-              <div class="col-md-2 border">
-                <body style={{ textAlign: "center" }}>Course ID</body>
+        <div className="row justify-content-center">
+          <div className="card" style={{ width: "1200px" }}>
+            <div className="card-body">
+              <h4 className="card-title" style={{ textAlign: "center" }}>
+                Enrollment and Schedule
+              </h4>
+              <br />
+              <div className="row">
+                <div class="col-md-2 border">
+                  <body style={{ textAlign: "center" }}>Course ID</body>
+                </div>
+                <div class="col-md-2 border">
+                  <body style={{ textAlign: "center" }}>Course Name</body>
+                </div>
+                <div class="col-md-2 border">
+                  <body style={{ textAlign: "center" }}>Tutor Name</body>
+                </div>
+                <div class="col-md-2 border">
+                  <body style={{ textAlign: "center" }}>Enroll Date</body>
+                </div>
+                <div class="col-md-2 border">
+                  <body style={{ textAlign: "center" }}>
+                    Start Date - End Date
+                  </body>
+                </div>
+                <div class="col-md-2 border">
+                  <body style={{ textAlign: "center" }}>Class Day</body>
+                </div>
               </div>
-              <div class="col-md-2 border">
-                <body style={{ textAlign: "center" }}>Course Name</body>
-              </div>
-              <div class="col-md-2 border">
-                <body style={{ textAlign: "center" }}>Tutor Name</body>
-              </div>
-              <div class="col-md-2 border">
-                <body style={{ textAlign: "center" }}>Enroll Date</body>
-              </div>
-              <div class="col-md-2 border">
-                <body style={{ textAlign: "center" }}>Start Date</body>
-              </div>
-              <div class="col-md-2 border">
-                <body style={{ textAlign: "center" }}>End Date</body>
-              </div>
+              {this.state.courses.map(item => (
+                <RowInformation detail={item} />
+              ))}
             </div>
-            {this.state.courses.map(item => (
-              <RowInformation detail={item} />
-            ))}
           </div>
         </div>
       );
@@ -81,7 +85,8 @@ class RowInformation extends Component {
       tutorName,
       createdTime,
       startDate,
-      endDate
+      endDate,
+      day
     } = this.props.detail;
     if (this.props.detail) {
       return (
@@ -106,13 +111,11 @@ class RowInformation extends Component {
           </div>
           <div class="col-md-2 border">
             <body style={{ textAlign: "center" }}>
-              {startDate.substring(0, 11)}
+              {startDate.substring(0, 11) + " - " + endDate.substring(0, 11)}
             </body>
           </div>
           <div class="col-md-2 border">
-            <body style={{ textAlign: "center" }}>
-              {endDate.substring(0, 11)}
-            </body>
+            <body style={{ textAlign: "center" }}>{day}</body>
           </div>
         </div>
       );

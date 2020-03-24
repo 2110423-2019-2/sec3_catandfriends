@@ -14,9 +14,9 @@ export default class EditProfile extends Component {
     let tt;
     if (!this.state.data) {
       tt = <div></div>;
-    } else if ((this.state.data.role = "tutor")) {
+    } else if (this.state.data.role == "tutor") {
       tt = <EditTutorProfile />;
-    } else if ((this.state.data.role = "student")) {
+    } else if (this.state.data.role == "student") {
       tt = <EditStudentProfile />;
     }
     // console.log(this.state.data);
