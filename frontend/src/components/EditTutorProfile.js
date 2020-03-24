@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import "./EditTutorProfile.css";
 export default class EditTutorProfile extends Component {
   constructor(props) {
     super(props);
@@ -15,11 +15,6 @@ export default class EditTutorProfile extends Component {
     this.handleChange = this.handleChange.bind(this);
     // this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  // handleChange(e) {
-  //   this.setState({ [e.target.name]: e.target.value });
-  // }
-
   handleChange(event) {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -31,7 +26,7 @@ export default class EditTutorProfile extends Component {
 
   render() {
     return (
-      <div className="card mb-3 p-2" style={{ maxWidth: 800 }}>
+      <div className="editTutorProfileCard border">
         <h3 className="card-title border text-center">Edit Tutor Profile</h3>
         <br />
         <form
@@ -149,4 +144,5 @@ export default class EditTutorProfile extends Component {
       </div>
     );
   }
+  async componentDidMount() {}
 }
