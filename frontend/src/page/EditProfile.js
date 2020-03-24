@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Util from "../apis/Util";
 import history from "../history";
+import "./TutorPage.css";
 import EditStudentProfile from "../components/EditStudentProfile";
 import EditTutorProfile from "../components/EditTutorProfile";
 export default class EditProfile extends Component {
@@ -19,7 +20,11 @@ export default class EditProfile extends Component {
       tt = <EditStudentProfile />;
     }
     // console.log(this.state.data);
-    return <p>{tt}</p>;
+    return (
+      <div className="wholeB justify-content-center">
+        <div className="row justify-content-center">{tt}</div>
+      </div>
+    );
   }
   async componentDidMount() {
     // console.log(window.location.search);
