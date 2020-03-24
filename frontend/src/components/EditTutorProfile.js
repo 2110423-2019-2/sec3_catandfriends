@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./EditTutorProfile.css";
+import Util from "../apis/Util";
+import NormalButton from "./NormalButton";
 export default class EditTutorProfile extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +29,7 @@ export default class EditTutorProfile extends Component {
   render() {
     return (
       <div className="editTutorProfileCard border">
-        <h3 className="card-title border text-center">Edit Tutor Profile</h3>
+        <h3 className="editProfileH border text-center">Edit Tutor Profile</h3>
         <br />
         <form
           onSubmit={e => {
@@ -35,14 +37,14 @@ export default class EditTutorProfile extends Component {
             console.log(this.state);
             e.preventDefault();
           }}
-          style={{ marginLeft: 30 }}
         >
-          <div class="row">
-            <div class="col-md-6" width="100%">
-              <label>
+          <div class="row ">
+            <div class="col-md-6">
+              <label htmlFor="firstName" className="nameE">
                 First Name
                 <br />
                 <input
+                  id="firstName"
                   type="text"
                   value={this.state.firstName}
                   name="firstName"
@@ -51,11 +53,13 @@ export default class EditTutorProfile extends Component {
                 />
               </label>
             </div>
+
             <div class="col-md-6">
-              <label>
+              <label className="nameE" htmlFor="lastName">
                 Last Name
                 <br />
                 <input
+                  id="lastName"
                   type="text"
                   value={this.state.lastName}
                   style={{ width: 250 }}
@@ -67,7 +71,7 @@ export default class EditTutorProfile extends Component {
           </div>
           <div class="row">
             <div class="col-md-6" width="100%">
-              <label>
+              <label className="nameE">
                 Password
                 <br />
                 <input
@@ -80,7 +84,7 @@ export default class EditTutorProfile extends Component {
               </label>
             </div>
             <div class="col-md-6">
-              <label>
+              <label className="nameE">
                 New Password
                 <br />
                 <input
@@ -95,7 +99,7 @@ export default class EditTutorProfile extends Component {
           </div>
           <div class="row">
             <div class="col-md-6" width="100%">
-              <label>
+              <label className="nameE">
                 Phone Number
                 <br />
                 <input
@@ -108,7 +112,7 @@ export default class EditTutorProfile extends Component {
               </label>
             </div>
             <div class="col-md-6">
-              <label>
+              <label className="nameE">
                 Gender
                 <br />
                 <input
@@ -121,28 +125,23 @@ export default class EditTutorProfile extends Component {
               </label>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6" width="100%">
-              <label>
-                Bio
-                <br />
-                <textarea
-                  type="text"
-                  value={this.state.bio}
-                  style={{ width: 250 }}
-                  name="bio"
-                  onChange={this.handleChange}
-                />
-              </label>
+          <div className="row text-center" style={{ marginTop: "20px" }}>
+            <div className="col-md-12">
+              <NormalButton color="green" type="submit" value="Submit">
+                Submit
+              </NormalButton>
             </div>
-          </div>
-          <br />
-          <div className="text-center" style={{ marginRight: 40 }}>
-            <input type="submit" value="Submit" className="btn btn-success" />
           </div>
         </form>
       </div>
     );
   }
-  async componentDidMount() {}
+  async componentDidMount() {
+    console.log(window.location.search);
+    let params = new URLSearchParams(window.location.search);
+    let data = await Util.getProfile(params.get("userId"));
+    await this.setState({ data });
+    await console.log(data);
+    console.log(localStorage.getItem("token"));
+  }
 }
