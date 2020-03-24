@@ -47,12 +47,18 @@ export class TutorProfile extends Component {
               style={{ marginTop: "10px", marginBottom: "20px" }}
             >
               <div className="col-md-6 border">
-                <div className="nameB" style={{ fontSize: "24px" }}>
+                <div
+                  className="nameB"
+                  style={{ fontSize: "26px", textAlign: "center" }}
+                >
                   {this.props.data.firstName}
                 </div>
               </div>
               <div className="col-md-6 border">
-                <div className="nameB" style={{ fontSize: "24px" }}>
+                <div
+                  className="nameB"
+                  style={{ fontSize: "26px", textAlign: "center" }}
+                >
                   {this.props.data.lastName}
                 </div>
               </div>
@@ -167,7 +173,14 @@ export class TutorProfile extends Component {
               className="row border justify-content-center"
               style={{ marginBottom: "10px" }}
             >
-              <NormalButton color="rgba(107, 63, 233, 0.8)">
+              <NormalButton
+                color="rgba(107, 63, 233, 0.8)"
+                onClick={() => {
+                  history.push(
+                    `/profile/edit?token=${localStorage.getItem("token")}`
+                  );
+                }}
+              >
                 Edit Profile
               </NormalButton>
             </div>
