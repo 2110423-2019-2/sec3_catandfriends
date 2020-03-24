@@ -10,12 +10,7 @@ export class Home extends Component {
     // window.location.reload();
     console.log(this.state.data);
     if (!this.state.data.role) {
-      return (
-        <div>
-          {/* <div>Loading...</div> */}
-          <div></div>
-        </div>
-      );
+      return <div>{/* <div>Loading...</div> */}</div>;
     } else {
       if (this.state.data.role == "tutor") {
         return (
