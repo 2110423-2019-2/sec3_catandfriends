@@ -15,8 +15,9 @@ export default class EditTutorProfile extends Component {
       phoneNumber: ""
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleChange(event) {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -24,19 +25,34 @@ export default class EditTutorProfile extends Component {
     this.setState({
       [name]: value
     });
+    this.enablePass();
   }
 
+  enablePass(){
+    var fill = (document.getElementById("password").value=="");
+    document.getElementById("newpassword").disabled=fill;
+  }
+  async handleSubmit(e) {
+    alert(JSON.stringify(this.state));
+    console.log(this.state);
+    let data = await Util.editCourse(
+      this.state._id,
+      this.state.firstName,
+      this.state.lastName,
+      this.state.gender,
+      this.state.password,
+      this.state.newPassword,
+      localStorage.getItem("token"),
+    );
+    e.preventDefault();
+  }
   render() {
     return (
       <div className="editTutorProfileCard border">
         <h3 className="editProfileH border text-center">Edit Tutor Profile</h3>
         <br />
         <form
-          onSubmit={e => {
-            alert(JSON.stringify(this.state));
-            console.log(this.state);
-            e.preventDefault();
-          }}
+          onSubmit={e => this.handleSubmit(e)}
         >
           <div class="row ">
             <div class="col-md-6">
@@ -75,11 +91,13 @@ export default class EditTutorProfile extends Component {
                 Password
                 <br />
                 <input
+                  id="password"
                   type="password"
                   value={this.state.password}
                   style={{ width: 250 }}
                   name="password"
                   onChange={this.handleChange}
+                  required
                 />
               </label>
             </div>
@@ -88,11 +106,14 @@ export default class EditTutorProfile extends Component {
                 New Password
                 <br />
                 <input
+                  id="newpassword"
                   type="password"
                   value={this.state.newPassword}
                   style={{ width: 250 }}
                   name="newPassword"
                   onChange={this.handleChange}
+                  required
+                  disabled 
                 />
               </label>
             </div>
@@ -103,7 +124,9 @@ export default class EditTutorProfile extends Component {
                 Phone Number
                 <br />
                 <input
+                  id = "tel"
                   type="tel"
+                  maxLength="10"
                   value={this.state.phoneNumber}
                   style={{ width: 250 }}
                   name="phoneNumber"
@@ -115,13 +138,16 @@ export default class EditTutorProfile extends Component {
               <label className="nameE">
                 Gender
                 <br />
-                <input
-                  type="text"
+                <select
+                  id = "gender"
                   value={this.state.Gender}
                   style={{ width: 250 }}
                   name="gender"
                   onChange={this.handleChange}
-                />
+                >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                </select>
               </label>
             </div>
           </div>
@@ -140,8 +166,9 @@ export default class EditTutorProfile extends Component {
     console.log(window.location.search);
     let params = new URLSearchParams(window.location.search);
     let data = await Util.getProfile(params.get("userId"));
-    await this.setState({ data });
+    await this.setState(data);
     await console.log(data);
+    console.log(this.state)
     console.log(localStorage.getItem("token"));
   }
 }
