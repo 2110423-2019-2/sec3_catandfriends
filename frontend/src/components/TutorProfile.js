@@ -24,7 +24,22 @@ export class TutorProfile extends Component {
       bio: "my bio"
     };
   }
-
+  showWarn(warn) {
+    let Warn;
+    if (!warn) {
+      Warn = (
+        <div className="row justify-content-center">
+          <p class="alert alert-warning" style={{ textAlign: "center" }}>
+            <strong>Warning!</strong> You are an unverified tutor. You are not
+            able to create any courses.
+          </p>
+        </div>
+      );
+      return Warn;
+    } else {
+      return;
+    }
+  }
   render() {
     return (
       <div className="bigCard border">
@@ -55,17 +70,17 @@ export class TutorProfile extends Component {
               </div>
             </div>
           </div>
-          <div className="col-md-8 border">
+          <div className="col-md-8">
             <div className="row">
-              <div className="col-md-12 border infoC">
+              <div className="col-md-12  infoC">
                 <div className="headerB">My Profile</div>
               </div>
             </div>
             <div className="row">
-              <div className="col-md-4 border" align="center">
-                <img className="picPro border" src={this.state.imgsrc} />
+              <div className="col-md-4 " align="center">
+                <img className="picPro " src={this.state.imgsrc} />
               </div>
-              <div className="col-md-4 border">
+              <div className="col-md-4 ">
                 <div
                   className="nameB"
                   style={{
@@ -78,7 +93,7 @@ export class TutorProfile extends Component {
                   {this.props.data.firstName}
                 </div>
               </div>
-              <div className="col-md-4 border">
+              <div className="col-md-4 ">
                 <div
                   className="nameB"
                   style={{
@@ -93,77 +108,72 @@ export class TutorProfile extends Component {
               </div>
             </div>
 
-            <div className="row border" style={{ padding: "5px" }}>
+            <div className="row" style={{ padding: "5px" }}>
               <div
-                className="col-md-12 border infoC"
+                className="col-md-12  infoC"
                 style={{ marginTop: "5px", marginBottom: "5px" }}
               >
-                <div className="row border">
-                  <div className="col-md-4 border">
+                <div className="row">
+                  <div className="col-md-4">
                     <div className="nameB">SSN:</div>
                   </div>
-                  <div className="col-md-8 border">
+                  <div className="col-md-8">
                     <div className="valueB">{this.props.data.ssn}</div>
                   </div>
                 </div>
-                <div className="row border">
-                  <div className="col-md-4 border">
+                <div className="row ">
+                  <div className="col-md-4">
                     <div className="nameB">Birth Date:</div>
                   </div>
-                  <div className="col-md-8 b{order">
+                  <div className="col-md-8">
                     <div className="valueB">
                       {this.props.data.birthDate.substring(0, 10)}
                     </div>
                   </div>
                 </div>
-                <div className="row border">
-                  <div className="col-md-4 border">
+                <div className="row ">
+                  <div className="col-md-4">
                     <div className="nameB">Gender:</div>
                   </div>
-                  <div className="col-md-8 border">
+                  <div className="col-md-8">
                     <div className="valueB">{this.props.data.gender}</div>
                   </div>
                 </div>
-                <div className="row border">
-                  <div className="col-md-4 border">
+                <div className="row">
+                  <div className="col-md-4">
                     <div className="nameB">Email:</div>
                   </div>
-                  <div className="col-md-8 border">
+                  <div className="col-md-8">
+                    <div className="valueB">{this.props.data.email}</div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="nameB">Phone Number:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">{this.props.data.phoneNumber}</div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="nameB">Verify status:</div>
+                  </div>
+                  <div className="col-md-8">
                     <div className="valueB">
-                      {this.props.data.email + " "}
                       <span style={{ fontWeight: "bold", color: "blue" }}>
-                        {this.props.data.verified
-                          ? "[verified]"
-                          : "not verified"}
+                        {this.props.data.verifyStatus
+                          ? "VERIFIED"
+                          : "NOT VERIFIED"}
                       </span>
                     </div>
                   </div>
                 </div>
-                <div className="row border">
-                  <div className="col-md-4 border">
-                    <div className="nameB">Phone Number:</div>
-                  </div>
-                  <div className="col-md-8 border">
-                    <div className="valueB">{this.props.data.phoneNumber}</div>
-                  </div>
-                </div>
-                <div className="row border">
-                  <div className="col-md-4 border">
-                    <div className="nameB">Verify status:</div>
-                  </div>
-                  <div className="col-md-8 border">
-                    <div className="valueB">
-                      {this.props.data.verifyStatus
-                        ? "verified"
-                        : "not verified"}
-                    </div>
-                  </div>
-                </div>
-                <div className="row border">
-                  <div className="col-md-4 border">
+                <div className="row">
+                  <div className="col-md-4">
                     <div className="nameB">Verify document:</div>
                   </div>
-                  <div className="col-md-8 border">
+                  <div className="col-md-8">
                     <div className="valueB">
                       {this.props.data.verificationDocument
                         ? this.props.data.verificationDocument
@@ -171,31 +181,31 @@ export class TutorProfile extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="row border">
-                  <div className="col-md-4 border">
+                <div className="row">
+                  <div className="col-md-4">
                     <div className="nameB">Verify payment:</div>
                   </div>
-                  <div className="col-md-8 border">
+                  <div className="col-md-8">
                     <div className="valueB">
                       {this.props.data.verifyPayment + " ยังไม่มี back"}
                     </div>
                   </div>
                 </div>
-                <div className="row border">
-                  <div className="col-md-4 border">
+                <div className="row">
+                  <div className="col-md-4">
                     <div className="nameB">Premium status:</div>
                   </div>
-                  <div className="col-md-8 border">
+                  <div className="col-md-8">
                     <div className="valueB">
                       {this.props.data.premiumStatus ? "Premium" : "Standard"}
                     </div>
                   </div>
                 </div>
-                <div className="row border">
-                  <div className="col-md-4 border">
+                <div className="row">
+                  <div className="col-md-4">
                     <div className="nameB">Premium payment:</div>
                   </div>
-                  <div className="col-md-8 border">
+                  <div className="col-md-8">
                     <div className="valueB">
                       {this.props.data.premiumPayment + " ยังไม่มี back"}
                     </div>
@@ -203,8 +213,9 @@ export class TutorProfile extends Component {
                 </div>
               </div>
             </div>
+            {this.showWarn(this.props.data.verifyStatus)}
             <div
-              className="row border justify-content-center"
+              className="row justify-content-center"
               style={{ marginTop: "10px" }}
             >
               <NormalButton
