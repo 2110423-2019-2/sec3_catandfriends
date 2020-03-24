@@ -94,7 +94,10 @@ export class NavBar extends Component {
                     My Profile<span className="sr-only">(current)</span>
                   </a>
                   <a class="dropdown-item" href="/mycourse">
-                    My Course<span className="sr-only">(current)</span>
+                    {this.state.role == "tutor"
+                      ? "Course & Request"
+                      : "Coourse & Schedule"}
+                    <span className="sr-only">(current)</span>
                   </a>
                   <a
                     class="dropdown-item"
@@ -136,7 +139,8 @@ export class NavBar extends Component {
       // alert(JSON.stringify(data));
       this.setState({
         data,
-        fullName: data.firstName + " " + data.lastName.substring(0, 1) + "."
+        fullName: data.firstName + " " + data.lastName.substring(0, 1) + ".",
+        role: data.role
       });
       console.log(this.state);
     }
