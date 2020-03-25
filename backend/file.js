@@ -247,7 +247,20 @@ router.get('/images/user', async (req, res) => {
     readstream.pipe(res);
     res.status(200);
   });
+});
 
+router.get('/images/qrcode', async (req, res) => {
+  const filename = 'qrcode.png';
+  imagesGFS.files.findOne({ filename: filename }, (err, file) => {
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exist'
+      });
+    }
+    const readstream = imagesGFS.createReadStream(file.filename);
+    readstream.pipe(res);
+    res.status(200);
+  });
 });
 
 router.post(VERIFY_DOCUMENTS_PATH, upload.single('file'), (req, res) => {
