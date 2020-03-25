@@ -32,3 +32,15 @@ h1 {
   font-size: 1.1em;
   font-weight: 500;
 }
+.bgDD {
+  background-color: black;
+}
+.navbar-nav > li > .dropdown-menu {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.navbar-nav > li > .dropdown-menu .dropdown-item:hover {
+  background-color: rgba(64, 124, 133, 0.9);
+}
+.navbar-nav > li > .dropdown-menu a {
+  color: #ffffff;
+}

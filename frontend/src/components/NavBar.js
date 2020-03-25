@@ -87,7 +87,7 @@ export class NavBar extends Component {
                 </AccountButton>
 
                 <div
-                  class="dropdown-menu"
+                  class="dropdown-menu bgDD"
                   aria-labelledby="navbarDropdownMenuLink"
                 >
                   <a class="dropdown-item" href="/profile">

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./EditTutorProfile.css";
 import Util from "../apis/Util";
 import NormalButton from "./NormalButton";
+import history from "../history";
 export default class EditTutorProfile extends Component {
   constructor(props) {
     super(props);
@@ -10,8 +11,6 @@ export default class EditTutorProfile extends Component {
       firstName: "",
       lastName: "",
       gender: "",
-      password: "",
-      newPassword: "",
       phoneNumber: ""
     };
     this.handleChange = this.handleChange.bind(this);
@@ -25,26 +24,26 @@ export default class EditTutorProfile extends Component {
     this.setState({
       [name]: value
     });
-    this.enablePass();
   }
 
-  enablePass(){
-    var fill = (document.getElementById("password").value=="");
-    document.getElementById("newpassword").disabled=fill;
-  }
   async handleSubmit(e) {
+    e.preventDefault();
     alert(JSON.stringify(this.state));
-    console.log(this.state);
-    let data = await Util.editCourse(
-      this.state._id,
+    let data = await Util.editProfile(
       this.state.firstName,
       this.state.lastName,
       this.state.gender,
-      this.state.password,
-      this.state.newPassword,
+      this.phoneNumber,
       localStorage.getItem("token"),
     );
-    e.preventDefault();
+    console.log(data);
+    if (!data.error) {
+      alert("A profile is edited");
+      console.log(data);
+      history.push("/profile");
+    } else {
+      window.alert("Cannot Edit Profile");     
+    }
   }
   render() {
     return (
@@ -81,39 +80,6 @@ export default class EditTutorProfile extends Component {
                   style={{ width: 250 }}
                   name="lastName"
                   onChange={this.handleChange}
-                />
-              </label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6" width="100%">
-              <label className="nameE">
-                Password
-                <br />
-                <input
-                  id="password"
-                  type="password"
-                  value={this.state.password}
-                  style={{ width: 250 }}
-                  name="password"
-                  onChange={this.handleChange}
-                  required
-                />
-              </label>
-            </div>
-            <div class="col-md-6">
-              <label className="nameE">
-                New Password
-                <br />
-                <input
-                  id="newpassword"
-                  type="password"
-                  value={this.state.newPassword}
-                  style={{ width: 250 }}
-                  name="newPassword"
-                  onChange={this.handleChange}
-                  required
-                  disabled 
                 />
               </label>
             </div>

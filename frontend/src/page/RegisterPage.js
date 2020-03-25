@@ -11,10 +11,11 @@ export default class RegisterPage extends Component {
   render() {
     return (
       <div className="justify-content-center">
-        <div className="row justify-content-center">
-          <Register />
+        <div className="row">
+          <div className="col-md-12" align="center">
+            <Register />
+          </div>
         </div>
-        <div className="row justify-content-center"></div>
       </div>
     );
   }

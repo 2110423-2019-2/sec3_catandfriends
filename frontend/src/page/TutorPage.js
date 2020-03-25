@@ -18,9 +18,11 @@ export default class TutorPage extends Component {
   render() {
     if (this.props.owner) {
       return (
-        <div className=" wholeB justify-content-center">
-          <div className="row justify-content-center">
-            <TutorProfile data={this.props.data} />
+        <div className="justify-content-center">
+          <div className="row">
+            <div className="col-md-12" align="center">
+              <TutorProfile data={this.props.data} />
+            </div>
           </div>
         </div>
       );
@@ -28,11 +30,15 @@ export default class TutorPage extends Component {
       console.log(this.props.data);
       return (
         <div className="justify-content-center">
-          <div className="row justify-content-center">
-            <StudentCTuProfile data={this.props.data} />
+          <div className="row">
+            <div className="col-md-12" align="center">
+              <StudentCTuProfile data={this.props.data} />
+            </div>
           </div>
-          <div className="row justify-content-center">
-            <CourseCardLayout data={this.state.detail} />
+          <div className="row">
+            <div className="col-md-12" align="center">
+              <CourseCardLayout data={this.state.detail} />
+            </div>
           </div>
         </div>
       );
