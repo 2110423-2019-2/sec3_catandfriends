@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./MyStudentCard.css";
+import NormalButton from "./NormalButton";
+import history from "../history";
 export default class MyStudentCard extends Component {
   constructor(props) {
     super(props);
@@ -77,9 +79,16 @@ export default class MyStudentCard extends Component {
               </div>
               <br />
               <div className="mystyle">
-                <button type="button" class="btn btn-outline-primary">
-                  Edit Information
-                </button>
+                <NormalButton
+                  color="rgba(107, 63, 233, 0.8)"
+                  onClick={() => {
+                    history.push(
+                      `/profile/edit?token=${localStorage.getItem("token")}`
+                    );
+                  }}
+                >
+                  Edit Profile
+                </NormalButton>
               </div>
               <br />
             </div>
