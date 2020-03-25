@@ -7,18 +7,18 @@ export default class CourseInformation extends Component {
   state = { data: null };
 
   render() {
-    if (this.state.data) {
+    if (!this.state.data) {
+      return <div align="center">Loading...</div>;
+    } else {
       return (
         <div className="justify-content-center">
-          <div className="row justify-content-center">
-            {/* <TutorCard /> */}
-            <CourseDetail detail={this.state.data} />
+          <div className="row">
+            <div className="col-md-12" align="center">
+              <CourseDetail detail={this.state.data} />
+            </div>
           </div>
-          <div className="row justify-content-center"></div>
         </div>
       );
-    } else {
-      return <div align="center">Loading...</div>;
     }
   }
 

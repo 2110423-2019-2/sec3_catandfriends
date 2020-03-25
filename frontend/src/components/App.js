@@ -18,6 +18,7 @@ import EditCourseCardLayout from "./EditCourseCardLayout";
 import RegisterPage from "../page/RegisterPage";
 import EditProfile from "../page/EditProfile";
 import MyCourse from "../page/MyCourse";
+import "./App.css";
 const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;
@@ -29,17 +30,19 @@ class App extends Component {
     return (
       <Router history={history}>
         <NavBar />
-        <Switch>
-          <Route path="/register" component={RegisterPage} />
-          <Route path="/login" component={Login} />
-          <Route path="/search" component={SearchResult} />
-          <Route path="/profile/edit" component={EditProfile} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/course/edit" component={EditCourse} />
-          <Route path="/course/create" component={NewCourse} />
-          <Route path="/course" component={CourseInformation} />
-          <Route path="/mycourse" component={MyCourse} />
-        </Switch>
+        <div className="bgCustom">
+          <Switch>
+            <Route path="/register" component={RegisterPage} />
+            <Route path="/login" component={Login} />
+            <Route path="/search" component={SearchResult} />
+            <Route path="/profile/edit" component={EditProfile} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/course/edit" component={EditCourse} />
+            <Route path="/course/create" component={NewCourse} />
+            <Route path="/course" component={CourseInformation} />
+            <Route path="/mycourse" component={MyCourse} />
+          </Switch>
+        </div>
       </Router>
     );
   }
