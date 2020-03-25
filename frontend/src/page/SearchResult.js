@@ -364,7 +364,10 @@ export default class SearchResult extends Component {
               style={{
                 margin: "15px",
                 display: "block",
-                textAlign: "center"
+                textAlign: "center",
+                color: "black",
+                backgroundColor: "rgba(255,255,255,0.3)",
+                borderRadius: "12px"
               }}
             >
               Search Result

@@ -4,6 +4,7 @@
   margin: 10px;
   text-align: center;
   border-radius: 12px !important;
+  border: none !important;
   /*normal*/
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s; */
@@ -33,7 +34,16 @@
 .mcard-header {
   background-color: rgb(56, 87, 153);
   border-radius: 12px 12px 0px 0px;
-  width: 228px;
+  width: 230px;
+  height: 150px;
+  /* padding: 5px; */
+  background-size: cover;
+  color: #fff;
+  text-shadow: 4px 4px 4px #000000;
+}
+.mcard-headerS {
+  border-radius: 12px 12px 0px 0px;
+  width: 230px;
   height: 150px;
   /* padding: 5px; */
   background-size: cover;

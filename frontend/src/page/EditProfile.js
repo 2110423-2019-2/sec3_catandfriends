@@ -21,8 +21,12 @@ export default class EditProfile extends Component {
     }
     // console.log(this.state.data);
     return (
-      <div className="wholeB justify-content-center">
-        <div className="row justify-content-center">{tt}</div>
+      <div className="justify-content-center">
+        <div className="row">
+          <div className="col-md-12" align="center">
+            {tt}
+          </div>
+        </div>
       </div>
     );
   }

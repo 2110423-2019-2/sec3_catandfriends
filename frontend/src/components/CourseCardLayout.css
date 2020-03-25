@@ -5,4 +5,13 @@
   padding-top: 30px;
   padding-bottom: 30px;
   max-width: 1150px;
+  height: auto;
+}
+.ecardblock {
+  padding-right: 100px;
+  padding-left: 100px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  max-width: 124s0px;
+  height: auto;
 }

@@ -77,8 +77,10 @@ export default class EditableCard extends React.Component {
         <div className="card-body mycard-body">
           <h5 className="card-title mycard-title">{courseName}</h5>
           <p className="card-text tutorname">{fullname}</p>
-          <div align="center" style={{ marginBottom: "15px" }}>
-            <p className="card-text day border">{this.dayToString(day)}</p>
+          <div align="center" style={{ marginBottom: "5px" }}>
+            <textarea className="card-text day">
+              {this.dayToString(day)}
+            </textarea>
           </div>
           <CourseButton
             onClick={() => this.onClickGotoCourseInform(courseid)}
