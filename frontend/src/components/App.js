@@ -20,7 +20,7 @@ const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;
 const Project = () => <h1>Project</h1>;
 const NotFoundPage = () => (
-  <h1 style={{ color: "white" }}>404: Page Not Found</h1>
+  <div>{/* <h1 style={{ color: "white" }}>404: Page Not Found</h1> */}</div>
 );
 
 class App extends Component {
