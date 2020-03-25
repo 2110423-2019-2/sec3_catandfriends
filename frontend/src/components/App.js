@@ -30,7 +30,7 @@ class App extends Component {
     return (
       <Router history={history}>
         <NavBar />
-        <div className="bgCustom">
+        <div className="TS">
           <Switch>
             <Route path="/register" component={RegisterPage} />
             <Route path="/login" component={Login} />
