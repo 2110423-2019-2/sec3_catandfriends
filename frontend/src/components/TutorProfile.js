@@ -40,37 +40,47 @@ export class TutorProfile extends Component {
       return;
     }
   }
+  showPremium(premium) {
+    let Premium;
+    if (!premium) {
+      Premium = (
+        <NormalButton
+          color="rgba(21, 171, 168,0.8)"
+          onClick={() => {
+            history.push(`/profile/premium`);
+          }}
+        >
+          Upgrade Premium
+        </NormalButton>
+      );
+      return Premium;
+    } else {
+      return;
+    }
+  }
+  showVerify(verify) {
+    let Verify;
+    if (!verify) {
+      Verify = (
+        <NormalButton
+          color="rgba(19, 124, 204,0.8)"
+          onClick={() => {
+            history.push(`/profile/verify`);
+          }}
+        >
+          Verify Tutor
+        </NormalButton>
+      );
+      return Verify;
+    } else {
+      return;
+    }
+  }
   render() {
     return (
       <div className="bigCard border">
         <div className="row">
-          <div className="col-md-4 border">
-            {/* <div className="row justify-content-center">
-              <img className="picPro border p-3" src={this.state.imgsrc} />
-            </div> */}
-            <div className="row justify-content-center">
-              <VerifyCard />
-            </div>
-            <div className="row justify-content-center">
-              <VerifyCard />
-            </div>
-            <div className="row justify-content-center">
-              <button type="button" className="btn btn-warning btn-block">
-                Upgrade to Premium
-              </button>
-            </div>
-            <div className="row justify-content-center">
-              <VerifyCard />
-            </div>
-
-            <div className="row justify-content-center">
-              <div>
-                !!!!!!!!!!!ต้องเพิ่ม สำคัญ!!!!!!!!!! upload file/upload
-                slip/payment button qr/upload payment slip
-              </div>
-            </div>
-          </div>
-          <div className="col-md-8">
+          <div className="col-md-12">
             <div className="row">
               <div className="col-md-12  infoC">
                 <div className="headerB">My Profile</div>
@@ -80,39 +90,19 @@ export class TutorProfile extends Component {
               <div className="col-md-4 " align="center">
                 <img className="picPro " src={this.state.imgsrc} />
               </div>
-              <div className="col-md-4 ">
-                <div
-                  className="nameB"
-                  style={{
-                    fontSize: "26px",
-                    textAlign: "center",
-                    position: "absolute",
-                    bottom: "40%"
-                  }}
-                >
-                  {this.props.data.firstName}
-                </div>
-              </div>
-              <div className="col-md-4 ">
-                <div
-                  className="nameB"
-                  style={{
-                    fontSize: "26px",
-                    textAlign: "center",
-                    position: "absolute",
-                    bottom: "40%"
-                  }}
-                >
-                  {this.props.data.lastName}
+              <div className="col-md-8 ">
+                <div className="nameM">
+                  <span id="nameK">
+                    {this.props.data.firstName +
+                      "\xa0\xa0\xa0\xa0" +
+                      this.props.data.lastName}
+                  </span>
                 </div>
               </div>
             </div>
 
-            <div className="row" style={{ padding: "5px" }}>
-              <div
-                className="col-md-12  infoC"
-                style={{ marginTop: "5px", marginBottom: "5px" }}
-              >
+            <div className="row">
+              <div className="col-md-12  infoC" style={{ marginBottom: "5px" }}>
                 <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">SSN:</div>
@@ -187,7 +177,7 @@ export class TutorProfile extends Component {
                   </div>
                   <div className="col-md-8">
                     <div className="valueB">
-                      {this.props.data.verifyPayment + " ยังไม่มี back"}
+                      {this.props.data.verificationPayment + " ยังไม่มี back"}
                     </div>
                   </div>
                 </div>
@@ -216,18 +206,20 @@ export class TutorProfile extends Component {
             {this.showWarn(this.props.data.verifyStatus)}
             <div
               className="row justify-content-center"
-              style={{ marginTop: "10px" }}
+              // style={{ marginTop: "10px" }}
             >
-              <NormalButton
-                color="rgba(107, 63, 233, 0.8)"
-                onClick={() => {
-                  history.push(
-                    `/profile/edit?token=${localStorage.getItem("token")}`
-                  );
-                }}
-              >
-                Edit Profile
-              </NormalButton>
+              <div className="col-md-12">
+                <NormalButton
+                  color="rgba(107, 63, 233, 0.8)"
+                  onClick={() => {
+                    history.push(`/profile/edit`);
+                  }}
+                >
+                  Edit Profile
+                </NormalButton>
+                {this.showVerify(this.props.data.verifyStatus)}
+                {this.showPremium(this.props.data.premiumStatus)}
+              </div>
             </div>
           </div>
         </div>

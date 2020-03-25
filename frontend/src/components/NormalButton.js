@@ -1,5 +1,6 @@
 import styled from "styled-components";
 const NormalButton = styled.button`
+  margin: 5px;
   color: white;
   transition: 0.3s;
   background-color: ${props => props.color};

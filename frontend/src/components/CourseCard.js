@@ -53,6 +53,10 @@ class CourseCard extends React.Component {
           id="image"
           className="mcard-header"
         >
+          {" "}
+          <div style={{ height: "120px", paddingLeft: "5px" }}>
+            <div className="mcard-header--title">{category}</div>
+          </div>
           <div style={{ height: "30px" }}>
             <div
               className="mcard-header--title"
