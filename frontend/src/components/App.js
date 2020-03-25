@@ -19,12 +19,14 @@ const Home = () => <h1>Home</h1>;
 const About = () => <h1>About</h1>;
 const Post = () => <h1>Post</h1>;
 const Project = () => <h1>Project</h1>;
-const NotFoundPage = () => <h1>404: Page Not Found</h1>;
+const NotFoundPage = () => (
+  <h1 style={{ color: "white" }}>404: Page Not Found</h1>
+);
 
 class App extends Component {
   getPage(page) {
     if (!localStorage.getItem("token")) {
-      return PageNotFound;
+      return NotFoundPage;
     } else {
       return page;
     }
