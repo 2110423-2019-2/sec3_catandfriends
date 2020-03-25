@@ -1,3 +1,58 @@
-.myStyle{
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+.myStyle {
   text-align: center;
+}
+.picPro {
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}
+.bigCard {
+  width: auto;
+  min-width: 1050px;
+  height: auto;
+  min-height: 600px;
+  background-color: rgb(255, 255, 255);
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 20px;
+  margin: 20px;
+  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
+}
+.headerB {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  color: #000000;
+  text-align: center;
+}
+.nameB {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  color: #000000;
+}
+.valueB {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  color: #000000;
+}
+.infoC {
+  background-color: rgb(245, 245, 245);
+  border-radius: 12px;
+  padding: 10px;
+  padding-left: 10px;
 }

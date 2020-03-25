@@ -46,6 +46,7 @@ export default class NewCourse extends Component {
         let d = parseInt(c)/100;
         return d;
       }
+
       handleChange(event) {
         const target = event.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
@@ -68,13 +69,25 @@ export default class NewCourse extends Component {
         event.preventDefault();
         if(!this.compareDate()){
           alert("Start Date must be before End Date");
+        } else if(!this.compareTime){
+          alert("Start Time must be before End Time");
         }else{
             console.log(this.state)
            alert(JSON.stringify(this.state))
          let data = await Util.createCourse(this.state.courseName,this.state.dayAndStartTime,this.state.dayAndEndTime,this.state.startDate,this.state.endDate,localStorage.getItem("token"),this.state.totalAmountOfStudent,this.state.description,this.state.courseFee,this.state.category);
           //let data = await Util.createCourse("ff",[6.3,null,null,null,null,null,null],[8.3,null,null,null,null,null,null],this.state.startDate,this.state.endDate,localStorage.getItem("token"),13,"dfsdfsdf",11111,"language");
+          if (data.error) {
+            window.alert("Cannot Create Course");
+          } else {
+          if (!data.error) {
+            alert("New course created");
+            history.push("/profile");
+          } else {
+            window.alert("Cannot Create Course");
+          }
           console.log(data);         
         }
+      }
         
       }
       handleDayAndStartTimeChange = () => {
@@ -212,6 +225,15 @@ export default class NewCourse extends Component {
     return aDate < bDate;
   }
 
+  compareTime(){
+    var i=0;
+    var invalid=false;
+    for (i=0;i<7;i++){
+      invalid = this.state.dayAndEndTime<this.state.dayAndStartTime;
+    }
+    return invalid;
+  }
+  
   render() {
     return (
       <div className="card mb-4 p-3" style={{ maxWidth: 1000 }}>

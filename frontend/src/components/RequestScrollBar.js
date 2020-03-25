@@ -73,7 +73,11 @@ export default class RequestScrollBar extends Component {
         </div>
       );
     } else {
-      return <div>...Loading</div>;
+      return (
+        <div className="card" data-spy="scroll" id="overflowTest">
+          <h5 align="center">Request List</h5>
+        </div>
+      );
     }
   }
 

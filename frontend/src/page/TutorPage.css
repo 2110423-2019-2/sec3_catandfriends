@@ -1,0 +1,25 @@
+.wholeB {
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  top: 86;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  /* display: block; */
+  /* background-image: linear-gradient(
+    to right top,
+    #32a0a0,
+    #58b096,
+    #85bd8a,
+    #b4c883,
+    #e5cf86
+  ); */
+  background-image: linear-gradient(
+    180deg,
+    #7055bd 0%,
+    rgba(186, 60, 128, 0.7) 100%
+  );
+  background-size: 100% 100%;
+}
