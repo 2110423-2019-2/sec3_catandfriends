@@ -68,7 +68,7 @@ export class TutorProfile extends Component {
             history.push(`/profile/verify`);
           }}
         >
-          Verify Tutor
+          Verify Account
         </NormalButton>
       );
       return Verify;
