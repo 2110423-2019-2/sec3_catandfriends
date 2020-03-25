@@ -72,14 +72,13 @@ class EditCourseCardLayout extends React.Component {
       return Emp;
     } else {
       return (
-        <div
-          className="row border"
-          style={{ maxWidth: "1100px", paddingLeft: "22px", marginTop: "22px" }}
-        >
-          {this.state.data.map(item => (
-            <EditableCard detail={item} />
-          ))}
-          <BlankCouseCard />
+        <div className="justify-content-center" align="center">
+          <div className="row ecardblock">
+            <BlankCouseCard />
+            {this.state.data.map(item => (
+              <EditableCard detail={item} key={item._id.toString()} />
+            ))}
+          </div>
         </div>
       );
     }

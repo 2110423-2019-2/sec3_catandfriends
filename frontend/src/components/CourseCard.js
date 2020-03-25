@@ -37,30 +37,6 @@ class CourseCard extends React.Component {
       "https://i.kym-cdn.com/photos/images/newsfeed/001/535/446/1c5.jpg";
     const priceS = this.props.detail.courseFee + "฿";
     const courseid = this.props.detail._id;
-    var Editable;
-    if (!this.props.editable) {
-      Editable = (
-        <div style={{ height: "120px", paddingLeft: "5px" }}>
-          <div className="mcard-header--title">{category}</div>
-        </div>
-      );
-    } else {
-      Editable = (
-        <div style={{ height: "120px", paddingLeft: "5px" }}>
-          <div className="mcard-header--title">{category}</div>
-          <button
-            class="button button-secondary"
-            onClick={() => {
-              history.push(`/course/edit?courseId=${this.props.courseid}`);
-            }}
-          >
-            <h6>
-              <i className="fa fa-edit">Edit</i>
-            </h6>
-          </button>
-        </div>
-      );
-    }
     return (
       <div
         className="card mycard clickable"
@@ -77,7 +53,10 @@ class CourseCard extends React.Component {
           id="image"
           className="mcard-header"
         >
-          {Editable}
+          {" "}
+          <div style={{ height: "120px", paddingLeft: "5px" }}>
+            <div className="mcard-header--title">{category}</div>
+          </div>
           <div style={{ height: "30px" }}>
             <div
               className="mcard-header--title"
