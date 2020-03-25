@@ -10,7 +10,7 @@ export class Home extends Component {
     // window.location.reload();
     console.log(this.state.data);
     if (!this.state.data.role) {
-      return <div>{/* <div>Loading...</div> */}</div>;
+      return <div className=" wholeB justify-content-center"></div>;
     } else {
       if (this.state.data.role == "tutor") {
         return (
