@@ -124,7 +124,7 @@ export class NavBar extends Component {
       history.push(page);
     } else if (page == "/logout") {
       localStorage.clear();
-      history.push("/");
+      history.push("/home");
       window.location.reload();
     } else if (!localStorage.getItem("token")) {
       window.alert("Please login first!");
