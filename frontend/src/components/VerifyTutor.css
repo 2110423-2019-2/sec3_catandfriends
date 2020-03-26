@@ -38,6 +38,13 @@
   width: 100%;
   min-height: 100px;
   height: auto;
-  overflow: auto;
+  /* overflow-y: initial; */
   resize: none;
+  border: none;
+  margin-bottom: 5px;
+}
+.fileName:hover {
+  color: green;
+  text-decoration: underline;
+  cursor: pointer;
 }
