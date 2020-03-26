@@ -41,7 +41,7 @@
   align-items: center;
   /* background: rgba(255, 255, 255, 0.5); */
   background: linear-gradient(229deg, #2edefb, #6046c6, #d04599);
-  background-size: 600% 600%;
+  background-size: 150% 150%;
 
   -webkit-animation: AnimationName 59s ease infinite;
   -moz-animation: AnimationName 59s ease infinite;
