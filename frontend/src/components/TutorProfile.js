@@ -177,7 +177,7 @@ export class TutorProfile extends Component {
                   </div>
                   <div className="col-md-8">
                     <div className="valueB">
-                      {this.props.data.verificationPayment}
+                      {this.props.data.verificationPayment + " ยังไม่มี back"}
                     </div>
                   </div>
                 </div>
