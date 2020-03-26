@@ -10,7 +10,7 @@ const requestRoute = require("./request");
 const profileRoute = require("./profile");
 const scheduleRoute = require("./schedule");
 const searchRoute = require("./search");
-const uploadRoute = require("./upload");
+const fileRoute = require("./file");
 const verifyRoute = require("./verify");
 const mongoose = require("mongoose");
 require("./auth/auth");
@@ -50,9 +50,9 @@ app.use(
 app.use("/schedule", scheduleRoute);
 app.use("/search", searchRoute);
 app.use(
-  "/upload",
+  "/file",
   passport.authenticate("jwt-profile", { session: false }),
-  uploadRoute
+  fileRoute
 );
 app.use("/verify", verifyRoute);
 

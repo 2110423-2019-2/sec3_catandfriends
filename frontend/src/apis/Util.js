@@ -231,6 +231,32 @@ const Util = {
     console.log(response.status);
     if (response.status == 400) return { error: true };
     if (response.status == 201) return response.json();
+  },
+  editProfile:  async (
+    firstName,
+    lastName,
+    gender,
+    phoneNumber,
+    token
+  ) => {
+    const URL = `http://localhost:8000/profile?token=${token}`;
+    const response = await fetch(URL, {
+      method: "PUT",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        gender,
+        phoneNumber
+      })
+    });
+    console.log(response.status);
+    if (response.status == 400) return { error: true };
+    if (response.status == 201) return response.json();
   }
 };
 
