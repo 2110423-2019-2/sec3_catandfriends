@@ -40,9 +40,9 @@ export class TutorProfile extends Component {
       return;
     }
   }
-  showPremium(premium) {
+  showPremium(premium, verify) {
     let Premium;
-    if (!premium) {
+    if (verify && !premium) {
       Premium = (
         <NormalButton
           color="rgba(21, 171, 168,0.8)"
@@ -218,7 +218,10 @@ export class TutorProfile extends Component {
                   Edit Profile
                 </NormalButton>
                 {this.showVerify(this.props.data.verifyStatus)}
-                {this.showPremium(this.props.data.premiumStatus)}
+                {this.showPremium(
+                  this.props.data.premiumStatus,
+                  this.props.data.verifyStatus
+                )}
               </div>
             </div>
           </div>
