@@ -11,9 +11,7 @@
   font-family: "Merienda One", cursive;
   font-size: 1.7em !important;
 }
-h1 {
-  color: green;
-}
+
 .primaryBtn:focus {
   outline: none;
 }
