@@ -1,28 +1,58 @@
-
-.container{
-    float: left;
-    width: 100%;
+.request {
+  display: inline-block;
 }
-.request{
-    display: inline-block;
-} 
-.container div{
-    font-size: 12px;
+.requestCard {
+  width: 900px;
+  max-width: 900px;
+  height: 300px;
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 0px 25px;
+  border-radius: 20px;
+  margin: 20px;
+  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
+  overflow-y: scroll;
 }
-#overflowTest{
-    background: #ffffff;
-    color: #000;
-    padding: 5px;
-    width: 40%;
-    height: 200px;
-    border: #006064;
-    overflow-y: scroll;
-  }
-
-.btn-success{
-    text-align: center;
+#overflowTest {
+  color: #000;
+  padding: 5px;
+  height: 200px;
+  border: #006064;
+  overflow-y: scroll;
 }
 
-.btn-danger{
-    text-align: center;
+.btn-success {
+  text-align: center;
+}
+
+.btn-danger {
+  text-align: center;
+}
+.infoR {
+  background-color: rgb(245, 245, 245);
+  border-radius: 12px;
+  padding: 10px;
+  padding-left: 10px;
+}
+.headerR {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  color: #000000;
+  text-align: center;
+}
+.tableR {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin: 10px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  color: #000000;
 }
