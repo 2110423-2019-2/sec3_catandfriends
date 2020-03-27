@@ -140,52 +140,54 @@ router.get("/", async (req, res) => {
         course[i].isAvailable = course[i].amountOfStudent > 0 ? true : false;
         // let remaining = course[i].amountOfStudent;
 
-        course[i].startDate = undefined;
-        course[i].endDate = undefined;
+        //course[i].startDate = undefined;
+        //course[i].endDate = undefined;
         course[i].dayAndStartTime = undefined;
         course[i].dayAndEndTime = undefined;
         course[i].listOfStudentId = undefined;
         // course[i].amountOfStudent = undefined;
-        course[i].createdTime = undefined;
-        course[i].lastModified = undefined;
+        //course[i].createdTime = undefined;
+        //course[i].lastModified = undefined;
 
         course[i] = {
           ...course[i].toObject(),
           tutorName: tutorName
-          // remaining: remaining
         };
       }
-      res.json(course);
     }
-    res.status(200).end();
+    res.status(200).json(course);
   } else if (studentId != undefined) {
-    // console.log(studentId);
-    // console.log("ajsdkfl");
-    let course = await CourseModel.find({});
+    let course = await requestModel.find({studentId: studentId});
     let s = [];
+    //console.log(course);
     console.log("\n\n\n");
     for (i = 0; i < course.length; i++) {
-      //console.log(CourseModel().type);
-      let length = course[i]["listOfStudentId"].length;
-      //console.log(course[i]['listOfStudentId']);
-      for (j = 0; j < length; j++) {
-        if (course[i]["listOfStudentId"][j] == studentId) {
-          //console.log(course[i]);
-          s.push(course[i]);
-          console.log(s);
-          continue;
+      console.log(course[i].courseId);
+      let status = course[i].status;
+      console.log("status = "+status)
+      let message = "status: ";
+      let c = await CourseModel.findById(course[i].courseId,
+        {dayAndStartTime:0, dayAndEndTime:0, listOfStudentId:0, listOfStudentRequest:0, createdTime:0, lastModified:0});
+        if(status ==1){
+          message = message+"enroll successful";
         }
-      }
+        else if(status ==0){
+          message = message+"waiting for tutor confirmation";
+        }
+        else if(status ==-1){
+          message = message+"the enrollment was rejected";
+        }
+        console.log(c);
+        s.push(message);
+        s.push(c);
+        
+      //console.log(s);
     }
-    // console.log(s);
-    res.json(s);
-    res.status(200).end();
+     //console.log(s);
+    res.status(200).json(s);
+    return ;
   } else {
     res.status(404).json("invalid");
-    course = await CourseModel.find({});
-    console.log(course);
-    //res.status(404).end();
-
   }
 });
 

@@ -80,11 +80,20 @@ router.post('/', async (req, res) => {
     payload.lastModified = dateThailand._d;
     const requests = new RequestModel(payload);
     let err, save;
-
     [err, save] = await to(requests.save());
     if (err) {
       res.status(500).end();
     }
+    [err, value] = await to(CourseModel.findOneAndUpdate({
+      _id: payload.courseId
+    }, {
+      $push: {
+        listOfStudentRequest: payload.studentId
+      },
+      lastModified: dateThailand._d
+    }, {
+      useFindAndModify: false
+    }));
     res.status(201).end();
   } else {
     res.status(201).end();
