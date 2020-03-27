@@ -100,7 +100,7 @@ export class NavBar extends Component {
                   <a class="dropdown-item" href="/mycourse">
                     {this.state.role == "tutor"
                       ? "My Course & Request"
-                      : "My Coourse & Schedule"}
+                      : "My Course & Schedule"}
                     <span className="sr-only">(current)</span>
                   </a>
                   <a
