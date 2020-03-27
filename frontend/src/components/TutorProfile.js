@@ -240,16 +240,17 @@ export class TutorProfile extends Component {
       true
     );
     xhr.responseType = "arraybuffer";
-    xhr.onload = await function(e, imageUrl) {
+    xhr.onload = function(e, imageUrl) {
       var arrayBufferView = new Uint8Array(this.response);
       var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
       var urlCreator = window.URL || window.webkitURL;
       var imageUrl = urlCreator.createObjectURL(blob);
       var img = document.querySelector("#photo");
-      img.src = imageUrl;
+      if (img) {
+        img.src = imageUrl;
+      }
     };
     xhr.send();
-    console.log(this.state);
   }
 }
 
