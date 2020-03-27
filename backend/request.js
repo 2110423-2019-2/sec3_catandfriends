@@ -179,6 +179,9 @@ router.put('/', async (req, res) => {
           $push: {
             listOfStudentId: payload.studentId
           },
+           $pull: {
+             listOfStudentRequest: payload.studentId
+           },
           amountOfStudent: currentAmountOfStudent - 1,
           lastModified: dateThailand._d
         }, {
