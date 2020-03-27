@@ -20,36 +20,61 @@ export default class StudentCard extends Component {
 
   render() {
     return (
-      <div className="bigCard border">
+      <div className="bigCard border" style={{ minHeight: "auto" }}>
         <div className="row">
           <div className="col-md-12">
             <div className="row">
               <div className="col-md-12  infoC">
-                <div className="headerB">My Profile</div>
+                <div className="headerB">Profile</div>
               </div>
             </div>
             <div className="row">
               <div className="col-md-4 " align="center">
-                <img className="picPro " src={this.state.imgsrc} />
+                <img className="studentpicPro " src={this.state.imgsrc} />
               </div>
               <div className="col-md-8 ">
-                <div className="nameM">
-                  <span id="nameK">
-                    {this.props.data.firstName +
-                      "\xa0\xa0\xa0\xa0" +
-                      this.props.data.lastName}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12  infoC" style={{ marginBottom: "5px" }}>
-                <div className="row">
-                  <div className="col-md-4">
-                    <div className="nameB">Phone Number:</div>
+                <div className="row justify-content-center">
+                  <div className="nameM">
+                    <span id="nameK">
+                      {this.props.data.firstName +
+                        "\xa0\xa0\xa0\xa0" +
+                        this.props.data.lastName}
+                    </span>
                   </div>
-                  <div className="col-md-8">
-                    <div className="valueB">{this.props.data.phoneNumber}</div>
+                </div>
+                <div className="row justify-content-center">
+                  <div
+                    className="col-md-12  infoC"
+                    style={{ marginBottom: "5px" }}
+                  >
+                    <div className="row">
+                      <div className="col-md-4">
+                        <div className="nameB">Phone Number:</div>
+                      </div>
+                      <div className="col-md-8">
+                        <div className="valueB">
+                          {this.props.data.phoneNumber}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-4">
+                        <div className="nameB">Birth Date:</div>
+                      </div>
+                      <div className="col-md-8">
+                        <div className="valueB">
+                          {this.props.data.birthDate.substring(0, 10)}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-4">
+                        <div className="nameB">Gender:</div>
+                      </div>
+                      <div className="col-md-8">
+                        <div className="valueB">{this.props.data.gender}</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
