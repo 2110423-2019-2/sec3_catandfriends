@@ -14,6 +14,7 @@ const courseSchema = new Schema({
     amountOfStudent: {type: Number,required: true},
     totalAmountOfStudent: {type: Number,required: true, default: 0},
     listOfStudentId: {type: [String]},
+    listOfStudentRequest: {type: [String]},
     description: {type: String,required: true},
     courseFee: {type: Number,required: true},
     createdTime: {type: Date,required: true},

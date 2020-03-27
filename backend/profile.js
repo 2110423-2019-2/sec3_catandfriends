@@ -58,4 +58,39 @@ router.get("/", async (req, res, next) => {
   }
   return res.status(200).send(profile);
 });
+router.put("/", async (req, res) => {
+  const userId = req.user._id;
+  profile = await userModel.findById(userId);
+  console.log(profile);
+  const payload = req.body;
+  if(payload.role != undefined){
+    res.status(400).json("you can't change your role");
+    return ;
+  }
+  if(payload.ssn != undefined){
+    res.status(400).json("you can't chage your ssn");
+    return ;
+  }
+  if(payload.email != undefined){
+    res.status(400).json("you can't chage your email");
+    return ;
+  }
+  if(payload.password != undefined){
+    res.status(400).json("you can't chage your password");
+    return ;
+  }
+  if(payload.birthDate != undefined){
+    res.status(400).json("you can't chage your birthDate");
+    return ;
+  }
+  if(payload.verified != undefined){
+    res.status(400).json("you can't chage your verification");
+    return ;
+  }
+  await userModel.updateOne({ _id: userId }, { $set: payload });
+  console.log("after update");
+  console.log(profile);
+  res.status(201).json("update complete");
+
+});
 module.exports = router;
