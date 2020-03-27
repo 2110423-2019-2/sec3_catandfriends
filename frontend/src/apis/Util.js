@@ -232,13 +232,7 @@ const Util = {
     if (response.status == 400) return { error: true };
     if (response.status == 201) return response.json();
   },
-  editProfile:  async (
-    firstName,
-    lastName,
-    gender,
-    phoneNumber,
-    token
-  ) => {
+  editProfile: async (firstName, lastName, gender, phoneNumber, token) => {
     const URL = `http://localhost:8000/profile?token=${token}`;
     const response = await fetch(URL, {
       method: "PUT",
@@ -257,6 +251,19 @@ const Util = {
     console.log(response.status);
     if (response.status == 400) return { error: true };
     if (response.status == 201) return response.json();
+  },
+  getVeriDoc: async tutorId => {
+    const URL = `http://localhost:8000/file/verifyFile?token=${localStorage.getItem(
+      "token"
+    )}&tutorId=${tutorId}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors",
+      responseType: "blob"
+    });
+    console.log(response);
+    if (response.status == 404) return { error: true };
+    if (response.status == 200) return response;
   }
 };
 
