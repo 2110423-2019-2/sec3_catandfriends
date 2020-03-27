@@ -360,18 +360,20 @@ export default class SearchResult extends Component {
             align="center"
             style={{ maxWidth: "1200px" }}
           >
-            <h2
-              style={{
-                margin: "15px",
-                display: "block",
-                textAlign: "center",
-                color: "black",
-                backgroundColor: "rgba(255,255,255,0.3)",
-                borderRadius: "12px"
-              }}
-            >
-              Search Result
-            </h2>
+            <div className="row justify-content-center">
+              <h2
+                style={{
+                  marginTop: "20px",
+                  padding: "5px 15px",
+                  textAlign: "center",
+                  color: "black",
+                  backgroundColor: "rgba(255,255,255,0.3)",
+                  borderRadius: "12px"
+                }}
+              >
+                Search Result
+              </h2>
+            </div>
             <CourseCardLayout data={this.state.data} />
           </div>
         </div>
