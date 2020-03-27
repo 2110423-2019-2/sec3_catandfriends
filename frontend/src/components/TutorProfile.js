@@ -230,26 +230,33 @@ export class TutorProfile extends Component {
     );
   }
   async componentDidMount() {
-    var xhr = new XMLHttpRequest();
-    var myurl = "";
-    xhr.open(
-      "GET",
-      `http://localhost:8000/file/images/user?token=${localStorage.getItem(
-        "token"
-      )}&userId=${this.props.data._id}`,
-      true
-    );
-    xhr.responseType = "arraybuffer";
-    xhr.onload = await function(e, imageUrl) {
-      var arrayBufferView = new Uint8Array(this.response);
-      var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
-      var urlCreator = window.URL || window.webkitURL;
-      var imageUrl = urlCreator.createObjectURL(blob);
+    if (this.props.data.profileImage) {
+      var xhr = new XMLHttpRequest();
+      var myurl = "";
+      xhr.open(
+        "GET",
+        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
+          "token"
+        )}&userId=${this.props.data._id}`,
+        true
+      );
+      xhr.responseType = "arraybuffer";
+      xhr.onload = function(e, imageUrl) {
+        var arrayBufferView = new Uint8Array(this.response);
+        var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(blob);
+        var img = document.querySelector("#photo");
+        if (img) {
+          img.src = imageUrl;
+          alert(imageUrl);
+        }
+      };
+      xhr.send();
+    } else {
       var img = document.querySelector("#photo");
-      img.src = imageUrl;
-    };
-    xhr.send();
-    console.log(this.state);
+      img.src = "https://i.ibb.co/8NHMg4K/pic.png";
+    }
   }
 }
 
