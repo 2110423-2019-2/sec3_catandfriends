@@ -71,6 +71,22 @@ router.put("/", async (req, res) => {
     res.status(400).json("you can't chage your ssn");
     return ;
   }
+  if(payload.email != undefined){
+    res.status(400).json("you can't chage your email");
+    return ;
+  }
+  if(payload.password != undefined){
+    res.status(400).json("you can't chage your password");
+    return ;
+  }
+  if(payload.birthDate != undefined){
+    res.status(400).json("you can't chage your birthDate");
+    return ;
+  }
+  if(payload.verified != undefined){
+    res.status(400).json("you can't chage your verification");
+    return ;
+  }
   await userModel.updateOne({ _id: userId }, { $set: payload });
   console.log("after update");
   console.log(profile);

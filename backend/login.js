@@ -9,8 +9,7 @@ router.post("/", async (req, res, next) => {
     try {
       if (err || !user) {
         console.log(err);
-        const error = new Error("An Error occurred");
-        return next(error);
+        return res.status(500).json(err);
       }
       req.login(user, { session: false }, async error => {
         if (error) return next(error);

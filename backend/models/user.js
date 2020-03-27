@@ -27,7 +27,7 @@ const userSchema = new Schema(
       required: true,
       unique: true
     },
-    birthdate: {
+    birthDate: {
       type: Date,
       required: true
     },
@@ -42,6 +42,11 @@ const userSchema = new Schema(
     role: {
       type: String,
       required: true
+    },
+    verified: {
+      type: Boolean,
+      required: true,
+      default: false
     }
   },
   { collection: collectionName, versionKey: false }
