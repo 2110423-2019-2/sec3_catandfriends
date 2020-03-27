@@ -33,7 +33,7 @@ export default class EditTutorProfile extends Component {
       this.state.firstName,
       this.state.lastName,
       this.state.gender,
-      this.phoneNumber,
+      this.state.phoneNumber,
       localStorage.getItem("token"),
     );
     console.log(data);
@@ -45,14 +45,31 @@ export default class EditTutorProfile extends Component {
       window.alert("Cannot Edit Profile");     
     }
   }
+
   render() {
     return (
       <div className="editTutorProfileCard">
         <h3 className="editProfileH text-center">Edit Tutor Profile</h3>
         <br />
         <form
-          onSubmit={e => this.handleSubmit(e)}
+          onSubmit={e => {
+            alert(JSON.stringify(this.state));
+            console.log(this.state);
+            e.preventDefault();
+          }}
         >
+          <div class="row">
+            <div className="col-md-8 ">
+              <input
+                id="veridoc"
+                className="form-control-file p-1"
+                type="file"
+                name="file"
+                accept=".pdf"
+                onChange={this.onChangeHandlerFile}
+                />
+              </div>
+          </div>
           <div class="row ">
             <div class="col-md-6">
               <label htmlFor="firstName" className="nameE">
@@ -132,6 +149,12 @@ export default class EditTutorProfile extends Component {
       </div>
     );
   }
+  onChangeHandlerFile = event => {
+    this.setState({
+      selectedFile: event.target.files[0],
+      loadedFile: 0
+    });
+  };
   async componentDidMount() {
     console.log(window.location.search);
     let params = new URLSearchParams(window.location.search);

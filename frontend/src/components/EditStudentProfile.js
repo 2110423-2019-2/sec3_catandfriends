@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./EditStudentProfile.css";
 import Util from "../apis/Util";
 import NormalButton from "./NormalButton";
+import history from "../history";
 export default class EditStudentProfile extends Component {
   constructor(props) {
     super(props);
@@ -10,12 +11,10 @@ export default class EditStudentProfile extends Component {
       firstName: "",
       lastName: "",
       gender: "",
-      password: "",
-      newPassword: "",
       phoneNumber: ""
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(event) {
     const target = event.target;
@@ -24,6 +23,26 @@ export default class EditStudentProfile extends Component {
     this.setState({
       [name]: value
     });
+  }
+
+  async handleSubmit(e) {
+    e.preventDefault();
+    alert(JSON.stringify(this.state));
+    let data = await Util.editProfile(
+      this.state.firstName,
+      this.state.lastName,
+      this.state.gender,
+      this.state.phoneNumber,
+      localStorage.getItem("token"),
+    );
+    console.log(data);
+    if (!data.error) {
+      alert("A profile is edited");
+      console.log(data);
+      history.push("/profile");
+    } else {
+      window.alert("Cannot Edit Profile");     
+    }
   }
 
   render() {
@@ -68,60 +87,20 @@ export default class EditStudentProfile extends Component {
                 />
               </label>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6" width="100%">
-              <label className="nameS">
-                Password
-                <br />
-                <input
-                  type="password"
-                  value={this.state.password}
-                  style={{ width: 250 }}
-                  name="password"
-                  onChange={this.handleChange}
-                />
-              </label>
-            </div>
             <div class="col-md-6">
               <label className="nameS">
-                New Password
+              Gender
                 <br />
-                <input
-                  type="password"
-                  value={this.state.newPassword}
-                  style={{ width: 250 }}
-                  name="newPassword"
-                  onChange={this.handleChange}
-                />
-              </label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6" width="100%">
-              <label className="nameS">
-                Phone Number
-                <br />
-                <input
-                  type="tel"
-                  value={this.state.phoneNumber}
-                  style={{ width: 250 }}
-                  name="phoneNumber"
-                  onChange={this.handleChange}
-                />
-              </label>
-            </div>
-            <div class="col-md-6">
-              <label className="nameS">
-                Gender
-                <br />
-                <input
-                  type="text"
+                <select
+                  id = "gender"
                   value={this.state.Gender}
                   style={{ width: 250 }}
                   name="gender"
                   onChange={this.handleChange}
-                />
+                >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                </select>
               </label>
             </div>
           </div>
@@ -144,8 +123,9 @@ export default class EditStudentProfile extends Component {
     console.log(window.location.search);
     let params = new URLSearchParams(window.location.search);
     let data = await Util.getProfile(params.get("userId"));
-    await this.setState({ data });
+    await this.setState(data);
     await console.log(data);
+    console.log(this.state)
     console.log(localStorage.getItem("token"));
   }
 }
