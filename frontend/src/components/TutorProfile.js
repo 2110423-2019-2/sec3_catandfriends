@@ -249,7 +249,6 @@ export class TutorProfile extends Component {
         var img = document.querySelector("#photo");
         if (img) {
           img.src = imageUrl;
-          alert(imageUrl);
         }
       };
       xhr.send();
