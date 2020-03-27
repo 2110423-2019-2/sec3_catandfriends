@@ -58,19 +58,27 @@ export default class EditTutorProfile extends Component {
             e.preventDefault();
           }}
         >
-          <div class="row">
-            <div className="col-md-8 ">
-              <input
-                id="veridoc"
-                className="form-control-file p-1"
-                type="file"
-                name="file"
-                accept=".pdf"
-                onChange={this.onChangeHandlerFile}
-                />
+            <div className="row">
+                <div className="col-md-12">
+                  <div className="nameV">
+                     {/* image */}
+                  </div>
+                </div>
               </div>
-          </div>
-          <div class="row ">
+              <div className="row" style={{ marginTop: "10px" }}>
+                <div className="col-md-12">
+                  <input
+                    id="veridoc"
+                    className="form-control-file"
+                    type="file"
+                    name="file"
+                    accept=".jpeg,.gif,.png"
+                    onChange={this.onChangeHandlerSlip}
+                    style={{textAlign:"center"}}
+                  />
+                </div>
+                </div>
+          <div class="row" style={{marginTop:"10px"}}>
             <div class="col-md-6">
               <label htmlFor="firstName" className="nameE">
                 First Name
@@ -149,10 +157,10 @@ export default class EditTutorProfile extends Component {
       </div>
     );
   }
-  onChangeHandlerFile = event => {
+  onChangeHandlerSlip = event => {
     this.setState({
-      selectedFile: event.target.files[0],
-      loadedFile: 0
+      selectedSlip: event.target.files[0],
+      loadedSilp: 0
     });
   };
   async componentDidMount() {
