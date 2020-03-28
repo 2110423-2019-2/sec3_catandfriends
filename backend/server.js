@@ -47,7 +47,10 @@ app.use(
   passport.authenticate("jwt-profile", { session: false }),
   profileRoute
 );
-app.use("/schedule", scheduleRoute);
+app.use("/schedule",
+  passport.authenticate("jwt-profile", { session: false }),
+  scheduleRoute
+);
 app.use("/search", searchRoute);
 app.use(
   "/file",

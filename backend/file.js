@@ -139,6 +139,10 @@ const upload = multer({ storage });
 router.get('/verifyFile', async (req, res) => {
   const tutorId = req.query.tutorId;
   const userId = req.user._id;
+  if (!tutorId) {
+    res.status(400).json({ err: 'bad request' });
+    return;
+  }
 
   let owner = tutorId == userId ? true : false;
   let admin = await UserModel.countDocuments({
@@ -170,6 +174,10 @@ router.get('/verifyFile', async (req, res) => {
 router.get('/paymentFile/verify', async (req, res) => {
   const tutorId = req.query.tutorId;
   const userId = req.user._id;
+  if (!tutorId) {
+    res.status(400).json({ err: 'bad request' });
+    return;
+  }
 
   let owner = tutorId == userId ? true : false;
   let admin = await UserModel.countDocuments({
@@ -201,6 +209,10 @@ router.get('/paymentFile/verify', async (req, res) => {
 router.get('/paymentFile/premium', async (req, res) => {
   const tutorId = req.query.tutorId;
   const userId = req.user._id;
+  if (!tutorId) {
+    res.status(400).json({ err: 'bad request' });
+    return;
+  }
 
   let owner = tutorId == userId ? true : false;
   let admin = await UserModel.countDocuments({
@@ -231,6 +243,10 @@ router.get('/paymentFile/premium', async (req, res) => {
 
 router.get('/images/user', async (req, res) => {
   const userId = req.query.userId;
+  if (!userId) {
+    res.status(400).json({ err: 'bad request' });
+    return;
+  }
 
   let userInfo = await UserModel.findOne({
     _id: userId,
