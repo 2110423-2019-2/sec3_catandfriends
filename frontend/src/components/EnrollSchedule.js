@@ -5,7 +5,8 @@ export default class EnrollSchedule extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      courses: []
+      schedule: [],
+      ready: false
     };
   }
 
@@ -18,7 +19,7 @@ export default class EnrollSchedule extends Component {
     // item.poster_src = "https://image.tmdb.org/t/p/w185"+ item.poster_path
     // dataArray.push(item)
     //this.setState({rows: dataArray})
-    if (this.state.courses) {
+    if (this.state.ready) {
       return (
         <div className="row justify-content-center">
           <div className="card" style={{ width: "1200px" }}>
@@ -49,7 +50,7 @@ export default class EnrollSchedule extends Component {
                   <body style={{ textAlign: "center" }}>Class Day</body>
                 </div>
               </div>
-              {this.state.courses.map(item => (
+              {this.state.schedule.map(item => (
                 <RowInformation detail={item} />
               ))}
             </div>
@@ -57,21 +58,25 @@ export default class EnrollSchedule extends Component {
         </div>
       );
     } else {
-      return <div>Loading...</div>;
+      return (
+        <div className="row justify-content-center">
+          <div className="card" style={{ width: "1200px" }}>
+            <div className="row justify-content-center">
+              <div>Loading...</div>
+            </div>
+          </div></div>
+
+      )
     }
   }
 
   async componentDidMount() {
-    let courses = [];
     let schedule = await Util.getSchedule(this.props.userId);
     console.log(schedule);
-    schedule.listOfCourse.forEach(courseId => {
-      let course = Util.getCourseById(courseId);
-      courses.push(course);
+    this.setState({
+      schedule: schedule,
+      ready: true
     });
-    courses = await Promise.all(courses);
-    console.log(courses);
-    this.setState({ courses });
   }
 }
 class RowInformation extends Component {
