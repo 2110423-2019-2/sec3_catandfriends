@@ -26,6 +26,7 @@ router.get("/", async (req, res) => {
     const requestInfo = await RequestModel.findOne({ tutorId: courseInfo.tutorId, studentId: studentId, courseId: courseInfo._id });
     // console.log(requestInfo);
 
+    listOfCourse[i].courseName = courseInfo.courseName;
     listOfCourse[i].tutorName = userInfo.firstName + " " + userInfo.lastName;
     listOfCourse[i].enrollDate = requestInfo ? format.formatDate(requestInfo.lastModified) : null;
     listOfCourse[i].duration = format.formatDuration(courseInfo);
