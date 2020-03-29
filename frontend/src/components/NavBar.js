@@ -124,15 +124,10 @@ export class NavBar extends Component {
     );
   }
   onClickNavBar = page => {
-    if (page == "/register" || page == "/login") {
-      history.push(page);
-    } else if (page == "/logout") {
+    if (page == "/logout") {
       localStorage.clear();
       history.push("/home");
       window.location.reload();
-    } else if (!localStorage.getItem("token")) {
-      window.alert("Please login first!");
-      return history.push("./login");
     } else {
       history.push(page);
     }

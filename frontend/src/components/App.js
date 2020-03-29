@@ -45,6 +45,13 @@ class App extends Component {
       return LogInAlready;
     }
   }
+  homePage() {
+    if(!localStorage.getItem("token")) {
+      return Home;
+    } else {
+      return SearchResult;
+    }
+  }
   render() {
     return (
       <Router history={history}>
@@ -72,7 +79,7 @@ class App extends Component {
             <Route path="/course/create" component={this.getPage(NewCourse)} />
             <Route path="/course" component={this.getPage(CourseInformation)} />
             <Route path="/mycourse" component={this.getPage(MyCourse)} />
-            <Route path="/home" component={Home} />
+            <Route path="/home" component={this.homePage()} />
             <Route component={PageNotFound} />
           </Switch>
         </div>
