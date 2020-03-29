@@ -46,7 +46,7 @@ export class CourseDetail extends Component {
         </div>
       );
     } else {
-      studentList = "";
+      studentList = <div></div>;
     }
     return (
       <div className="card mb-3" style={{ maxWidth: "1000px" }}>

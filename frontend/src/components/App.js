@@ -4,6 +4,7 @@ import "./App.css";
 import SearchResult from "../page/SearchResult";
 import NavBar from "./NavBar";
 import NewCourse from "./NewCourse";
+import Home from "./Home.js";
 import EditCourse from "./EditCourse";
 import CourseInformation from "../page/CourseInformation";
 import Profile from "./Profile";
@@ -15,8 +16,8 @@ import MyCourse from "../page/MyCourse";
 import VerifyPage from "../page/VerifyPage";
 import PremiumPage from "../page/PremiumPage";
 import PageNotFound from "../page/PageNotFound";
+
 // import LogInFirst from "./LogInFirst";
-const Home = () => <div></div>;
 const About = () => <h1>About</h1>;
 const LogInFirst = () => {
   alert("Please Log in first");
@@ -42,6 +43,13 @@ class App extends Component {
       return page;
     } else {
       return LogInAlready;
+    }
+  }
+  homePage() {
+    if(!localStorage.getItem("token")) {
+      return Home;
+    } else {
+      return SearchResult;
     }
   }
   render() {
@@ -71,7 +79,7 @@ class App extends Component {
             <Route path="/course/create" component={this.getPage(NewCourse)} />
             <Route path="/course" component={this.getPage(CourseInformation)} />
             <Route path="/mycourse" component={this.getPage(MyCourse)} />
-            <Route path="/home" component={Home} />
+            <Route path="/home" component={this.homePage()} />
             <Route component={PageNotFound} />
           </Switch>
         </div>
