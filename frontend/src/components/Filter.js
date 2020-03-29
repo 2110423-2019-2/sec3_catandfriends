@@ -193,7 +193,6 @@ function PriceGroup(props) {
       className="row"
       align="left"
       style={{
-        marginBottom: "15px",
         padding: "10px",
         backgroundColor: "white",
         borderRadius: "12px"
@@ -363,7 +362,7 @@ class Filter extends React.Component {
     let d = this.getPrice();
     // await this.setState({ dayStr: a, subStr: b, timeStr: c, priceStr: d });
     console.log(a, b, c, d);
-    alert(a + b + c + d);
+    // alert(a + b + c + d);
     // console.log(JSON.stringify(this.state));
     let data = await Util.getSearchResult(a, b, c, d);
     // this.setState({ data });
@@ -385,16 +384,21 @@ class Filter extends React.Component {
           margin: "25px",
           marginTop: "40px",
           borderRadius: "12px",
-          backgroundColor: "rgba(255,255,255,0.5) ",
-          border: "none"
+          backgroundColor: "rgba(255,255,255,0.3) ",
+          border: "none",
+          height: "auto",
+          position: "sticky",
+          top: "40px"
         }}
       >
-        <div
-          style={{
-            padding: "10px 25px"
-          }}
-        >
-          <form onSubmit={this.handleSubmit} style={{ textAlign: "center" }}>
+        <form onSubmit={this.handleSubmit} style={{ textAlign: "center" }}>
+          <div
+            style={{
+              padding: "10px 25px",
+              height: "520px",
+              overflow: "scroll"
+            }}
+          >
             <DayGroup state={this.state.day} handler={this.handleDayChange} />
             <SubjectGroup
               state={this.state.subject}
@@ -408,15 +412,13 @@ class Filter extends React.Component {
               state={this.state.price}
               handler={this.handlePriceChange}
             />
-            <NormalButton
-              type="submit"
-              value="submit"
-              color="rgb(19, 204, 169)"
-            >
-              Submit
-            </NormalButton>
-          </form>
-        </div>
+          </div>
+          <div style={{ margin: "10px" }}>
+            <button type="submit" value="submit" class="btn btn-success">
+              Search
+            </button>
+          </div>
+        </form>
       </div>
     );
   }
