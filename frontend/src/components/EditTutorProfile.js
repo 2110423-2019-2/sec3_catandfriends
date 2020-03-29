@@ -22,6 +22,7 @@ export default class EditTutorProfile extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateThisImage = this.updateThisImage.bind(this);
+    this.handleImageCropClose = this.handleImageCropClose.bind(this);
   }
 
   handleChange(event) {
@@ -56,13 +57,12 @@ export default class EditTutorProfile extends Component {
 
   updateThisImage(imgCrop) {
     this.setState({ imgCrop: imgCrop })
-    this.handleClose();
+    this.handleImageCropClose();
     console.log(imgCrop);
-
   }
 
-  handleClose = () => this.setState({ showEditImage: false });
-  handleShow = () => this.setState({ showEditImage: true });
+  handleImageCropClose = () => this.setState({ showEditImage: false });
+  handleImageCropShow = () => this.setState({ showEditImage: true });
 
   render() {
     return (
@@ -70,13 +70,11 @@ export default class EditTutorProfile extends Component {
         <h3 className="editProfileH text-center">Edit Tutor Profile</h3>
         <div className="row" style={{ marginTop: "10px" }}>
           <div className="col-md-12">
-            <div>
-              <div className="row justify-content-center">
-                Croped picture
+            <div className="row justify-content-center">
+              Croped picture
               </div>
-              <div className="row justify-content-center" style={{ marginTop: "10px" }}>
-                <img src={this.state.imgCrop}></img>
-              </div>
+            <div className="row justify-content-center" style={{ marginTop: "10px" }}>
+              <img src={this.state.imgCrop}></img>
             </div>
             {/* <input
                 id="veridoc"
@@ -87,17 +85,19 @@ export default class EditTutorProfile extends Component {
                 onChange={this.onChangeHandlerSlip}
                 style={{ textAlign: "center" }}
               /> */}
-            <NormalButton color="rgb(76, 182, 181)" onClick={this.handleShow}>
+            <NormalButton color="rgb(76, 182, 181)" onClick={this.handleImageCropShow}>
               Edit your picture
-            </NormalButton>
+              </NormalButton>
 
-            <Modal show={this.state.showEditImage} onHide={this.handleClose}>
-              <Modal.Body>
-                <div>
-                  <ImgDropAndCrop triggerParentUpdate={this.updateThisImage} />
-                </div>
-              </Modal.Body>
-            </Modal>
+            <div className="row justify-content-center" >
+              <Modal show={this.state.showEditImage} onHide={this.handleImageCropClose} size="lg" style={{ overflow: "hidden" }}>
+                <Modal.Body style={{ overflow: "auto" }}>
+                  <div>
+                    <ImgDropAndCrop updateThisImage={this.updateThisImage} handleImageCropClose={this.handleImageCropClose} />
+                  </div>
+                </Modal.Body>
+              </Modal>
+            </div>
           </div>
         </div>
         <form
