@@ -88,7 +88,7 @@ export class TutorProfile extends Component {
             </div>
             <div className="row">
               <div className="col-md-4 " align="center">
-                <img className="picPro " id="photo" />
+                <img className="picPro " id="photo2" />
               </div>
               <div className="col-md-8 ">
                 <div className="nameM">
@@ -246,14 +246,14 @@ export class TutorProfile extends Component {
         var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
         var urlCreator = window.URL || window.webkitURL;
         var imageUrl = urlCreator.createObjectURL(blob);
-        var img = document.querySelector("#photo");
+        var img = document.querySelector("#photo2");
         if (img) {
           img.src = imageUrl;
         }
       };
       xhr.send();
     } else {
-      var img = document.querySelector("#photo");
+      var img = document.querySelector("#photo2");
       img.src = "https://i.ibb.co/8NHMg4K/pic.png";
     }
   }
