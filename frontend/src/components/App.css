@@ -13,13 +13,14 @@
 }
 .TS {
   min-width: 100%;
-  min-height: 676px;
+  /* min-height: 676px; */
   padding: 0;
   margin: 0;
   width: 100%;
   height: 100vh;
   overflow-x: hidden;
   overflow-y: scroll;
+  overflow-x: hidden;
   background-image: linear-gradient(100deg, #324d91, #9cab9a);
   background-size: 100% 100%;
 }
