@@ -84,7 +84,8 @@ export class NavBar extends Component {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    {"㋛  " + this.state.fullName}
+                    <img id="photo" className="avatar" />
+                    <span>{"\xa0" + this.state.fullName}</span>
                     <span className="sr-only">(current)</span>
                   </AccountButton>
                 ) : (
@@ -147,6 +148,34 @@ export class NavBar extends Component {
         role: data.role
       });
       console.log(this.state);
+    }
+    if (!this.state.data || !this.state.data.profileImage) {
+      var img = document.querySelector("#photo");
+      if (img) {
+        img.src = "https://i.ibb.co/8NHMg4K/pic.png";
+      }
+    } else {
+      var xhr = new XMLHttpRequest();
+      var myurl = "";
+      xhr.open(
+        "GET",
+        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
+          "token"
+        )}&userId=${this.state.data._id}`,
+        true
+      );
+      xhr.responseType = "arraybuffer";
+      xhr.onload = function(e, imageUrl) {
+        var arrayBufferView = new Uint8Array(this.response);
+        var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(blob);
+        var img = document.querySelector("#photo");
+        if (img) {
+          img.src = imageUrl;
+        }
+      };
+      xhr.send();
     }
   }
   // componentWillReceiveProps(nextProps) {
