@@ -9,19 +9,19 @@ const format = require("./commonFunc/format");
 
 router.get("/", async (req, res) => {
     let category =
-        req.query.category == undefined || req.query.category == "0000"
+        req.query.category === undefined || req.query.category == "0000"
             ? "1111"
             : req.query.category;
     let price =
-        req.query.price == undefined || req.query.price == "00000"
+        req.query.price === undefined || req.query.price == "00000"
             ? "11111"
             : req.query.price;
     let day =
-        req.query.day == undefined || req.query.day == "0000000"
+        req.query.day === undefined || req.query.day == "0000000"
             ? "1111111"
             : req.query.day;
     let time =
-        req.query.time == undefined || req.query.time == "00000000"
+        req.query.time === undefined || req.query.time == "00000000"
             ? "11111111"
             : req.query.time;
 
