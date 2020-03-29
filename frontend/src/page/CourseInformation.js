@@ -16,7 +16,7 @@ export default class CourseInformation extends Component {
             <h2
               style={{
                 padding: "5px 15px",
-                margin: "20px",
+                margin: "30px",
                 textAlign: "center",
                 color: "black",
                 backgroundColor: "rgba(255,255,255,0.3)",
