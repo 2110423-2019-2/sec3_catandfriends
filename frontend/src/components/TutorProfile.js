@@ -210,7 +210,7 @@ export class TutorProfile extends Component {
             >
               <div className="col-md-12">
                 <NormalButton
-                  color="rgba(107, 63, 233, 0.8)"
+                  color="rgba(127, 83, 253, 0.8)"
                   onClick={() => {
                     history.push(`/profile/edit`);
                   }}
