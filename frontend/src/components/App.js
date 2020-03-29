@@ -4,6 +4,7 @@ import "./App.css";
 import SearchResult from "../page/SearchResult";
 import NavBar from "./NavBar";
 import NewCourse from "./NewCourse";
+import Home from "./Home.js";
 import EditCourse from "./EditCourse";
 import CourseInformation from "../page/CourseInformation";
 import Profile from "./Profile";
@@ -15,8 +16,8 @@ import MyCourse from "../page/MyCourse";
 import VerifyPage from "../page/VerifyPage";
 import PremiumPage from "../page/PremiumPage";
 import PageNotFound from "../page/PageNotFound";
+
 // import LogInFirst from "./LogInFirst";
-const Home = () => <div></div>;
 const About = () => <h1>About</h1>;
 const LogInFirst = () => {
   alert("Please Log in first");

@@ -11,7 +11,7 @@ class CourseCardLayout extends React.Component {
   render() {
     return (
       <div className="container-fluid">
-        <div className="row cardblock ">
+        <div className="row cardblock justify-content-center">
           {this.state.data.map(item => (
             <CourseCard detail={item} key={item._id.toString()} />
           ))}

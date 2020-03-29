@@ -28,10 +28,7 @@ export class NavBar extends Component {
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-custom">
-        <a
-          className="navbar-brand"
-          onClick={() => this.onClickNavBar("/register")}
-        >
+        <a className="navbar-brand" onClick={() => this.onClickNavBar("/home")}>
           <img
             src={this.state.logoDark}
             style={{ marginRight: "10px" }}
@@ -56,11 +53,15 @@ export class NavBar extends Component {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <NavButton onClick={() => this.onClickNavBar("/register")}>
-                Home <span class="sr-only">(current)</span>
-              </NavButton>
-            </li>
+            {!localStorage.getItem("token") ? (
+              <li className="nav-item">
+                <NavButton onClick={() => this.onClickNavBar("/register")}>
+                  Register <span class="sr-only">(current)</span>
+                </NavButton>
+              </li>
+            ) : (
+              <div></div>
+            )}
             {localStorage.getItem("token") ? (
               <li className="nav-item">
                 <NavButton onClick={() => this.onClickNavBar("/search")}>
@@ -74,18 +75,21 @@ export class NavBar extends Component {
           <ul className="navbar-nav ml-auto">
             {localStorage.getItem("token") ? (
               <li className="nav-item dropdown">
-                <AccountButton
-                  className="dropdown-toggle "
-                  href="#"
-                  id="navbarDropdownMenuLink"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  {"㋛  " + this.state.fullName}
-                  <span className="sr-only">(current)</span>
-                </AccountButton>
-
+                {this.state.fullName ? (
+                  <AccountButton
+                    className="dropdown-toggle "
+                    href="#"
+                    id="navbarDropdownMenuLink"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    {"㋛  " + this.state.fullName}
+                    <span className="sr-only">(current)</span>
+                  </AccountButton>
+                ) : (
+                  <div></div>
+                )}
                 <div
                   class="dropdown-menu bgDD"
                   aria-labelledby="navbarDropdownMenuLink"
@@ -96,7 +100,7 @@ export class NavBar extends Component {
                   <a class="dropdown-item" href="/mycourse">
                     {this.state.role == "tutor"
                       ? "My Course & Request"
-                      : "My Coourse & Schedule"}
+                      : "My Course & Schedule"}
                     <span className="sr-only">(current)</span>
                   </a>
                   <a
