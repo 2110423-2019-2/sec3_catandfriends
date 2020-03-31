@@ -128,7 +128,6 @@ const storage = new GridFsStorage({
             console.log("No route");
             return reject(err);
         }
-
         resolve(fileInfo);
       });
     });
