@@ -4,7 +4,6 @@ import "./Home.css";
 import Util from "../apis/Util";
 import history from "../history";
 export class Home extends Component {
-
   constructor(props) {
     super(props);
 
@@ -43,13 +42,32 @@ export class Home extends Component {
         <div class="container">
           <div className="row">
             <div className="col-md-6 justify-content-center" align="center">
-              <img src="https://s3-ap-southeast-1.amazonaws.com/img-in-th/5faf044d419d7af0c6a2035716ca76d5.png" style={{maxWidth: "300px", marginTop: "100px"}} />
-              <div className="textshadow" style={{}}>"Nothing extraneous, everything intentional"</div>
-              <div className="textshadow" style={{fontSize: "24px", fontWeight: "700"}}>JOIN US NOW !</div>
+              <img
+                src="https://s3-ap-southeast-1.amazonaws.com/img-in-th/5faf044d419d7af0c6a2035716ca76d5.png"
+                style={{ maxWidth: "300px", marginTop: "50px" }}
+              />
+              <div className="textshadow" style={{}}>
+                "Nothing extraneous, everything intentional"
+              </div>
+              <div
+                className="textshadow"
+                style={{ fontSize: "24px", fontWeight: "700" }}
+              >
+                JOIN US NOW !
+              </div>
             </div>
             <div className="col-md-6 justify-content-center" align="center">
-              <div className="homebox" style={{ marginTop: "100px" }}>
-                <div className="textshadow" style={{fontSize: "24px", fontWeight: "700"}}><br />Create an account</div>
+              <div
+                className="homebox"
+                style={{ marginTop: "50px", marginBottom: "50px" }}
+              >
+                <div
+                  className="textshadow"
+                  style={{ fontSize: "24px", fontWeight: "700" }}
+                >
+                  <br />
+                  Create an account
+                </div>
                 <br />
                 <form
                   onSubmit={event => this.onclickGoToLogin(event)}
@@ -92,7 +110,13 @@ export class Home extends Component {
                     />
                   </div>
                   <div className="row">
-                    <select id="user" name="Utype" onChange={this.handleChange} className="inbox" style={{ width: "100%", marginBottom: "15px" }}>
+                    <select
+                      id="user"
+                      name="Utype"
+                      onChange={this.handleChange}
+                      className="inbox"
+                      style={{ width: "100%", marginBottom: "15px" }}
+                    >
                       <option disabled>User Type</option>
                       <option value="tutor">Tutor</option>
                       <option value="student">Student</option>
@@ -113,7 +137,13 @@ export class Home extends Component {
                     />
                   </div>
                   <div className="row">
-                    <select id="gender" name="gender" onChange={this.handleChange} className="inbox" style={{ width: "100%", marginBottom: "15px" }}>
+                    <select
+                      id="gender"
+                      name="gender"
+                      onChange={this.handleChange}
+                      className="inbox"
+                      style={{ width: "100%", marginBottom: "15px" }}
+                    >
                       <option disabled>Gender</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -158,15 +188,22 @@ export class Home extends Component {
                     />
                   </div>
                   <br />
-                  <div className="text-center" style={{ margin: "auto", marginBottom: "20px" }}>
-                    <NormalButton color="none" className="btn btn-success" type="submit" borderColor="#00AA00">Register Now</NormalButton>
+                  <div
+                    className="text-center"
+                    style={{ margin: "auto", marginBottom: "5px" }}
+                  >
+                    <NormalButton
+                      color="none"
+                      className="btn btn-success"
+                      type="submit"
+                      borderColor="#00AA00"
+                    >
+                      Register Now
+                    </NormalButton>
                   </div>
                   <br />
                 </form>
-
-
               </div>
-
             </div>
           </div>
         </div>
@@ -195,7 +232,6 @@ export class Home extends Component {
       history.push(`/login`);
     }
   }
-
 }
 
 export default Home;
