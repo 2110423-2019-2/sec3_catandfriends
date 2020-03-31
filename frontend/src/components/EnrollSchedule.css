@@ -18,10 +18,11 @@
   background-color: rgb(245, 245, 245);
   border-radius: 12px;
   padding: 10px;
+
   /* padding-left: 10px; */
 }
 .nameR {
-  background-color: rgb(143, 188, 228);
+  background-color: rgb(245, 245, 245);
   font-family: Roboto;
   font-style: normal;
   font-weight: 600;
@@ -30,7 +31,7 @@
   color: #000000;
   text-align: center;
   width: auto;
-  border-left: 1px solid black;
+  border: 1px solid rgb(255, 255, 255);
   padding: 10px;
   /* padding-left: 10px;
   padding-right: 10px; */
