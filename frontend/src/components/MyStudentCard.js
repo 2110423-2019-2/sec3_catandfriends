@@ -17,7 +17,8 @@ export default class MyStudentCard extends Component {
       password: "password",
       phoneNumber: "0123456789",
       scheduleId: "0987654321",
-      imgsrc: "https://i.ibb.co/8NHMg4K/pic.png",
+      imgsrc:
+        "https://www.img.in.th/images/3f2b15dc36aa6aa06ce42f1c1ed84a22.jpg",
       faceurl: "/kkk",
       bio:
         "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."
@@ -26,6 +27,93 @@ export default class MyStudentCard extends Component {
 
   render() {
     return (
+      <div className="bigCard border">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="row">
+              <div className="col-md-12  infoC">
+                <div className="headerB">My Profile</div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-4 " align="center">
+                <img className="picPro " src={this.state.imgsrc} />
+              </div>
+              <div className="col-md-8 ">
+                <div className="nameM">
+                  <span id="nameK">
+                    {this.props.data.firstName +
+                      "\xa0\xa0\xa0\xa0" +
+                      this.props.data.lastName}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12  infoC" style={{ marginBottom: "5px" }}>
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="nameB">SSN:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">{this.props.data.ssn}</div>
+                  </div>
+                </div>
+                <div className="row ">
+                  <div className="col-md-4">
+                    <div className="nameB">Birth Date:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">
+                      {this.props.data.birthDate.substring(0, 10)}
+                    </div>
+                  </div>
+                </div>
+                <div className="row ">
+                  <div className="col-md-4">
+                    <div className="nameB">Gender:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">{this.props.data.gender}</div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="nameB">Email:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">{this.props.data.email}</div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="nameB">Phone Number:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">{this.props.data.phoneNumber}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div className="mystyle">
+          <NormalButton
+            color="rgba(107, 63, 233, 0.8)"
+            onClick={() => {
+              history.push(
+                `/profile/edit?token=${localStorage.getItem("token")}`
+              );
+            }}
+          >
+            Edit Profile
+          </NormalButton>
+        </div>
+        <br />
+      </div>
+
+      /*
       <div className="card mb-3" style={{ maxWidth: "1000px" }}>
         <div className="row no-gutters">
           <div className="col-md-4">
@@ -94,7 +182,7 @@ export default class MyStudentCard extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </div>*/
     );
   }
 }
