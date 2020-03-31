@@ -15,6 +15,7 @@ import MyCourse from "../page/MyCourse";
 import VerifyPage from "../page/VerifyPage";
 import PremiumPage from "../page/PremiumPage";
 import PageNotFound from "../page/PageNotFound";
+import Chatbox from "./Chatbox";
 // import LogInFirst from "./LogInFirst";
 const Home = () => <div></div>;
 const About = () => <h1>About</h1>;
@@ -54,6 +55,7 @@ class App extends Component {
               path="/register"
               component={this.alreadylogin(RegisterPage)}
             />
+            <Route path="/chat" component={Chatbox} />
             <Route path="/login" component={this.alreadylogin(Login)} />
             {/* if already login?? */}
             <Route path="/search" component={this.getPage(SearchResult)} />

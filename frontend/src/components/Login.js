@@ -88,7 +88,7 @@ export class Login extends Component {
       this.setState({ password: "" });
     } else {
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", data.user);
+      localStorage.setItem("user", JSON.stringify(data.user));
       console.log(data);
       history.push("/profile");
       window.location.reload();

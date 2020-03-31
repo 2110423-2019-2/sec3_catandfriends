@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import history from "../history";
 import "./StudentCTuProfile.css";
 export class StudentCTuProfile extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ export class StudentCTuProfile extends Component {
               style={{ maxWidth: "300px" }}
               alt="..."
             />
+            <button onClick={this.onClickChat}>Chat now</button>
           </div>
           <div className="col-md-8">
             <div className="card-body">
@@ -93,6 +95,9 @@ export class StudentCTuProfile extends Component {
       </div>
     );
   }
+  onClickChat = () => {
+    history.push(`/chat?userId=${this.props.data._id}`);
+  };
 }
 
 export default StudentCTuProfile;
