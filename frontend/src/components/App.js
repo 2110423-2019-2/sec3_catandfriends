@@ -46,7 +46,7 @@ class App extends Component {
     }
   }
   homePage() {
-    if(!localStorage.getItem("token")) {
+    if (!localStorage.getItem("token")) {
       return Home;
     } else {
       return SearchResult;
@@ -58,13 +58,12 @@ class App extends Component {
         <NavBar />
         <div className="TS">
           <Switch>
-            <Route
+            {/* <Route
               path="/register"
               component={this.alreadylogin(RegisterPage)}
-            />
+            /> */}
             <Route path="/login" component={this.alreadylogin(Login)} />
-            {/* if already login?? */}
-            <Route path="/search" component={this.getPage(SearchResult)} />
+            {/* <Route path="/search" component={this.getPage(SearchResult)} /> */}
             <Route path="/profile/edit" component={this.getPage(EditProfile)} />
             <Route
               path="/profile/verify"

@@ -53,7 +53,7 @@ export class NavBar extends Component {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav mr-auto">
-            {!localStorage.getItem("token") ? (
+            {/* {!localStorage.getItem("token") ? (
               <li className="nav-item">
                 <NavButton onClick={() => this.onClickNavBar("/register")}>
                   Register <span class="sr-only">(current)</span>
@@ -61,8 +61,7 @@ export class NavBar extends Component {
               </li>
             ) : (
               <div></div>
-            )}
-            {localStorage.getItem("token") ? (
+            )}  {localStorage.getItem("token") ? (
               <li className="nav-item">
                 <NavButton onClick={() => this.onClickNavBar("/search")}>
                   Search
@@ -70,7 +69,7 @@ export class NavBar extends Component {
               </li>
             ) : (
               <div></div>
-            )}
+            )} */}
           </ul>
           <ul className="navbar-nav ml-auto">
             {localStorage.getItem("token") ? (
