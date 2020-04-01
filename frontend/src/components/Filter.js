@@ -380,7 +380,7 @@ class Filter extends React.Component {
       <div
         className="card"
         style={{
-          minWidth: "220px",
+          minWidth: "230px",
           width: "auto",
           margin: "25px",
           marginTop: "40px",
