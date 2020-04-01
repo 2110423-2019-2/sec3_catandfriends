@@ -59,8 +59,8 @@ const Util = {
     console.log(userId);
     const URL = userId
       ? `http://localhost:8000/profile?userId=${userId}&token=${localStorage.getItem(
-        "token"
-      )}`
+          "token"
+        )}`
       : `http://localhost:8000/profile?token=${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "GET",
@@ -258,12 +258,63 @@ const Util = {
     )}&tutorId=${tutorId}`;
     const response = await fetch(URL, {
       method: "GET",
-      mode: "cors",
-      responseType: "blob"
+      mode: "cors"
     });
     console.log(response);
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response;
+  },
+  getMessage: async roomId => {
+    const URL = `http://localhost:8000/message?roomId=${roomId}&token=${localStorage.getItem(
+      "token"
+    )}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors"
+    });
+    console.log(response);
+    if (response.status == 500) return { error: true };
+    if (response.status == 200) return response.json();
+  },
+  sendMessage: async (message, roomId) => {
+    const URL = `http://localhost:8000/message?token=${localStorage.getItem(
+      "token"
+    )}`;
+    const response = await fetch(URL, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message, roomId })
+    });
+    console.log(response);
+    if (response.status == 500) return { error: true };
+    if (response.status == 201) return response.json();
+  },
+  getChatUserBoxes: async () => {
+    const URL = `http://localhost:8000/message/rooms?token=${localStorage.getItem(
+      "token"
+    )}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors"
+    });
+    console.log(response);
+    if (response.status == 500) return { error: true };
+    if (response.status == 200) return response.json();
+  },
+  getChatUserBox: async userId => {
+    const URL = `http://localhost:8000/message/room?userId=${userId}&token=${localStorage.getItem(
+      "token"
+    )}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors"
+    });
+    console.log(response);
+    if (response.status == 500) return { error: true };
+    if (response.status == 200) return response.json();
   }
 };
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./StudentCard.css";
+import history from "../history";
 export default class StudentCard extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +19,12 @@ export default class StudentCard extends Component {
     };
   }
 
+  onClickChat = () => {
+    history.push(`/chat?userId=${this.props.data._id}`);
+  };
+
   render() {
+    console.log(this.props.data);
     return (
       <div className="bigCard border" style={{ minHeight: "auto" }}>
         <div className="row">
@@ -93,6 +99,7 @@ export default class StudentCard extends Component {
               style={{ maxWidth: "300px" }}
               alt="..."
             />
+            <button onClick={this.onClickChat}>Chat now</button>
           </div>
           <div className="col-md-8">
             <div className="card-body">

@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const loginRoute = require("./login");
@@ -11,6 +11,7 @@ const profileRoute = require("./profile");
 const scheduleRoute = require("./schedule");
 const fileRoute = require("./file");
 const searchRoute = require("./search");
+const messageRoute = require("./message");
 
 const verifyRoute = require("./verify");
 const mongoose = require("mongoose");
@@ -35,11 +36,13 @@ app.use(cors());
 
 app.use("/login", loginRoute);
 app.use("/signup", signupRoute);
-app.use("/courses",
+app.use(
+  "/courses",
   passport.authenticate("jwt-profile", { session: false }),
   courseRoute
 );
-app.use("/requests",
+app.use(
+  "/requests",
   passport.authenticate("jwt-profile", { session: false }),
   requestRoute
 );
@@ -48,7 +51,8 @@ app.use(
   passport.authenticate("jwt-profile", { session: false }),
   profileRoute
 );
-app.use("/schedule",
+app.use(
+  "/schedule",
   passport.authenticate("jwt-profile", { session: false }),
   scheduleRoute
 );
@@ -59,6 +63,11 @@ app.use(
   fileRoute
 );
 app.use("/verify", verifyRoute);
+app.use(
+  "/message",
+  passport.authenticate("jwt-profile", { session: false }),
+  messageRoute
+);
 
 app.listen(8000, () => {
   console.log("Start server at port 8000.");
