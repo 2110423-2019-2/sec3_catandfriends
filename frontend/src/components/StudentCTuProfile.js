@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import history from "../history";
 import "./StudentCTuProfile.css";
+import Util from "../apis/Util";
+import NormalButton from "./NormalButton";
 export class StudentCTuProfile extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +18,23 @@ export class StudentCTuProfile extends Component {
       bio: "my bio"
     };
   }
-
+  chat() {
+    if (!this.state.me || !this.state.me.role) {
+      return <div></div>;
+    } else if (this.state.me.role == "student") {
+      return (
+        <NormalButton
+          onClick={this.onClickChat}
+          color="rgb(0, 255, 0)"
+          textcolor="black"
+        >
+          Chat Now
+        </NormalButton>
+      );
+    } else {
+      return <div></div>;
+    }
+  }
   render() {
     return (
       <div
@@ -36,14 +54,18 @@ export class StudentCTuProfile extends Component {
               </div>
               <div className="col-md-8 ">
                 <div className="row justify-content-center">
-                  <div className="nameM">
-                    <span id="nameK">
-                      {this.props.data.firstName +
-                        "\xa0\xa0\xa0\xa0" +
-                        this.props.data.lastName}
-                    </span>
+                  <div className="col-md-9 ">
+                    <div className="nameM">
+                      <span id="nameK">
+                        {this.props.data.firstName +
+                          "\xa0\xa0\xa0\xa0" +
+                          this.props.data.lastName}
+                      </span>
+                    </div>
                   </div>
-                  <button onClick={this.onClickChat}>Chat now</button>
+                  <div className="col-md-3" style={{ paddingTop: "10px" }}>
+                    {this.chat()}
+                  </div>
                 </div>
                 <div className="row justify-content-center">
                   <div
@@ -100,6 +122,8 @@ export class StudentCTuProfile extends Component {
     );
   }
   async componentDidMount() {
+    let me = await Util.getProfile();
+    await this.setState({ me });
     if (this.props.data.profileImage) {
       var xhr = new XMLHttpRequest();
       var myurl = "";
