@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./EditTutorProfile.css";
+import axios from "axios";
+import FileSaver from "file-saver";
 import Util from "../apis/Util";
 import NormalButton from "./NormalButton";
 import history from "../history";
@@ -8,6 +10,7 @@ export default class EditTutorProfile extends Component {
     super(props);
 
     this.state = {
+      imgsrc:"https://i.ibb.co/8NHMg4K/pic.png",
       firstName: "",
       lastName: "",
       gender: "",
@@ -60,21 +63,20 @@ export default class EditTutorProfile extends Component {
         >
             <div className="row">
                 <div className="col-md-12">
-                  <div className="nameV">
-                     {/* image */}
+                  <div className="nameV" style={{textAlign:"center"}}>
+                     <img src={this.state.imgsrc} className="profilePic" />
                   </div>
                 </div>
               </div>
-              <div className="row" style={{ marginTop: "10px" }}>
-                <div className="col-md-12">
+              <div className="row" style={{ marginTop: "10px",marginLeft: "80px" }}>
+                <div className="col-md-12" style={{textAlign:"center"}}>
                   <input
-                    id="veridoc"
-                    className="form-control-file"
+                    id="uploadProfilePic"
+                    className="uploadProfilePic"
                     type="file"
                     name="file"
                     accept=".jpeg,.gif,.png"
-                    onChange={this.onChangeHandlerSlip}
-                    style={{textAlign:"center"}}
+                    onChange={this.onChangeHandlerPic}
                   />
                 </div>
                 </div>
@@ -157,12 +159,62 @@ export default class EditTutorProfile extends Component {
       </div>
     );
   }
-  onChangeHandlerSlip = event => {
+  onChangeHandlerPic = event => {
     this.setState({
-      selectedSlip: event.target.files[0],
-      loadedSilp: 0
+      selectedPic: event.target.files[0],
+      loadedPic: 0
     });
   };
+  onClickHandlerPic = () => {
+    if (!this.state.selectedPic) {
+      alert("Please select a file");
+      return;
+    }
+    if (!this.isImagefile(this.state.selectedPic)) {
+      alert(
+        "Your chosen file is not a JPG/PNG/GIF file" +
+          this.state.selectedSlip.type
+      );
+      return;
+    }
+    const data = new FormData();
+    data.append("file", this.state.selectedSlip);
+    axios
+      .post(
+        `http://localhost:8000/file/paymentFile/verify/upload?token=${localStorage.getItem(
+          "token"
+        )}`,
+        data,
+        {
+          // receive two    parameter endpoint url ,form data
+        }
+      )
+      .then(res => {
+        // then print response status
+        console.log(res.statusText);
+        alert("File Uploaded");
+        window.location.reload();
+      });
+  };
+  onClickGetSlipImg = () => {
+    axios({
+      method: "GET",
+      url: `http://localhost:8000/file/paymentFile/verify?token=${localStorage.getItem(
+        "token"
+      )}&tutorId=${this.state.data._id}`,
+      responseType: "blob"
+    })
+      .then(response => {
+        this.setState({ imageDownloading: true }, () => {
+          FileSaver.saveAs(response.data, "your-slip.jpg");
+        });
+        console.log(response);
+      })
+      .then(() => {
+        this.setState({ imageDownloading: false });
+        console.log("Completed");
+      });
+    };
   async componentDidMount() {
     console.log(window.location.search);
     let params = new URLSearchParams(window.location.search);
