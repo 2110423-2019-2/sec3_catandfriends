@@ -30,7 +30,7 @@ export class CourseDetail extends Component {
     } else {
       showbutton = (
         <NormalButton
-          color="orange"
+          color="rgb(240,240,240)"
           onClick={event => this.onClick(event)}
           disabled
         >
