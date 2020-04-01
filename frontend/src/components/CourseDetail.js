@@ -3,7 +3,7 @@ import "./CourseDetail.css";
 import TutorCard from "../components/TutorCard";
 import history from "../history";
 import Util from "../apis/Util";
-
+import NormalButton from "./NormalButton";
 export class CourseDetail extends Component {
   constructor(props) {
     super(props);
@@ -23,142 +23,151 @@ export class CourseDetail extends Component {
     let showbutton;
     if (this.state.requestable) {
       showbutton = (
-        <button
-          type="button"
-          className="btn btn-outline-success"
-          onClick={event => this.onClick(event)}
-        >
+        <NormalButton color="orange" onClick={event => this.onClick(event)}>
           Request
-        </button>
+        </NormalButton>
       );
     } else {
       showbutton = (
-        <button variant="dark" type="button" disabled={true}>
+        <NormalButton
+          color="orange"
+          onClick={event => this.onClick(event)}
+          disabled
+        >
           Requested
-        </button>
+        </NormalButton>
       );
     }
     let studentList;
+    let editbtn;
     if (this.props.detail.owner) {
       studentList = (
-        <div className="col-md-12 border">
+        <div className="col-md-12 ">
           <AllStudentList data={this.props.detail} />
         </div>
       );
+      editbtn = (
+        <NormalButton
+          color="rgba(135, 53, 53, 0.8)"
+          onClick={() => {
+            history.push(`/course/edit?courseId=${this.props.detail.courseid}`);
+          }}
+        >
+          Edit Course
+        </NormalButton>
+      );
     } else {
       studentList = <div></div>;
+      editbtn = <div></div>;
     }
     return (
-      <div className="card mb-3" style={{ maxWidth: "1000px" }}>
-        <div className="row no-gutters">
-          <div className="col-md-4">
-            <div align="center">
-              <img
-                src={this.state.imgsrc}
-                className="card-img p-3"
-                style={{ maxWidth: "300px" }}
-                alt="..."
-              />
+      <div className="courseDetailCard">
+        <div className="row ">
+          <div className="col-md-9">
+            <div className="row  text-center" className="myStyle">
+              <h3 className="verifyTutorH ">Course Detail</h3>
             </div>
-            <div align="center">
-              <TutorCard
-                tutorname={this.props.detail.tutorName}
-                tutorid={this.props.detail.tutorId}
-              />
-            </div>
-          </div>
-          <div className="col-md-8">
-            <div className="card-body">
-              <div className="row border text-center" className="myStyle">
-                <h3 className="card-title border">Course Detail</h3>
+            <div className="row " style={{ padding: "5px 20px" }}>
+              <div className="col-md-6 ">
+                <h4>{this.props.detail.courseName}</h4>
               </div>
-              <br />
-              <div className="row">
-                <div className="col-md-6 border">
-                  <h4>{this.props.detail.courseName}</h4>
-                </div>
-                <div className="col-md-6 border">
-                  <h5 className="tutorname">
-                    {" by " + this.props.detail.tutorName}
-                  </h5>
-                </div>
-
-                <div className="col-md-4 border">
-                  <br />
-                  {/*Enter*/}
-                  <br />
-                  <body>
-                    <strong>Category : </strong>
-                  </body>
-                  <body>
-                    <strong>Start Date : </strong>
-                  </body>
-                  <body>
-                    <strong>End Date : </strong>
-                  </body>
-                  <body>
-                    <strong>Amount Left : </strong>
-                  </body>
-                  <body>
-                    <strong>Price : </strong>
-                  </body>
-
-                  <br />
-                  {/*Enter*/}
-                  <br />
-                </div>
-                <div className="col-md-8 border">
-                  <br />
-                  {/*Enter*/}
-                  <br />
-                  <body>{this.props.detail.category}</body>
-                  <body>{this.props.detail.startDate}</body>
-                  <body>{this.props.detail.endDate}</body>
-                  <body>
-                    {this.props.detail.amountOfStudent +
-                      "/" +
-                      this.props.detail.totalAmountOfStudent}
-                  </body>
-                  <body>{this.props.detail.courseFee}</body>
-                  <br />
-                  {/*Enter*/}
-
-                  <br />
-                </div>
-
-                <div className="col-md-12 border">
-                  <br />
-                  <strong>Class Time :</strong>
-                  <p className="card-text">{this.props.detail.day}</p>
-                  <br />
-                </div>
-                <div className="col-md-12 border">
-                  <br />
-                  <strong>Description :</strong>
-                  <p className="card-text">{this.props.detail.description}</p>
-                  <br />
-                </div>
-
-                <div className="col-md-12 border">
-                  <div className="alert alert-warning">
-                    <strong>Warning!</strong> If you request to enroll this
-                    course, you can not cancel.
+              <div className="col-md-6 ">
+                <a
+                  href={`/profile?userId=${this.props.detail.tutorId}`}
+                  style={{ fontSize: "22px" }}
+                >
+                  {" by " + this.props.detail.tutorName}
+                </a>
+              </div>
+            </div>
+            <div className="row" style={{ padding: "5px 20px" }}>
+              <div className="col-md-12  infoC" style={{ marginBottom: "5px" }}>
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="nameB">Category:</div>
                   </div>
-                  <div className="myStyle">{showbutton}</div>
-                  <br />
+                  <div className="col-md-8">
+                    <div className="valueB">{this.props.detail.category}</div>
+                  </div>
                 </div>
-                <p className="card-text">
-                  <small className="text-muted">
-                    {"Last updated " +
-                      (this.props.detail.lastModified + "").substring(0, 10) +
-                      " " +
-                      (this.props.detail.lastModified + "").substring(11, 19)}
-                  </small>
-                </p>
-                {studentList}
+                <div className="row ">
+                  <div className="col-md-4">
+                    <div className="nameB">Start Date:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">{this.props.detail.startDate}</div>
+                  </div>
+                </div>{" "}
+                <div className="row ">
+                  <div className="col-md-4">
+                    <div className="nameB">End Date:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">{this.props.detail.endDate}</div>
+                  </div>
+                </div>
+                <div className="row ">
+                  <div className="col-md-4">
+                    <div className="nameB">Amount Left:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">
+                      {this.props.detail.amountOfStudent +
+                        "/" +
+                        this.props.detail.totalAmountOfStudent}
+                    </div>
+                  </div>
+                </div>
+                <div className="row ">
+                  <div className="col-md-4">
+                    <div className="nameB">Price:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">{this.props.detail.courseFee}</div>
+                  </div>
+                </div>
+                <div className="row ">
+                  <div className="col-md-4">
+                    <div className="nameB">Class day:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">{this.props.detail.day}</div>
+                  </div>
+                </div>
+                <div className="row ">
+                  <div className="col-md-4">
+                    <div className="nameB">Description:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">
+                      {this.props.detail.description}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+            <div className="row">
+              <div className="col-md-12 ">
+                <div className="alert alert-warning">
+                  <strong>Warning!</strong> If you request to enroll this
+                  course, you can not cancel.
+                </div>
+                <div className="row justify-content-center">
+                  <div className="myStyle">{showbutton}</div>
+                  <div className="myStyle">{editbtn}</div>
+                </div>
+              </div>
+            </div>
+            <p className="card-text">
+              <small className="text-muted">
+                {"Last updated " +
+                  (this.props.detail.lastModified + "").substring(0, 10) +
+                  " " +
+                  (this.props.detail.lastModified + "").substring(11, 19)}
+              </small>
+            </p>
           </div>
+          <div className="col-md-3">{studentList}</div>
         </div>
       </div>
     );
@@ -205,7 +214,7 @@ class AllStudentList extends Component {
     }
     return (
       <div className="text-center">
-        <h3>Student List</h3>
+        <h3 className="verifyTutorH">Student List</h3>
         {this.state.data.map(item => (
           <StudentList detail={item} key={item._id} />
         ))}
