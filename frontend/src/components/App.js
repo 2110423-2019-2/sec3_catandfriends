@@ -16,7 +16,7 @@ import MyCourse from "../page/MyCourse";
 import VerifyPage from "../page/VerifyPage";
 import PremiumPage from "../page/PremiumPage";
 import PageNotFound from "../page/PageNotFound";
-import Chatbox from "./Chatbox";
+
 // import LogInFirst from "./LogInFirst";
 const About = () => <h1>About</h1>;
 const LogInFirst = () => {
@@ -58,14 +58,12 @@ class App extends Component {
         <NavBar />
         <div className="TS">
           <Switch>
-            <Route
+            {/* <Route
               path="/register"
               component={this.alreadylogin(RegisterPage)}
-            />
-            <Route path="/chat" component={this.getPage(Chatbox)} />
+            /> */}
             <Route path="/login" component={this.alreadylogin(Login)} />
-            {/* if already login?? */}
-            <Route path="/search" component={this.getPage(SearchResult)} />
+            {/* <Route path="/search" component={this.getPage(SearchResult)} /> */}
             <Route path="/profile/edit" component={this.getPage(EditProfile)} />
             <Route
               path="/profile/verify"
