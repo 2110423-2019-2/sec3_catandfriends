@@ -25,7 +25,8 @@ function DayGroup(props) {
         marginBottom: "15px",
         padding: "10px",
         backgroundColor: "white",
-        borderRadius: "12px"
+        borderRadius: "12px",
+        overflowX: "hidden"
       }}
     >
       <h4 style={{ textAlign: "center", width: "100%" }}>Day</h4>
