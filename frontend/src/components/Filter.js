@@ -25,7 +25,8 @@ function DayGroup(props) {
         marginBottom: "15px",
         padding: "10px",
         backgroundColor: "white",
-        borderRadius: "12px"
+        borderRadius: "12px",
+        overflowX: "hidden"
       }}
     >
       <h4 style={{ textAlign: "center", width: "100%" }}>Day</h4>
@@ -379,7 +380,7 @@ class Filter extends React.Component {
       <div
         className="card"
         style={{
-          minWidth: "220px",
+          minWidth: "230px",
           width: "auto",
           margin: "25px",
           marginTop: "40px",
