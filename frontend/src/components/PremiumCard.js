@@ -111,7 +111,7 @@ export default class PremiumCard extends Component {
                 style={{ maxWidth: "250px" }}
                 alt="..."
               />
-              <h4>350 bath</h4>
+              <h4>350 baht</h4>
               <br />
             </div>
           </div>
