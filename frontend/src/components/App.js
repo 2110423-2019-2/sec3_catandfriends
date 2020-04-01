@@ -62,7 +62,7 @@ class App extends Component {
               path="/register"
               component={this.alreadylogin(RegisterPage)}
             />
-            <Route path="/chat" component={Chatbox} />
+            <Route path="/chat" component={this.getPage(Chatbox)} />
             <Route path="/login" component={this.alreadylogin(Login)} />
             {/* if already login?? */}
             <Route path="/search" component={this.getPage(SearchResult)} />

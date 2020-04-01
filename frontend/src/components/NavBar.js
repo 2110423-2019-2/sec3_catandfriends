@@ -74,6 +74,15 @@ export class NavBar extends Component {
           </ul>
           <ul className="navbar-nav ml-auto">
             {localStorage.getItem("token") ? (
+              <li className="nav-item">
+                <NavButton onClick={() => this.onClickNavBar("/chat")}>
+                  Chat <span class="sr-only">(current)</span>
+                </NavButton>
+              </li>
+            ) : (
+              <div></div>
+            )}
+            {localStorage.getItem("token") ? (
               <li className="nav-item dropdown">
                 {this.state.fullName ? (
                   <AccountButton
