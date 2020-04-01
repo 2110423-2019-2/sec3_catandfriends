@@ -63,7 +63,7 @@ export class CourseDetail extends Component {
     return (
       <div className="courseDetailCard">
         <div className="row ">
-          <div className="col-md-9">
+          <div className={this.props.detail.owner ? "col-md-9" : "col-md-12"}>
             <div className="row  text-center" className="myStyle">
               <h3 className="verifyTutorH ">Course Detail</h3>
             </div>
@@ -167,7 +167,11 @@ export class CourseDetail extends Component {
               </small>
             </p>
           </div>
-          <div className="col-md-3">{studentList}</div>
+          {this.props.detail.owner ? (
+            <div className="col-md-3">{studentList}</div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
     );
