@@ -50,7 +50,8 @@ router.get("/rooms", async (req, res) => {
 router.post("/", async (req, res) => {
   var { roomId, message } = req.body;
   var userId = req.user._id;
-  var timeStamp = moment.tz(Date.now(), "Asia/Bangkok");
+  var timeStamp = moment.tz(Date.now(), "Asia/Bangkok")._d;
+  // console.log(timeStamp);
 
   var messageObject = await messageModel.create({
     roomId,
