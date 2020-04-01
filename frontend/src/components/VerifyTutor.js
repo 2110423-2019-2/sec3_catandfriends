@@ -10,6 +10,8 @@ export default class VerifyTutor extends Component {
     this.state = {
       testQR:
         "https://s3-ap-southeast-1.amazonaws.com/img-in-th/baa3026e0bf6871a8fa693e78486ccd2.png"
+      , testQRLink:
+        "https://www.taylorswift.com/"
     };
     this.onClickGetVeriFile = this.onClickGetVeriFile.bind(this);
   }
@@ -46,21 +48,34 @@ export default class VerifyTutor extends Component {
       return (
         <div className="verifyTutorCard">
           <h3 className="verifyTutorH text-center">Verify Tutor</h3>
-          <div className="row ">
+          <div className="row justify-content-center">
+            To be able to create a course, your account have to be verified.
+            <br></br>
+          </div>
+          <div className="row justify-content-center">
+            We have to require 2 documents from you.
+            <br></br>
+          </div>
+          <div className="row justify-content-center">
+            1. your verification document 2. your verification payment.
+            <br></br>
+          </div>
+          <div className="row justify-content-center">
+            After receiving your documents, we will verify your account in 24 hours.
+            <br></br>
+          </div>
+          <div className="row " style={{ marginTop: "10px" }} >
             <div className="col-md-6 " style={{ marginBottom: "5px" }}>
               <h3>File</h3>
               <div className="row">
                 <div className="col-md-12 ">
-                  <p className="fileDetail ">
-                    this is detail this is detail this is detail this is detail
-                    this is detail this is detail this is detail this is detail
-                    this is detail this is detail this is detail this is detail
-                    this is detail this is detail this is detail this is detail
-                    this is detail this is detail this is detail this is detail
-                  </p>
+                  <div className="row justify-content-center">
+                    Please upload your verification document in PDF format.
+                    <br></br>
+                  </div>
                 </div>
               </div>
-              <div className="row">
+              <div className="row" style={{ marginTop: "10px" }}>
                 <div className="col-md-12 ">
                   <div className="nameV">
                     {"Last uploaded file:" + "\xa0\xa0"}
@@ -95,6 +110,13 @@ export default class VerifyTutor extends Component {
               <h3>Payment</h3>
               <div className="row">
                 <div className="col-md-12">
+                  <div className="row justify-content-center">
+                    Please upload your verification payment in image format.
+                    <br></br>
+                  </div>
+                  <div className="row justify-content-center">
+                    You can scan QR code or link for payment below.
+                  </div>
                   <div className="payDetail">
                     <GradientButton
                       type="button"
@@ -133,14 +155,11 @@ export default class VerifyTutor extends Component {
                         </div>
                         <div class="modal-body">
                           <img src={this.state.testQR} />
-                          <p className="fileDetail ">
-                            this is detail this is detail this is detail this is
-                            detail this is detail this is detail this is detail
-                            this is detail this is detail this is detail this is
-                            detail this is detail this is detail this is detail
-                            this is detail this is detail this is detail this is
-                            detail this is detail this is detail
-                          </p>
+                          <div className="row justify-content-center">
+                            <a className="fileNameB" href={this.state.testQRLink}>
+                              <i>link here</i>
+                            </a>
+                          </div>
                         </div>
                         <div class="modal-footer">
                           <button
@@ -188,7 +207,7 @@ export default class VerifyTutor extends Component {
               </div>
             </div>
           </div>
-        </div>
+        </div >
       );
     }
   }
@@ -222,8 +241,7 @@ export default class VerifyTutor extends Component {
     }
     if (!this.isDocfile(this.state.selectedFile)) {
       alert(
-        "Your chosen file is not a PDF/DOC/DOCX file" +
-          this.state.selectedFile.type
+        "Your chosen file is not a PDF file"
       );
       return;
     }
@@ -254,7 +272,7 @@ export default class VerifyTutor extends Component {
     if (!this.isImagefile(this.state.selectedSlip)) {
       alert(
         "Your chosen file is not a JPG/PNG/GIF file" +
-          this.state.selectedSlip.type
+        this.state.selectedSlip.type
       );
       return;
     }
