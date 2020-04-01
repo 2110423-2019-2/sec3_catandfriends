@@ -12,7 +12,7 @@ body {
   min-height: 100vh;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 5px;
 }
 
@@ -26,7 +26,7 @@ body {
   background-color: #ddd;
   outline: 1px solid slategrey;
   border-radius: 1rem;
-}
+} */
 
 .text-small {
   font-size: 0.9rem;
