@@ -88,7 +88,7 @@ export class TutorProfile extends Component {
             </div>
             <div className="row">
               <div className="col-md-4 " align="center">
-                <img className="picPro " src={this.state.imgsrc} />
+                <img className="picPro " id="photo2" />
               </div>
               <div className="col-md-8 ">
                 <div className="nameM">
@@ -210,7 +210,7 @@ export class TutorProfile extends Component {
             >
               <div className="col-md-12">
                 <NormalButton
-                  color="rgba(107, 63, 233, 0.8)"
+                  color="rgba(127, 83, 253, 0.8)"
                   onClick={() => {
                     history.push(`/profile/edit`);
                   }}
@@ -228,6 +228,34 @@ export class TutorProfile extends Component {
         </div>
       </div>
     );
+  }
+  async componentDidMount() {
+    if (this.props.data.profileImage) {
+      var xhr = new XMLHttpRequest();
+      var myurl = "";
+      xhr.open(
+        "GET",
+        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
+          "token"
+        )}&userId=${this.props.data._id}`,
+        true
+      );
+      xhr.responseType = "arraybuffer";
+      xhr.onload = function(e, imageUrl) {
+        var arrayBufferView = new Uint8Array(this.response);
+        var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(blob);
+        var img = document.querySelector("#photo2");
+        if (img) {
+          img.src = imageUrl;
+        }
+      };
+      xhr.send();
+    } else {
+      var img = document.querySelector("#photo2");
+      img.src = "https://i.ibb.co/8NHMg4K/pic.png";
+    }
   }
 }
 

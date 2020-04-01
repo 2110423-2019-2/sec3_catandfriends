@@ -9,6 +9,7 @@ const courseRoute = require("./course");
 const requestRoute = require("./request");
 const profileRoute = require("./profile");
 const scheduleRoute = require("./schedule");
+const fileRoute = require("./file");
 const searchRoute = require("./search");
 
 const verifyRoute = require("./verify");
@@ -47,12 +48,15 @@ app.use(
   passport.authenticate("jwt-profile", { session: false }),
   profileRoute
 );
-app.use("/schedule", scheduleRoute);
+app.use("/schedule",
+  passport.authenticate("jwt-profile", { session: false }),
+  scheduleRoute
+);
 app.use("/search", searchRoute);
 app.use(
   "/file",
   passport.authenticate("jwt-profile", { session: false }),
-  //fileRoute
+  fileRoute
 );
 app.use("/verify", verifyRoute);
 

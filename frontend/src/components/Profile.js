@@ -3,7 +3,7 @@ import TutorPage from "../page/TutorPage";
 import StudentPage from "../page/StudentPage";
 import Util from "../apis/Util";
 
-export class Home extends Component {
+export class Profile extends Component {
   state = { data: {} };
 
   render() {
@@ -35,4 +35,4 @@ export class Home extends Component {
   }
 }
 
-export default Home;
+export default Profile;

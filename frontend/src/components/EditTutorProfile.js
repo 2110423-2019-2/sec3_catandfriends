@@ -5,6 +5,10 @@ import FileSaver from "file-saver";
 import Util from "../apis/Util";
 import NormalButton from "./NormalButton";
 import history from "../history";
+import Popup from "reactjs-popup";
+import ImgDropAndCrop from "../components/ImgDropAndCrop";
+import { Modal, Button, Row, Col, Form } from "react-bootstrap";
+
 export default class EditTutorProfile extends Component {
   constructor(props) {
     super(props);
@@ -14,10 +18,13 @@ export default class EditTutorProfile extends Component {
       firstName: "",
       lastName: "",
       gender: "",
-      phoneNumber: ""
+      phoneNumber: "",
+      showEditImage: false,
+      imgCrop: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.updateThisImage = this.updateThisImage.bind(this);
   }
 
   handleChange(event) {
@@ -37,6 +44,7 @@ export default class EditTutorProfile extends Component {
       this.state.lastName,
       this.state.gender,
       this.state.phoneNumber,
+      this.state.imgCrop,
       localStorage.getItem("token"),
     );
     console.log(data);
@@ -45,15 +53,56 @@ export default class EditTutorProfile extends Component {
       console.log(data);
       history.push("/profile");
     } else {
-      window.alert("Cannot Edit Profile");     
+      window.alert("Cannot Edit Profile");
     }
   }
+
+  updateThisImage(imgCrop) {
+    this.setState({ imgCrop: imgCrop })
+    this.handleClose();
+    console.log(imgCrop);
+
+  }
+
+  handleClose = () => this.setState({ showEditImage: false });
+  handleShow = () => this.setState({ showEditImage: true });
 
   render() {
     return (
       <div className="editTutorProfileCard">
         <h3 className="editProfileH text-center">Edit Tutor Profile</h3>
-        <br />
+        <div className="row" style={{ marginTop: "10px" }}>
+          <div className="col-md-12">
+            <div>
+              <div className="row justify-content-center">
+                Croped picture
+              </div>
+              <div className="row justify-content-center" style={{ marginTop: "10px" }}>
+                <img src={this.state.imgCrop}></img>
+              </div>
+            </div>
+            {/* <input
+                id="veridoc"
+                className="form-control-file"
+                type="file"
+                name="file"
+                accept=".jpeg,.gif,.png"
+                onChange={this.onChangeHandlerSlip}
+                style={{ textAlign: "center" }}
+              /> */}
+            <NormalButton color="rgb(76, 182, 181)" onClick={this.handleShow}>
+              Edit your picture
+            </NormalButton>
+
+            <Modal show={this.state.showEditImage} onHide={this.handleClose}>
+              <Modal.Body>
+                <div>
+                  <ImgDropAndCrop triggerParentUpdate={this.updateThisImage} />
+                </div>
+              </Modal.Body>
+            </Modal>
+          </div>
+        </div>
         <form
           onSubmit={e => {
             alert(JSON.stringify(this.state));
@@ -67,6 +116,12 @@ export default class EditTutorProfile extends Component {
                      <img src={this.state.imgsrc} className="profilePic" />
                   </div>
                 </div>
+            <div className="row">
+                <div className="col-md-12">
+                  <div className="nameV">
+                     {/* image */}
+                  </div>
+                </div>
               </div>
               <div className="row" style={{ marginTop: "10px",marginLeft: "80px" }}>
                 <div className="col-md-12" style={{textAlign:"center"}}>
@@ -77,6 +132,20 @@ export default class EditTutorProfile extends Component {
                     name="file"
                     accept=".jpeg,.gif,.png"
                     onChange={this.onChangeHandlerPic}
+                  />
+                </div>
+                </div>
+          <div class="row" style={{marginTop:"10px"}}>
+              <div className="row" style={{ marginTop: "10px" }}>
+                <div className="col-md-12">
+                  <input
+                    id="veridoc"
+                    className="form-control-file"
+                    type="file"
+                    name="file"
+                    accept=".jpeg,.gif,.png"
+                    onChange={this.onChangeHandlerSlip}
+                    style={{textAlign:"center"}}
                   />
                 </div>
                 </div>
@@ -117,7 +186,7 @@ export default class EditTutorProfile extends Component {
                 Phone Number
                 <br />
                 <input
-                  id = "tel"
+                  id="tel"
                   type="tel"
                   maxLength="10"
                   value={this.state.phoneNumber}
@@ -132,14 +201,14 @@ export default class EditTutorProfile extends Component {
                 Gender
                 <br />
                 <select
-                  id = "gender"
+                  id="gender"
                   value={this.state.Gender}
                   style={{ width: 250 }}
                   name="gender"
                   onChange={this.handleChange}
                 >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
                 </select>
               </label>
             </div>
@@ -155,7 +224,9 @@ export default class EditTutorProfile extends Component {
               </NormalButton>
             </div>
           </div>
-        </form>
+          </div>
+          </div>
+          </form>
       </div>
     );
   }
@@ -224,4 +295,4 @@ export default class EditTutorProfile extends Component {
     console.log(this.state)
     console.log(localStorage.getItem("token"));
   }
-}
+  }

@@ -1,0 +1,52 @@
+.enrollCard {
+  width: auto;
+  max-width: 1000px;
+  height: auto;
+  min-height: 300px;
+  background-color: rgb(255, 255, 255);
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 20px;
+  margin: 40px;
+  margin-bottom: 300px;
+  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
+}
+.enrollH {
+  background-color: rgb(245, 245, 245);
+  border-radius: 12px;
+  padding: 10px;
+
+  /* padding-left: 10px; */
+}
+.nameR {
+  background-color: rgb(245, 245, 245);
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  color: #000000;
+  text-align: center;
+  width: auto;
+  border: 1px solid rgb(255, 255, 255);
+  padding: 10px;
+  /* padding-left: 10px;
+  padding-right: 10px; */
+}
+.Eday {
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 80px;
+}
+.courseL {
+  font-weight: bold;
+  color: rgb(82, 136, 136) !important;
+}
+.courseL:hover {
+  font-weight: bolder;
+  text-decoration: underline !important;
+}

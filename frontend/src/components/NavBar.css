@@ -42,3 +42,11 @@
 .navbar-nav > li > .dropdown-menu a {
   color: #ffffff;
 }
+.avatar {
+  margin: 2px;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}
