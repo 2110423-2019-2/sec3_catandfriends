@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import history from "../history";
 import "./StudentCTuProfile.css";
 export class StudentCTuProfile extends Component {
   constructor(props) {
@@ -42,6 +43,7 @@ export class StudentCTuProfile extends Component {
                         this.props.data.lastName}
                     </span>
                   </div>
+                  <button onClick={this.onClickChat}>Chat now</button>
                 </div>
                 <div className="row justify-content-center">
                   <div
@@ -125,6 +127,9 @@ export class StudentCTuProfile extends Component {
       img.src = "https://i.ibb.co/8NHMg4K/pic.png";
     }
   }
+  onClickChat = () => {
+    history.push(`/chat?userId=${this.props.data._id}`);
+  };
 }
 
 export default StudentCTuProfile;
