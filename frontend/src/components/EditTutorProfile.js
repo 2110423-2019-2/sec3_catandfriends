@@ -14,13 +14,13 @@ export default class EditTutorProfile extends Component {
     super(props);
 
     this.state = {
-      imgsrc:"https://i.ibb.co/8NHMg4K/pic.png",
+      _id:"",
       firstName: "",
       lastName: "",
       gender: "",
       phoneNumber: "",
       showEditImage: false,
-      imgCrop: ""
+      profileImage: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,18 +37,19 @@ export default class EditTutorProfile extends Component {
     });
   }
 
-  async handleSubmit(e) {
-    e.preventDefault();
+  async handleSubmit(event) {
+    event.preventDefault();
     alert(JSON.stringify(this.state));
     let data = await Util.editProfile(
+      this.state._id,
       this.state.firstName,
       this.state.lastName,
       this.state.gender,
       this.state.phoneNumber,
-      this.state.imgCrop,
+      this.state.profileImage,
       localStorage.getItem("token"),
     );
-    console.log(data);
+    console.log("data"+data);
     if (!data.error) {
       alert("A profile is edited");
       console.log(data);
@@ -58,10 +59,27 @@ export default class EditTutorProfile extends Component {
     }
   }
 
-  updateThisImage(imgCrop) {
-    this.setState({ imgCrop: imgCrop })
+  updateThisImage(profileImage) {
+    this.setState({ profileImage: profileImage })
     this.handleImageCropClose();
-    console.log(imgCrop);
+    console.log(profileImage);
+    const data = new FormData();
+    data.append("file", this.state.profileImage);
+    axios
+      .post(
+        `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
+          "token"
+        )}`,
+        data,
+        {
+          // receive two    parameter endpoint url ,form data
+        }
+      )
+      .then(res => {
+        // then print response status
+        console.log(res.statusText);
+        alert("File Uploaded");
+      });
   }
 
   handleImageCropClose = () => this.setState({ showEditImage: false });
@@ -76,9 +94,6 @@ export default class EditTutorProfile extends Component {
             <div className="row justify-content-center">
               Croped picture
               </div>
-            <div className="row justify-content-center" style={{ marginTop: "10px" }}>
-              <img src={this.state.imgCrop}></img>
-            </div>
             {/* <input
                 id="veridoc"
                 className="form-control-file"
@@ -104,54 +119,18 @@ export default class EditTutorProfile extends Component {
           </div>
         </div>
         <form
-          onSubmit={e => {
-            alert(JSON.stringify(this.state));
-            console.log(this.state);
-            e.preventDefault();
-          }}
+          onSubmit={event => this.handleSubmit(event)}
         >
-            <div className="row">
+            {/* <div className="row">
                 <div className="col-md-12">
                   <div className="nameV" style={{textAlign:"center"}}>
-                     <img src={this.state.imgsrc} className="profilePic" />
+                     <img src={this.state.profileImage} className="profilePic" />
                   </div>
                 </div>
-            <div className="row">
-                <div className="col-md-12">
-                  <div className="nameV">
-                     {/* image */}
-                  </div>
-                </div>
-              </div>
-              <div className="row" style={{ marginTop: "10px",marginLeft: "80px" }}>
-                <div className="col-md-12" style={{textAlign:"center"}}>
-                  <input
-                    id="uploadProfilePic"
-                    className="uploadProfilePic"
-                    type="file"
-                    name="file"
-                    accept=".jpeg,.gif,.png"
-                    onChange={this.onChangeHandlerPic}
-                  />
-                </div>
-                </div>
-          <div class="row" style={{marginTop:"10px"}}>
-              <div className="row" style={{ marginTop: "10px" }}>
-                <div className="col-md-12">
-                  <input
-                    id="veridoc"
-                    className="form-control-file"
-                    type="file"
-                    name="file"
-                    accept=".jpeg,.gif,.png"
-                    onChange={this.onChangeHandlerSlip}
-                    style={{textAlign:"center"}}
-                  />
-                </div>
-                </div>
-          <div class="row" style={{marginTop:"10px"}}>
-            <div class="col-md-6">
-              <label htmlFor="firstName" className="nameE">
+              </div> */}
+              <div class="row" style={{marginTop:"10px",textAlign:"center"}}>
+                <div class="col-md-6">
+                <label htmlFor="firstName" className="nameE">
                 First Name
                 <br />
                 <input
@@ -224,68 +203,96 @@ export default class EditTutorProfile extends Component {
               </NormalButton>
             </div>
           </div>
-          </div>
-          </div>
           </form>
-      </div>
+          </div>
     );
   }
-  onChangeHandlerPic = event => {
-    this.setState({
-      selectedPic: event.target.files[0],
-      loadedPic: 0
-    });
-  };
-  onClickHandlerPic = () => {
-    if (!this.state.selectedPic) {
-      alert("Please select a file");
-      return;
-    }
-    if (!this.isImagefile(this.state.selectedPic)) {
-      alert(
-        "Your chosen file is not a JPG/PNG/GIF file" +
-          this.state.selectedSlip.type
-      );
-      return;
-    }
-    const data = new FormData();
-    data.append("file", this.state.selectedSlip);
-    axios
-      .post(
-        `http://localhost:8000/file/paymentFile/verify/upload?token=${localStorage.getItem(
-          "token"
-        )}`,
-        data,
-        {
-          // receive two    parameter endpoint url ,form data
-        }
-      )
-      .then(res => {
-        // then print response status
-        console.log(res.statusText);
-        alert("File Uploaded");
-        window.location.reload();
-      });
-  };
-  onClickGetSlipImg = () => {
-    axios({
-      method: "GET",
-      url: `http://localhost:8000/file/paymentFile/verify?token=${localStorage.getItem(
-        "token"
-      )}&tutorId=${this.state.data._id}`,
-      responseType: "blob"
-    })
-      .then(response => {
-        this.setState({ imageDownloading: true }, () => {
-          FileSaver.saveAs(response.data, "your-slip.jpg");
-        });
-        console.log(response);
-      })
-      .then(() => {
-        this.setState({ imageDownloading: false });
-        console.log("Completed");
-      });
-    };
+
+//   onChangeHandlerImg = event => {
+
+//     this.setState({
+
+//       selectedImg: event.target.files[0],
+
+//       loadedImg: 0
+
+//     });
+
+//   };
+
+
+ 
+
+// onClickHandlerImg = () => {
+
+//     if (!this.state.selectedImg) {
+
+//       alert("Please select a file");
+
+//       return;
+
+//     }
+
+//     if (!this.isImagefile(this.state.selectedImg)) {
+
+//       alert(
+
+//         "Your chosen file is not a JPG/PNG/GIF file" +
+
+//           this.state.selectedImg.type
+
+//       );
+
+//       return;
+
+//     }
+
+//     const data = new FormData();
+
+//     data.append("file", this.state.selectedImg);
+
+//     axios
+
+//       .post(
+
+//         `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
+
+//           "token"
+
+//         )}`,
+
+//         data,
+
+//         {
+
+//           // receive two    parameter endpoint url ,form data
+
+//         }
+
+//       )
+
+//       .then(res => {
+
+//         // then print response status
+
+//         console.log(res.statusText);
+
+//         alert("File Uploaded");
+
+//         window.location.reload();
+
+//       });
+
+//   };
+
+// isImagefile(file) {
+
+//     const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
+
+//     return file && acceptedImageTypes.includes(file.type);
+
+//   }
+  
   async componentDidMount() {
     console.log(window.location.search);
     let params = new URLSearchParams(window.location.search);
@@ -293,6 +300,6 @@ export default class EditTutorProfile extends Component {
     await this.setState(data);
     await console.log(data);
     console.log(this.state)
-    console.log(localStorage.getItem("token"));
+    //console.log(localStorage.getItem("token"));
   }
   }
