@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import Util from "../apis/Util";
+import FileSaver from "file-saver";
 export default class PremiumCard extends Component {
   constructor(props) {
     super(props);
@@ -11,18 +12,65 @@ export default class PremiumCard extends Component {
       /*https://s3-ap-southeast-1.amazonaws.com/img-in-th/9f79ee3d9195d512adecddd66289b536.png*/
     };
   }
-  onChangeHandler = event => {
+  onClickGetSlipImg = () => {
+    axios({
+      method: "GET",
+      url: `http://localhost:8000/file/paymentFile/premium?token=${localStorage.getItem(
+        "token"
+      )}&tutorId=${this.state.data._id}`,
+      responseType: "blob"
+    })
+      .then(response => {
+        this.setState({ imageDownloading: true }, () => {
+          FileSaver.saveAs(response.data, "your-slip.jpg");
+        });
+        console.log(response);
+      })
+      .then(() => {
+        this.setState({ imageDownloading: false });
+        console.log("Completed");
+      });
+  };
+  isImagefile(file) {
+    const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    return file && acceptedImageTypes.includes(file.type);
+  }
+  getImage() {
+    if (this.state.data.premiumPayment) {
+      return (
+        <span className="fileNameB" onClick={this.onClickGetSlipImg}>
+          <i>download file</i>
+        </span>
+      );
+    } else {
+      return <span>-</span>;
+    }
+  }
+  onChangeHandlerSlip = event => {
     this.setState({
-      selectedFile: event.target.files[0],
-      loaded: 0
+      selectedSlip: event.target.files[0],
+      loadedSilp: 0
     });
   };
-  onClickHandler = () => {
+  onClickHandlerSlip = () => {
+    if (!this.state.selectedSlip) {
+      alert("Please select a file");
+      return;
+    }
+    if (!this.isImagefile(this.state.selectedSlip)) {
+      alert(
+        "Your chosen file is not a JPG/PNG/GIF file" +
+          this.state.selectedSlip.type
+      );
+      return;
+    }
     const data = new FormData();
-    data.append("file", this.state.selectedFile);
+    data.append("file", this.state.selectedSlip);
     axios
       .post(
-        `http://localhost:8000/upload?token=${localStorage.getItem("token")}`,
+        `http://localhost:8000/file/paymentFile/premium/upload?token=${localStorage.getItem(
+          "token"
+        )}`,
         data,
         {
           // receive two    parameter endpoint url ,form data
@@ -31,63 +79,92 @@ export default class PremiumCard extends Component {
       .then(res => {
         // then print response status
         console.log(res.statusText);
+        alert("File Uploaded");
+        window.location.reload();
       });
   };
-
   render() {
-    return (
-      <div className="bigCard border">
-        <div className="row">
-          <div className="col-md-12  infoC">
-            <div className="headerB">Premium Payment</div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <br />
-            <img
-              src={this.state.imgsrc}
-              className="card-img p-3"
-              style={{ maxWidth: "250px" }}
-              alt="..."
-            />
-            <h4>350 bath</h4>
-            <br />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12 ">
-            <div class="container">
-              <label /*className="bg-success text-white"*/>
-                <input
-                  id="bill"
-                  className=" border border-dark"
-                  //className="form-control-file p-1"
-                  type="file"
-                  name="file"
-                  onChange={this.onChangeHandler}
-                />
-
-                <button
-                  type="button"
-                  className="btn btn-block btn btn-dark btn-sm p-1"
-                  onClick={this.onClickHandler}
-                >
-                  comfirm your payment
-                </button>
-              </label>
+    if (!this.state.data) {
+      return (
+        <div className="bigCard border" style={{ height: "600px" }}>
+          <div className="row">
+            <div className="col-md-12  infoC">
+              <div className="headerB">Premium Payment</div>
             </div>
-            <br />
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="bigCard border" style={{ height: "600px" }}>
+          <div className="row">
+            <div className="col-md-12  infoC">
+              <div className="headerB">Premium Payment</div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <br />
+              <img
+                src={this.state.imgsrc}
+                className="card-img p-3"
+                style={{ maxWidth: "250px" }}
+                alt="..."
+              />
+              <h4>350 baht</h4>
+              <br />
+            </div>
+          </div>
+          <div className="row" style={{ marginBottom: "5px" }}>
+            <div className="col-md-12 justify-content-center">
+              <div className="nameV justify-content-center text-center">
+                {"Last uploaded slip image:" + "\xa0\xa0"}
+                {this.getImage()}
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12 ">
+              <div class="container">
+                <label /*className="bg-success text-white"*/>
+                  <input
+                    id="bill"
+                    className=" border border-dark"
+                    //className="form-control-file p-1"
+                    type="file"
+                    name="file"
+                    onChange={this.onChangeHandlerSlip}
+                  />
+
+                  <button
+                    id="upload"
+                    type="button"
+                    className="btn btn-block btn-dark btn-sm p-1"
+                    onClick={this.onClickHandlerSlip}
+                  >
+                    Upload slip
+                  </button>
+                </label>
+              </div>
+              {/* <br />
             <br />
             <br />
             <br />
             <br />
             <br />
 
-            <div>- Thank you -</div>
+            <div>- Thank you -</div> */}
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
+  }
+  async componentDidMount() {
+    let params = new URLSearchParams(window.location.search);
+    let data = await Util.getProfile(params.get("userId"));
+    await this.setState({ data });
+    await console.log(data);
+    console.log(this.state);
   }
 }
