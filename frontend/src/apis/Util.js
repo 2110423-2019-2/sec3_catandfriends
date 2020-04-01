@@ -232,7 +232,7 @@ const Util = {
     if (response.status == 400) return { error: true };
     if (response.status == 201) return response.json();
   },
-  editProfile: async (firstName, lastName, gender, phoneNumber, token) => {
+  editProfile: async (_id,firstName, lastName, gender, phoneNumber,profileImage, token) => {
     const URL = `http://localhost:8000/profile?token=${token}`;
     const response = await fetch(URL, {
       method: "PUT",
@@ -242,10 +242,12 @@ const Util = {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
+        _id,
         firstName,
         lastName,
         gender,
-        phoneNumber
+        phoneNumber,
+        profileImage
       })
     });
     console.log(response.status);
