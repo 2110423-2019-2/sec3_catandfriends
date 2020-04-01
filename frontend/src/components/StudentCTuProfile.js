@@ -18,80 +18,109 @@ export class StudentCTuProfile extends Component {
 
   render() {
     return (
-      <div
-        className="card mb-3"
-        style={{ maxWidth: "1000px", maxHeight: "400px" }}
-      >
-        <div className="row no-gutters">
-          <div className="col-md-4">
-            <img
-              src={this.state.imgsrc}
-              className="card-img p-3"
-              style={{ maxWidth: "300px" }}
-              alt="..."
-            />
-          </div>
-          <div className="col-md-8">
-            <div className="card-body">
-              <div className="row border text-center" className="myStyle">
-                <h3 className="card-title border">Tutor Profile</h3>
+      <div className="bigCard border" style={{ minHeight: "auto" }}>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="row">
+              <div className="col-md-12  infoC">
+                <div className="headerB">Tutor Profile</div>
               </div>
-              <br />
-              <div className="row ">
-                <div className="col-md-6 border">
-                  <h4 style={{}}>{this.props.data.firstName}</h4>
+            </div>
+            <div className="row">
+              <div className="col-md-4 " align="center">
+                <img className="studentpicPro " id="photo5" />
+              </div>
+              <div className="col-md-8 ">
+                <div className="row justify-content-center">
+                  <div className="nameM">
+                    <span id="nameK">
+                      {this.props.data.firstName +
+                        "\xa0\xa0\xa0\xa0" +
+                        this.props.data.lastName}
+                    </span>
+                  </div>
                 </div>
-                <div className="col-md-6 border">
-                  <h4>{this.props.data.lastName}</h4>
-                </div>
-
-                <div className="col-md-4 border">
-                  <br />
-                  {/*Enter*/}
-                  <br />
-                  <body>
-                    <strong>Gender : </strong>
-                  </body>
-                  <body>
-                    <strong>Phone number : </strong>
-                  </body>
-                  <body>
-                    <strong>Email : </strong>
-                  </body>
-                  <body>
-                    <strong>Verify Status : </strong>
-                  </body>
-                  <br />
-                  {/*Enter*/}
-                  <br />
-                </div>
-                <div className="col-md-8 border">
-                  <br />
-                  {/*Enter*/}
-                  <br />
-                  <body> {this.props.data.gender}</body>
-                  <body> {this.props.data.phoneNumber}</body>
-                  <body> {this.props.data.email}</body>
-                  <body
-                    className={
-                      this.props.data.verifyStatus ? "verified" : "notverified"
-                    }
+                <div className="row justify-content-center">
+                  <div
+                    className="col-md-12  infoC"
+                    style={{ marginBottom: "5px" }}
                   >
-                    {this.props.data.verifyStatus ? "VERIFIED" : "NOT VERIFIED"}
-                  </body>
-                  <br />
-                  {/*Enter*/}
-                  <br />
+                    <div className="row">
+                      <div className="col-md-4">
+                        <div className="nameB">Phone Number:</div>
+                      </div>
+                      <div className="col-md-8">
+                        <div className="valueB">
+                          {this.props.data.phoneNumber}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-4">
+                        <div className="nameB">Gender:</div>
+                      </div>
+                      <div className="col-md-8">
+                        <div className="valueB">{this.props.data.gender}</div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-4">
+                        <div className="nameB">Email:</div>
+                      </div>
+                      <div className="col-md-8">
+                        <div className="valueB">{this.props.data.email}</div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-4">
+                        <div className="nameB">Verify status:</div>
+                      </div>
+                      <div className="col-md-8">
+                        <div className="valueB">
+                          <span style={{ fontWeight: "bold", color: "blue" }}>
+                            {this.props.data.verifyStatus
+                              ? "VERIFIED"
+                              : "NOT VERIFIED"}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <br />
-              {/*Enter*/}
-              <br />
             </div>
           </div>
         </div>
-      </div>
+      </div> 
     );
+  }
+  async componentDidMount() {
+    if (this.props.data.profileImage) {
+      var xhr = new XMLHttpRequest();
+      var myurl = "";
+      xhr.open(
+        "GET",
+        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
+          "token"
+        )}&userId=${this.props.data._id}`,
+        true
+      );
+      xhr.responseType = "arraybuffer";
+      xhr.onload = function(e, imageUrl) {
+        var arrayBufferView = new Uint8Array(this.response);
+        var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(blob);
+        var img = document.querySelector("#photo5");
+        if (img) {
+          img.src = imageUrl;
+        }
+      };
+      xhr.send();
+    } else {
+      var img = document.querySelector("#photo5");
+      img.src = "https://i.ibb.co/8NHMg4K/pic.png";
+    }
   }
 }
 

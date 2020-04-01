@@ -1,10 +1,18 @@
-.title{
-    font-size: larger;
-    font-weight: bold;
-  }
-.border{
-    border-style: solid;
+.title {
+  font-size: larger;
+  font-weight: bold;
 }
-.mystyle{
+.border {
+  border-style: solid;
+}
+.mystyle {
   text-align: center;
+}
+.studentpicPro {
+  margin: 10px;
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
 }

@@ -39,7 +39,6 @@ export default class VerifyTutor extends Component {
     if (!this.state.data) {
       return (
         <div className="verifyTutorCard">
-          <p>{JSON.stringify(this.state.data)}</p>
           <h3 className="verifyTutorH text-center">Verify Tutor</h3>
         </div>
       );

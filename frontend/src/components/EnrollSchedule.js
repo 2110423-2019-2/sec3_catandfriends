@@ -5,25 +5,140 @@ import history from "../history";
 export default class EnrollSchedule extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      schedule: null,
-      ready: false
-    };
+    this.state = {};
   }
-
   render() {
-    if (this.state.ready) {
-      if (!this.state.schedule.length) {
+    // if (this.state.ready) {
+    //   if (!this.state.schedule.length) {
+    if (!this.state.schedule) {
+      return (
+        <div className="justify-content-center">
+          <div className="row">
+            <div className="col-md-12" align="center">
+              <div className="enrollCard">
+                <h3 className="enrollH text-center">Enrollment and Schedule</h3>
+                <div className="row" style={{}}>
+                  <div className="col-md-12" style={{ padding: "30px" }}>
+                    <div className="row">
+                      <div className="col-md-2 " style={{ padding: "0px" }}>
+                        <div className="nameR " style={{ textAlign: "center" }}>
+                          Course Name
+                        </div>
+                      </div>
+                      <div className="col-md-2 " style={{ padding: "0px" }}>
+                        <div className="nameR" style={{ textAlign: "center" }}>
+                          Tutor Name
+                        </div>
+                      </div>
+                      <div className="col-md-2 " style={{ padding: "0px" }}>
+                        <div className="nameR" style={{ textAlign: "center" }}>
+                          Enroll Date
+                        </div>
+                      </div>
+                      <div className="col-md-2 " style={{ padding: "0px" }}>
+                        <div className="nameR" style={{ textAlign: "center" }}>
+                          Start Date
+                        </div>
+                      </div>
+                      <div className="col-md-2 " style={{ padding: "0px" }}>
+                        <div className="nameR" style={{ textAlign: "center" }}>
+                          End Date
+                        </div>
+                      </div>
+                      <div className="col-md-2 " style={{ padding: "0px" }}>
+                        <div className="nameR" style={{ textAlign: "center" }}>
+                          Class Day
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12 ">
+                        <div
+                          style={{
+                            textAlign: "center",
+                            height: "300px",
+                            fontSize: "24px",
+                            paddingTop: "20px"
+                          }}
+                        >
+                          Loading...
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      if (this.state.schedule.length) {
         return (
-          <div className="row justify-content-center">
-            <div className="card" style={{ width: "1000px" }}>
-              <div className="card-body">
-                <h4 className="card-title" style={{ textAlign: "center" }}>
-                  Enrollment and Schedule
-                </h4>
-                <br />
-                <div className="row justify-content-center">
-                  <h5>You have no enrollment</h5>
+          <div className="justify-content-center">
+            <div className="row">
+              <div className="col-md-12" align="center">
+                <div className="enrollCard">
+                  <h3 className="enrollH text-center">
+                    Enrollment and Schedule
+                  </h3>
+                  <div className="row" style={{}}>
+                    <div className="col-md-12" style={{ padding: "30px" }}>
+                      <div className="row">
+                        <div className="col-md-2 " style={{ padding: "0px" }}>
+                          <div
+                            className="nameR "
+                            style={{ textAlign: "center" }}
+                          >
+                            Course Name
+                          </div>
+                        </div>
+                        <div className="col-md-2 " style={{ padding: "0px" }}>
+                          <div
+                            className="nameR"
+                            style={{ textAlign: "center" }}
+                          >
+                            Tutor Name
+                          </div>
+                        </div>
+                        <div className="col-md-2 " style={{ padding: "0px" }}>
+                          <div
+                            className="nameR"
+                            style={{ textAlign: "center" }}
+                          >
+                            Enroll Date
+                          </div>
+                        </div>
+                        <div className="col-md-2 " style={{ padding: "0px" }}>
+                          <div
+                            className="nameR"
+                            style={{ textAlign: "center" }}
+                          >
+                            Start Date
+                          </div>
+                        </div>
+                        <div className="col-md-2 " style={{ padding: "0px" }}>
+                          <div
+                            className="nameR"
+                            style={{ textAlign: "center" }}
+                          >
+                            End Date
+                          </div>
+                        </div>
+                        <div className="col-md-2 " style={{ padding: "0px" }}>
+                          <div
+                            className="nameR"
+                            style={{ textAlign: "center" }}
+                          >
+                            Class Day
+                          </div>
+                        </div>
+                      </div>
+                      {this.state.schedule.map(item => (
+                        <RowInformation detail={item} />
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -31,82 +146,94 @@ export default class EnrollSchedule extends Component {
         );
       } else {
         return (
-          <div className="row justify-content-center">
-            <div
-              className="card"
-              style={{ width: "1000px", minWidth: "1000px" }}
-            >
-              <div className="card-body">
-                <h4 className="card-title" style={{ textAlign: "center" }}>
-                  Enrollment and Schedule
-                </h4>
-                <br />
-                <div className="row justify-content-center">
-                  {/* <div class="col-md-2 border">
-                    <body style={{ textAlign: "center" }}>Course ID</body>
-                  </div> */}
-                  <div class="col-md-1 justify-content-center"></div>
-                  <div class="col-md-2 border justify-content-center">
-                    <body style={{ textAlign: "center", fontWeight: "bold" }}>
-                      Course Name
-                    </body>
+          <div className="justify-content-center">
+            <div className="row">
+              <div className="col-md-12" align="center">
+                <div className="enrollCard">
+                  <h3 className="enrollH text-center">
+                    Enrollment and Schedule
+                  </h3>
+                  <div className="row" style={{}}>
+                    <div className="col-md-12" style={{ padding: "30px" }}>
+                      <div className="row">
+                        <div className="col-md-2 " style={{ padding: "0px" }}>
+                          <div
+                            className="nameR "
+                            style={{ textAlign: "center" }}
+                          >
+                            Course Name
+                          </div>
+                        </div>
+                        <div className="col-md-2 " style={{ padding: "0px" }}>
+                          <div
+                            className="nameR"
+                            style={{ textAlign: "center" }}
+                          >
+                            Tutor Name
+                          </div>
+                        </div>
+                        <div className="col-md-2 " style={{ padding: "0px" }}>
+                          <div
+                            className="nameR"
+                            style={{ textAlign: "center" }}
+                          >
+                            Enroll Date
+                          </div>
+                        </div>
+                        <div className="col-md-2 " style={{ padding: "0px" }}>
+                          <div
+                            className="nameR"
+                            style={{ textAlign: "center" }}
+                          >
+                            Start Date
+                          </div>
+                        </div>
+                        <div className="col-md-2 " style={{ padding: "0px" }}>
+                          <div
+                            className="nameR"
+                            style={{ textAlign: "center" }}
+                          >
+                            End Date
+                          </div>
+                        </div>
+                        <div className="col-md-2 " style={{ padding: "0px" }}>
+                          <div
+                            className="nameR"
+                            style={{ textAlign: "center" }}
+                          >
+                            Class Day
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-12 ">
+                          <div
+                            style={{
+                              textAlign: "center",
+                              height: "300px",
+                              fontSize: "24px",
+                              paddingTop: "20px"
+                            }}
+                          >
+                            You have no course enrollment
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-md-2 border justify-content-center">
-                    <body style={{ textAlign: "center", fontWeight: "bold" }}>
-                      Tutor Name
-                    </body>
-                  </div>
-                  <div class="col-md-2 border justify-content-center">
-                    <body style={{ textAlign: "center", fontWeight: "bold" }}>
-                      Enroll Date
-                    </body>
-                  </div>
-                  <div class="col-md-2 border justify-content-center">
-                    <body style={{ textAlign: "center", fontWeight: "bold" }}>
-                      Start Date - End Date
-                    </body>
-                  </div>
-                  <div class="col-md-2 border">
-                    <body style={{ textAlign: "center", fontWeight: "bold" }}>
-                      Class Day
-                    </body>
-                  </div>
-                  <div class="col-md-1 justify-content-center"></div>
                 </div>
-                {this.state.schedule.map(item => (
-                  <RowInformation detail={item} />
-                ))}
               </div>
             </div>
           </div>
         );
       }
-    } else {
-      return (
-        <div className="row justify-content-center">
-          <div className="card" style={{ width: "1000px" }}>
-            <div className="card-body">
-              <h4 className="card-title" style={{ textAlign: "center" }}>
-                Enrollment and Schedule
-              </h4>
-              <br />
-              <div className="row justify-content-center">
-                <h5>Loading...</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
     }
   }
 
   async componentDidMount() {
     let schedule = await Util.getSchedule(this.props.userId);
     console.log(schedule);
-    this.setState({
-      schedule: schedule,
-      ready: true
-    });
+    this.setState({ schedule });
   }
 }
 class RowInformation extends Component {
@@ -132,39 +259,45 @@ class RowInformation extends Component {
     } = this.props.detail;
     if (this.props.detail) {
       return (
-        <div
-          className="row"
-          key={this.props.detail._id}
-          style={{ textAlign: "left" }}
-        >
-          {/* <div class="col-md-2 border">
-            <body style={{ textAlign: "center" }}>{_id}</body>
-          </div> */}
-          <div class="col-md-1 justify-content-center"></div>
-          <div class="col-md-2 border">
-            <body style={{ textAlign: "center" }}>
+        <div className="row" key={this.props.detail._id}>
+          <div className="col-md-2 border">
+            <a
+              className="courseL"
+              style={{ textAlign: "center" }}
+              onClick={() => {
+                history.push(`/course?courseId=${_id}`);
+              }}
+            >
               {courseName ? courseName : "-"}
-            </body>
+            </a>
           </div>
-          <div class="col-md-2 border">
-            <body style={{ textAlign: "center" }}>
+          <div className="col-md-2 border">
+            <div style={{ textAlign: "center" }}>
               {tutorName ? tutorName : "-"}
-            </body>
+            </div>
           </div>
+
           <div class="col-md-2 border">
-            <body style={{ textAlign: "center" }}>
+            <div style={{ textAlign: "center" }}>
               {enrollDate ? enrollDate : "-"}
-            </body>
+            </div>
+          </div>
+
+          <div class="col-md-2 border">
+            <div style={{ textAlign: "center" }}>
+              {duration ? duration.split(" - ")[0] : "-"}
+            </div>
           </div>
           <div class="col-md-2 border">
-            <body style={{ textAlign: "center" }}>
-              {duration ? duration : "-"}
-            </body>
+            <div style={{ textAlign: "center" }}>
+              {duration ? duration.split(" - ")[1] : "-"}
+            </div>
           </div>
-          <div class="col-md-2 border">
-            <body style={{ textAlign: "center" }}>{day ? duration : "-"}</body>
+          <div className="col-md-2 border justify-content-center">
+            <textarea className="Eday" style={{ textAlign: "center" }}>
+              {day ? this.dayToString(day) : "-"}
+            </textarea>
           </div>
-          <div class="col-md-1 justify-content-center"></div>
         </div>
       );
     }
