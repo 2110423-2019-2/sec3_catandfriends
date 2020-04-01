@@ -30,7 +30,7 @@ export default class StudentCard extends Component {
             </div>
             <div className="row">
               <div className="col-md-4 " align="center">
-                <img className="studentpicPro " src={this.state.imgsrc} />
+                <img className="studentpicPro " id="photo4" />
               </div>
               <div className="col-md-8 ">
                 <div className="row justify-content-center">
@@ -124,5 +124,33 @@ export default class StudentCard extends Component {
         </div>
       </div>*/
     );
+  }
+  async componentDidMount() {
+    if (this.props.data.profileImage) {
+      var xhr = new XMLHttpRequest();
+      var myurl = "";
+      xhr.open(
+        "GET",
+        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
+          "token"
+        )}&userId=${this.props.data._id}`,
+        true
+      );
+      xhr.responseType = "arraybuffer";
+      xhr.onload = function(e, imageUrl) {
+        var arrayBufferView = new Uint8Array(this.response);
+        var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(blob);
+        var img = document.querySelector("#photo4");
+        if (img) {
+          img.src = imageUrl;
+        }
+      };
+      xhr.send();
+    } else {
+      var img = document.querySelector("#photo4");
+      img.src = "https://i.ibb.co/8NHMg4K/pic.png";
+    }
   }
 }
