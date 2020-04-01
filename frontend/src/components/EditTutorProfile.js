@@ -14,7 +14,7 @@ export default class EditTutorProfile extends Component {
     super(props);
 
     this.state = {
-      _id:"",
+      _id: "",
       firstName: "",
       lastName: "",
       gender: "",
@@ -39,7 +39,7 @@ export default class EditTutorProfile extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    alert(JSON.stringify(this.state));
+    // alert(JSON.stringify(this.state));
     let data = await Util.editProfile(
       this.state._id,
       this.state.firstName,
@@ -49,10 +49,10 @@ export default class EditTutorProfile extends Component {
       this.state.profileImage,
       localStorage.getItem("token"),
     );
-    console.log("data"+data);
+    // console.log("data"+data);
     if (!data.error) {
       alert("A profile is edited");
-      console.log(data);
+      // console.log(data);
       history.push("/profile");
     } else {
       window.alert("Cannot Edit Profile");
@@ -62,7 +62,7 @@ export default class EditTutorProfile extends Component {
   updateThisImage(profileImage) {
     this.setState({ profileImage: profileImage })
     this.handleImageCropClose();
-    console.log(profileImage);
+    // console.log(profileImage);
     const data = new FormData();
     data.append("file", this.state.profileImage);
     axios
@@ -77,7 +77,7 @@ export default class EditTutorProfile extends Component {
       )
       .then(res => {
         // then print response status
-        console.log(res.statusText);
+        // console.log(res.statusText);
         alert("File Uploaded");
       });
   }
@@ -91,9 +91,9 @@ export default class EditTutorProfile extends Component {
         <h3 className="editProfileH text-center">Edit Tutor Profile</h3>
         <div className="row" style={{ marginTop: "10px" }}>
           <div className="col-md-12">
-            <div className="row justify-content-center">
+            {/* <div className="row justify-content-center">
               Croped picture
-              </div>
+              </div> */}
             {/* <input
                 id="veridoc"
                 className="form-control-file"
@@ -103,7 +103,7 @@ export default class EditTutorProfile extends Component {
                 onChange={this.onChangeHandlerSlip}
                 style={{ textAlign: "center" }}
               /> */}
-            <NormalButton color="rgb(76, 182, 181)" onClick={this.handleImageCropShow}>
+            {/* <NormalButton color="rgb(76, 182, 181)" onClick={this.handleImageCropShow}>
               Edit your picture
               </NormalButton>
 
@@ -115,22 +115,22 @@ export default class EditTutorProfile extends Component {
                   </div>
                 </Modal.Body>
               </Modal>
-            </div>
+            </div> */}
           </div>
         </div>
         <form
           onSubmit={event => this.handleSubmit(event)}
         >
-            {/* <div className="row">
+          {/* <div className="row">
                 <div className="col-md-12">
                   <div className="nameV" style={{textAlign:"center"}}>
                      <img src={this.state.profileImage} className="profilePic" />
                   </div>
                 </div>
               </div> */}
-              <div class="row" style={{marginTop:"10px",textAlign:"center"}}>
-                <div class="col-md-6">
-                <label htmlFor="firstName" className="nameE">
+          <div class="row" style={{ marginTop: "10px", textAlign: "center" }}>
+            <div class="col-md-6">
+              <label htmlFor="firstName" className="nameE">
                 First Name
                 <br />
                 <input
@@ -140,6 +140,7 @@ export default class EditTutorProfile extends Component {
                   name="firstName"
                   style={{ width: 250 }}
                   onChange={this.handleChange}
+                  required
                 />
               </label>
             </div>
@@ -155,6 +156,7 @@ export default class EditTutorProfile extends Component {
                   style={{ width: 250 }}
                   name="lastName"
                   onChange={this.handleChange}
+                  required
                 />
               </label>
             </div>
@@ -172,6 +174,9 @@ export default class EditTutorProfile extends Component {
                   style={{ width: 250 }}
                   name="phoneNumber"
                   onChange={this.handleChange}
+                  required
+                  pattern="[0-9]{10}"
+                  maxlength="10"
                 />
               </label>
             </div>
@@ -203,103 +208,103 @@ export default class EditTutorProfile extends Component {
               </NormalButton>
             </div>
           </div>
-          </form>
-          </div>
+        </form>
+      </div>
     );
   }
 
-//   onChangeHandlerImg = event => {
+  //   onChangeHandlerImg = event => {
 
-//     this.setState({
+  //     this.setState({
 
-//       selectedImg: event.target.files[0],
+  //       selectedImg: event.target.files[0],
 
-//       loadedImg: 0
+  //       loadedImg: 0
 
-//     });
+  //     });
 
-//   };
+  //   };
 
 
- 
 
-// onClickHandlerImg = () => {
 
-//     if (!this.state.selectedImg) {
+  // onClickHandlerImg = () => {
 
-//       alert("Please select a file");
+  //     if (!this.state.selectedImg) {
 
-//       return;
+  //       alert("Please select a file");
 
-//     }
+  //       return;
 
-//     if (!this.isImagefile(this.state.selectedImg)) {
+  //     }
 
-//       alert(
+  //     if (!this.isImagefile(this.state.selectedImg)) {
 
-//         "Your chosen file is not a JPG/PNG/GIF file" +
+  //       alert(
 
-//           this.state.selectedImg.type
+  //         "Your chosen file is not a JPG/PNG/GIF file" +
 
-//       );
+  //           this.state.selectedImg.type
 
-//       return;
+  //       );
 
-//     }
+  //       return;
 
-//     const data = new FormData();
+  //     }
 
-//     data.append("file", this.state.selectedImg);
+  //     const data = new FormData();
 
-//     axios
+  //     data.append("file", this.state.selectedImg);
 
-//       .post(
+  //     axios
 
-//         `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
+  //       .post(
 
-//           "token"
+  //         `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
 
-//         )}`,
+  //           "token"
 
-//         data,
+  //         )}`,
 
-//         {
+  //         data,
 
-//           // receive two    parameter endpoint url ,form data
+  //         {
 
-//         }
+  //           // receive two    parameter endpoint url ,form data
 
-//       )
+  //         }
 
-//       .then(res => {
+  //       )
 
-//         // then print response status
+  //       .then(res => {
 
-//         console.log(res.statusText);
+  //         // then print response status
 
-//         alert("File Uploaded");
+  //         console.log(res.statusText);
 
-//         window.location.reload();
+  //         alert("File Uploaded");
 
-//       });
+  //         window.location.reload();
 
-//   };
+  //       });
 
-// isImagefile(file) {
+  //   };
 
-//     const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
+  // isImagefile(file) {
 
-//     return file && acceptedImageTypes.includes(file.type);
+  //     const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
 
-//   }
-  
+  //     return file && acceptedImageTypes.includes(file.type);
+
+  //   }
+
   async componentDidMount() {
-    console.log(window.location.search);
+    // console.log(window.location.search);
     let params = new URLSearchParams(window.location.search);
     let data = await Util.getProfile(params.get("userId"));
     await this.setState(data);
-    await console.log(data);
-    console.log(this.state)
+    // await console.log(data);
+    // console.log(this.state)
     //console.log(localStorage.getItem("token"));
   }
-  }
+}
