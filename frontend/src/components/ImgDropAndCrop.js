@@ -79,22 +79,33 @@ class ImgDropAndCrop extends Component {
         const { imgSrc } = this.state;
         image64toCanvasRef(canvasRef, imgSrc, pixelCrop);
         console.log(canvasRef);
-
     }
     handleOnSubmit = (event) => {
         event.preventDefault();
-        const canvasRef = this.imagePreviewCanvasRef.current;
+        const canvasRef = this.imagePreviewCanvasRef.current; //BUG
         const { imgSrc } = this.state;
+        if (!imgSrc) {
+            alert("No selected picture");
+            return;
+        }
+        if (!canvasRef.width || !canvasRef.height) {
+            alert("No cropped picture");
+            return;
+        }
+
         const fileExtension = extractImageFileExtensionFromBase64(imgSrc);
         const imageData64 = canvasRef.toDataURL('image/' + fileExtension);
-        this.props.triggerParentUpdate(imageData64);
+        this.props.updateThisImage(imageData64);
+    }
+    handleOnCancel = (event) => {
+        this.props.handleImageCropClose();
     }
 
     render() {
         const { imgSrc } = this.state;
         return (
             <div>
-                <div className="row justify-content-center" style={{ fontSize: "30px" }}>Edit your picture</div>
+                <div className="row justify-content-center" style={{ fontSize: "30px", marginBottom: "5px", marginTop: "5px" }}>Edit your picture</div>
                 {imgSrc !== null ?
                     <div>
                         <ReactCrop src={imgSrc}
@@ -115,24 +126,29 @@ class ImgDropAndCrop extends Component {
                     </div>
                     : <div></div>
                 }
-                <div className="row justify-content-center">
+                <div className="row justify-content-center" style={{ marginBottom: "5px", marginTop: "5px" }}>
                     <Dropzone onDrop={this.handleOnDrop} accept={acceptFileTypes} multiple={false} maxSize={imageMaxSize}>
                         {({ getRootProps, getInputProps }) => (
-                            <section>
+                            <div className="row justify-content-center">
                                 <div {...getRootProps()}>
                                     <input {...getInputProps()} />
                                     <div className="col border justify-content-center">
-                                        <div className="row-md-12 justify-content-center" style={{ marginBottom: "10px", marginTop: "10px" }}>
+                                        <div className="row-cols-xl-6 justify-content-center" style={{ marginBottom: "10px", marginTop: "10px" }}>
                                             Choose or drag and drop your picture here
                                         </div>
                                     </div>
                                 </div>
-                            </section>
+                            </div>
                         )}
                     </Dropzone>
                 </div>
                 <div className="row justify-content-center">
-                    <NormalButton color="rgb(76, 182, 181)" onClick={this.handleOnSubmit}>Done</NormalButton>
+                    <div className="d-flex justify-content-end" style={{ marginBottom: "5px", marginTop: "5px" }}>
+                        <NormalButton color="black" onClick={this.handleOnCancel}>Cancel</NormalButton>
+                    </div>
+                    <div className="d-flex justify-content-start" style={{ marginBottom: "5px", marginTop: "5px" }}>
+                        <NormalButton color="rgb(76, 182, 181)" onClick={this.handleOnSubmit}>Done</NormalButton>
+                    </div>
                 </div>
             </div>
         );
