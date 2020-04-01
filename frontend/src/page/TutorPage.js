@@ -37,7 +37,22 @@ export default class TutorPage extends Component {
           </div>
           <div className="row">
             <div className="col-md-12" align="center">
-              <CourseCardLayout data={this.state.detail} />
+              <div className="row justify-content-center">
+                <h2
+                  style={{
+                    padding: "5px 15px",
+                    textAlign: "center",
+                    color: "black",
+                    backgroundColor: "rgba(255,255,255,0.3)",
+                    borderRadius: "12px"
+                  }}
+                >
+                  Tutor's Courses
+                </h2>
+              </div>
+              <div className="row justify-content-center">
+                <CourseCardLayout data={this.state.detail} />
+              </div>
             </div>
           </div>
         </div>

@@ -18,7 +18,10 @@ export class StudentCTuProfile extends Component {
 
   render() {
     return (
-      <div className="bigCard border" style={{ minHeight: "auto" }}>
+      <div
+        className="bigCard border"
+        style={{ minHeight: "auto", marginBottom: "20px" }}
+      >
         <div className="row">
           <div className="col-md-12">
             <div className="row">
@@ -91,7 +94,7 @@ export class StudentCTuProfile extends Component {
             </div>
           </div>
         </div>
-      </div> 
+      </div>
     );
   }
   async componentDidMount() {
