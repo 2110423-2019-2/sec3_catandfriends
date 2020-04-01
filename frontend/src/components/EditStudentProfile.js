@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./EditStudentProfile.css";
+import "./EditTutorProfile.css";
 import axios from "axios";
 import FileSaver from "file-saver";
 import Util from "../apis/Util";
@@ -9,7 +9,7 @@ import Popup from "reactjs-popup";
 import ImgDropAndCrop from "../components/ImgDropAndCrop";
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 
-export default class EditTutorProfile extends Component {
+export default class EditStudentProfile extends Component {
   constructor(props) {
     super(props);
 
@@ -47,9 +47,9 @@ export default class EditTutorProfile extends Component {
       this.state.gender,
       this.state.phoneNumber,
       this.state.profileImage,
-      localStorage.getItem("token"),
+      localStorage.getItem("token")
     );
-    console.log("data" + data);
+    // console.log("data"+data);
     if (!data.error) {
       alert("A profile is edited");
       // console.log(data);
@@ -60,9 +60,9 @@ export default class EditTutorProfile extends Component {
   }
 
   updateThisImage(profileImage) {
-    this.setState({ profileImage: profileImage })
+    this.setState({ profileImage: profileImage });
     this.handleImageCropClose();
-    console.log(profileImage);
+    // console.log(profileImage);
     const data = new FormData();
     data.append("file", this.state.profileImage);
     axios
@@ -77,7 +77,7 @@ export default class EditTutorProfile extends Component {
       )
       .then(res => {
         // then print response status
-        console.log(res.statusText);
+        // console.log(res.statusText);
         alert("File Uploaded");
       });
   }
@@ -89,222 +89,197 @@ export default class EditTutorProfile extends Component {
     return (
       <div className="editTutorProfileCard">
         <h3 className="editProfileH text-center">Edit Student Profile</h3>
-        <div className="row" style={{ marginTop: "10px" }}>
-          <div className="col-md-12">
-            {/* <div className="row justify-content-center">
-              Croped picture
-              </div> */}
-            {/* <input
-                id="veridoc"
-                className="form-control-file"
-                type="file"
-                name="file"
-                accept=".jpeg,.gif,.png"
-                onChange={this.onChangeHandlerSlip}
-                style={{ textAlign: "center" }}
-              /> */}
-            {/* <NormalButton color="rgb(76, 182, 181)" onClick={this.handleImageCropShow}>
-              Edit your picture
-              </NormalButton>
+        <div className="row" style={{ marginTop: "10px", padding: "20px" }}>
+          <div className="col-md-3 justify-content-center infoC">
+            <div
+              className="nameE "
+              style={{ paddingLeft: "0px", marginTop: "10px" }}
+            >
+              New profile image
+            </div>
+            <div
+              className="row justify-content-center "
+              style={{ padding: "10px 25px", marginTop: "20px" }}
+            >
+              <div className="col-md-12 justify-content-center ">
+                <input
+                  id="veridoc"
+                  className="form-control-file p-1"
+                  type="file"
+                  name="file"
+                  accept=".jpeg,.gif,.png"
+                  onChange={this.onChangeHandlerSlip}
+                />
+                <button
+                  id="upload"
+                  type="button"
+                  className="btn btn-block btn-primary btn-sm p-1"
+                  onClick={this.onClickHandlerSlip}
+                >
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
 
-            <div className="row justify-content-center" >
-              <Modal show={this.state.showEditImage} onHide={this.handleImageCropClose} size="lg" style={{ overflow: "hidden" }}>
-                <Modal.Body style={{ overflow: "auto" }}>
-                  <div>
-                    <ImgDropAndCrop updateThisImage={this.updateThisImage} handleImageCropClose={this.handleImageCropClose} />
-                  </div>
-                </Modal.Body>
-              </Modal>
-            </div> */}
+          <div className="col-md-9">
+            <form onSubmit={event => this.handleSubmit(event)}>
+              <div
+                class="row"
+                style={{ marginTop: "10px", textAlign: "center" }}
+              >
+                <div class="col-md-6">
+                  <label htmlFor="firstName" className="nameE">
+                    First Name
+                    <br />
+                    <input
+                      id="firstName"
+                      type="text"
+                      value={this.state.firstName}
+                      name="firstName"
+                      style={{ width: 250 }}
+                      onChange={this.handleChange}
+                      required
+                    />
+                  </label>
+                </div>
+
+                <div class="col-md-6">
+                  <label className="nameE" htmlFor="lastName">
+                    Last Name
+                    <br />
+                    <input
+                      id="lastName"
+                      type="text"
+                      value={this.state.lastName}
+                      style={{ width: 250 }}
+                      name="lastName"
+                      onChange={this.handleChange}
+                      required
+                    />
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6" width="100%">
+                  <label className="nameE">
+                    Phone Number
+                    <br />
+                    <input
+                      id="tel"
+                      type="tel"
+                      maxLength="10"
+                      value={this.state.phoneNumber}
+                      style={{ width: 250 }}
+                      name="phoneNumber"
+                      onChange={this.handleChange}
+                      required
+                      pattern="[0-9]{10}"
+                      maxlength="10"
+                    />
+                  </label>
+                </div>
+                <div class="col-md-6">
+                  <label className="nameE">
+                    Gender
+                    <br />
+                    <select
+                      id="gender"
+                      value={this.state.Gender}
+                      style={{ width: 250 }}
+                      name="gender"
+                      onChange={this.handleChange}
+                    >
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+              <div className="row text-center" style={{ marginTop: "20px" }}>
+                <div className="col-md-12">
+                  <NormalButton
+                    color="rgb(76, 182, 181)"
+                    type="submit"
+                    value="Submit"
+                  >
+                    Submit
+                  </NormalButton>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-        <form
-          onSubmit={event => this.handleSubmit(event)}
-        >
-          {/* <div className="row">
-                <div className="col-md-12">
-                  <div className="nameV" style={{textAlign:"center"}}>
-                     <img src={this.state.profileImage} className="profilePic" />
-                  </div>
-                </div>
-              </div> */}
-          <div class="row" style={{ marginTop: "10px", textAlign: "center" }}>
-            <div class="col-md-6">
-              <label htmlFor="firstName" className="nameE">
-                First Name
-                <br />
-                <input
-                  id="firstName"
-                  type="text"
-                  value={this.state.firstName}
-                  name="firstName"
-                  style={{ width: 250 }}
-                  onChange={this.handleChange}
-                  required
-                />
-              </label>
-            </div>
-
-            <div class="col-md-6">
-              <label className="nameE" htmlFor="lastName">
-                Last Name
-                <br />
-                <input
-                  id="lastName"
-                  type="text"
-                  value={this.state.lastName}
-                  style={{ width: 250 }}
-                  name="lastName"
-                  onChange={this.handleChange}
-                  required
-                />
-              </label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6" width="100%">
-              <label className="nameE">
-                Phone Number
-                <br />
-                <input
-                  id="tel"
-                  type="tel"
-                  maxLength="10"
-                  value={this.state.phoneNumber}
-                  style={{ width: 250 }}
-                  name="phoneNumber"
-                  onChange={this.handleChange}
-                  required
-                  pattern="[0-9]{10}"
-                  maxlength="10"
-                />
-              </label>
-            </div>
-            <div class="col-md-6">
-              <label className="nameE">
-                Gender
-                <br />
-                <select
-                  id="gender"
-                  value={this.state.Gender}
-                  style={{ width: 250 }}
-                  name="gender"
-                  onChange={this.handleChange}
-                >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
-              </label>
-            </div>
-          </div>
-          <div className="row text-center" style={{ marginTop: "20px" }}>
-            <div className="col-md-12">
-              <NormalButton
-                color="rgb(76, 182, 181)"
-                type="submit"
-                value="Submit"
-              >
-                Submit
-              </NormalButton>
-            </div>
-          </div>
-        </form>
       </div>
     );
   }
 
-  //   onChangeHandlerImg = event => {
+  onChangeHandlerSlip = event => {
+    this.setState({
+      selectedSlip: event.target.files[0],
 
-  //     this.setState({
+      loadedSilp: 0
+    });
+  };
 
-  //       selectedImg: event.target.files[0],
+  onClickHandlerSlip = () => {
+    if (!this.state.selectedSlip) {
+      alert("Please select a file");
 
-  //       loadedImg: 0
+      return;
+    }
 
-  //     });
+    if (!this.isImagefile(this.state.selectedSlip)) {
+      alert(
+        "Your chosen file is not a JPG/PNG/GIF file" +
+          this.state.selectedSlip.type
+      );
 
-  //   };
+      return;
+    }
 
+    const data = new FormData();
 
+    data.append("file", this.state.selectedSlip);
 
+    axios
 
-  // onClickHandlerImg = () => {
+      .post(
+        `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
+          "token"
+        )}`,
 
-  //     if (!this.state.selectedImg) {
+        data,
 
-  //       alert("Please select a file");
+        {
+          // receive two    parameter endpoint url ,form data
+        }
+      )
 
-  //       return;
+      .then(res => {
+        // then print response status
 
-  //     }
+        console.log(res.statusText);
 
-  //     if (!this.isImagefile(this.state.selectedImg)) {
+        alert("File Uploaded");
 
-  //       alert(
+        window.location.reload();
+      });
+  };
 
-  //         "Your chosen file is not a JPG/PNG/GIF file" +
+  isImagefile(file) {
+    const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
 
-  //           this.state.selectedImg.type
-
-  //       );
-
-  //       return;
-
-  //     }
-
-  //     const data = new FormData();
-
-  //     data.append("file", this.state.selectedImg);
-
-  //     axios
-
-  //       .post(
-
-  //         `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
-
-  //           "token"
-
-  //         )}`,
-
-  //         data,
-
-  //         {
-
-  //           // receive two    parameter endpoint url ,form data
-
-  //         }
-
-  //       )
-
-  //       .then(res => {
-
-  //         // then print response status
-
-  //         console.log(res.statusText);
-
-  //         alert("File Uploaded");
-
-  //         window.location.reload();
-
-  //       });
-
-  //   };
-
-  // isImagefile(file) {
-
-  //     const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
-
-  //     return file && acceptedImageTypes.includes(file.type);
-
-  //   }
+    return file && acceptedImageTypes.includes(file.type);
+  }
 
   async componentDidMount() {
-    console.log(window.location.search);
+    // console.log(window.location.search);
     let params = new URLSearchParams(window.location.search);
     let data = await Util.getProfile(params.get("userId"));
     await this.setState(data);
-    await console.log(data);
-    console.log(this.state)
+    // await console.log(data);
+    // console.log(this.state)
     //console.log(localStorage.getItem("token"));
   }
 }
