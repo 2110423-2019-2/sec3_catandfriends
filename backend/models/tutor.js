@@ -19,6 +19,18 @@ const tutorSchema = new Schema(
       unique: true,
       sparse: true,
       default: null
+    },
+    verificationPayment: {
+      type: String,
+      unique: true,
+      sparse: true,
+      default: null
+    },
+    premiumPayment: {
+      type: String,
+      unique: true,
+      sparse: true,
+      default: null
     }
   },
   {

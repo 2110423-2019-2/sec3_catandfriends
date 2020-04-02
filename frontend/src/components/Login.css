@@ -1,7 +1,82 @@
-.login{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.field {
+  font-size: 1.1em;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid gray;
+  border-radius: 15px;
+  padding-left: 15px;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.6) !important;
+}
+.loginBtn {
+  border-radius: 60px !important;
+  padding: 0.25em 1em;
+  font-size: 1.1em;
+}
+.login {
+  min-width: 430px;
+  min-height: 220px;
+  width: auto;
+  height: auto;
+  border-radius: 30px !important;
+  padding-left: 30px;
+  padding-top: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  margin-bottom: 180px;
+  /* margin-top: 80px;  */
+  box-shadow: 10px 16px 40px rgba(39, 44, 49, 0.24),
+    3px 5px 10px rgba(39, 44, 49, 0.12);
+}
+.whole {
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  top: 86;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  /* background: rgba(255, 255, 255, 0.5); */
+  background: linear-gradient(229deg, #2edefb, #6046c6, #d04599);
+  background-size: 150% 150%;
 
+  -webkit-animation: AnimationName 59s ease infinite;
+  -moz-animation: AnimationName 59s ease infinite;
+  animation: AnimationName 59s ease infinite;
+}
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 0% 51%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 51%;
+  }
+}
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 0% 51%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 51%;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 51%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 51%;
+  }
 }

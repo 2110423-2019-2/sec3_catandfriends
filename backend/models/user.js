@@ -47,12 +47,18 @@ const userSchema = new Schema(
       type: Boolean,
       required: true,
       default: false
+    },
+    profileImage: {
+      type: String,
+      unique: true,
+      sparse: true,
+      default: null
     }
   },
   { collection: collectionName, versionKey: false }
 );
 
-userSchema.methods.isValidPassword = async function(password) {
+userSchema.methods.isValidPassword = async function (password) {
   const user = this;
   const compare = await bcrypt.compare(password, user.password);
   return compare;

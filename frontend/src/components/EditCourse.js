@@ -14,26 +14,14 @@ export default class EditCourse extends Component {
       startDate: "",
       endDate: "",
       Monday: false,
-      ST0: null,
-      ET0: null,
       Tuesday: false,
-      ST1: null,
-      ET1: null,
       Wednesday: false,
-      ST2: null,
-      ET2: null,
       Thursday: false,
-      ST3: null,
-      ET3: null,
       Friday: false,
-      ST4: null,
-      ET4: null,
       Saturday: false,
-      ST5: null,
-      ET5: null,
       Sunday: false,
-      ST6: null,
-      ET6: null,
+      StartTimes: [null, null, null, null, null, null, null],
+      EndTimes: [null, null, null, null, null, null, null],
       dayAndStartTime: [null, null, null, null, null, null, null],
       dayAndEndTime: [null, null, null, null, null, null, null],
       day: ""
@@ -41,6 +29,7 @@ export default class EditCourse extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+
   }
   // onSubmit={e=>{
   //   alert(JSON.stringify(this.state))
@@ -56,39 +45,86 @@ export default class EditCourse extends Component {
     let d = parseInt(c) / 100;
     return d;
   }
+
+  floatToTime(float) {
+    if (!float) return null;
+    let a = float.toString();
+    let b = (float * 100).toString();
+    let [hour, minute] = a.split(".");
+    minute = hour <= 9 ? b.substring(1, 3) : b.substring(2, 4);
+    return (hour <= 9 ? "0" + hour : hour) + ":" + minute;
+  }
+
+  dateToYMD(date) {
+    var d = date.getDate();
+    var m = date.getMonth() + 1;
+    var y = date.getFullYear();
+    return y + "-" + (m <= 9 ? "0" + m : m) + "-" + (d <= 9 ? "0" + d : d);
+  }
+
+  setObject() {
+    if (this.state.dayAndStartTime[0] != null) {
+      this.state.Monday = true;
+      document.getElementById("Monday").checked = true;
+    }
+    if (this.state.dayAndStartTime[1] != null) {
+      this.state.Tuesday = true;
+      document.getElementById("Tuesday").checked = true;
+    }
+    if (this.state.dayAndStartTime[2] != null) {
+      this.state.Wednesday = true;
+      document.getElementById("Wednesday").checked = true;
+    }
+    if (this.state.dayAndStartTime[3] != null) {
+      this.state.Thursday = true;
+      document.getElementById("Thursday").checked = true;
+    }
+    if (this.state.dayAndStartTime[4] != null) {
+      this.state.Friday = true;
+      document.getElementById("Friday").checked = true;
+    }
+    if (this.state.dayAndStartTime[5] != null) {
+      this.state.Saturday = true;
+      document.getElementById("Saturday").checked = true;
+    }
+    if (this.state.dayAndStartTime[6] != null) {
+      this.state.Sunday = true;
+      document.getElementById("Sunday").checked = true;
+    }
+    this.enableTime();
+    var i = 0;
+    for (i = 0; i < 7; i++) {
+      var ST = this.state.dayAndStartTime[i];
+      var ET = this.state.dayAndEndTime[i];
+      if (ST == null) document.getElementById("ST" + i).value = null;
+      if (ST != null)
+        document.getElementById("ST" + i).value = this.floatToTime(ST);
+      if (ET == null) document.getElementById("ET" + i).value = null;
+      if (ET != null)
+        document.getElementById("ET" + i).value = this.floatToTime(ET);
+    }
+  }
+
   handleChange(event) {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     this.setState({
-      [name]: value,
-      dayAndStartTime: [
-        this.timeToFloat(this.state.ST0),
-        this.timeToFloat(this.state.ST1),
-        this.timeToFloat(this.state.ST2),
-        this.timeToFloat(this.state.ST3),
-        this.timeToFloat(this.state.ST4),
-        this.timeToFloat(this.state.ST5),
-        this.timeToFloat(this.state.ST6)
-      ],
-      dayAndEndTime: [
-        this.timeToFloat(this.state.ET0),
-        this.timeToFloat(this.state.ET1),
-        this.timeToFloat(this.state.ET2),
-        this.timeToFloat(this.state.ET3),
-        this.timeToFloat(this.state.ET4),
-        this.timeToFloat(this.state.ET5),
-        this.timeToFloat(this.state.ET6)
-      ]
+      [name]: value
+      // dayAndStartTime:[this.timeToFloat(this.state.ST0),this.timeToFloat(this.state.ST1),this.timeToFloat(this.state.ST2),this.timeToFloat(this.state.ST3),this.timeToFloat(this.state.ST4),this.timeToFloat(this.state.ST5),this.timeToFloat(this.state.ST6)],
+      // dayAndEndTime:[this.timeToFloat(this.state.ET0),this.timeToFloat(this.state.ET1),this.timeToFloat(this.state.ET2),this.timeToFloat(this.state.ET3),this.timeToFloat(this.state.ET4),this.timeToFloat(this.state.ET5),this.timeToFloat(this.state.ET6)],
     });
     this.enableTime();
   }
-
+      
   async handleSubmit(event) {
     event.preventDefault();
     if (!this.compareDate()) {
       alert("Start Date must be before End Date");
-    } else {
+    } else if(!this.compareTime){
+      alert("Start Time must be before End Time");
+    }else {
+      alert(JSON.stringify(this.state));
       let data = await Util.editCourse(
         this.state._id,
         this.state.courseName,
@@ -109,11 +145,42 @@ export default class EditCourse extends Component {
         console.log(data);
         history.push("/profile");
       } else {
-        window.alert("Cannot Edit Course");
+        window.alert("Cannot Edit Course");     
       }
     }
   }
 
+  handleDayAndStartTimeChange = () => {
+    var newArray = new Array();
+    var j = 0;
+    for (j = 0; j < 7; j++) {
+      var InputValue = document.getElementById("ST" + j).value;
+      if (InputValue == "") {
+        newArray.push(null);
+      } else {
+        newArray.push(this.timeToFloat(InputValue));
+      }
+    }
+    this.setState({
+      dayAndStartTime: newArray
+    });
+  };
+
+  handleDayAndEndTimeChange = () => {
+    var newArray = new Array();
+    var j = 0;
+    for (j = 0; j < 7; j++) {
+      var InputValue = document.getElementById("ET" + j).value;
+      if (InputValue == "") {
+        newArray.push(null);
+      } else {
+        newArray.push(this.timeToFloat(InputValue));
+      }
+    }
+    this.setState({
+      dayAndEndTime: newArray
+    });
+  };
   // hanndleCancel(event){
 
   // }
@@ -135,10 +202,6 @@ export default class EditCourse extends Component {
     if (!Mon) {
       document.getElementById("ST0").value = null;
       document.getElementById("ET0").value = null;
-      this.setState({
-        ST0: null,
-        ET0: null
-      });
     }
 
     document.getElementById("ST1").disabled = !Tue;
@@ -148,10 +211,6 @@ export default class EditCourse extends Component {
     if (!Tue) {
       document.getElementById("ST1").value = null;
       document.getElementById("ET1").value = null;
-      this.setState({
-        ST1: null,
-        ET1: null
-      });
     }
 
     document.getElementById("ST2").disabled = !Wed;
@@ -161,10 +220,6 @@ export default class EditCourse extends Component {
     if (!Wed) {
       document.getElementById("ST2").value = null;
       document.getElementById("ET2").value = null;
-      this.setState({
-        ST2: null,
-        ET2: null
-      });
     }
 
     document.getElementById("ST3").disabled = !Thu;
@@ -174,10 +229,6 @@ export default class EditCourse extends Component {
     if (!Thu) {
       document.getElementById("ST3").value = null;
       document.getElementById("ET3").value = null;
-      this.setState({
-        ST3: null,
-        ET3: null
-      });
     }
 
     document.getElementById("ST4").disabled = !Fri;
@@ -187,10 +238,6 @@ export default class EditCourse extends Component {
     if (!Fri) {
       document.getElementById("ST4").value = null;
       document.getElementById("ET4").value = null;
-      this.setState({
-        ST4: null,
-        ET4: null
-      });
     }
 
     document.getElementById("ST5").disabled = !Sat;
@@ -200,10 +247,6 @@ export default class EditCourse extends Component {
     if (!Sat) {
       document.getElementById("ST5").value = null;
       document.getElementById("ET5").value = null;
-      this.setState({
-        ST5: null,
-        ET5: null
-      });
     }
 
     document.getElementById("ST6").disabled = !Sun;
@@ -213,10 +256,6 @@ export default class EditCourse extends Component {
     if (!Sun) {
       document.getElementById("ST6").value = null;
       document.getElementById("ET6").value = null;
-      this.setState({
-        ST6: null,
-        ET6: null
-      });
     }
 
     document.getElementById("Monday").required = !(
@@ -230,16 +269,25 @@ export default class EditCourse extends Component {
     );
   }
 
-  compareDate() {
-    var a = document.getElementById("startDate").value;
-    var b = document.getElementById("endDate").value;
-    var splitA = a.split("/");
-    var splitB = b.split("/");
-    var aDate = Date.parse(splitA[0], splitA[1] - 1, splitA[2]);
-    var bDate = Date.parse(splitB[0], splitB[1] - 1, splitB[2]);
-    return aDate < bDate;
-  }
+      compareDate() {
+        var a = document.getElementById("startDate").value;
+        var b = document.getElementById("endDate").value;
+        var splitA = a.split("/");
+        var splitB = b.split("/");
+        var aDate = Date.parse(splitA[0], splitA[1] - 1, splitA[2]);
+        var bDate = Date.parse(splitB[0], splitB[1] - 1, splitB[2]);
+        return aDate < bDate;
+      }
 
+      compareTime(){
+        var i=0;
+        var invalid=false;
+        for (i=0;i<7;i++){
+          invalid = this.state.dayAndEndTime<this.state.dayAndStartTime;
+        }
+        return invalid;
+      }
+      
   render() {
     return (
       <div className="card mb-4 p-3" style={{ maxWidth: 1000 }}>
@@ -268,11 +316,16 @@ export default class EditCourse extends Component {
               <label>
                 Category
                 <br />
-                <select name="category" onChange={this.handleChange} required>
-                  <option value="language">Language</option>
-                  <option value="mathematics">Mathematics</option>
-                  <option value="science">Science</option>
-                  <option value="social">Social</option>
+                <select
+                  name="category"
+                  onChange={this.handleChange}
+                  value={this.state.category}
+                  required
+                >
+                  <option value="Language">Language</option>
+                  <option value="Mathematics">Mathematics</option>
+                  <option value="Science">Science</option>
+                  <option value="Social">Social</option>
                 </select>
               </label>
             </div>
@@ -281,9 +334,7 @@ export default class EditCourse extends Component {
             <div class="col-md-3" width="100%">
               <label>
                 Start Date
-                <div style={{ fontSize: 11, color: "red" }}>
-                  old start date : {this.state.startDate}
-                </div>
+                <br />
                 <input
                   type="Date"
                   required
@@ -298,9 +349,6 @@ export default class EditCourse extends Component {
               <label>
                 End Date
                 <br />
-                <div style={{ fontSize: 11, color: "red" }}>
-                  old end date : {this.state.endDate}
-                </div>
                 <input
                   type="Date"
                   required
@@ -438,9 +486,9 @@ export default class EditCourse extends Component {
                   id="ST0"
                   min="06:00"
                   max="22:00"
-                  value={this.ST0}
+                  value={this.state.StartTimes[0]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndStartTimeChange}
                   disabled
                 />
                 <br />
@@ -450,9 +498,9 @@ export default class EditCourse extends Component {
                   id="ST1"
                   min="06:00"
                   max="22:00"
-                  value={this.ST1}
+                  value={this.state.StartTimes[1]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndStartTimeChange}
                   disabled
                 />
                 <br />
@@ -462,9 +510,9 @@ export default class EditCourse extends Component {
                   id="ST2"
                   min="06:00"
                   max="22:00"
-                  value={this.ST2}
+                  value={this.state.StartTimes[2]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndStartTimeChange}
                   disabled
                 />
                 <br />
@@ -474,9 +522,9 @@ export default class EditCourse extends Component {
                   id="ST3"
                   min="06:00"
                   max="22:00"
-                  value={this.ST3}
+                  value={this.state.StartTimes[3]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndStartTimeChange}
                   disabled
                 />
                 <br />
@@ -486,9 +534,9 @@ export default class EditCourse extends Component {
                   id="ST4"
                   min="06:00"
                   max="22:00"
-                  value={this.ST4}
+                  value={this.state.StartTimes[4]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndStartTimeChange}
                   disabled
                 />
                 <br />
@@ -498,9 +546,9 @@ export default class EditCourse extends Component {
                   id="ST5"
                   min="06:00"
                   max="22:00"
-                  value={this.ST5}
+                  value={this.state.StartTimes[5]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndStartTimeChange}
                   disabled
                 />
                 <br />
@@ -510,14 +558,15 @@ export default class EditCourse extends Component {
                   id="ST6"
                   min="06:00"
                   max="22:00"
-                  value={this.ST6}
+                  value={this.state.StartTimes[6]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndStartTimeChange}
                   disabled
                 />
                 <br />
               </div>
             </div>
+
             <div class="col-md-3" width="100%">
               <label htmlFor="EndTime">End Time</label>
               <div id="EndTime">
@@ -527,9 +576,9 @@ export default class EditCourse extends Component {
                   id="ET0"
                   min="06:00"
                   max="22:00"
-                  value={this.ET0}
+                  value={this.state.EndTimes[0]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndEndTimeChange}
                   disabled
                 />
                 <br />
@@ -539,9 +588,9 @@ export default class EditCourse extends Component {
                   id="ET1"
                   min="06:00"
                   max="22:00"
-                  value={this.ET1}
+                  value={this.state.EndTimes[1]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndEndTimeChange}
                   disabled
                 />
                 <br />
@@ -551,9 +600,9 @@ export default class EditCourse extends Component {
                   id="ET2"
                   min="06:00"
                   max="22:00"
-                  value={this.ET2}
+                  value={this.state.EndTimes[2]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndEndTimeChange}
                   disabled
                 />
                 <br />
@@ -563,9 +612,9 @@ export default class EditCourse extends Component {
                   id="ET3"
                   min="06:00"
                   max="22:00"
-                  value={this.ET3}
+                  value={this.state.EndTimes[3]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndEndTimeChange}
                   disabled
                 />
                 <br />
@@ -575,9 +624,9 @@ export default class EditCourse extends Component {
                   id="ET4"
                   min="06:00"
                   max="22:00"
-                  value={this.ET4}
+                  value={this.state.EndTimes[4]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndEndTimeChange}
                   disabled
                 />
                 <br />
@@ -587,9 +636,9 @@ export default class EditCourse extends Component {
                   id="ET5"
                   min="06:00"
                   max="22:00"
-                  value={this.ET5}
+                  value={this.state.EndTimes[5]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndEndTimeChange}
                   disabled
                 />
                 <br />
@@ -599,19 +648,13 @@ export default class EditCourse extends Component {
                   id="ET6"
                   min="06:00"
                   max="22:00"
-                  value={this.ET6}
+                  value={this.state.EndTimes[6]}
                   style={{ marginBottom: "2px" }}
-                  onChange={this.handleChange}
+                  onChange={this.handleDayAndEndTimeChange}
                   disabled
                 />
                 <br />
               </div>
-            </div>
-            <div class="col-md-3" width="100%">
-              <label htmlFor="OldTime" style={{ color: "red" }}>
-                Previous time
-              </label>
-              <div style={{ fontSize: 13, color: "red" }}>{this.state.day}</div>
             </div>
           </div>
 
@@ -631,6 +674,7 @@ export default class EditCourse extends Component {
               </label>
             </div>
           </div>
+
           <br />
           <div className="text-center" style={{ marginRight: 40 }}>
             <input
@@ -645,11 +689,19 @@ export default class EditCourse extends Component {
       </div>
     );
   }
+
   async componentDidMount() {
     console.log(window.location.search);
     let data = await Util.getCourseById(window.location.search.substring(10));
-    console.log(data);
+    let startDate = new Date(data.startDate);
+    startDate = this.dateToYMD(startDate);
+    let endDate = new Date(data.endDate);
+    endDate = this.dateToYMD(endDate);
     this.setState(data);
-    console.log(this.state);
+    this.setState({
+      startDate: startDate,
+      endDate: endDate
+    });
+    this.setObject();
   }
 }
