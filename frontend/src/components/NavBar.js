@@ -18,25 +18,25 @@ export class NavBar extends Component {
     this.unhover = this.unhover.bind(this);
   }
   hover() {
+    document.getElementById("imgLogo").setAttribute("src", this.state.logoDark);
+  }
+  unhover() {
     document
       .getElementById("imgLogo")
       .setAttribute("src", this.state.logoLight);
   }
-  unhover() {
-    document.getElementById("imgLogo").setAttribute("src", this.state.logoDark);
-  }
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-custom">
+      <nav className="navbar navbar-expand-lg navbar-light bg-custom">
         <a className="navbar-brand" onClick={() => this.onClickNavBar("/home")}>
           <img
-            src={this.state.logoDark}
+            src={this.state.logoLight}
             style={{ marginRight: "10px" }}
             className="logoImg"
             alt="Logo"
             id="imgLogo"
-            onMouseOver={this.hover}
-            onMouseOut={this.unhover}
+            // onMouseOver={this.hover}
+            // onMouseOut={this.unhover}
           />
           <span className="brandName">TutorHere</span>
         </a>
@@ -72,7 +72,7 @@ export class NavBar extends Component {
             )} */}
           </ul>
           <ul className="navbar-nav ml-auto">
-            {localStorage.getItem("token") ? (
+            {/* {localStorage.getItem("token") ? (
               <li className="nav-item">
                 <NavButton onClick={() => this.onClickNavBar("/chat")}>
                   Chat <span class="sr-only">(current)</span>
@@ -80,7 +80,7 @@ export class NavBar extends Component {
               </li>
             ) : (
               <div></div>
-            )}
+            )} */}
             {localStorage.getItem("token") ? (
               <li className="nav-item dropdown">
                 {this.state.fullName ? (
@@ -111,6 +111,12 @@ export class NavBar extends Component {
                       ? "My Course & Request"
                       : "My Course & Schedule"}
                     <span className="sr-only">(current)</span>
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    onClick={() => this.onClickNavBar("/chat")}
+                  >
+                    Chat <span class="sr-only">(current)</span>
                   </a>
                   <a
                     class="dropdown-item"

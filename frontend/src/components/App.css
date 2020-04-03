@@ -20,7 +20,9 @@
   height: 100vh;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-image: linear-gradient(100deg, #324d91, #9cab9a);
+  background-color: rgb(244, 244, 244);
+  /* background-image: linear-gradient(rgb(166, 188, 197), white); */
+  /* background-image: linear-gradient(100deg, #324d91, #9cab9a); */
   background-size: 100% 100%;
 }
 .lll {

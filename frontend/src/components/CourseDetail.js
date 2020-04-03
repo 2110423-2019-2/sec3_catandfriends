@@ -27,26 +27,8 @@ export class CourseDetail extends Component {
           Request
         </NormalButton>
       );
-    } else {
+    } else if (this.props.detail.owner) {
       showbutton = (
-        <NormalButton
-          color="rgb(240,240,240)"
-          onClick={event => this.onClick(event)}
-          disabled
-        >
-          Requested
-        </NormalButton>
-      );
-    }
-    let studentList;
-    let editbtn;
-    if (this.props.detail.owner) {
-      studentList = (
-        <div className="col-md-12 ">
-          <AllStudentList data={this.props.detail} />
-        </div>
-      );
-      editbtn = (
         <NormalButton
           color="rgba(135, 53, 53, 0.8)"
           onClick={() => {
@@ -56,9 +38,28 @@ export class CourseDetail extends Component {
           Edit Course
         </NormalButton>
       );
+    } else if (this.state.data && this.state.data.role == "student") {
+      showbutton = (
+        <NormalButton color="rgb(240,240,240)" disabled>
+          Requested
+        </NormalButton>
+      );
+    } else {
+      showbutton = (
+        <NormalButton color="rgb(255,255,255)" disabled>
+          Requested
+        </NormalButton>
+      );
+    }
+    let studentList;
+    if (this.props.detail.owner) {
+      studentList = (
+        <div className="col-md-12 ">
+          <AllStudentList data={this.props.detail} />
+        </div>
+      );
     } else {
       studentList = <div></div>;
-      editbtn = <div></div>;
     }
     return (
       <div className="courseDetailCard">
@@ -148,13 +149,16 @@ export class CourseDetail extends Component {
             </div>
             <div className="row">
               <div className="col-md-12 ">
-                <div className="alert alert-warning">
-                  <strong>Warning!</strong> If you request to enroll this
-                  course, you can not cancel.
-                </div>
+                {this.state.requestable ? (
+                  <div className="alert alert-warning">
+                    <strong>Warning!</strong> If you request to enroll this
+                    course, you can not cancel.
+                  </div>
+                ) : (
+                  <div></div>
+                )}
                 <div className="row justify-content-center">
                   <div className="myStyle">{showbutton}</div>
-                  <div className="myStyle">{editbtn}</div>
                 </div>
               </div>
             </div>
@@ -178,7 +182,11 @@ export class CourseDetail extends Component {
   }
 
   async componentDidMount() {
-    this.setState({ requestable: this.props.detail.requestable });
+    let data = await Util.getProfile();
+    this.setState({
+      requestable: this.props.detail.requestable,
+      data
+    });
   }
 
   async onClick(event) {
@@ -219,9 +227,13 @@ class AllStudentList extends Component {
     return (
       <div className="text-center">
         <h3 className="verifyTutorH">Student List</h3>
-        {this.state.data.map(item => (
-          <StudentList detail={item} key={item._id} />
-        ))}
+        <div className="row justify-content-center">
+          <div className="col-md-12 slist justify-content-center">
+            {this.state.data.map(item => (
+              <StudentList detail={item} key={item._id} />
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
@@ -247,13 +259,15 @@ class StudentList extends Component {
 
   render() {
     return (
-      <div className="card slist">
-        <a
-          className="studentlist"
-          onClick={() => this.onClick(this.props.detail._id)}
-        >
-          {this.props.detail.firstName + "\t" + this.props.detail.lastName}
-        </a>
+      <div className="row justify-content-center">
+        <div className="col-md-12 slist justify-content-center">
+          <button
+            className="studentList"
+            onClick={() => this.onClick(this.props.detail._id)}
+          >
+            {this.props.detail.firstName + "\t" + this.props.detail.lastName}
+          </button>
+        </div>
       </div>
     );
   }

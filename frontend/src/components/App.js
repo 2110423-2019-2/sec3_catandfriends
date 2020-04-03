@@ -56,33 +56,30 @@ class App extends Component {
     return (
       <Router history={history}>
         <NavBar />
-        <div className="TS">
-          <Switch>
-            {/* <Route
+        {/* <div className="TS"> */}
+        <Switch>
+          {/* <Route
               path="/register"
               component={this.alreadylogin(RegisterPage)}
             /> */}
-            <Route path="/chat" component={this.getPage(Chatbox)} />
-            <Route path="/login" component={this.alreadylogin(Login)} />
-            {/* <Route path="/search" component={this.getPage(SearchResult)} /> */}
-            <Route path="/profile/edit" component={this.getPage(EditProfile)} />
-            <Route
-              path="/profile/verify"
-              component={this.getPage(VerifyPage)}
-            />
-            <Route
-              path="/profile/premium"
-              component={this.getPage(PremiumPage)}
-            />
-            <Route path="/profile" component={Profile} />
-            <Route path="/course/edit" component={this.getPage(EditCourse)} />
-            <Route path="/course/create" component={this.getPage(NewCourse)} />
-            <Route path="/course" component={this.getPage(CourseInformation)} />
-            <Route path="/mycourse" component={this.getPage(MyCourse)} />
-            <Route path="/home" component={this.homePage()} />
-            <Route component={PageNotFound} />
-          </Switch>
-        </div>
+          <Route path="/chat" component={this.getPage(Chatbox)} />
+          <Route path="/login" component={this.alreadylogin(Login)} />
+          {/* <Route path="/search" component={this.getPage(SearchResult)} /> */}
+          <Route path="/profile/edit" component={this.getPage(EditProfile)} />
+          <Route path="/profile/verify" component={this.getPage(VerifyPage)} />
+          <Route
+            path="/profile/premium"
+            component={this.getPage(PremiumPage)}
+          />
+          <Route path="/profile" component={Profile} />
+          <Route path="/course/edit" component={this.getPage(EditCourse)} />
+          <Route path="/course/create" component={this.getPage(NewCourse)} />
+          <Route path="/course" component={this.getPage(CourseInformation)} />
+          <Route path="/mycourse" component={this.getPage(MyCourse)} />
+          <Route path="/home" component={this.homePage()} />
+          <Route component={PageNotFound} />
+        </Switch>
+        {/* </div> */}
       </Router>
     );
   }
