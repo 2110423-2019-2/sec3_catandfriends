@@ -1,22 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Merienda+One&display=swap");
 .logoImg {
-  width: 60px;
+  width: 40px;
+  transition: 0.6s;
+}
+.logoImg:hover {
+  transform: scale(1.2);
 }
 .bg-custom {
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  min-height: fit-content;
+  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.2);
   /* background-color: rgb(172, 195, 207); */
 }
 
 .navbar-brand {
   font-family: "Merienda One", cursive;
-  font-size: 1.7em !important;
+  font-size: 1.6em !important;
 }
 
 .primaryBtn:focus {
   outline: none;
 }
 .brandName {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); */
+  color: rgb(89, 87, 87);
+}
+.brandName:hover {
+  color: rgb(39, 39, 39);
 }
 .demo {
   background: rgb(25, 108, 70);
@@ -34,13 +44,14 @@
   background-color: black;
 }
 .navbar-nav > li > .dropdown-menu {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
 }
 .navbar-nav > li > .dropdown-menu .dropdown-item:hover {
-  background-color: rgba(64, 124, 133, 0.9);
+  background-color: rgba(184, 244, 253, 0.9);
 }
 .navbar-nav > li > .dropdown-menu a {
-  color: #ffffff;
+  color: #000000;
 }
 .avatar {
   margin: 2px;
