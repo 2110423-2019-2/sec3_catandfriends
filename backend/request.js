@@ -63,6 +63,7 @@ router.put("/", async (req, res) => {
   const studentId = payload.studentId;
   const courseId = payload.courseId;
   const status = payload.status;
+
   let err, message;
 
   let theRequest = await findTheRequest(tutorId, studentId, courseId);
@@ -78,8 +79,10 @@ router.put("/", async (req, res) => {
       if (status == 1) {
         err = await updateRequest(tutorId, studentId, courseId, dateThailand._d);
         err = await updateSchedule(studentId, courseId, dateThailand._d);
-        err = await updateCourse(studentId, courseId, dateThailand._d);
+        err = await updateCourse(studentId, courseId, course.amountOfStudent, dateThailand._d);
         message = "Request accepted";
+        console.log(message);
+
       } else if (status == -1) {
         err = await deleteRequest(tutorId, studentId, courseId);
         message = "Request rejected";
@@ -245,7 +248,7 @@ async function updateSchedule(studentId, courseId, dateThailand) {
   return err
 }
 
-async function updateCourse(studentId, courseId, dateThailand) {
+async function updateCourse(studentId, courseId, amountOfStudent, dateThailand) {
   [err, value] = await to(
     CourseModel.findOneAndUpdate(
       {
@@ -258,7 +261,8 @@ async function updateCourse(studentId, courseId, dateThailand) {
         $inc: {
           amountOfStudent: -1
         },
-        lastModified: dateThailand
+        lastModified: dateThailand,
+        isAvailable: amountOfStudent == 1 ? false : true
       },
       {
         useFindAndModify: false
