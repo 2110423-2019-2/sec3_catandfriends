@@ -8,7 +8,7 @@ import styled from "styled-components";
 const AddButton = styled(CourseButton)`
   background: rgba(255, 255, 255, 0.6);
   &:hover {
-    background: linear-gradient(90deg, #a67ca8 0%, #4d65a6 100%);
+    background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
   }
 `;
 class BlankCard extends React.Component {
