@@ -3,7 +3,6 @@ const router = express.Router();
 const moment = require("moment-timezone");
 const to = require("await-to-js").default;
 const CourseModel = require("./models/course");
-const tutorModel = require("./models/tutor");
 const userModel = require("./models/user");
 const format = require("./commonFunc/format");
 
