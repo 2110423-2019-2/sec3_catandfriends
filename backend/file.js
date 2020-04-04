@@ -21,7 +21,7 @@ const VERIFY_DOCUMENTS_PATH = '/verifyFile/upload';
 const PAYMENT_VERIFY_DOCUMENTS_PATH = '/paymentFile/verify/upload';
 const PAYMENT_PREMUIM_DOCUMENTS_PATH = '/paymentFile/premium/upload';
 const USER_IMAGES_PATH = '/images/user/upload';
-const COURSE_IMAGES_PATH = '/images/course/upload';
+// const COURSE_IMAGES_PATH = '/images/course/upload';
 const conn = mongoose2.createConnection(mongoURIUpload);
 
 let verifyDocumentsGFS, paymentDocumentsGFS, imagesGFS;
