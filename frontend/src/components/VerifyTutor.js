@@ -9,9 +9,8 @@ export default class VerifyTutor extends Component {
     super(props);
     this.state = {
       testQR:
-        "https://s3-ap-southeast-1.amazonaws.com/img-in-th/baa3026e0bf6871a8fa693e78486ccd2.png"
-      , testQRLink:
-        "https://www.taylorswift.com/"
+        "https://s3-ap-southeast-1.amazonaws.com/img-in-th/baa3026e0bf6871a8fa693e78486ccd2.png",
+      testQRLink: "https://www.taylorswift.com/",
     };
     this.onClickGetVeriFile = this.onClickGetVeriFile.bind(this);
   }
@@ -61,10 +60,11 @@ export default class VerifyTutor extends Component {
             <br></br>
           </div>
           <div className="row justify-content-center">
-            After receiving your documents, we will verify your account in 24 hours.
+            After receiving your documents, we will verify your account in 24
+            hours.
             <br></br>
           </div>
-          <div className="row " style={{ marginTop: "10px" }} >
+          <div className="row " style={{ marginTop: "10px" }}>
             <div className="col-md-6 " style={{ marginBottom: "5px" }}>
               <h3>File</h3>
               <div className="row">
@@ -156,7 +156,10 @@ export default class VerifyTutor extends Component {
                         <div class="modal-body">
                           <img src={this.state.testQR} />
                           <div className="row justify-content-center">
-                            <a className="fileNameB" href={this.state.testQRLink}>
+                            <a
+                              className="fileNameB"
+                              href={this.state.testQRLink}
+                            >
                               <i>link here</i>
                             </a>
                           </div>
@@ -207,7 +210,7 @@ export default class VerifyTutor extends Component {
               </div>
             </div>
           </div>
-        </div >
+        </div>
       );
     }
   }
@@ -217,21 +220,21 @@ export default class VerifyTutor extends Component {
   }
   isDocfile(file) {
     const acceptedDocTypes = [
-      "application/pdf"
+      "application/pdf",
       // "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ];
     return file && acceptedDocTypes.includes(file.type);
   }
-  onChangeHandlerFile = event => {
+  onChangeHandlerFile = (event) => {
     this.setState({
       selectedFile: event.target.files[0],
-      loadedFile: 0
+      loadedFile: 0,
     });
   };
-  onChangeHandlerSlip = event => {
+  onChangeHandlerSlip = (event) => {
     this.setState({
       selectedSlip: event.target.files[0],
-      loadedSilp: 0
+      loadedSilp: 0,
     });
   };
   onClickHandlerFile = () => {
@@ -240,9 +243,7 @@ export default class VerifyTutor extends Component {
       return;
     }
     if (!this.isDocfile(this.state.selectedFile)) {
-      alert(
-        "Your chosen file is not a PDF file"
-      );
+      alert("Your chosen file is not a PDF file");
       return;
     }
     const data = new FormData();
@@ -257,7 +258,7 @@ export default class VerifyTutor extends Component {
           // receive two    parameter endpoint url ,form data
         }
       )
-      .then(res => {
+      .then((res) => {
         // then print response status
         console.log(res.statusText);
         alert("File Uploaded");
@@ -272,7 +273,7 @@ export default class VerifyTutor extends Component {
     if (!this.isImagefile(this.state.selectedSlip)) {
       alert(
         "Your chosen file is not a JPG/PNG/GIF file" +
-        this.state.selectedSlip.type
+          this.state.selectedSlip.type
       );
       return;
     }
@@ -288,7 +289,7 @@ export default class VerifyTutor extends Component {
           // receive two    parameter endpoint url ,form data
         }
       )
-      .then(res => {
+      .then((res) => {
         // then print response status
         console.log(res.statusText);
         alert("File Uploaded");
@@ -301,9 +302,9 @@ export default class VerifyTutor extends Component {
       url: `http://localhost:8000/file/verifyFile?token=${localStorage.getItem(
         "token"
       )}&tutorId=${this.state.data._id}`,
-      responseType: "blob"
+      responseType: "blob",
     })
-      .then(response => {
+      .then((response) => {
         this.setState({ fileDownloading: true }, () => {
           FileSaver.saveAs(response.data, "your-veridoc.pdf");
         });
@@ -319,9 +320,9 @@ export default class VerifyTutor extends Component {
       url: `http://localhost:8000/file/paymentFile/verify?token=${localStorage.getItem(
         "token"
       )}&tutorId=${this.state.data._id}`,
-      responseType: "blob"
+      responseType: "blob",
     })
-      .then(response => {
+      .then((response) => {
         this.setState({ imageDownloading: true }, () => {
           FileSaver.saveAs(response.data, "your-slip.jpg");
         });

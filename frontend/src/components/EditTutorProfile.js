@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import "./EditTutorProfile.css";
-import axios from "axios";
-import FileSaver from "file-saver";
 import Util from "../apis/Util";
 import NormalButton from "./NormalButton";
 import history from "../history";
-import Popup from "reactjs-popup";
-import ImgDropAndCrop from "../components/ImgDropAndCrop";
-import { Modal, Button, Row, Col, Form } from "react-bootstrap";
+// import Popup from "reactjs-popup";
+// import ImgDropAndCrop from "../components/ImgDropAndCrop";
+// import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 
 export default class EditTutorProfile extends Component {
   constructor(props) {
@@ -20,12 +18,12 @@ export default class EditTutorProfile extends Component {
       gender: "",
       phoneNumber: "",
       showEditImage: false,
-      profileImage: ""
+      profileImage: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.updateThisImage = this.updateThisImage.bind(this);
-    this.handleImageCropClose = this.handleImageCropClose.bind(this);
+    // this.updateThisImage = this.updateThisImage.bind(this);
+    // this.handleImageCropClose = this.handleImageCropClose.bind(this);
   }
 
   handleChange(event) {
@@ -33,7 +31,7 @@ export default class EditTutorProfile extends Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -59,31 +57,31 @@ export default class EditTutorProfile extends Component {
     }
   }
 
-  updateThisImage(profileImage) {
-    this.setState({ profileImage: profileImage });
-    this.handleImageCropClose();
-    // console.log(profileImage);
-    const data = new FormData();
-    data.append("file", this.state.profileImage);
-    axios
-      .post(
-        `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
-          "token"
-        )}`,
-        data,
-        {
-          // receive two    parameter endpoint url ,form data
-        }
-      )
-      .then(res => {
-        // then print response status
-        // console.log(res.statusText);
-        alert("File Uploaded");
-      });
-  }
+  // updateThisImage(profileImage) {
+  //   this.setState({ profileImage: profileImage });
+  //   this.handleImageCropClose();
+  //   // console.log(profileImage);
+  //   const data = new FormData();
+  //   data.append("file", this.state.profileImage);
+  //   axios
+  //     .post(
+  //       `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
+  //         "token"
+  //       )}`,
+  //       data,
+  //       {
+  //         // receive two    parameter endpoint url ,form data
+  //       }
+  //     )
+  //     .then((res) => {
+  //       // then print response status
+  //       // console.log(res.statusText);
+  //       alert("File Uploaded");
+  //     });
+  // }
 
-  handleImageCropClose = () => this.setState({ showEditImage: false });
-  handleImageCropShow = () => this.setState({ showEditImage: true });
+  // handleImageCropClose = () => this.setState({ showEditImage: false });
+  // handleImageCropShow = () => this.setState({ showEditImage: true });
 
   render() {
     return (
@@ -123,7 +121,7 @@ export default class EditTutorProfile extends Component {
           </div>
 
           <div className="col-md-9">
-            <form onSubmit={event => this.handleSubmit(event)}>
+            <form onSubmit={(event) => this.handleSubmit(event)}>
               <div
                 class="row"
                 style={{ marginTop: "10px", textAlign: "center" }}
@@ -214,15 +212,15 @@ export default class EditTutorProfile extends Component {
     );
   }
 
-  onChangeHandlerSlip = event => {
+  onChangeHandlerSlip = (event) => {
     this.setState({
       selectedSlip: event.target.files[0],
 
-      loadedSilp: 0
+      loadedSilp: 0,
     });
   };
 
-  onClickHandlerSlip = () => {
+  onClickHandlerSlip = async () => {
     if (!this.state.selectedSlip) {
       alert("Please select a file");
 
@@ -239,32 +237,14 @@ export default class EditTutorProfile extends Component {
     }
 
     const data = new FormData();
-
     data.append("file", this.state.selectedSlip);
-
-    axios
-
-      .post(
-        `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
-          "token"
-        )}`,
-
-        data,
-
-        {
-          // receive two    parameter endpoint url ,form data
-        }
-      )
-
-      .then(res => {
-        // then print response status
-
-        console.log(res.statusText);
-
-        alert("File Uploaded");
-
-        window.location.reload();
-      });
+    console.log(data.get("file"));
+    let img = await Util.uploadImge(data);
+    if (!img.error) {
+      console.log(img.statusText);
+      alert("File Uploaded");
+      window.location.reload();
+    }
   };
 
   isImagefile(file) {
