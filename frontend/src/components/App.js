@@ -16,8 +16,7 @@ import MyCourse from "../page/MyCourse";
 import VerifyPage from "../page/VerifyPage";
 import PremiumPage from "../page/PremiumPage";
 import PageNotFound from "../page/PageNotFound";
-import Util from "../apis/Util";
-
+import Chatbox from "./Chatbox";
 // import LogInFirst from "./LogInFirst";
 const About = () => <h1>About</h1>;
 const LogInFirst = () => {
@@ -30,11 +29,7 @@ const LogInAlready = () => {
   history.push("/profile");
   return <div></div>;
 };
-const VerifyFirst = () => {
-  alert("You are an unverified tutor");
-  history.push("/profile");
-  return <div></div>;
-};
+
 class App extends Component {
   getPage(page) {
     if (!localStorage.getItem("token")) {
@@ -57,20 +52,6 @@ class App extends Component {
       return SearchResult;
     }
   }
-  isVerify(page) {
-    if (!localStorage.getItem("token")) {
-      return LogInFirst;
-    } else {
-      let data = JSON.parse(localStorage.getItem("user"));
-      if (data.role == "student") {
-        return page;
-      } else if (data.verifyStatus) {
-        return page;
-      } else {
-        return VerifyFirst;
-      }
-    }
-  }
   render() {
     return (
       <Router history={history}>
@@ -81,19 +62,20 @@ class App extends Component {
               path="/register"
               component={this.alreadylogin(RegisterPage)}
             /> */}
+          <Route path="/chat" component={this.getPage(Chatbox)} />
           <Route path="/login" component={this.alreadylogin(Login)} />
           {/* <Route path="/search" component={this.getPage(SearchResult)} /> */}
           <Route path="/profile/edit" component={this.getPage(EditProfile)} />
           <Route path="/profile/verify" component={this.getPage(VerifyPage)} />
           <Route
             path="/profile/premium"
-            component={this.isVerify(PremiumPage)}
+            component={this.getPage(PremiumPage)}
           />
           <Route path="/profile" component={Profile} />
           <Route path="/course/edit" component={this.getPage(EditCourse)} />
           <Route path="/course/create" component={this.getPage(NewCourse)} />
           <Route path="/course" component={this.getPage(CourseInformation)} />
-          <Route path="/mycourse" component={this.isVerify(MyCourse)} />
+          <Route path="/mycourse" component={this.getPage(MyCourse)} />
           <Route path="/home" component={this.homePage()} />
           <Route component={PageNotFound} />
         </Switch>
