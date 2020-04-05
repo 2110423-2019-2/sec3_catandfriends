@@ -237,7 +237,7 @@ export default class EditStudentProfile extends Component {
     const data = new FormData();
     data.append("file", this.state.selectedSlip);
     console.log(data.get("file"));
-    let img = await Util.uploadImge(data);
+    let img = await Util.uploadImage(data);
     if (!img.error) {
       console.log(img.statusText);
       alert("File Uploaded");
