@@ -1,34 +1,3 @@
-.editTutorProfileCard {
-  width: auto;
-  max-width: 900px;
-  height: auto;
-  min-height: 300px;
-  background-color: rgb(255, 255, 255);
-  padding-right: 30px;
-  padding-left: 30px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border-radius: 20px;
-  margin: 40px;
-  margin-bottom: 300px;
-  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
-    1px 3px 8px rgba(39, 44, 49, 0.03);
-}
-.editProfileH {
-  background-color: rgb(245, 245, 245);
-  border-radius: 12px;
-  padding: 10px;
-  /* padding-left: 10px; */
-}
-.nameE {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 28px;
-  color: #000000;
-  padding-left: 20px;
-}
 .profilePic{
   width: 200px;
   height: 200px;

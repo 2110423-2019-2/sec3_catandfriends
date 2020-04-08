@@ -1,34 +1,37 @@
-.field {
-  font-size: 1.1em;
-  width: 100%;
-  max-width: 400px;
-  border: 1px solid gray;
-  border-radius: 15px;
-  padding-left: 15px;
-  outline: none;
-  background-color: rgba(255, 255, 255, 0.6) !important;
+.left{
+  text-align: left;
 }
-.loginBtn {
-  border-radius: 60px !important;
-  padding: 0.25em 1em;
-  font-size: 1.1em;
+
+.textcolor {
+  color: var(--black-color);
 }
-.login {
-  min-width: 430px;
-  min-height: 220px;
+.homebox-login{
+  -moz-transition: all .1s ease-in;
+  -o-transition: all .1s ease-in;
+  -webkit-transition: all .1s ease-in;
+  transition: all .1s ease-in;
+  padding: 30px;
   width: auto;
-  height: auto;
-  border-radius: 30px !important;
-  padding-left: 30px;
-  padding-top: 30px;
-  padding-right: 30px;
-  padding-bottom: 30px;
-  background-color: rgba(255, 255, 255, 0.75) !important;
-  margin-bottom: 180px;
-  /* margin-top: 80px;  */
-  box-shadow: 10px 16px 40px rgba(39, 44, 49, 0.24),
-    3px 5px 10px rgba(39, 44, 49, 0.12);
+  border-radius: 10px;
+  background: var(--white-color-trans);
+  box-shadow: var(--homebox-shadow-color);
 }
+
+.field {
+  -moz-transition: all .1s ease-in;
+    -o-transition: all .1s ease-in;
+    -webkit-transition: all .1s ease-in;
+    transition: all .1s ease-in;
+    background: var(--white-color-trans);
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    border-width: 0px;
+    border-radius: 5px;
+    padding-left: 10px;
+    margin-right: 10px;
+    color: var(--black-color);
+}
+
 .whole {
   position: fixed;
   padding: 0;

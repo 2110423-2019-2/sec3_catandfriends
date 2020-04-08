@@ -27,7 +27,7 @@ export class NavBar extends Component {
   }
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-custom">
+      <nav className="navbar navbar-expand-lg navbar-white">
         <a className="navbar-brand" onClick={() => this.onClickNavBar("/home")}>
           <img
             src={this.state.logoLight}
@@ -35,8 +35,8 @@ export class NavBar extends Component {
             className="logoImg"
             alt="Logo"
             id="imgLogo"
-            // onMouseOver={this.hover}
-            // onMouseOut={this.unhover}
+          // onMouseOver={this.hover}
+          // onMouseOut={this.unhover}
           />
           <span className="brandName">TutorHere</span>
         </a>
@@ -49,7 +49,7 @@ export class NavBar extends Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon navtogglecolor"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav mr-auto">
@@ -84,8 +84,9 @@ export class NavBar extends Component {
             {localStorage.getItem("token") ? (
               <li className="nav-item dropdown">
                 {this.state.fullName ? (
-                  <AccountButton
-                    className="dropdown-toggle "
+                  <button
+                    className="dropdown-toggle button-white"
+                    style={{ width: "fit-content" }}
                     href="#"
                     id="navbarDropdownMenuLink"
                     data-toggle="dropdown"
@@ -95,31 +96,31 @@ export class NavBar extends Component {
                     <img id="photo" className="avatar" />
                     <span>{"\xa0" + this.state.fullName}</span>
                     <span className="sr-only">(current)</span>
-                  </AccountButton>
+                  </button>
                 ) : (
-                  <div></div>
-                )}
+                    <div></div>
+                  )}
                 <div
-                  class="dropdown-menu bgDD"
+                  class="dropdown-menu navbar-box"
                   aria-labelledby="navbarDropdownMenuLink"
                 >
-                  <a class="dropdown-item" href="/profile">
+                  <a class="dropdown-item textnormal" href="/profile">
                     My Profile<span className="sr-only">(current)</span>
                   </a>
-                  <a class="dropdown-item" href="/mycourse">
+                  <a class="dropdown-item textnormal" href="/mycourse">
                     {this.state.role == "tutor"
                       ? "My Course & Request"
                       : "My Course & Schedule"}
                     <span className="sr-only">(current)</span>
                   </a>
                   <a
-                    class="dropdown-item"
+                    class="dropdown-item textnormal"
                     onClick={() => this.onClickNavBar("/chat")}
                   >
                     Chat <span class="sr-only">(current)</span>
                   </a>
                   <a
-                    class="dropdown-item"
+                    class="dropdown-item textnormal"
                     onClick={() => this.onClickNavBar("/logout")}
                   >
                     Sign Out<span className="sr-only">(current)</span>
@@ -127,12 +128,12 @@ export class NavBar extends Component {
                 </div>
               </li>
             ) : (
-              <li className="nav-item">
-                <NavButton onClick={() => this.onClickNavBar("/login")} isOn>
-                  Sign In
-                </NavButton>
-              </li>
-            )}
+                <li className="nav-item">
+                  <button className="button-white" style={{ width: "120px" }} onClick={() => this.onClickNavBar("/login")} isOn>
+                    Sign In
+                </button>
+                </li>
+              )}
           </ul>
         </div>
       </nav>
@@ -174,7 +175,7 @@ export class NavBar extends Component {
         true
       );
       xhr.responseType = "arraybuffer";
-      xhr.onload = function(e, imageUrl) {
+      xhr.onload = function (e, imageUrl) {
         var arrayBufferView = new Uint8Array(this.response);
         var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
         var urlCreator = window.URL || window.webkitURL;

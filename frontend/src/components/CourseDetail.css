@@ -8,35 +8,26 @@
 .center {
   text-align: center;
 }
-.studentList:hover {
-  background-color: beige;
+.button-studentList:hover {
+  background: var(--black-color) !important;
+  color: var(--white-color) !important;
+  border: 1px solid var(--white-color) !important;
 }
-.studentList {
-  border-radius: 12px;
-  height: auto;
-  width: 100%;
-  padding: 5px 10px;
-  border: 1px solid rgb(230, 230, 230);
+.button-studentList {
+  transition: all .1s ease-in;
+    width: 100%;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: rgba(255, 255, 255, 0) !important;
+    color: var(--black-color) !important;
+    border: 1px solid var(--black-color) !important;
+    box-sizing: border-box;
+    border-radius: 5px;
 }
 .slist {
   padding: 5px;
   /* vertical-align: middle; */
-}
-.courseDetailCard {
-  width: auto;
-  max-width: 1200px;
-  height: auto;
-  min-height: 300px;
-  background-color: rgb(255, 255, 255);
-  padding-right: 30px;
-  padding-left: 30px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border-radius: 20px;
-  margin: 0px 0px;
-  margin-bottom: 25px;
-  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
-    1px 3px 8px rgba(39, 44, 49, 0.03);
 }
 .headerD {
   font-family: Roboto;

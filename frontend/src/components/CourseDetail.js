@@ -23,38 +23,38 @@ export class CourseDetail extends Component {
     let showbutton;
     if (this.state.requestable) {
       showbutton = (
-        <NormalButton color="orange" onClick={event => this.onClick(event)}>
+        <button className="button-white" onClick={event => this.onClick(event)}>
           Request
-        </NormalButton>
+        </button>
       );
     } else if (this.props.detail.owner) {
       showbutton = (
-        <NormalButton
-          color="rgba(135, 53, 53, 0.8)"
+        <button
+          className="button-white"
           onClick={() => {
             history.push(`/course/edit?courseId=${this.props.detail.courseid}`);
           }}
         >
           Edit Course
-        </NormalButton>
+        </button>
       );
     } else if (this.state.data && this.state.data.role == "student") {
       showbutton = (
-        <NormalButton color="rgb(240,240,240)" disabled>
+        <button className="button-white" disabled>
           Requested
-        </NormalButton>
+        </button>
       );
     } else {
       showbutton = (
-        <NormalButton color="rgb(255,255,255)" disabled>
+        <button className="button-white" disabled>
           Requested
-        </NormalButton>
+        </button>
       );
     }
     let studentList;
     if (this.props.detail.owner) {
       studentList = (
-        <div className="col-md-12 ">
+        <div className="col-md-12">
           <AllStudentList data={this.props.detail} />
         </div>
       );
@@ -62,20 +62,19 @@ export class CourseDetail extends Component {
       studentList = <div></div>;
     }
     return (
-      <div className="courseDetailCard">
+      <div className="bigCard">
         <div className="row ">
           <div className={this.props.detail.owner ? "col-md-9" : "col-md-12"}>
             <div className="row  text-center" className="myStyle">
-              <h3 className="verifyTutorH ">Course Detail</h3>
+              <div className="inside-block textshadow">Course Detail</div>
             </div>
             <div className="row " style={{ padding: "5px 20px" }}>
               <div className="col-md-6 ">
-                <h4>{this.props.detail.courseName}</h4>
+                <div className="textshadow">{this.props.detail.courseName}</div>
               </div>
               <div className="col-md-6 ">
-                <a
+                <a className="textshadow"
                   href={`/profile?userId=${this.props.detail.tutorId}`}
-                  style={{ fontSize: "22px" }}
                 >
                   {" by " + this.props.detail.tutorName}
                 </a>
@@ -155,8 +154,8 @@ export class CourseDetail extends Component {
                     course, you can not cancel.
                   </div>
                 ) : (
-                  <div></div>
-                )}
+                    <div></div>
+                  )}
                 <div className="row justify-content-center">
                   <div className="myStyle">{showbutton}</div>
                 </div>
@@ -174,8 +173,8 @@ export class CourseDetail extends Component {
           {this.props.detail.owner ? (
             <div className="col-md-3">{studentList}</div>
           ) : (
-            <div></div>
-          )}
+              <div></div>
+            )}
         </div>
       </div>
     );
@@ -226,7 +225,7 @@ class AllStudentList extends Component {
     }
     return (
       <div className="text-center">
-        <h3 className="verifyTutorH">Student List</h3>
+        <div className="textshadow">Student List</div>
         <div className="row justify-content-center">
           <div className="col-md-12 slist justify-content-center">
             {this.state.data.map(item => (
@@ -262,7 +261,7 @@ class StudentList extends Component {
       <div className="row justify-content-center">
         <div className="col-md-12 slist justify-content-center">
           <button
-            className="studentList"
+            className="button-studentList"
             onClick={() => this.onClick(this.props.detail._id)}
           >
             {this.props.detail.firstName + "\t" + this.props.detail.lastName}

@@ -23,13 +23,13 @@ export class StudentCTuProfile extends Component {
       return <div></div>;
     } else if (this.state.me.role == "student") {
       return (
-        <NormalButton
+        <button className="button-white width90"
           onClick={this.onClickChat}
           color="rgb(0, 255, 0)"
           textcolor="black"
         >
           Chat Now
-        </NormalButton>
+        </button>
       );
     } else {
       return <div></div>;
@@ -38,14 +38,14 @@ export class StudentCTuProfile extends Component {
   render() {
     return (
       <div
-        className="bigCard border"
+        className="bigCard"
         style={{ minHeight: "auto", marginBottom: "20px" }}
       >
         <div className="row">
           <div className="col-md-12">
             <div className="row">
-              <div className="col-md-12  infoC">
-                <div className="headerB">Tutor Profile</div>
+              <div className="col-md-12  inside-block">
+                <div className="textheader">Tutor Profile</div>
               </div>
             </div>
             <div className="row">

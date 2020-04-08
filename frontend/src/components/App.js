@@ -56,7 +56,6 @@ class App extends Component {
     return (
       <Router history={history}>
         <NavBar />
-        {/* <div className="TS"> */}
         <Switch>
           {/* <Route
               path="/register"
@@ -79,7 +78,6 @@ class App extends Component {
           <Route path="/home" component={this.homePage()} />
           <Route component={PageNotFound} />
         </Switch>
-        {/* </div> */}
       </Router>
     );
   }

@@ -27,12 +27,12 @@ export default class MyStudentCard extends Component {
 
   render() {
     return (
-      <div className="bigCard border">
+      <div className="bigCard">
         <div className="row">
           <div className="col-md-12">
             <div className="row">
-              <div className="col-md-12  infoC">
-                <div className="headerB">My Profile</div>
+              <div className="col-md-12  inside-block">
+                <div className="textheader">My Profile</div>
               </div>
             </div>
             <div className="row">
@@ -50,7 +50,7 @@ export default class MyStudentCard extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-12  infoC" style={{ marginBottom: "5px" }}>
+              <div className="col-md-12  inside-block" style={{ marginBottom: "5px" }}>
                 <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">SSN:</div>
@@ -99,8 +99,7 @@ export default class MyStudentCard extends Component {
         </div>
         <br />
         <div className="mystyle">
-          <NormalButton
-            color="rgba(107, 63, 233, 0.8)"
+          <button className="button-white"
             onClick={() => {
               history.push(
                 `/profile/edit?token=${localStorage.getItem("token")}`
@@ -108,7 +107,7 @@ export default class MyStudentCard extends Component {
             }}
           >
             Edit Profile
-          </NormalButton>
+          </button>
         </div>
         <br />
       </div>

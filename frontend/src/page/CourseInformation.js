@@ -13,18 +13,14 @@ export default class CourseInformation extends Component {
       return (
         <div className="justify-content-center">
           <div className="row justify-content-center">
-            <h2
+            <div className="inside-block textheader"
               style={{
                 padding: "5px 15px",
-                margin: "30px",
-                textAlign: "center",
-                color: "black",
-                backgroundColor: "rgba(255,255,255,0.3)",
-                borderRadius: "12px"
+                margin: "30px"
               }}
             >
               {"Course: " + this.state.data.courseName}
-            </h2>
+            </div>
             <div className="col-md-12" align="center">
               <CourseDetail detail={this.state.data} />
             </div>
