@@ -26,12 +26,12 @@ export default class StudentCard extends Component {
   render() {
     console.log(this.props.data);
     return (
-      <div className="bigCard border" style={{ minHeight: "auto" }}>
+      <div className="bigCard">
         <div className="row">
           <div className="col-md-12">
             <div className="row">
-              <div className="col-md-12  infoC">
-                <div className="headerB">Profile</div>
+              <div className="col-md-12  inside-block">
+                <div className="textheader">Profile</div>
               </div>
             </div>
             <div className="row">
@@ -50,7 +50,7 @@ export default class StudentCard extends Component {
                 </div>
                 <div className="row justify-content-center">
                   <div
-                    className="col-md-12  infoC"
+                    className="col-md-12  inside-block"
                     style={{ marginBottom: "5px" }}
                   >
                     <div className="row">

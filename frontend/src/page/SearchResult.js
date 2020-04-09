@@ -25,18 +25,18 @@ export default class SearchResult extends Component {
               style={{ maxWidth: "1200px" }}
             >
               <div className="row justify-content-center">
-                <h2
+                <div
+                className="inside-block textshadow"
                   style={{
                     marginTop: "20px",
                     padding: "5px 15px",
                     textAlign: "center",
-                    color: "black",
                     backgroundColor: "rgba(255,255,255,0.3)",
                     borderRadius: "12px"
                   }}
                 >
                   {"Search Result: Loading..."}
-                </h2>
+                </div>
               </div>
               <CourseCardLayout data={[]} />
             </div>
@@ -56,7 +56,8 @@ export default class SearchResult extends Component {
               style={{ maxWidth: "1200px" }}
             >
               <div className="row justify-content-center">
-                <h2
+                <div
+                  className="inside-block textshadow"
                   style={{
                     marginTop: "20px",
                     padding: "5px 15px",
@@ -69,7 +70,7 @@ export default class SearchResult extends Component {
                   {"Search Result: " +
                     this.state.data.length +
                     (this.state.data.length <= 1 ? " course" : " courses")}
-                </h2>
+                </div>
               </div>
               <CourseCardLayout data={this.state.data} />
             </div>

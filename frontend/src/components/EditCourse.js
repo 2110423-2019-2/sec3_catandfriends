@@ -116,14 +116,14 @@ export default class EditCourse extends Component {
     });
     this.enableTime();
   }
-      
+
   async handleSubmit(event) {
     event.preventDefault();
     if (!this.compareDate()) {
       alert("Start Date must be before End Date");
-    } else if(!this.compareTime){
+    } else if (!this.compareTime) {
       alert("Start Time must be before End Time");
-    }else {
+    } else {
       alert(JSON.stringify(this.state));
       let data = await Util.editCourse(
         this.state._id,
@@ -145,7 +145,7 @@ export default class EditCourse extends Component {
         console.log(data);
         history.push("/profile");
       } else {
-        window.alert("Cannot Edit Course");     
+        window.alert("Cannot Edit Course");
       }
     }
   }
@@ -269,41 +269,42 @@ export default class EditCourse extends Component {
     );
   }
 
-      compareDate() {
-        var a = document.getElementById("startDate").value;
-        var b = document.getElementById("endDate").value;
-        var splitA = a.split("/");
-        var splitB = b.split("/");
-        var aDate = Date.parse(splitA[0], splitA[1] - 1, splitA[2]);
-        var bDate = Date.parse(splitB[0], splitB[1] - 1, splitB[2]);
-        return aDate < bDate;
-      }
+  compareDate() {
+    var a = document.getElementById("startDate").value;
+    var b = document.getElementById("endDate").value;
+    var splitA = a.split("/");
+    var splitB = b.split("/");
+    var aDate = Date.parse(splitA[0], splitA[1] - 1, splitA[2]);
+    var bDate = Date.parse(splitB[0], splitB[1] - 1, splitB[2]);
+    return aDate < bDate;
+  }
 
-      compareTime(){
-        var i=0;
-        var invalid=false;
-        for (i=0;i<7;i++){
-          invalid = this.state.dayAndEndTime<this.state.dayAndStartTime;
-        }
-        return invalid;
-      }
-      
+  compareTime() {
+    var i = 0;
+    var invalid = false;
+    for (i = 0; i < 7; i++) {
+      invalid = this.state.dayAndEndTime < this.state.dayAndStartTime;
+    }
+    return invalid;
+  }
+
   render() {
     return (
-      <div className="card mb-4 p-3" style={{ maxWidth: 1000 }}>
-        <h3 className="card-title border text-center">Edit Course</h3>
+      <div className="bigCard" style={{ maxWidth: 1000 }}>
+        <div className="inside-block textshadow">Edit Course</div>
         <br />
         <form
           onSubmit={event => this.handleSubmit(event)}
           style={{ marginLeft: 30 }}
         >
           <div class="row">
-            <div class="col-md-6" width="100%">
+            <div class="col-md-6 textnormal text-left">
               <label>
                 Course Name
                 <br />
                 <input
                   type="text"
+                  className="inbox"
                   required
                   value={this.state.courseName}
                   name="courseName"
@@ -312,12 +313,13 @@ export default class EditCourse extends Component {
                 />
               </label>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 textnormal text-left">
               <label>
                 Category
                 <br />
                 <select
                   name="category"
+                  className="inbox"
                   onChange={this.handleChange}
                   value={this.state.category}
                   required
@@ -331,12 +333,13 @@ export default class EditCourse extends Component {
             </div>
           </div>
           <div class="row">
-            <div class="col-md-3" width="100%">
+            <div class="col-md-3 textnormal text-left" width="100%">
               <label>
                 Start Date
                 <br />
                 <input
                   type="Date"
+                  className="inbox"
                   required
                   value={this.state.startDate}
                   onChange={this.handleChange}
@@ -345,12 +348,13 @@ export default class EditCourse extends Component {
                 />
               </label>
             </div>
-            <div class="col-md-3" width="100%">
+            <div class="col-md-3 textnormal text-left" width="100%">
               <label>
                 End Date
                 <br />
                 <input
                   type="Date"
+                  className="inbox"
                   required
                   value={this.state.endDate}
                   onChange={this.handleChange}
@@ -359,13 +363,14 @@ export default class EditCourse extends Component {
                 />
               </label>
             </div>
-            <div class="col-md-3" width="100%">
+            <div class="col-md-3 textnormal text-left" width="100%">
               <label>
                 Price
                 <br />
                 <input
                   type="Number"
                   min="0"
+                  className="inbox"
                   required
                   value={this.state.courseFee}
                   onChange={this.handleChange}
@@ -373,13 +378,14 @@ export default class EditCourse extends Component {
                 />
               </label>
             </div>
-            <div class="col-md-3" width="100%">
+            <div class="col-md-3 textnormal text-left" width="100%">
               <label>
                 Student amount
                 <br />
                 <input
                   type="Number"
                   min="0"
+                  className="inbox"
                   required
                   value={this.state.totalAmountOfStudent}
                   onChange={this.handleChange}
@@ -389,7 +395,7 @@ export default class EditCourse extends Component {
             </div>
           </div>
           <div class="row">
-            <div class="col-md-3" width="100%">
+            <div class="col-md-3 textnormal text-left" width="100%">
               <label htmlFor="Weekday">
                 Week day
                 <div id="Weekday" style={{ paddingTop: "5px" }}>
@@ -477,194 +483,41 @@ export default class EditCourse extends Component {
                 </div>
               </label>
             </div>
-            <div class="col-md-3" width="100%">
+            <div class="col-md-3 textnormal text-left" width="100%">
               <label htmlFor="StartTime">Start Time</label>
               <div id="StartTime">
-                <input
-                  type="Time"
-                  name="ST0"
-                  id="ST0"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.StartTimes[0]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndStartTimeChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ST1"
-                  id="ST1"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.StartTimes[1]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndStartTimeChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ST2"
-                  id="ST2"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.StartTimes[2]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndStartTimeChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ST3"
-                  id="ST3"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.StartTimes[3]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndStartTimeChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ST4"
-                  id="ST4"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.StartTimes[4]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndStartTimeChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ST5"
-                  id="ST5"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.StartTimes[5]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndStartTimeChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ST6"
-                  id="ST6"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.StartTimes[6]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndStartTimeChange}
-                  disabled
-                />
-                <br />
+                <input type="Time" className="inbox" name="ST0" id="ST0" min="06:00" max="22:00" value={this.state.StartTimes[0]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
+                <input type="Time" className="inbox" name="ST1" id="ST1" min="06:00" max="22:00" value={this.state.StartTimes[1]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
+                <input type="Time" className="inbox" name="ST2" id="ST2" min="06:00" max="22:00" value={this.state.StartTimes[2]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
+                <input type="Time" className="inbox" name="ST3" id="ST3" min="06:00" max="22:00" value={this.state.StartTimes[3]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
+                <input type="Time" className="inbox" name="ST4" id="ST4" min="06:00" max="22:00" value={this.state.StartTimes[4]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
+                <input type="Time" className="inbox" name="ST5" id="ST5" min="06:00" max="22:00" value={this.state.StartTimes[5]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
+                <input type="Time" className="inbox" name="ST6" id="ST6" min="06:00" max="22:00" value={this.state.StartTimes[6]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
               </div>
             </div>
 
-            <div class="col-md-3" width="100%">
+            <div class="col-md-3 textnormal text-left" width="100%">
               <label htmlFor="EndTime">End Time</label>
               <div id="EndTime">
-                <input
-                  type="Time"
-                  name="ET0"
-                  id="ET0"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.EndTimes[0]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndEndTimeChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ET1"
-                  id="ET1"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.EndTimes[1]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndEndTimeChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ET2"
-                  id="ET2"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.EndTimes[2]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndEndTimeChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ET3"
-                  id="ET3"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.EndTimes[3]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndEndTimeChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ET4"
-                  id="ET4"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.EndTimes[4]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndEndTimeChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ET5"
-                  id="ET5"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.EndTimes[5]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndEndTimeChange}
-                  disabled
-                />
-                <br />
-                <input
-                  type="Time"
-                  name="ET6"
-                  id="ET6"
-                  min="06:00"
-                  max="22:00"
-                  value={this.state.EndTimes[6]}
-                  style={{ marginBottom: "2px" }}
-                  onChange={this.handleDayAndEndTimeChange}
-                  disabled
-                />
-                <br />
+                <input type="Time" className="inbox" name="ET0" id="ET0" min="06:00" max="22:00" value={this.state.EndTimes[0]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
+                <input type="Time" className="inbox" name="ET1" id="ET1" min="06:00" max="22:00" value={this.state.EndTimes[1]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
+                <input type="Time" className="inbox" name="ET2" id="ET2" min="06:00" max="22:00" value={this.state.EndTimes[2]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
+                <input type="Time" className="inbox" name="ET3" id="ET3" min="06:00" max="22:00" value={this.state.EndTimes[3]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
+                <input type="Time" className="inbox" name="ET4" id="ET4" min="06:00" max="22:00" value={this.state.EndTimes[4]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
+                <input type="Time" className="inbox" name="ET5" id="ET5" min="06:00" max="22:00" value={this.state.EndTimes[5]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
+                <input type="Time" className="inbox" name="ET6" id="ET6" min="06:00" max="22:00" value={this.state.EndTimes[6]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
               </div>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-md-6" width="100%" height="100px">
+            <div class="col-md-6 textnormal text-left" width="100%" height="100px">
               <label>
                 Description
                 <br />
                 <textarea
                   type="text"
+                  className="inbox"
                   required
                   value={this.state.description}
                   onChange={this.handleChange}
@@ -674,14 +527,12 @@ export default class EditCourse extends Component {
               </label>
             </div>
           </div>
-
-          <br />
-          <div className="text-center" style={{ marginRight: 40 }}>
+          <div className="text-center">
             <input
               type="submit"
               value="Submit"
-              className="btn btn-success"
-              style={{ marginRight: 20 }}
+              className="button-white"
+              style={{ marginBottom: 10 }}
             />
             {/* <input type="cancel" value="Cancel" className="btn btn-danger" style={{width:76.5, height:38}}/> */}
           </div>

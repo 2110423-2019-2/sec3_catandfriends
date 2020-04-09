@@ -85,12 +85,12 @@ export default class EditTutorProfile extends Component {
 
   render() {
     return (
-      <div className="editTutorProfileCard">
-        <h3 className="editProfileH text-center">Edit Tutor Profile</h3>
+      <div className="bigCard">
+        <div className="inside-block textheader">Edit Tutor Profile</div>
         <div className="row" style={{ marginTop: "10px", padding: "20px" }}>
-          <div className="col-md-3 justify-content-center infoC">
+          <div className="col-md-3 justify-content-center inside-block">
             <div
-              className="nameE "
+              className="textshadow"
               style={{ paddingLeft: "0px", marginTop: "10px" }}
             >
               New profile image
@@ -127,13 +127,14 @@ export default class EditTutorProfile extends Component {
                 style={{ marginTop: "10px", textAlign: "center" }}
               >
                 <div class="col-md-6">
-                  <label htmlFor="firstName" className="nameE">
+                  <label className="textnormal" htmlFor="firstName">
                     First Name
                     <br />
                     <input
                       id="firstName"
                       type="text"
                       value={this.state.firstName}
+                      className="field"
                       name="firstName"
                       style={{ width: 250 }}
                       onChange={this.handleChange}
@@ -143,13 +144,14 @@ export default class EditTutorProfile extends Component {
                 </div>
 
                 <div class="col-md-6">
-                  <label className="nameE" htmlFor="lastName">
+                  <label className="textnormal" htmlFor="lastName">
                     Last Name
                     <br />
                     <input
                       id="lastName"
                       type="text"
                       value={this.state.lastName}
+                      className="field"
                       style={{ width: 250 }}
                       name="lastName"
                       onChange={this.handleChange}
@@ -160,7 +162,7 @@ export default class EditTutorProfile extends Component {
               </div>
               <div class="row">
                 <div class="col-md-6" width="100%">
-                  <label className="nameE">
+                <label className="textnormal">
                     Phone Number
                     <br />
                     <input
@@ -168,6 +170,7 @@ export default class EditTutorProfile extends Component {
                       type="tel"
                       maxLength="10"
                       value={this.state.phoneNumber}
+                      className="field"
                       style={{ width: 250 }}
                       name="phoneNumber"
                       onChange={this.handleChange}
@@ -178,12 +181,13 @@ export default class EditTutorProfile extends Component {
                   </label>
                 </div>
                 <div class="col-md-6">
-                  <label className="nameE">
+                  <label className="textnormal">
                     Gender
                     <br />
                     <select
                       id="gender"
                       value={this.state.Gender}
+                      className="field"
                       style={{ width: 250 }}
                       name="gender"
                       onChange={this.handleChange}
@@ -196,13 +200,13 @@ export default class EditTutorProfile extends Component {
               </div>
               <div className="row text-center" style={{ marginTop: "20px" }}>
                 <div className="col-md-12">
-                  <NormalButton
-                    color="rgb(76, 182, 181)"
+                  <button
+                    className="button-white"
                     type="submit"
                     value="Submit"
                   >
                     Submit
-                  </NormalButton>
+                  </button>
                 </div>
               </div>
             </form>
@@ -239,7 +243,7 @@ export default class EditTutorProfile extends Component {
     const data = new FormData();
     data.append("file", this.state.selectedSlip);
     console.log(data.get("file"));
-    let img = await Util.uploadImge(data);
+    let img = await Util.uploadImage(data);
     if (!img.error) {
       console.log(img.statusText);
       alert("File Uploaded");

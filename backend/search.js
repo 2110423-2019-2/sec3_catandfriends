@@ -225,9 +225,9 @@ router.get("/", async (req, res) => {
     }
     // ///////////////////////////////
     query.$and.push({ endDate: { $gte: dateThailand._d } });
-    // console.log(JSON.stringify(query));
+    // console.log(query);
 
-    [err, courses] = await to(CourseModel.find(query));
+    [err, courses] = await to(CourseModel.aggregate([{ $match: query }, { $sort: { isAvailable: -1, premiumTutorStatus: -1, startDate: 1 } }]));
     if (err) {
         res.status(500).end();
     }
@@ -264,7 +264,7 @@ router.get("/", async (req, res) => {
         courses[i].lastModified = undefined;
 
         courses[i] = {
-            ...courses[i].toObject(),
+            ...courses[i],
             tutorName: tutorName
             // remaining: remaining
         };
@@ -273,9 +273,9 @@ router.get("/", async (req, res) => {
     // console.log(courses);
     courses.sort((a, b) => {
         return (
-            b.isAvailable - a.isAvailable ||
-            b.premiumTutorStatus - a.premiumTutorStatus ||
-            a.startDate - b.startDate
+            b.isAvailable - a.isAvailable
+            // b.premiumTutorStatus - a.premiumTutorStatus ||
+            // a.startDate - b.startDate
         );
     });
     // console.log(courses);

@@ -326,7 +326,7 @@ const Util = {
     if (response.status == 500) return { error: true };
     if (response.status == 200) return response.json();
   },
-  uploadImge: async (data) => {
+  uploadImage: async (data) => {
     const URL = `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
       "token"
     )}`;

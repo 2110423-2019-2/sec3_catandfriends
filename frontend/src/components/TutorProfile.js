@@ -78,12 +78,12 @@ export class TutorProfile extends Component {
   }
   render() {
     return (
-      <div className="bigCard border">
+      <div className="bigCard">
         <div className="row">
           <div className="col-md-12">
             <div className="row">
-              <div className="col-md-12  infoC">
-                <div className="headerB">My Profile</div>
+              <div className="col-md-12  inside-block">
+                <div className="textheader">My Profile</div>
               </div>
             </div>
             <div className="row">
@@ -102,7 +102,7 @@ export class TutorProfile extends Component {
             </div>
 
             <div className="row">
-              <div className="col-md-12  infoC" style={{ marginBottom: "5px" }}>
+              <div className="col-md-12  inside-block" style={{ marginBottom: "5px" }}>
                 <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">SSN:</div>
@@ -213,14 +213,13 @@ export class TutorProfile extends Component {
               // style={{ marginTop: "10px" }}
             >
               <div className="col-md-12">
-                <NormalButton
-                  color="rgba(127, 83, 253, 0.8)"
+                <button className="button-white"
                   onClick={() => {
                     history.push(`/profile/edit`);
                   }}
                 >
                   Edit Profile
-                </NormalButton>
+                </button>
                 {this.showVerify(this.props.data.verifyStatus)}
                 {this.showPremium(
                   this.props.data.premiumStatus,

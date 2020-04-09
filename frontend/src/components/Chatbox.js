@@ -65,8 +65,8 @@ class UserBoxes extends Component {
     console.log(this.props.users);
     return (
       <div class="col-5 px-0">
-        <div class="bg-white">
-          <div class="bg-gray px-4 py-2 bg-light">
+        <div class="background-color-trans">
+          <div class="px-4 py-2 background-color-trans text-color">
             <p class="h5 mb-0 py-1">Recent</p>
           </div>
 
@@ -93,7 +93,7 @@ class UserBox extends Component {
     return (
       <a
         href="#"
-        class="list-group-item list-group-item-action list-group-item-light rounded-0"
+        class="list-group-item list-group-item-action rounded-0 background-color"
         onClick={() => {
           this.props.onClickUser(this.props.user.roomId);
         }}
@@ -106,7 +106,7 @@ class UserBox extends Component {
             class="rounded-circle"
           />
           <div class="media-body ml-4">
-            <div class="d-flex align-items-center justify-content-between mb-1">
+            <div class="d-flex align-items-center justify-content-between mb-1 textnormal">
               <h6 class="mb-0">{this.props.user.firstName}</h6>
             </div>
           </div>
@@ -121,7 +121,7 @@ class MessageBox extends Component {
     console.log(this.props.message);
     return (
       <div class="col-7 px-0">
-        <div class="px-4 py-5 chat-box bg-white" id="messageBox">
+        <div class="px-4 py-5 chat-box background-color" id="messageBox">
           {this.props.message.map(msg => {
             if (msg.userId == JSON.parse(localStorage.getItem("user"))._id) {
               return <RecieverMessage message={msg} />;
@@ -158,8 +158,8 @@ class SenderMessage extends Component {
           class="rounded-circle"
         />
         <div class="media-body ml-3">
-          <div class="bg-light rounded py-2 px-3 mb-2">
-            <p class="text-small mb-0 text-muted">
+          <div class="background-color-invert rounded py-2 px-3 mb-2">
+            <p class="text-small mb-0 text-color-invert">
               {this.props.message.message}{" "}
             </p>
           </div>
@@ -200,7 +200,7 @@ class TypingArea extends Component {
     return (
       <form
         onSubmit={event => this.onSubmit(event)}
-        class="bg-light"
+        class="background-color"
         autoComplete="off"
       >
         <div class="input-group">
@@ -208,7 +208,7 @@ class TypingArea extends Component {
             type="text"
             placeholder="Type a message"
             aria-describedby="button-addon2"
-            class="form-control rounded-0 border-0 py-4 bg-light"
+            class="form-control rounded-0 border-0 py-4 background-light"
             id="message"
           />
           <div class="input-group-append">

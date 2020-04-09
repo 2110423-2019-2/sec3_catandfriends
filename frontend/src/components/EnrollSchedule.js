@@ -52,12 +52,9 @@ export default class EnrollSchedule extends Component {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-12 ">
-                        <div
+                      <div className="col-md-12">
+                        <div className="textshadow"
                           style={{
-                            textAlign: "center",
-                            height: "300px",
-                            fontSize: "24px",
                             paddingTop: "20px"
                           }}
                         >
@@ -207,11 +204,8 @@ export default class EnrollSchedule extends Component {
                       </div>
                       <div className="row">
                         <div className="col-md-12 ">
-                          <div
+                          <div className="textshadow"
                             style={{
-                              textAlign: "center",
-                              height: "300px",
-                              fontSize: "24px",
                               paddingTop: "20px"
                             }}
                           >
@@ -260,7 +254,7 @@ class RowInformation extends Component {
     if (this.props.detail) {
       return (
         <div className="row" key={this.props.detail._id}>
-          <div className="col-md-2 border">
+          <div className="col-md-2 background-color">
             <a
               className="courseL"
               style={{ textAlign: "center" }}
@@ -271,29 +265,29 @@ class RowInformation extends Component {
               {courseName ? courseName : "-"}
             </a>
           </div>
-          <div className="col-md-2 border">
+          <div className="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {tutorName ? tutorName : "-"}
             </div>
           </div>
 
-          <div class="col-md-2 border">
+          <div class="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {enrollDate ? enrollDate : "-"}
             </div>
           </div>
 
-          <div class="col-md-2 border">
+          <div class="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {duration ? duration.split(" - ")[0] : "-"}
             </div>
           </div>
-          <div class="col-md-2 border">
+          <div class="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {duration ? duration.split(" - ")[1] : "-"}
             </div>
           </div>
-          <div className="col-md-2 border justify-content-center">
+          <div className="col-md-2 justify-content-center">
             <textarea className="Eday" style={{ textAlign: "center" }}>
               {day ? this.dayToString(day) : "-"}
             </textarea>

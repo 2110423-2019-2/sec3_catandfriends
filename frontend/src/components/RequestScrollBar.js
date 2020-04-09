@@ -20,7 +20,7 @@ export default class RequestScrollBar extends Component {
   render() {
     if (this.state.data) {
       return (
-        <div className="requestCard">
+        <div className="requestCard background-color-trans">
           {this.state.data.map(item => {
             if (item.status === 0) {
               return (
@@ -76,7 +76,7 @@ export default class RequestScrollBar extends Component {
       );
     } else {
       return (
-        <div className="requestCard">
+        <div className="requestCard background-color-trans">
           {/* <h5 align="center">Request List</h5> */}
         </div>
       );
