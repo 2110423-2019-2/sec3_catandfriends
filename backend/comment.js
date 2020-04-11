@@ -6,7 +6,30 @@ const moment = require("moment-timezone");
 const to = require("await-to-js").default;
 
 router.get("/", async (req, res) => {
+    const userId = req.user._id;
+    const courseId = req.query.courseId;
+    let err, comments;
 
+    let isAlreadyCommentedR = await checkAlreadyCommented(userId, courseId);
+    err = isAlreadyCommentedR[0];
+    let isAlreadyCommented = isAlreadyCommentedR[1];
+
+    if (isAlreadyCommented) {
+        commentsR = await findCommentOwnCommentTop(userId, courseId);
+        err = commentsR[0];
+        comments = commentsR[1];
+    } else {
+        commentsR = await findComment(courseId);
+        err = commentsR[0];
+        comments = commentsR[1];
+    }
+
+    if (err) {
+        res.status(500).end();
+        return;
+    }
+
+    res.status(200).json(comments).end();
 });
 
 router.post("/", async (req, res) => {
@@ -78,6 +101,35 @@ async function saveComment(studentId, courseId, text, dateThailand) {
     const comment = new commentModel(payload);
     [err, save] = await to(comment.save());
     return err;
+}
+
+async function findComment(courseId) {
+    [err, comments] = await to(commentModel.find(
+        { courseId: courseId }
+    ).sort({
+        lastModified: -1
+    }));
+    return [err, comments];
+}
+
+async function findCommentOwnCommentTop(userId, courseId) {
+    [err, ownComments] = await to(commentModel.find(
+        {
+            courseId: courseId,
+            studentId: userId
+        }
+    ));
+
+    [err, otherComments] = await to(commentModel.find(
+        {
+            courseId: courseId,
+            studentId: { $ne: userId }
+        }
+    ).sort({
+        lastModified: -1
+    }));
+
+    return [err, ownComments.concat(otherComments)];
 }
 
 module.exports = router;
