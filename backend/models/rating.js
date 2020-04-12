@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-var collectionName = "rate";
+var collectionName = "rating";
 
-const rateSchema = new Schema(
+const ratingSchema = new Schema(
     {
         courseId: {
             type: String,
@@ -12,7 +12,7 @@ const rateSchema = new Schema(
             type: String,
             required: true
         },
-        rate: {
+        rating: {
             type: Number,
         },
         createdTime: {
@@ -29,6 +29,6 @@ const rateSchema = new Schema(
 }
 );
 
-const RateModel = mongoose.model("RateModel", rateSchema);
+const RatingModel = mongoose.model("RatingModel", ratingSchema);
 
-module.exports = RateModel;
+module.exports = RatingModel;
