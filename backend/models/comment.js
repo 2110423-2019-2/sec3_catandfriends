@@ -14,7 +14,11 @@ const commentSchema = new Schema(
         },
         text: {
             type: String,
-            required: true
+            default: ""
+        },
+        rating: {
+            type: Number,
+            default: null
         },
         createdTime: {
             type: Date,

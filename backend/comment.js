@@ -38,6 +38,7 @@ router.post("/", async (req, res) => {
     const studentId = req.user._id;
     const courseId = req.body.courseId;
     const text = req.body.text;
+    const star = req.body.star;
     const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
 
     let err;
@@ -57,7 +58,8 @@ router.post("/", async (req, res) => {
     let isAlreadyCommented = isAlreadyCommentedR[1];
 
     if (!isAlreadyCommented) {
-        err = await saveComment(studentId, courseId, text, dateThailand);
+        err = await saveComment(studentId, courseId, text, star, dateThailand);
+        err = await updateCourseRating("POST", studentId, courseId, star);
     }
 
     if (err) {
@@ -72,8 +74,15 @@ router.put("/", async (req, res) => {
     const studentId = req.user._id;
     const courseId = req.body.courseId;
     const text = req.body.text;
+    const star = req.body.star;
     const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
 
+    if (!star) {
+        res.status(400).json({
+            err: "No star entered"
+        }).end();
+        return;
+    }
     let err;
     let isEnrolledR = await checkEnrollment(studentId, courseId);
     err = isEnrolledR[0];
@@ -91,7 +100,8 @@ router.put("/", async (req, res) => {
     let isAlreadyCommented = isAlreadyCommentedR[1];
 
     if (isAlreadyCommented) {
-        err = await updateComment(studentId, courseId, text, dateThailand);
+        err = await updateCourseRating("PUT", studentId, courseId, star);
+        err = await updateComment(studentId, courseId, text, star, dateThailand);
     } else {
         res.status(400).json({
             err: "No comment exists"
@@ -161,16 +171,74 @@ async function checkAlreadyCommented(studentId, courseId) {
     return [err, !!comment];
 }
 
-async function saveComment(studentId, courseId, text, dateThailand) {
+async function saveComment(studentId, courseId, text, star, dateThailand) {
     let err;
     let payload = {};
     payload.courseId = courseId;
     payload.studentId = studentId;
     payload.text = text;
+    payload.rating = star;
     payload.createdTime = dateThailand;
     payload.lastModified = dateThailand;
     const comment = new commentModel(payload);
     [err, save] = await to(comment.save());
+    return err;
+}
+
+async function updateCourseRating(method, studentId, courseId, star) {
+    [err, course] = await to(courseModel.findById(courseId,
+        {
+            averageRating: 1,
+            numberOfRating: 1
+        }
+    ));
+    if (!course.averageRating) {
+        course.averageRating = 0;
+        course.numberOfRating = 0;
+    }
+
+    if (method == "POST") {
+        let averageRatingNew = (course.averageRating + star) / (course.numberOfRating + 1);
+
+        [err, value] = await to(courseModel.findOneAndUpdate(
+            {
+                _id: courseId
+            },
+            {
+                averageRating: averageRatingNew,
+                numberOfRating: course.numberOfRating + 1
+            },
+            {
+                useFindAndModify: false
+            }
+        ));
+    }
+    if (method == "PUT") {
+        [err, comment] = await to(commentModel.findOne(
+            {
+                studentId: studentId,
+                courseId: courseId
+            },
+            {
+                rating: 1
+            }
+        ));
+
+        let averageRatingNew = ((course.averageRating * course.numberOfRating) - comment.rating + star) / course.numberOfRating;
+
+        [err, value] = await to(courseModel.findOneAndUpdate(
+            {
+                _id: courseId
+            },
+            {
+                averageRating: averageRatingNew
+            },
+            {
+                useFindAndModify: false
+            }
+        ));
+    }
+
     return err;
 }
 
@@ -217,7 +285,7 @@ async function findCommentOwnCommentTop(userId, courseId) {
     return [err, [ownComments].concat(otherComments)];
 }
 
-async function updateComment(studentId, courseId, text, dateThailand) {
+async function updateComment(studentId, courseId, text, star, dateThailand) {
     [err, value] = await to(commentModel.findOneAndUpdate(
         {
             studentId: studentId,
@@ -225,6 +293,7 @@ async function updateComment(studentId, courseId, text, dateThailand) {
         },
         {
             text: text,
+            rating: star,
             lastModified: dateThailand
         },
         {
