@@ -68,7 +68,42 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
+    const studentId = req.user._id;
+    const courseId = req.body.courseId;
+    const text = req.body.text;
+    const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
 
+    let err;
+    let isEnrolledR = await checkEnrollment(studentId, courseId);
+    err = isEnrolledR[0];
+    let isEnrolled = isEnrolledR[1];
+
+    if (!isEnrolled) {
+        res.status(400).json({
+            err: "Not enrolled"
+        }).end();
+        return;
+    }
+
+    let isAlreadyCommentedR = await checkAlreadyCommented(studentId, courseId);
+    err = isAlreadyCommentedR[0];
+    let isAlreadyCommented = isAlreadyCommentedR[1];
+
+    if (isAlreadyCommented) {
+        err = await updateComment(studentId, courseId, text, dateThailand);
+    } else {
+        res.status(400).json({
+            err: "No comment exists"
+        }).end();
+        return;
+    }
+
+    if (err) {
+        res.status(500).end();
+        console.log(err);
+        return;
+    }
+    res.status(201).end();
 });
 
 router.delete("/", async (req, res) => {
@@ -137,6 +172,23 @@ async function findCommentOwnCommentTop(userId, courseId) {
     }
 
     return [err, [ownComments].concat(otherComments)];
+}
+
+async function updateComment(studentId, courseId, text, dateThailand) {
+    [err, value] = await to(commentModel.findOneAndUpdate(
+        {
+            studentId: studentId,
+            courseId: courseId
+        },
+        {
+            text: text,
+            lastModified: dateThailand
+        },
+        {
+            useFindAndModify: false
+        }
+    ));
+    return err;
 }
 
 module.exports = router;
