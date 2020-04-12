@@ -232,7 +232,15 @@ const Util = {
     if (response.status == 400) return { error: true };
     if (response.status == 201) return response.json();
   },
-  editProfile: async (_id,firstName, lastName, gender, phoneNumber,profileImage, token) => {
+  editProfile: async (
+    _id,
+    firstName,
+    lastName,
+    gender,
+    phoneNumber,
+    profileImage,
+    token
+  ) => {
     const URL = `http://localhost:8000/profile?token=${token}`;
     const response = await fetch(URL, {
       method: "PUT",
@@ -317,6 +325,22 @@ const Util = {
     console.log(response);
     if (response.status == 500) return { error: true };
     if (response.status == 200) return response.json();
+  },
+  sendReport: async data => {
+    const URL = `http://localhost:8000/report?token=${localStorage.getItem(
+      "token"
+    )}`;
+    const response = await fetch(URL, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+    console.log(response);
+    if (response.status == 500) return { error: true };
+    if (response.status == 201) return response.json();
   }
 };
 
