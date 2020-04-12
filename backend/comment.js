@@ -107,7 +107,40 @@ router.put("/", async (req, res) => {
 });
 
 router.delete("/", async (req, res) => {
+    const studentId = req.user._id;
+    const courseId = req.query.courseId;
 
+    let err;
+    let isEnrolledR = await checkEnrollment(studentId, courseId);
+    err = isEnrolledR[0];
+    let isEnrolled = isEnrolledR[1];
+
+    if (!isEnrolled) {
+        res.status(400).json({
+            err: "Not enrolled"
+        }).end();
+        return;
+    }
+
+    let isAlreadyCommentedR = await checkAlreadyCommented(studentId, courseId);
+    err = isAlreadyCommentedR[0];
+    let isAlreadyCommented = isAlreadyCommentedR[1];
+
+    if (isAlreadyCommented) {
+        err = await deleteComment(studentId, courseId);
+    } else {
+        res.status(400).json({
+            err: "No comment exists"
+        }).end();
+        return;
+    }
+
+    if (err) {
+        res.status(500).end();
+        console.log(err);
+        return;
+    }
+    res.status(201).end();
 });
 
 async function checkEnrollment(studentId, courseId) {
@@ -191,4 +224,13 @@ async function updateComment(studentId, courseId, text, dateThailand) {
     return err;
 }
 
+async function deleteComment(studentId, courseId) {
+    [err, value] = await to(
+        commentModel.deleteOne({
+            studentId: studentId,
+            courseId: courseId
+        })
+    );
+    return err;
+}
 module.exports = router;
