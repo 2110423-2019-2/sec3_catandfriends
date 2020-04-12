@@ -3,6 +3,7 @@ const router = express.Router();
 const commentModel = require("./models/comment");
 const courseModel = require("./models/course");
 const moment = require("moment-timezone");
+const format = require("./commonFunc/format")
 const to = require("await-to-js").default;
 
 router.get("/", async (req, res) => {
@@ -179,6 +180,15 @@ async function findComment(courseId) {
     ).sort({
         lastModified: -1
     }));
+
+    for (let i = 0; i < comments.length; i++) {
+        comments[i] = {
+            ...comments[i].toObject(),
+            createdTimeS: format.formatTimeDate(comments[i].createdTime),
+            lastModifiedS: format.formatTimeDate(comments[i].lastModified),
+            editable: false
+        };
+    }
     return [err, comments];
 }
 
