@@ -3,6 +3,8 @@ import CourseDetail from "../components/CourseDetail";
 // import TutorCard from "../components/TutorCard";
 import Comment from "../components/Comment";
 import Util from "../apis/Util";
+import CommentCard from "../components/CommentCard";
+
 export default class CourseInformation extends Component {
   state = { data: null };
 
@@ -23,6 +25,11 @@ export default class CourseInformation extends Component {
             </div>
             <div className="col-md-12" align="center">
               <CourseDetail detail={this.state.data} />
+            </div>
+            <div className="col-md-12" align="center">
+              <CommentCard />
+              <br />
+              <br />
             </div>
           </div>
         </div>
