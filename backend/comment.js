@@ -26,6 +26,7 @@ router.get("/", async (req, res) => {
 
     if (err) {
         res.status(500).end();
+        console.log(err);
         return;
     }
 
@@ -60,6 +61,7 @@ router.post("/", async (req, res) => {
 
     if (err) {
         res.status(500).end();
+        console.log(err);
         return;
     }
     res.status(201).end();
@@ -113,12 +115,13 @@ async function findComment(courseId) {
 }
 
 async function findCommentOwnCommentTop(userId, courseId) {
-    [err, ownComments] = await to(commentModel.find(
+    [err, ownComments] = await to(commentModel.findOne(
         {
             courseId: courseId,
             studentId: userId
         }
     ));
+    ownComments = { ...ownComments.toObject(), editable: true };
 
     [err, otherComments] = await to(commentModel.find(
         {
@@ -129,7 +132,11 @@ async function findCommentOwnCommentTop(userId, courseId) {
         lastModified: -1
     }));
 
-    return [err, ownComments.concat(otherComments)];
+    for (let i = 0; i < otherComments.length; i++) {
+        otherComments[i] = { ...otherComments[i].toObject(), editable: false };
+    }
+
+    return [err, [ownComments].concat(otherComments)];
 }
 
 module.exports = router;
