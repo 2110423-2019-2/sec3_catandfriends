@@ -13,6 +13,7 @@ const rateRoute = require("./rate");
 const fileRoute = require("./file");
 const searchRoute = require("./search");
 const messageRoute = require("./message");
+const commentRoute = require("./comment");
 
 const verifyRoute = require("./verify");
 const mongoose = require("mongoose");
@@ -73,6 +74,11 @@ app.use(
   "/rate",
   passport.authenticate("jwt-profile", { session: false }),
   rateRoute
+);
+app.use(
+  "/comment",
+  passport.authenticate("jwt-profile", { session: false }),
+  commentRoute
 );
 
 app.listen(8000, () => {
