@@ -41,6 +41,13 @@ router.post("/", async (req, res) => {
     const star = req.body.star;
     const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
 
+    if (!text && !star) {
+        res.status(400).json({
+            err: "No entered comment or star"
+        }).end();
+        return;
+    }
+
     let err;
     let isEnrolledR = await checkEnrollment(studentId, courseId);
     err = isEnrolledR[0];
@@ -77,12 +84,6 @@ router.put("/", async (req, res) => {
     const star = req.body.star;
     const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
 
-    if (!star) {
-        res.status(400).json({
-            err: "No star entered"
-        }).end();
-        return;
-    }
     let err;
     let isEnrolledR = await checkEnrollment(studentId, courseId);
     err = isEnrolledR[0];
@@ -99,15 +100,26 @@ router.put("/", async (req, res) => {
     err = isAlreadyCommentedR[0];
     let isAlreadyCommented = isAlreadyCommentedR[1];
 
-    if (isAlreadyCommented) {
-        err = await updateCourseRating("PUT", studentId, courseId, star);
-        err = await updateComment(studentId, courseId, text, star, dateThailand);
-    } else {
+    if (!isAlreadyCommented) {
         res.status(400).json({
             err: "No comment exists"
         }).end();
         return;
     }
+
+    let isAlreadyRatedR = await checkAlreadyRated(studentId, courseId);
+    err = isAlreadyRatedR[0];
+    let isAlreadyRated = isAlreadyRatedR[1];
+
+    if (isAlreadyRated && !star) {
+        res.status(400).json({
+            err: "Already rated, required star"
+        }).end();
+        return;
+    }
+
+    err = await updateCourseRating("PUT", studentId, courseId, star);
+    err = await updateComment(studentId, courseId, text, star, dateThailand);
 
     if (err) {
         res.status(500).end();
@@ -185,6 +197,16 @@ async function saveComment(studentId, courseId, text, star, dateThailand) {
     return err;
 }
 
+async function checkAlreadyRated(studentId, courseId) {
+    [err, comment] = await to(commentModel.findOne(
+        {
+            courseId: courseId,
+            studentId: studentId
+        }
+    ));
+    return [err, !!comment.rating];
+}
+
 async function updateCourseRating(method, studentId, courseId, star) {
     [err, course] = await to(courseModel.findById(courseId,
         {
@@ -198,6 +220,7 @@ async function updateCourseRating(method, studentId, courseId, star) {
     }
 
     if (method == "POST") {
+        if (!star) return err;
         let averageRatingNew = (course.averageRating + star) / (course.numberOfRating + 1);
 
         [err, value] = await to(courseModel.findOneAndUpdate(
@@ -223,15 +246,21 @@ async function updateCourseRating(method, studentId, courseId, star) {
                 rating: 1
             }
         ));
-
-        let averageRatingNew = ((course.averageRating * course.numberOfRating) - comment.rating + star) / course.numberOfRating;
+        let averageRatingNew;
+        if (!comment.rating) {
+            course.numberOfRating += 1;
+            averageRatingNew = (course.averageRating + star) / course.numberOfRating;
+        } else {
+            averageRatingNew = ((course.averageRating * course.numberOfRating) - comment.rating + star) / course.numberOfRating;
+        }
 
         [err, value] = await to(courseModel.findOneAndUpdate(
             {
                 _id: courseId
             },
             {
-                averageRating: averageRatingNew
+                averageRating: averageRatingNew,
+                numberOfRating: course.numberOfRating
             },
             {
                 useFindAndModify: false
@@ -261,13 +290,18 @@ async function findComment(courseId) {
 }
 
 async function findCommentOwnCommentTop(userId, courseId) {
-    [err, ownComments] = await to(commentModel.findOne(
+    [err, ownComment] = await to(commentModel.findOne(
         {
             courseId: courseId,
             studentId: userId
         }
     ));
-    ownComments = { ...ownComments.toObject(), editable: true };
+    ownComment = {
+        ...ownComment.toObject(),
+        createdTimeS: format.formatTimeDate(ownComment.createdTime),
+        lastModifiedS: format.formatTimeDate(ownComment.lastModified),
+        editable: true
+    };
 
     [err, otherComments] = await to(commentModel.find(
         {
@@ -279,10 +313,15 @@ async function findCommentOwnCommentTop(userId, courseId) {
     }));
 
     for (let i = 0; i < otherComments.length; i++) {
-        otherComments[i] = { ...otherComments[i].toObject(), editable: false };
+        otherComments[i] = {
+            ...otherComments[i].toObject(),
+            createdTimeS: format.formatTimeDate(otherComments[i].createdTime),
+            lastModifiedS: format.formatTimeDate(otherComments[i].lastModified),
+            editable: false
+        };
     }
 
-    return [err, [ownComments].concat(otherComments)];
+    return [err, [ownComment].concat(otherComments)];
 }
 
 async function updateComment(studentId, courseId, text, star, dateThailand) {
@@ -305,10 +344,18 @@ async function updateComment(studentId, courseId, text, star, dateThailand) {
 
 async function deleteComment(studentId, courseId) {
     [err, value] = await to(
-        commentModel.deleteOne({
-            studentId: studentId,
-            courseId: courseId
-        })
+        commentModel.findOneAndUpdate(
+            {
+                studentId: studentId,
+                courseId: courseId
+            },
+            {
+                text: null
+            },
+            {
+                useFindAndModify: false
+            }
+        )
     );
     return err;
 }
