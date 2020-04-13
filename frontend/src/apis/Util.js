@@ -340,6 +340,54 @@ const Util = {
     if (response.status == 500) return { error: true };
     if (response.status == 201) return response.json();
   },
+  getComment: async (userId, courseId) => {
+    const URL = `http://localhost:8000/comment?userId=${userId}&courseId=${courseId}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors",
+    });
+    if (response.status == 404) return { error: true };
+    if (response.status == 200) return response.json();
+  },
+  creatComment: async (courseId,text,star,token) => {
+    const URL = `http://localhost:8000/comment?token=${token}`;
+    const response = await fetch(URL, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        courseId,
+        text,
+        star,
+      }),
+    });
+    console.log(response.status);
+    if (response.status == 400) return { error: true };
+    if (response.status == 201) return response.json();
+  },
+  editComment: async (_id,courseId,text,star,token)=> {
+    const URL = `http://localhost:8000/comment?token=${token}`;
+    const response = await fetch(URL, {
+      method: "PUT",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _id,
+        courseId,
+        text,
+        star,
+      }),
+    });
+    console.log(response.status);
+    if (response.status == 400) return { error: true };
+    if (response.status == 201) return response.json();
+  },
 };
 
 export default Util;
