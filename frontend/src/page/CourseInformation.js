@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import CourseDetail from "../components/CourseDetail";
 // import TutorCard from "../components/TutorCard";
 import Comment from "../components/Comment";
+import CommentForm from "../components/CommentForm";
 import Util from "../apis/Util";
 export default class CourseInformation extends Component {
   state = { data: null };
@@ -23,6 +24,7 @@ export default class CourseInformation extends Component {
             </div>
             <div className="col-md-12" align="center">
               <CourseDetail detail={this.state.data} />
+              <CommentForm/>
             </div>
           </div>
         </div>
