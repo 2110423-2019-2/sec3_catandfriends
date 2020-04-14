@@ -82,6 +82,7 @@ router.post("/", async (req, res) => {
 router.put("/", async (req, res) => {
     const studentId = req.user._id;
     const courseId = req.body.courseId;
+    const topic = req.body.topic;
     const text = req.body.text;
     const star = req.body.star;
     const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
@@ -121,7 +122,7 @@ router.put("/", async (req, res) => {
     }
 
     err = await updateCourseRating("PUT", studentId, courseId, star);
-    err = await updateComment(studentId, courseId, text, star, dateThailand);
+    err = await updateComment(studentId, courseId, topic, text, star, dateThailand);
 
     if (err) {
         res.status(500).end();
@@ -358,17 +359,18 @@ async function findCommentOwnCommentTop(userId, courseId) {
     return [err, [ownComment].concat(otherComments)];
 }
 
-async function updateComment(studentId, courseId, text, star, dateThailand) {
+async function updateComment(studentId, courseId, topic, text, star, dateThailand) {
+    let updateQuery = { lastModified: dateThailand };
+    if (topic) updateQuery.topic = topic;
+    if (text) updateQuery.text = text;
+    if (star) updateQuery.rating = star;
+
     [err, value] = await to(commentModel.findOneAndUpdate(
         {
             studentId: studentId,
             courseId: courseId
         },
-        {
-            text: text,
-            rating: star,
-            lastModified: dateThailand
-        },
+        updateQuery,
         {
             useFindAndModify: false
         }
