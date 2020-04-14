@@ -225,7 +225,7 @@ async function updateCourseRating(method, studentId, courseId, star) {
 
     if (method == "POST") {
         if (!star) return err;
-        let averageRatingNew = (course.averageRating + star) / (course.numberOfRating + 1);
+        let averageRatingNew = ((course.averageRating * course.numberOfRating) + star) / (course.numberOfRating + 1);
 
         [err, value] = await to(courseModel.findOneAndUpdate(
             {
@@ -252,8 +252,8 @@ async function updateCourseRating(method, studentId, courseId, star) {
         ));
         let averageRatingNew;
         if (!comment.rating) {
+            averageRatingNew = ((course.averageRating * course.numberOfRating) + star) / (course.numberOfRating + 1);
             course.numberOfRating += 1;
-            averageRatingNew = (course.averageRating + star) / course.numberOfRating;
         } else {
             averageRatingNew = ((course.averageRating * course.numberOfRating) - comment.rating + star) / course.numberOfRating;
         }
