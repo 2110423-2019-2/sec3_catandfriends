@@ -386,6 +386,7 @@ async function deleteComment(studentId, courseId) {
                 courseId: courseId
             },
             {
+                topic: null,
                 text: null
             },
             {
