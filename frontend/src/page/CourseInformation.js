@@ -4,6 +4,7 @@ import CourseDetail from "../components/CourseDetail";
 import Comment from "../components/Comment";
 import Util from "../apis/Util";
 import CommentCard from "../components/CommentCard";
+import CommentCardLayout from "../components/CommentCardLayout";
 
 export default class CourseInformation extends Component {
   state = { data: null };
@@ -15,7 +16,8 @@ export default class CourseInformation extends Component {
       return (
         <div className="justify-content-center">
           <div className="row justify-content-center">
-            <div className="inside-block textheader"
+            <div
+              className="inside-block textheader"
               style={{
                 padding: "5px 15px",
                 margin: "30px"
@@ -27,9 +29,7 @@ export default class CourseInformation extends Component {
               <CourseDetail detail={this.state.data} />
             </div>
             <div className="col-md-12" align="center">
-              <CommentCard />
-              <br />
-              <br />
+              <CommentCardLayout />
             </div>
           </div>
         </div>
