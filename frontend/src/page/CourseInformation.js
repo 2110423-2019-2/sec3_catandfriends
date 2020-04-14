@@ -29,7 +29,7 @@ export default class CourseInformation extends Component {
               <CourseDetail detail={this.state.data} />
             </div>
             <div className="col-md-12" align="center">
-              <CommentCardLayout />
+              <CommentCardLayout detail={this.state.data} />
             </div>
           </div>
         </div>

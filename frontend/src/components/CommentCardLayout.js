@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import "./CommentCardLayout.css";
 import CommentCard from "./CommentCard";
+import Util from "../apis/Util";
 
 export default class CommentCardLayout extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      comment: [],
-      comments: [
+      comment: [
         {
           topic: "A",
           rating: 2.5,
@@ -71,7 +71,11 @@ export default class CommentCardLayout extends Component {
     } else {
       for (i = 1; i < n; i++) {
         items.push(
-          <li data-target="#carouselExampleIndicators" data-slide-to={i}></li>
+          <li
+            data-target="#carouselExampleIndicators"
+            key={i}
+            data-slide-to={i}
+          ></li>
         );
       }
       return items;
@@ -103,7 +107,10 @@ export default class CommentCardLayout extends Component {
       items = [
         <div class="carousel-item active">
           <div className="row justify-content-center">
-            <CommentCard data={this.state.comments[0]} />
+            <CommentCard
+              data={this.state.comments[0]}
+              key={this.state.comments[0]._id}
+            />
           </div>
         </div>
       ];
@@ -112,44 +119,46 @@ export default class CommentCardLayout extends Component {
       items = [
         <div class="carousel-item active">
           <div className="row justify-content-center">
-            <CommentCard data={this.state.comments[0]} />
-            <CommentCard data={this.state.comments[1]} />
+            <CommentCard
+              data={this.state.comments[0]}
+              key={this.state.comments[0]._id}
+            />
+            <CommentCard
+              data={this.state.comments[1]}
+              key={this.state.comments[1]._id}
+            />
           </div>
         </div>
       ];
     }
     if (n > 2) {
-      if (n % 2 == 0) {
-        for (i = 2; i < n; i += 2) {
+      for (i = 2; i < n; i += 2) {
+        if (i + 1 == n) {
           items.push(
             <div class="carousel-item">
               <div className="row justify-content-center">
-                <CommentCard data={this.state.comments[i]} />
-                <CommentCard data={this.state.comments[i + 1]} />
+                <CommentCard
+                  data={this.state.comments[i]}
+                  key={this.state.comments[i]._id}
+                />
               </div>
             </div>
           );
-        }
-      } else {
-        for (i = 2; i < n; i += 2) {
-          if (i + 1 == n) {
-            items.push(
-              <div class="carousel-item">
-                <div className="row justify-content-center">
-                  <CommentCard data={this.state.comments[i]} />
-                </div>
+        } else {
+          items.push(
+            <div class="carousel-item">
+              <div className="row justify-content-center">
+                <CommentCard
+                  data={this.state.comments[i]}
+                  key={this.state.comments[i]._id}
+                />
+                <CommentCard
+                  data={this.state.comments[i + 1]}
+                  key={this.state.comments[i + 1]._id}
+                />
               </div>
-            );
-          } else {
-            items.push(
-              <div class="carousel-item">
-                <div className="row justify-content-center">
-                  <CommentCard data={this.state.comments[i]} />
-                  <CommentCard data={this.state.comments[i + 1]} />
-                </div>
-              </div>
-            );
-          }
+            </div>
+          );
         }
       }
     }
@@ -170,28 +179,10 @@ export default class CommentCardLayout extends Component {
             data-slide-to="0"
             class="active"
           ></li>
-          {this.getIndicator()}
+          {this.state.comments && this.getIndicator()}
         </ol>
         <div class="carousel-inner">
-          {/* <div class="carousel-item active">
-            <div className="row justify-content-center">
-              <CommentCard data={this.state.comments[0]} />
-              <CommentCard data={this.state.comments[1]} />
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div className="row justify-content-center">
-              <CommentCard data={this.state.comments[2]} />
-              <CommentCard data={this.state.comments[3]} />
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div className="row justify-content-center">
-              <CommentCard data={this.state.comments[4]} />
-            </div>{" "}
-          </div>
-        </div> */}
-          {this.getComment()}
+          {this.state.comments && this.getComment()}
         </div>
         <a
           class="carousel-control-prev arrowBtn"
@@ -214,7 +205,9 @@ export default class CommentCardLayout extends Component {
       </div>
     );
   }
-  // async componentDidMount(){
-  //   let data = await
-  // }
+  async componentDidMount() {
+    let comments = await Util.getComment(this.props.detail._id);
+    this.setState({ comments });
+    console.log(comments);
+  }
 }

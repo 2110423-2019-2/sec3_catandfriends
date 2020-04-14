@@ -1,8 +1,16 @@
 .CommentCard-topic {
   text-align: left;
+  display: block;
+  display: -webkit-box;
+  width: auto;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .CommentCard-card {
   margin: 10px;
+  min-height: 230px;
 }
 .CommentCard-textDot {
   display: block;

@@ -23,14 +23,9 @@ class CommentCard extends React.Component {
         style={{ width: "25rem" }}
       >
         <Card.Header>
-          <div style={{ width: "90%", height: "30px" }}>
+          <div style={{ width: "85%", height: "30px" }}>
             <div className="CommentCard-topic">{this.props.data.topic}</div>
           </div>
-          {/* {this.props.data._id == myId && (
-            <div style={{ width: "auto" }}>
-              <button className>delete</button>
-            </div>
-          )} */}
           {this.props.data.editable && (
             <div style={{ width: "auto" }}>
               <button className>delete</button>
@@ -51,12 +46,14 @@ class CommentCard extends React.Component {
               <div class="col-50 text-right">{this.props.data.studentName}</div>
             </div>
           </div>
-          <Card.Text>
-            <div className="CommentCard-textDot">{this.props.data.text}</div>
+          <Card.Text className="CommentCard-textDot">
+            {this.props.data.text}
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-          <div className="muted">{this.props.data.lastModified}</div>
+          <div className="muted">
+            {this.props.data.lastModified.substring(0, 10)}
+          </div>
         </Card.Footer>
       </Card>
     );
