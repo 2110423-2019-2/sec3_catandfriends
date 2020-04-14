@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const commentModel = require("./models/comment");
 const courseModel = require("./models/course");
+const userModel = require("./models/user");
 const moment = require("moment-timezone");
 const format = require("./commonFunc/format")
 const to = require("await-to-js").default;
@@ -37,13 +38,14 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
     const studentId = req.user._id;
     const courseId = req.body.courseId;
+    const topic = req.body.topic;
     const text = req.body.text;
     const star = req.body.star;
     const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
 
-    if (!text && !star) {
+    if (!topic && !text && !star) {
         res.status(400).json({
-            err: "No entered comment or star"
+            err: "No entered topic, comment or star"
         }).end();
         return;
     }
@@ -65,7 +67,7 @@ router.post("/", async (req, res) => {
     let isAlreadyCommented = isAlreadyCommentedR[1];
 
     if (!isAlreadyCommented) {
-        err = await saveComment(studentId, courseId, text, star, dateThailand);
+        err = await saveComment(studentId, courseId, topic, text, star, dateThailand);
         err = await updateCourseRating("POST", studentId, courseId, star);
     }
 
@@ -183,11 +185,12 @@ async function checkAlreadyCommented(studentId, courseId) {
     return [err, !!comment];
 }
 
-async function saveComment(studentId, courseId, text, star, dateThailand) {
+async function saveComment(studentId, courseId, topic, text, star, dateThailand) {
     let err;
     let payload = {};
     payload.courseId = courseId;
     payload.studentId = studentId;
+    payload.topic = topic;
     payload.text = text;
     payload.rating = star;
     payload.createdTime = dateThailand;
@@ -279,7 +282,18 @@ async function findComment(courseId) {
     }));
 
     for (let i = 0; i < comments.length; i++) {
+        let studentId = comments[i].studentId;
+        let studentInfo;
+        [err, studentInfo] = await to(userModel.findById(studentId,
+            {
+                _id: 0,
+                firstName: 1,
+                lastName: 1
+            }
+        ));
+
         comments[i] = {
+            studentName: studentInfo.firstName + " " + studentInfo.lastName,
             ...comments[i].toObject(),
             createdTimeS: format.formatTimeDate(comments[i].createdTime),
             lastModifiedS: format.formatTimeDate(comments[i].lastModified),
@@ -296,7 +310,17 @@ async function findCommentOwnCommentTop(userId, courseId) {
             studentId: userId
         }
     ));
+    let studentId = ownComment.studentId;
+    let studentInfo;
+    [err, studentInfo] = await to(userModel.findById(studentId,
+        {
+            _id: 0,
+            firstName: 1,
+            lastName: 1
+        }
+    ));
     ownComment = {
+        studentName: studentInfo.firstName + " " + studentInfo.lastName,
         ...ownComment.toObject(),
         createdTimeS: format.formatTimeDate(ownComment.createdTime),
         lastModifiedS: format.formatTimeDate(ownComment.lastModified),
@@ -313,7 +337,17 @@ async function findCommentOwnCommentTop(userId, courseId) {
     }));
 
     for (let i = 0; i < otherComments.length; i++) {
+        let studentId = otherComments[i].studentId;
+        let studentInfo;
+        [err, studentInfo] = await to(userModel.findById(studentId,
+            {
+                _id: 0,
+                firstName: 1,
+                lastName: 1
+            }
+        ));
         otherComments[i] = {
+            studentName: studentInfo.firstName + " " + studentInfo.lastName,
             ...otherComments[i].toObject(),
             createdTimeS: format.formatTimeDate(otherComments[i].createdTime),
             lastModifiedS: format.formatTimeDate(otherComments[i].lastModified),

@@ -12,6 +12,10 @@ const commentSchema = new Schema(
             type: String,
             required: true
         },
+        topic: {
+            type: String,
+            default: ""
+        },
         text: {
             type: String,
             default: ""
