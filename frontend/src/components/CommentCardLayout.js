@@ -63,13 +63,13 @@ export default class CommentCardLayout extends Component {
   //   <CourseCard detail={item} key={item._id.toString()} />
   // ))}
   getIndicator() {
-    let n = (this.state.comments.length + 1) / 2;
+    let n = Math.ceil(this.state.comments.length / 2);
     let items = [];
-    let i = 1;
+    let i;
     if (n <= 1) {
       return;
     } else {
-      for (i = 2; i < n; i++) {
+      for (i = 1; i < n; i++) {
         items.push(
           <li
             data-target="#carouselExampleIndicators"
