@@ -18,12 +18,12 @@ class CommentCard extends React.Component {
   }
   async deleteMyComment() {
     let msg = await Util.deleteComment(this.props.data.courseId);
-    // if (msg.error) {
-    //   window.alert(msg.error);
-    // } else {
-    //   window.alert("Your comment is deleted");
-    //   window.location.reload();
-    // }
+    if (msg.error) {
+      window.alert("Error");
+    } else {
+      window.alert("Your comment is deleted.");
+      window.location.reload();
+    }
   }
   render() {
     const myId = JSON.parse(localStorage.getItem("user"))._id;

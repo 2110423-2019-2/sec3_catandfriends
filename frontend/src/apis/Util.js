@@ -359,8 +359,8 @@ const Util = {
       method: "delete",
       mode: "cors",
     });
-    if (response.status == 400) return "dd";
-    if (response.status == 201) return "dscsd";
+    if (response.status == 400) return { error: true };
+    if (response.status == 201) return { error: false };
   },
 };
 
