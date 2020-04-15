@@ -277,7 +277,10 @@ async function updateCourseRating(method, studentId, courseId, star) {
 
 async function findComment(courseId) {
     [err, comments] = await to(commentModel.find(
-        { courseId: courseId }
+        {
+            courseId: courseId,
+            $or: [{ text: { $ne: null } }, { topic: { $ne: null } }]
+        }
     ).sort({
         lastModified: -1
     }));
@@ -308,30 +311,37 @@ async function findCommentOwnCommentTop(userId, courseId) {
     [err, ownComment] = await to(commentModel.findOne(
         {
             courseId: courseId,
-            studentId: userId
+            studentId: userId,
+            $or: [{ text: { $ne: null } }, { topic: { $ne: null } }]
         }
     ));
-    let studentId = ownComment.studentId;
-    let studentInfo;
-    [err, studentInfo] = await to(userModel.findById(studentId,
-        {
-            _id: 0,
-            firstName: 1,
-            lastName: 1
-        }
-    ));
-    ownComment = {
-        studentName: studentInfo.firstName + " " + studentInfo.lastName,
-        ...ownComment.toObject(),
-        createdTimeS: format.formatTimeDate(ownComment.createdTime),
-        lastModifiedS: format.formatTimeDate(ownComment.lastModified),
-        editable: true
-    };
+    if (ownComment) {
+        let studentId = ownComment.studentId;
+        let studentInfo;
+        [err, studentInfo] = await to(userModel.findById(studentId,
+            {
+                _id: 0,
+                firstName: 1,
+                lastName: 1
+            }
+        ));
+        ownComment = {
+            studentName: studentInfo.firstName + " " + studentInfo.lastName,
+            ...ownComment.toObject(),
+            createdTimeS: format.formatTimeDate(ownComment.createdTime),
+            lastModifiedS: format.formatTimeDate(ownComment.lastModified),
+            editable: true
+        };
+        ownComment = [ownComment];
+    } else {
+        ownComment = [];
+    }
 
     [err, otherComments] = await to(commentModel.find(
         {
             courseId: courseId,
-            studentId: { $ne: userId }
+            studentId: { $ne: userId },
+            $or: [{ text: { $ne: null } }, { topic: { $ne: null } }]
         }
     ).sort({
         lastModified: -1
@@ -356,7 +366,7 @@ async function findCommentOwnCommentTop(userId, courseId) {
         };
     }
 
-    return [err, [ownComment].concat(otherComments)];
+    return [err, ownComment.concat(otherComments)];
 }
 
 async function updateComment(studentId, courseId, topic, text, star, dateThailand) {
