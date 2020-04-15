@@ -2,6 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Rating from "@material-ui/lab/Rating";
 import "./CommentCard.css";
+import Util from "../apis/Util";
 
 class CommentCard extends React.Component {
   constructor(props) {
@@ -11,10 +12,19 @@ class CommentCard extends React.Component {
       rating: 2.5,
       detail:
         "คนสอนสอนดีมากก สอนดีกว่าอาจารย์สอนที่โรงเรียนอีก แถมยังหล่ออีกต่างหาก โฮ้ๆๆๆๆๆ คนสอนสอนดีมากก สอนดีกว่าอาจารย์สอนที่โรงเรียนอีก แถมยังหล่ออีกต่างหาก โฮ้ๆๆๆๆๆ",
-      studentName: "Alice"
+      studentName: "Alice",
     };
+    this.deleteMyComment = this.deleteMyComment.bind(this);
   }
-
+  async deleteMyComment() {
+    let msg = await Util.deleteComment(this.props.data.courseId);
+    // if (msg.error) {
+    //   window.alert(msg.error);
+    // } else {
+    //   window.alert("Your comment is deleted");
+    //   window.location.reload();
+    // }
+  }
   render() {
     const myId = JSON.parse(localStorage.getItem("user"))._id;
     return (
@@ -28,7 +38,14 @@ class CommentCard extends React.Component {
           </div>
           {this.props.data.editable && (
             <div style={{ width: "auto" }}>
-              <button className>delete</button>
+              <button
+                onClick={() => {
+                  this.deleteMyComment();
+                }}
+                className
+              >
+                delete
+              </button>
             </div>
           )}
         </Card.Header>
@@ -51,9 +68,7 @@ class CommentCard extends React.Component {
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-          <div className="muted">
-            {this.props.data.lastModified.substring(0, 10)}
-          </div>
+          <div className="muted">{this.props.data.lastModifiedS}</div>
         </Card.Footer>
       </Card>
     );
