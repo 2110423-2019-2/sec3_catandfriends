@@ -35,6 +35,32 @@ router.get("/", async (req, res) => {
     res.status(200).json(comments).end();
 });
 
+router.get("/myComment", async (req, res) => {
+    const userId = req.user._id;
+    const courseId = req.query.courseId;
+    let err, comments;
+
+    let isAlreadyCommentedR = await checkAlreadyCommented(userId, courseId);
+    err = isAlreadyCommentedR[0];
+    let isAlreadyCommented = isAlreadyCommentedR[1];
+
+    if (isAlreadyCommented) {
+        commentsR = await findMyComment(userId, courseId);
+        err = commentsR[0];
+        comments = commentsR[1];
+    } else {
+        comments = { isCommented: false };
+    }
+
+    if (err) {
+        res.status(500).end();
+        console.log(err);
+        return;
+    }
+
+    res.status(200).json(comments).end();
+});
+
 router.post("/", async (req, res) => {
     const studentId = req.user._id;
     const courseId = req.body.courseId;
@@ -305,6 +331,18 @@ async function findComment(courseId) {
         };
     }
     return [err, comments];
+}
+
+async function findMyComment(userId, courseId) {
+    [err, myComment] = await to(commentModel.findOne(
+        {
+            courseId: courseId,
+            studentId: userId
+        }
+    ));
+    myComment = { ...myComment.toObject(), isCommented: true };
+
+    return [err, myComment]
 }
 
 async function findCommentOwnCommentTop(userId, courseId) {
