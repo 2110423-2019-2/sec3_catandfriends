@@ -93,8 +93,8 @@ router.post("/", async (req, res) => {
     let isAlreadyCommented = isAlreadyCommentedR[1];
 
     if (!isAlreadyCommented) {
+        err = await updateCourseRating("POST", studentId, courseId, star);
         err = await saveComment(studentId, courseId, topic, text, star, dateThailand);
-        // err = await updateCourseRating("POST", studentId, courseId, star);
     }
 
     if (err) {
@@ -179,6 +179,7 @@ router.delete("/", async (req, res) => {
     let isAlreadyCommented = isAlreadyCommentedR[1];
 
     if (isAlreadyCommented) {
+        err = await updateCourseRating("DELETE", studentId, courseId, null);
         err = await deleteComment(studentId, courseId);
     } else {
         res.status(400).json({
@@ -238,32 +239,16 @@ async function checkAlreadyRated(studentId, courseId) {
 }
 
 async function updateCourseRating(method, studentId, courseId, star) {
-    [err, course] = await to(courseModel.findById(courseId,
-        {
-            averageRating: 1,
-            numberOfRating: 1
-        }
-    ));
-    if (!course.averageRating) {
-        course.averageRating = 0;
-        course.numberOfRating = 0;
-    }
-
     if (method == "POST") {
-        if (!star) return err;
-        let averageRatingNew = ((course.averageRating * course.numberOfRating) + star) / (course.numberOfRating + 1);
-
         [err, value] = await to(courseModel.findOneAndUpdate(
+            { _id: courseId },
             {
-                _id: courseId
+                $inc: {
+                    sumOfRating: star,
+                    numberOfRating: 1
+                }
             },
-            {
-                averageRating: averageRatingNew,
-                numberOfRating: course.numberOfRating + 1
-            },
-            {
-                useFindAndModify: false
-            }
+            { useFindAndModify: false }
         ));
     }
     if (method == "PUT") {
@@ -272,29 +257,37 @@ async function updateCourseRating(method, studentId, courseId, star) {
                 studentId: studentId,
                 courseId: courseId
             },
-            {
-                rating: 1
-            }
+            { rating: 1 }
         ));
-        let averageRatingNew;
-        if (!comment.rating) {
-            averageRatingNew = ((course.averageRating * course.numberOfRating) + star) / (course.numberOfRating + 1);
-            course.numberOfRating += 1;
-        } else {
-            averageRatingNew = ((course.averageRating * course.numberOfRating) - comment.rating + star) / course.numberOfRating;
-        }
 
         [err, value] = await to(courseModel.findOneAndUpdate(
+            { _id: courseId },
             {
-                _id: courseId
+                $inc: {
+                    sumOfRating: (-comment.rating + star)
+                }
             },
+            { useFindAndModify: false }
+        ));
+    }
+    if (method == "DELETE") {
+        [err, comment] = await to(commentModel.findOne(
             {
-                averageRating: averageRatingNew,
-                numberOfRating: course.numberOfRating
+                studentId: studentId,
+                courseId: courseId
             },
+            { rating: 1 }
+        ));
+
+        [err, value] = await to(courseModel.findOneAndUpdate(
+            { _id: courseId },
             {
-                useFindAndModify: false
-            }
+                $inc: {
+                    sumOfRating: (-comment.rating),
+                    numberOfRating: -1
+                }
+            },
+            { useFindAndModify: false }
         ));
     }
 

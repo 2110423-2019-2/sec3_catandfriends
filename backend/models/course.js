@@ -22,7 +22,7 @@ const courseSchema = new Schema({
     duration: String,
     premiumTutorStatus: Boolean,
     isAvailable: Boolean,
-    averageRating: { type: Number, required: true, default: null },
+    sumOfRating: { type: Number, required: true, default: 0 },
     numberOfRating: { type: Number, required: true, default: 0 },
     createdTime: { type: Date, required: true },
     lastModified: { type: Date, required: true }
