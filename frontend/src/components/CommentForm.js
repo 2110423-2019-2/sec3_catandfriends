@@ -5,44 +5,54 @@ export default class CommentForm extends Component {
     constructor(props){
         super(props);
 
-        this.state = {
-            _id:"",
-            topic: "",
-            text: "",
-            star: 0,
-            isCommented:false
+        this.state= {
+           comments:{
+                _id:"",
+                topic: "",
+                text: "",
+                star: null,
+                isCommented:false
+            }
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         //this.handleChange = this.handleChange.bind(this);
     }
 
-     async handleSubmit(event){
+     async handleSubmitCreate(event){
         event.preventDefault();
-        await this.setState({
-            isCommented: true
-        });
-        console.log(this.state)
-         let data = //this.state.isCommented==false? Util.editComment(
+        console.log(this.state.comments)
+        if (!this.state.comments.star){
+            alert("Please input rating")
+            return;
+        }
+         let data = //this.state.comments.isCommented==false? Util.editComment(
         //     window.location.search.substring(10),
-        //     this.state.topic,
-        //     this.state.text,
-        //     this.state.star,
+        //     this.state.comments.topic,
+        //     this.state.comments.text,
+        //     this.state.comments.star,
         //     localStorage.getItem("token")
         // )
         // : 
-            Util.creatComment(
-            window.location.search.substring(10),
-            this.state.topic,
-            this.state.text,
-            this.state.star,
+            await Util.createComment(
+            this.props.detail._id,
+            this.state.comments.topic,
+            this.state.comments.text,
+            this.state.comments.star,
         );
-        alert(JSON.stringify(this.state));
-        if (!data.error) {
-          alert("A comment is edited");
-          console.log(data);
-        } else {
-          window.alert("Cannot comment Course");
-        }
+        alert(data);
+        window.location.reload();
+    }
+    async handleSubmitEdit(event){
+        event.preventDefault();
+        console.log(this.state.comments)
+        let data = Util.editComment(
+            this.props.detail._id,
+            this.state.comments.topic,
+            this.state.comments.text,
+            this.state.comments.star,
+        );
+        alert(data);
+        window.location.reload();
     }
     render() {
         return (
@@ -57,7 +67,7 @@ export default class CommentForm extends Component {
                                 type="text"
                                 className="inbox"
                                 required
-                                valued={this.state.topic}
+                                valued={this.state.comments.topic}
                                 onChange={(event, newValue) => {
                                     this.setState({
                                         topic:event.target.value
@@ -67,11 +77,12 @@ export default class CommentForm extends Component {
                                 placeholder="Title"
                                 style={{width:500, height:30,resize:"none"}}/>
                         </div>
-                        <div className="col-3">
+                        <div className="col-3"> 
                         <Rating
                             name="hover-feedback"
-                            value={this.state.rating}
+                            value={this.state.comments.rating}
                             precision={0.5}
+                            required
                             onChange={(event, newValue) => {
                                 this.setState({
                                     star:newValue
@@ -87,7 +98,7 @@ export default class CommentForm extends Component {
                                 type="text"
                                 className="inbox"
                                 required
-                                value={this.state.comment}
+                                value={this.state.comments.comment}
                                 onChange={(event, newValue) => {
                                     this.setState({
                                         text:event.target.value
@@ -98,10 +109,10 @@ export default class CommentForm extends Component {
                                 style={{width:500, height:150,resize: "none"}}/>
                         </div>
                         <div className="col-3" align="center">
-                            {this.state.isCommented ? (
-                            <button className="button-white" style={{width:100}}>Edit</button>
+                            {this.state.comments.isCommented ? (
+                            <button className="button-white" style={{width:100}} onClick={this.handleSubmitEdit()}>Edit</button>
                             ) : (
-                            <button className="button-white" style={{width:100}}>Comment</button>
+                            <button className="button-white" style={{width:100}} onClick={this.handleSubmitCreate()}>Comment</button>
                             )}
                         </div>
                     </div>
@@ -110,11 +121,15 @@ export default class CommentForm extends Component {
         );
     }
     async componentDidMount(){
-        console.log(window.location.search.substring(10));
-        console.log(localStorage.getItem("token"));
-        let data = await Util.getComment(localStorage.getItem("token"),window.location.search.substring(10));
+        let comments = await Util.getMyComment(this.props.detail._id);
+        this.setState({ comments });
+        console.log(comments);
+      }
+        // console.log(window.location.search.substring(10));
+        // console.log(localStorage.getItem("token"));
+        // let data = await Util.getComment(localStorage.getItem("token"),window.location.search.substring(10));
         // this.setState(data);
         // console.log(data)
-        // console.log(this.state)
-    }
+        // console.log(this.state.comments)
+    // }
 }

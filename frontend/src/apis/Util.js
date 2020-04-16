@@ -340,7 +340,7 @@ const Util = {
     if (response.status == 500) return { error: true };
     if (response.status == 201) return response.json();
   },
-  creatComment: async (courseId,topic,text,star) => {
+  createComment: async (courseId,topic,text,star) => {
     const URL = `http://localhost:8000/comment?token=${localStorage.getItem("token")}`;
     console.log(URL)
     const response = await fetch(URL, {
@@ -358,8 +358,8 @@ const Util = {
       }),
     });
     console.log(response.status);
-    if (response.status == 400) return { error: true };
-    if (response.status == 201) return response.json();
+    if (response.status == 400) return response.json().err;
+    if (response.status == 201) return "OK";
   },
   editComment: async (courseId,topic,text,star,token)=> {
     const URL = `http://localhost:8000/comment?token=${token}`;
@@ -371,11 +371,11 @@ const Util = {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        courseId,
         topic,
         text,
-        star,
-      }),
-    });
+        star}),
+      });
     console.log(response.status);
     if (response.status == 400) return { error: true };
     if (response.status == 201) return response.json();
@@ -402,6 +402,16 @@ const Util = {
     if (response.status == 400) return { error: true };
     if (response.status == 201) return { error: false };
   },
+  getMyComment: async (courseId) => {
+    const URL = `http://localhost:8000/mycomment?courseId=${courseId}&token=${localStorage.getItem(
+      "token"
+    )}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors",
+    });
+    if (response.status == 404) return { error: true };
+    if (response.status == 200) return response.json();
+  },
 };
-
 export default Util;

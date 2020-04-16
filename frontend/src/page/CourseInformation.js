@@ -28,7 +28,7 @@ export default class CourseInformation extends Component {
             </div>
             <div className="col-md-12" align="center">
               <CourseDetail detail={this.state.data} />
-              <CommentForm/>
+              <CommentForm detail={this.state.data}/>
             </div>
             <div className="col-md-12" align="center">
               <CommentCardLayout detail={this.state.data} />
