@@ -403,7 +403,7 @@ const Util = {
     if (response.status == 201) return { error: false };
   },
   getMyComment: async (courseId) => {
-    const URL = `http://localhost:8000/mycomment?courseId=${courseId}&token=${localStorage.getItem(
+    const URL = `http://localhost:8000/comment/myComment?courseId=${courseId}&token=${localStorage.getItem(
       "token"
     )}`;
     const response = await fetch(URL, {

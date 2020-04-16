@@ -10,18 +10,19 @@ export default class CommentForm extends Component {
                 _id:"",
                 topic: "",
                 text: "",
-                star: null,
+                rating: null,
                 isCommented:false
             }
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        //this.handleChange = this.handleChange.bind(this);
+        this.handleSubmitEdit = this.handleSubmitEdit.bind(this);
+        this.handleSubmitCreate = this.handleSubmitCreate.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
      async handleSubmitCreate(event){
         event.preventDefault();
         console.log(this.state.comments)
-        if (!this.state.comments.star){
+        if (!this.state.comments.rating){
             alert("Please input rating")
             return;
         }
@@ -29,7 +30,7 @@ export default class CommentForm extends Component {
         //     window.location.search.substring(10),
         //     this.state.comments.topic,
         //     this.state.comments.text,
-        //     this.state.comments.star,
+        //     this.state.comments.rating,
         //     localStorage.getItem("token")
         // )
         // : 
@@ -37,7 +38,7 @@ export default class CommentForm extends Component {
             this.props.detail._id,
             this.state.comments.topic,
             this.state.comments.text,
-            this.state.comments.star,
+            this.state.comments.rating,
         );
         alert(data);
         window.location.reload();
@@ -49,10 +50,18 @@ export default class CommentForm extends Component {
             this.props.detail._id,
             this.state.comments.topic,
             this.state.comments.text,
-            this.state.comments.star,
+            this.state.comments.rating,
         );
         alert(data);
         window.location.reload();
+    }
+    handleChange(event){
+        const target = event.target;
+        const value = target.type === "checkbox" ? target.checked : target.value;
+        const name = target.name;
+        this.setState({
+        [name]: value
+        });
     }
     render() {
         return (
@@ -67,10 +76,12 @@ export default class CommentForm extends Component {
                                 type="text"
                                 className="inbox"
                                 required
-                                valued={this.state.comments.topic}
+                                value={this.state.comments.topic}
                                 onChange={(event, newValue) => {
-                                    this.setState({
-                                        topic:event.target.value
+                                    this.setState(prevState=>{
+                                        let comments=Object.assign({}, prevState.comments);
+                                        comments.topic = newValue;
+                                        return {comments};
                                         });
                                     }
                                 } 
@@ -80,12 +91,15 @@ export default class CommentForm extends Component {
                         <div className="col-3"> 
                         <Rating
                             name="hover-feedback"
+                            defalutvalue={this.state.comments.rating}
                             value={this.state.comments.rating}
                             precision={0.5}
                             required
                             onChange={(event, newValue) => {
-                                this.setState({
-                                    star:newValue
+                                this.setState(prevState=>{
+                                    let comments=Object.assign({}, prevState.comments);
+                                    comments.rating = newValue;
+                                    return {comments};
                                     });
                                 }
                             } 
@@ -98,10 +112,12 @@ export default class CommentForm extends Component {
                                 type="text"
                                 className="inbox"
                                 required
-                                value={this.state.comments.comment}
+                                value={this.state.comments.text}
                                 onChange={(event, newValue) => {
-                                    this.setState({
-                                        text:event.target.value
+                                    this.setState(prevState=>{
+                                        let comments=Object.assign({}, prevState.comments);
+                                        comments.text = newValue;
+                                        return {comments};
                                         });
                                     }
                                 } 
@@ -110,9 +126,9 @@ export default class CommentForm extends Component {
                         </div>
                         <div className="col-3" align="center">
                             {this.state.comments.isCommented ? (
-                            <button className="button-white" style={{width:100}} onClick={this.handleSubmitEdit()}>Edit</button>
+                            <button className="button-white" style={{width:100}} onClick={(event)=>{this.handleSubmitEdit(event)}}>Edit</button>
                             ) : (
-                            <button className="button-white" style={{width:100}} onClick={this.handleSubmitCreate()}>Comment</button>
+                            <button className="button-white" style={{width:100}} onClick={(event)=>{this.handleSubmitCreate(event)}}>Comment</button>
                             )}
                         </div>
                     </div>
@@ -123,7 +139,7 @@ export default class CommentForm extends Component {
     async componentDidMount(){
         let comments = await Util.getMyComment(this.props.detail._id);
         this.setState({ comments });
-        console.log(comments);
+        console.log(this.state.comments);
       }
         // console.log(window.location.search.substring(10));
         // console.log(localStorage.getItem("token"));
