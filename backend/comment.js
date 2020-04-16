@@ -147,7 +147,7 @@ router.put("/", async (req, res) => {
         return;
     }
 
-    // err = await updateCourseRating("PUT", studentId, courseId, star);
+    err = await updateCourseRating("PUT", studentId, courseId, star);
     err = await updateComment(studentId, courseId, topic, text, star, dateThailand);
 
     if (err) {
