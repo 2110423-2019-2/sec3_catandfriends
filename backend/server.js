@@ -9,7 +9,6 @@ const courseRoute = require("./course");
 const requestRoute = require("./request");
 const profileRoute = require("./profile");
 const scheduleRoute = require("./schedule");
-const rateRoute = require("./rating");
 const fileRoute = require("./file");
 const searchRoute = require("./search");
 const messageRoute = require("./message");
@@ -69,11 +68,6 @@ app.use(
   "/message",
   passport.authenticate("jwt-profile", { session: false }),
   messageRoute
-);
-app.use(
-  "/rating",
-  passport.authenticate("jwt-profile", { session: false }),
-  rateRoute
 );
 app.use(
   "/comment",
