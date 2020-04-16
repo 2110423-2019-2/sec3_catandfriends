@@ -349,8 +349,9 @@ const Util = {
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
   },
-  creatComment: async (token,topic,text,star) => {
-    const URL = `http://localhost:8000/comment?token=${token}`;
+  creatComment: async (courseId,topic,text,star) => {
+    const URL = `http://localhost:8000/comment?token=${localStorage.getItem("token")}`;
+    console.log(URL)
     const response = await fetch(URL, {
       method: "POST",
       mode: "cors",
@@ -359,16 +360,17 @@ const Util = {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        courseId,
         topic,
         text,
-        star,
+        star
       }),
     });
     console.log(response.status);
     if (response.status == 400) return { error: true };
     if (response.status == 201) return response.json();
   },
-  editComment: async (token,topic,text,star)=> {
+  editComment: async (courseId,topic,text,star,token)=> {
     const URL = `http://localhost:8000/comment?token=${token}`;
     const response = await fetch(URL, {
       method: "PUT",

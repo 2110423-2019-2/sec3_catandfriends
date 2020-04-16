@@ -6,6 +6,7 @@ export default class CommentForm extends Component {
         super(props);
 
         this.state = {
+            _id:"",
             topic: "",
             text: "",
             star: 0,
@@ -15,22 +16,25 @@ export default class CommentForm extends Component {
         //this.handleChange = this.handleChange.bind(this);
     }
 
-     handleSubmit(event){
+     async handleSubmit(event){
         event.preventDefault();
-        this.setState({
+        await this.setState({
             isCommented: true
         });
-        let data = this.state.isCommented==false? Util.editComment(
-            localStorage.getItem("token"),
+        console.log(this.state)
+         let data = //this.state.isCommented==false? Util.editComment(
+        //     window.location.search.substring(10),
+        //     this.state.topic,
+        //     this.state.text,
+        //     this.state.star,
+        //     localStorage.getItem("token")
+        // )
+        // : 
+            Util.creatComment(
+            window.location.search.substring(10),
             this.state.topic,
             this.state.text,
-            this.state.star
-        )
-        :  Util.creatComment(
-            localStorage.getItem("token"),
-            this.state.topic,
-            this.state.text,
-            this.state.star
+            this.state.star,
         );
         alert(JSON.stringify(this.state));
         if (!data.error) {
@@ -106,10 +110,11 @@ export default class CommentForm extends Component {
         );
     }
     async componentDidMount(){
-        console.log(window.location.search);
+        console.log(window.location.search.substring(10));
+        console.log(localStorage.getItem("token"));
         let data = await Util.getComment(localStorage.getItem("token"),window.location.search.substring(10));
-        this.setState(data);
-        console.log(data)
-        console.log(this.state)
+        // this.setState(data);
+        // console.log(data)
+        // console.log(this.state)
     }
 }
