@@ -9,9 +9,11 @@ const courseRoute = require("./course");
 const requestRoute = require("./request");
 const profileRoute = require("./profile");
 const scheduleRoute = require("./schedule");
+const rateRoute = require("./rating");
 const fileRoute = require("./file");
 const searchRoute = require("./search");
 const messageRoute = require("./message");
+const commentRoute = require("./comment");
 
 const verifyRoute = require("./verify");
 const mongoose = require("mongoose");
@@ -67,6 +69,16 @@ app.use(
   "/message",
   passport.authenticate("jwt-profile", { session: false }),
   messageRoute
+);
+app.use(
+  "/rating",
+  passport.authenticate("jwt-profile", { session: false }),
+  rateRoute
+);
+app.use(
+  "/comment",
+  passport.authenticate("jwt-profile", { session: false }),
+  commentRoute
 );
 
 app.listen(8000, () => {
