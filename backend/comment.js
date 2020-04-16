@@ -94,7 +94,7 @@ router.post("/", async (req, res) => {
 
     if (!isAlreadyCommented) {
         err = await saveComment(studentId, courseId, topic, text, star, dateThailand);
-        err = await updateCourseRating("POST", studentId, courseId, star);
+        // err = await updateCourseRating("POST", studentId, courseId, star);
     }
 
     if (err) {
@@ -147,7 +147,7 @@ router.put("/", async (req, res) => {
         return;
     }
 
-    err = await updateCourseRating("PUT", studentId, courseId, star);
+    // err = await updateCourseRating("PUT", studentId, courseId, star);
     err = await updateComment(studentId, courseId, topic, text, star, dateThailand);
 
     if (err) {
@@ -304,8 +304,7 @@ async function updateCourseRating(method, studentId, courseId, star) {
 async function findComment(courseId) {
     [err, comments] = await to(commentModel.find(
         {
-            courseId: courseId,
-            $or: [{ text: { $ne: null } }, { topic: { $ne: null } }]
+            courseId: courseId
         }
     ).sort({
         lastModified: -1
@@ -340,7 +339,22 @@ async function findMyComment(userId, courseId) {
             studentId: userId
         }
     ));
-    myComment = { ...myComment.toObject(), isCommented: true };
+    let studentId = userId;
+    let studentInfo;
+    [err, studentInfo] = await to(userModel.findById(studentId,
+        {
+            _id: 0,
+            firstName: 1,
+            lastName: 1
+        }
+    ));
+    myComment = {
+        studentName: studentInfo.firstName + " " + studentInfo.lastName,
+        ...myComment.toObject(),
+        createdTimeS: format.formatTimeDate(myComment.createdTime),
+        lastModifiedS: format.formatTimeDate(myComment.lastModified),
+        isCommented: true
+    };
 
     return [err, myComment]
 }
@@ -349,8 +363,7 @@ async function findCommentOwnCommentTop(userId, courseId) {
     [err, ownComment] = await to(commentModel.findOne(
         {
             courseId: courseId,
-            studentId: userId,
-            $or: [{ text: { $ne: null } }, { topic: { $ne: null } }]
+            studentId: userId
         }
     ));
     if (ownComment) {
@@ -378,8 +391,7 @@ async function findCommentOwnCommentTop(userId, courseId) {
     [err, otherComments] = await to(commentModel.find(
         {
             courseId: courseId,
-            studentId: { $ne: userId },
-            $or: [{ text: { $ne: null } }, { topic: { $ne: null } }]
+            studentId: { $ne: userId }
         }
     ).sort({
         lastModified: -1
@@ -428,17 +440,10 @@ async function updateComment(studentId, courseId, topic, text, star, dateThailan
 
 async function deleteComment(studentId, courseId) {
     [err, value] = await to(
-        commentModel.findOneAndUpdate(
+        commentModel.findOneAndDelete(
             {
                 studentId: studentId,
                 courseId: courseId
-            },
-            {
-                topic: null,
-                text: null
-            },
-            {
-                useFindAndModify: false
             }
         )
     );
