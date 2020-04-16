@@ -4,6 +4,7 @@ import TutorCard from "../components/TutorCard";
 import history from "../history";
 import Util from "../apis/Util";
 import NormalButton from "./NormalButton";
+import Rating from "@material-ui/lab/Rating";
 export class CourseDetail extends Component {
   constructor(props) {
     super(props);
@@ -83,6 +84,17 @@ export class CourseDetail extends Component {
             </div>
             <div className="row" style={{ padding: "5px 20px" }}>
               <div className="col-md-12  infoC" style={{ marginBottom: "5px" }}>
+              <div className="row">
+                  <div className="col-md-4">
+                    <div className="nameB">Rating:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB"> 
+                      {this.props.detail.averageRating+" "}
+                      <Rating name="read-only" precision={0.01} value={this.props.detail.averageRating} readOnly />
+                      </div>
+                  </div>
+                </div>
                 <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">Category:</div>

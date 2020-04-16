@@ -46,7 +46,7 @@ export default class CommentForm extends Component {
     async handleSubmitEdit(event){
         event.preventDefault();
         console.log(this.state.comments)
-        let data = Util.editComment(
+        let data = await Util.editComment(
             this.props.detail._id,
             this.state.comments.topic,
             this.state.comments.text,
@@ -77,10 +77,11 @@ export default class CommentForm extends Component {
                                 className="inbox"
                                 required
                                 value={this.state.comments.topic}
-                                onChange={(event, newValue) => {
-                                    this.setState(prevState=>{
+                                onChange={(event) => {
+                                    const topic = event.target.value;
+                                    this.setState((prevState)=>{
                                         let comments=Object.assign({}, prevState.comments);
-                                        comments.topic = newValue;
+                                        comments.topic = topic;
                                         return {comments};
                                         });
                                     }
@@ -113,10 +114,11 @@ export default class CommentForm extends Component {
                                 className="inbox"
                                 required
                                 value={this.state.comments.text}
-                                onChange={(event, newValue) => {
-                                    this.setState(prevState=>{
+                                onChange={(event) => {
+                                    const text = event.target.value;
+                                    this.setState((prevState)=>{
                                         let comments=Object.assign({}, prevState.comments);
-                                        comments.text = newValue;
+                                        comments.text = text;
                                         return {comments};
                                         });
                                     }
