@@ -62,7 +62,7 @@ export class CourseDetail extends Component {
       studentList = <div></div>;
     }
     return (
-      <div className="bigCard">
+      <div className="bigCard" style={{ marginBottom: "5px" }}>
         <div className="row ">
           <div className={this.props.detail.owner ? "col-md-9" : "col-md-12"}>
             <div className="row  text-center" className="myStyle">
@@ -73,7 +73,8 @@ export class CourseDetail extends Component {
                 <div className="textshadow">{this.props.detail.courseName}</div>
               </div>
               <div className="col-md-6 ">
-                <a className="textshadow"
+                <a
+                  className="textshadow"
                   href={`/profile?userId=${this.props.detail.tutorId}`}
                 >
                   {" by " + this.props.detail.tutorName}
@@ -154,8 +155,8 @@ export class CourseDetail extends Component {
                     course, you can not cancel.
                   </div>
                 ) : (
-                    <div></div>
-                  )}
+                  <div></div>
+                )}
                 <div className="row justify-content-center">
                   <div className="myStyle">{showbutton}</div>
                 </div>
@@ -173,8 +174,8 @@ export class CourseDetail extends Component {
           {this.props.detail.owner ? (
             <div className="col-md-3">{studentList}</div>
           ) : (
-              <div></div>
-            )}
+            <div></div>
+          )}
         </div>
       </div>
     );

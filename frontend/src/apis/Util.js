@@ -340,15 +340,6 @@ const Util = {
     if (response.status == 500) return { error: true };
     if (response.status == 201) return response.json();
   },
-  getComment: async (token, courseId) => {
-    const URL = `http://localhost:8000/comment?courseId=${courseId}&token=${token}`;
-    const response = await fetch(URL, {
-      method: "GET",
-      mode: "cors",
-    });
-    if (response.status == 404) return { error: true };
-    if (response.status == 200) return response.json();
-  },
   creatComment: async (courseId,topic,text,star) => {
     const URL = `http://localhost:8000/comment?token=${localStorage.getItem("token")}`;
     console.log(URL)
@@ -388,6 +379,28 @@ const Util = {
     console.log(response.status);
     if (response.status == 400) return { error: true };
     if (response.status == 201) return response.json();
+  },
+  getComment: async (courseId) => {
+    const URL = `http://localhost:8000/comment?courseId=${courseId}&token=${localStorage.getItem(
+      "token"
+    )}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors",
+    });
+    if (response.status == 404) return { error: true };
+    if (response.status == 200) return response.json();
+  },
+  deleteComment: async (courseId) => {
+    const URL = `http://localhost:8000/comment?courseId=${courseId}&token=${localStorage.getItem(
+      "token"
+    )}`;
+    const response = await fetch(URL, {
+      method: "delete",
+      mode: "cors",
+    });
+    if (response.status == 400) return { error: true };
+    if (response.status == 201) return { error: false };
   },
 };
 
