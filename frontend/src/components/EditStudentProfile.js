@@ -1,18 +1,15 @@
 import React, { Component } from "react";
 import "./EditTutorProfile.css";
-import axios from "axios";
-import FileSaver from "file-saver";
 import Util from "../apis/Util";
 import NormalButton from "./NormalButton";
 import history from "../history";
-import Popup from "reactjs-popup";
-import ImgDropAndCrop from "../components/ImgDropAndCrop";
-import { Modal, Button, Row, Col, Form } from "react-bootstrap";
+// import Popup from "reactjs-popup";
+// import ImgDropAndCrop from "../components/ImgDropAndCrop";
+// import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 
 export default class EditStudentProfile extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       _id: "",
       firstName: "",
@@ -20,12 +17,12 @@ export default class EditStudentProfile extends Component {
       gender: "",
       phoneNumber: "",
       showEditImage: false,
-      profileImage: ""
+      profileImage: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.updateThisImage = this.updateThisImage.bind(this);
-    this.handleImageCropClose = this.handleImageCropClose.bind(this);
+    // this.updateThisImage = this.updateThisImage.bind(this);
+    // this.handleImageCropClose = this.handleImageCropClose.bind(this);
   }
 
   handleChange(event) {
@@ -33,7 +30,7 @@ export default class EditStudentProfile extends Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -59,40 +56,40 @@ export default class EditStudentProfile extends Component {
     }
   }
 
-  updateThisImage(profileImage) {
-    this.setState({ profileImage: profileImage });
-    this.handleImageCropClose();
-    // console.log(profileImage);
-    const data = new FormData();
-    data.append("file", this.state.profileImage);
-    axios
-      .post(
-        `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
-          "token"
-        )}`,
-        data,
-        {
-          // receive two    parameter endpoint url ,form data
-        }
-      )
-      .then(res => {
-        // then print response status
-        // console.log(res.statusText);
-        alert("File Uploaded");
-      });
-  }
+  // updateThisImage(profileImage) {
+  //   this.setState({ profileImage: profileImage });
+  //   this.handleImageCropClose();
+  //   // console.log(profileImage);
+  //   const data = new FormData();
+  //   data.append("file", this.state.profileImage);
+  //   axios
+  //     .post(
+  //       `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
+  //         "token"
+  //       )}`,
+  //       data,
+  //       {
+  //         // receive two    parameter endpoint url ,form data
+  //       }
+  //     )
+  //     .then((res) => {
+  //       // then print response status
+  //       // console.log(res.statusText);
+  //       alert("File Uploaded");
+  //     });
+  // }
 
-  handleImageCropClose = () => this.setState({ showEditImage: false });
-  handleImageCropShow = () => this.setState({ showEditImage: true });
+  // handleImageCropClose = () => this.setState({ showEditImage: false });
+  // handleImageCropShow = () => this.setState({ showEditImage: true });
 
   render() {
     return (
-      <div className="editTutorProfileCard">
-        <h3 className="editProfileH text-center">Edit Student Profile</h3>
+      <div className="bigCard">
+        <div className="inside-block textheader">Edit Student Profile</div>
         <div className="row" style={{ marginTop: "10px", padding: "20px" }}>
-          <div className="col-md-3 justify-content-center infoC">
+          <div className="col-md-3 justify-content-center inside-block">
             <div
-              className="nameE "
+              className="textshadow"
               style={{ paddingLeft: "0px", marginTop: "10px" }}
             >
               New profile image
@@ -123,19 +120,20 @@ export default class EditStudentProfile extends Component {
           </div>
 
           <div className="col-md-9">
-            <form onSubmit={event => this.handleSubmit(event)}>
+            <form onSubmit={(event) => this.handleSubmit(event)}>
               <div
                 class="row"
                 style={{ marginTop: "10px", textAlign: "center" }}
               >
                 <div class="col-md-6">
-                  <label htmlFor="firstName" className="nameE">
+                  <label className="textnormal" htmlFor="firstName">
                     First Name
                     <br />
                     <input
                       id="firstName"
                       type="text"
                       value={this.state.firstName}
+                      className="field"
                       name="firstName"
                       style={{ width: 250 }}
                       onChange={this.handleChange}
@@ -145,13 +143,14 @@ export default class EditStudentProfile extends Component {
                 </div>
 
                 <div class="col-md-6">
-                  <label className="nameE" htmlFor="lastName">
+                  <label className="textnormal" htmlFor="lastName">
                     Last Name
                     <br />
                     <input
                       id="lastName"
                       type="text"
                       value={this.state.lastName}
+                      className="field"
                       style={{ width: 250 }}
                       name="lastName"
                       onChange={this.handleChange}
@@ -162,7 +161,7 @@ export default class EditStudentProfile extends Component {
               </div>
               <div class="row">
                 <div class="col-md-6" width="100%">
-                  <label className="nameE">
+                  <label className="textnormal">
                     Phone Number
                     <br />
                     <input
@@ -170,22 +169,23 @@ export default class EditStudentProfile extends Component {
                       type="tel"
                       maxLength="10"
                       value={this.state.phoneNumber}
+                      className="field"
                       style={{ width: 250 }}
                       name="phoneNumber"
                       onChange={this.handleChange}
                       required
                       pattern="[0-9]{10}"
-                      maxlength="10"
                     />
                   </label>
                 </div>
                 <div class="col-md-6">
-                  <label className="nameE">
+                  <label className="textnormal">
                     Gender
                     <br />
                     <select
                       id="gender"
                       value={this.state.Gender}
+                      className="field"
                       style={{ width: 250 }}
                       name="gender"
                       onChange={this.handleChange}
@@ -198,13 +198,13 @@ export default class EditStudentProfile extends Component {
               </div>
               <div className="row text-center" style={{ marginTop: "20px" }}>
                 <div className="col-md-12">
-                  <NormalButton
-                    color="rgb(76, 182, 181)"
+                  <button
+                    className="button-white"
                     type="submit"
                     value="Submit"
                   >
                     Submit
-                  </NormalButton>
+                  </button>
                 </div>
               </div>
             </form>
@@ -214,15 +214,15 @@ export default class EditStudentProfile extends Component {
     );
   }
 
-  onChangeHandlerSlip = event => {
+  onChangeHandlerSlip = (event) => {
     this.setState({
       selectedSlip: event.target.files[0],
 
-      loadedSilp: 0
+      loadedSilp: 0,
     });
   };
 
-  onClickHandlerSlip = () => {
+  onClickHandlerSlip = async () => {
     if (!this.state.selectedSlip) {
       alert("Please select a file");
 
@@ -239,32 +239,14 @@ export default class EditStudentProfile extends Component {
     }
 
     const data = new FormData();
-
     data.append("file", this.state.selectedSlip);
-
-    axios
-
-      .post(
-        `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
-          "token"
-        )}`,
-
-        data,
-
-        {
-          // receive two    parameter endpoint url ,form data
-        }
-      )
-
-      .then(res => {
-        // then print response status
-
-        console.log(res.statusText);
-
-        alert("File Uploaded");
-
-        window.location.reload();
-      });
+    console.log(data.get("file"));
+    let img = await Util.uploadImage(data);
+    if (!img.error) {
+      console.log(img.statusText);
+      alert("File Uploaded");
+      window.location.reload();
+    }
   };
 
   isImagefile(file) {

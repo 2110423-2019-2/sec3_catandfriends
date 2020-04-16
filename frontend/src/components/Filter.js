@@ -19,7 +19,7 @@ function CheckboxTemplate(props) {
 function DayGroup(props) {
   return (
     <div
-      className="row"
+      className="row inside-block"
       align="left"
       style={{
         marginBottom: "15px",
@@ -28,8 +28,8 @@ function DayGroup(props) {
         borderRadius: "12px"
       }}
     >
-      <h4 style={{ textAlign: "center", width: "100%" }}>Day</h4>
-      <div className="col-md-12">
+      <div className="textshadow" style={{ textAlign: "center", width: "100%" }}>Day</div>
+      <div className="col-md-12 textnormal text-left">
         <CheckboxTemplate
           text="Sunday"
           id="sunday"
@@ -80,7 +80,7 @@ function DayGroup(props) {
 function SubjectGroup(props) {
   return (
     <div
-      className="row"
+      className="row inside-block"
       align="left"
       style={{
         marginBottom: "15px",
@@ -89,8 +89,8 @@ function SubjectGroup(props) {
         borderRadius: "12px"
       }}
     >
-      <h4 style={{ textAlign: "center", width: "100%" }}>Category</h4>
-      <div className="col-md-12">
+      <div className="textshadow" style={{ textAlign: "center", width: "100%" }}>Category</div>
+      <div className="col-md-12 textnormal text-left">
         <CheckboxTemplate
           text="Mathematics"
           id="mathematics"
@@ -123,7 +123,7 @@ function SubjectGroup(props) {
 function TimeGroup(props) {
   return (
     <div
-      className="row"
+      className="row inside-block"
       align="left"
       style={{
         marginBottom: "15px",
@@ -132,8 +132,8 @@ function TimeGroup(props) {
         borderRadius: "12px"
       }}
     >
-      <h4 style={{ textAlign: "center", width: "100%" }}>Time</h4>
-      <div className="col-md-12">
+      <div className="textshadow" style={{ textAlign: "center", width: "100%" }}>Time</div>
+      <div className="col-md-12 textnormal text-left">
         <CheckboxTemplate
           text="6:00 to 8:00"
           id="time6To8"
@@ -190,7 +190,7 @@ function TimeGroup(props) {
 function PriceGroup(props) {
   return (
     <div
-      className="row"
+      className="row inside-block"
       align="left"
       style={{
         padding: "10px",
@@ -198,8 +198,8 @@ function PriceGroup(props) {
         borderRadius: "12px"
       }}
     >
-      <h4 style={{ textAlign: "center", width: "100%" }}>Price</h4>
-      <div className="col-md-12">
+      <div className="textshadow" style={{ textAlign: "center", width: "100%" }}>Price</div>
+      <div className="col-md-12 textnormal text-left">
         <CheckboxTemplate
           text="0 - 500 Baht"
           id="price0To500"
@@ -377,18 +377,14 @@ class Filter extends React.Component {
   render() {
     return (
       <div
-        className="card"
+        className="filterCard"
         style={{
-          minWidth: "230px",
+          minWidth: "250px",
           width: "auto",
           margin: "25px",
           marginTop: "40px",
-          borderRadius: "12px",
-          backgroundColor: "rgba(255,255,255,0.3) ",
           border: "none",
-          height: "auto",
           position: "sticky",
-          top: "40px"
         }}
       >
         <form onSubmit={this.handleSubmit} style={{ textAlign: "center" }}>
@@ -414,7 +410,7 @@ class Filter extends React.Component {
             />
           </div>
           <div style={{ margin: "10px" }}>
-            <button type="submit" value="submit" class="btn btn-success">
+            <button type="submit" value="submit" class="button-white" style={{width: "90%"}}>
               Search
             </button>
           </div>

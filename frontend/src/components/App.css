@@ -1,30 +1,13 @@
-.bgCustom {
+body {
   padding: 0;
   margin: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  min-height: 100vh;
   overflow-y: scroll;
-  background-image: linear-gradient(
-    180deg,
-    #7055bd 0%,
-    rgba(186, 60, 128, 0.7) 100%
-  );
+  background: linear-gradient(229deg, #2edefb, #6046c6, #d04599);
   background-size: 100% 100%;
-}
-.TS {
-  min-width: 100%;
-  /* min-height: 676px; */
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  background-color: rgb(244, 244, 244);
-  /* background-image: linear-gradient(rgb(166, 188, 197), white); */
-  /* background-image: linear-gradient(100deg, #324d91, #9cab9a); */
-  background-size: 100% 100%;
-}
-.lll {
-  color: rgb(187, 187, 187);
+
+  -webkit-animation: AnimationName 59s ease infinite;
+  -moz-animation: AnimationName 59s ease infinite;
+  animation: AnimationName 59s ease infinite;
 }

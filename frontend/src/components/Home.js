@@ -38,20 +38,20 @@ export class Home extends Component {
 
   render() {
     return (
-      <div className="justify-content-center">
-        <div class="container">
+      <div className="justify-content-center whole">
+        <div class="container block">
           <div className="row">
             <div className="col-md-6 justify-content-center" align="center">
               <img
-                src="https://s3-ap-southeast-1.amazonaws.com/img-in-th/5faf044d419d7af0c6a2035716ca76d5.png"
-                style={{ maxWidth: "300px", marginTop: "50px" }}
+                src="https://s3-ap-southeast-1.amazonaws.com/img-in-th/856030dc8f7609b974d03feb96d12b70.png"
+                style={{ maxWidth: "400px", marginTop: "150px" }}
               />
-              <div className="textshadow" style={{}}>
+              <div className="textstatic" style={{}}>
                 "Nothing extraneous, everything intentional"
               </div>
               <div
-                className="textshadow"
-                style={{ fontSize: "24px", fontWeight: "700" }}
+                className="textstatic"
+                style={{ fontSize: "24px", fontWeight: "700"}}
               >
                 JOIN US NOW !
               </div>
@@ -192,14 +192,14 @@ export class Home extends Component {
                     className="text-center"
                     style={{ margin: "auto", marginBottom: "5px" }}
                   >
-                    <NormalButton
+                    <button
                       color="none"
-                      className="btn btn-success"
+                      className="button-white"
                       type="submit"
                       borderColor="#00AA00"
                     >
                       Register Now
-                    </NormalButton>
+                    </button>
                   </div>
                   <br />
                 </form>

@@ -31,6 +31,11 @@ const tutorSchema = new Schema(
       unique: true,
       sparse: true,
       default: null
+    },
+    verfyStatus: {
+      type: Boolean,
+      required: true,
+      default: false
     }
   },
   {

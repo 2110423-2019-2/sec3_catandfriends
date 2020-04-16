@@ -15,8 +15,7 @@ class BlankCard extends React.Component {
   render() {
     return (
       <div
-        className="card mycard clickable"
-        style={{ backgroundColor: "rgba(255,255,255,0.5)" }}
+        className="card mycard clickable background-color-trans"
       >
         <div
           id="image"
@@ -31,9 +30,9 @@ class BlankCard extends React.Component {
           </div>
         </div>
         <div className="card-body mycard-body">
-          <AddButton onClick={() => this.onClickAddNewCourse()}>
+          <button class="button-white width90" onClick={() => this.onClickAddNewCourse()}>
             Create Course
-          </AddButton>
+          </button>
           <p className="card-text tutorname"></p>
 
           <div align="center" style={{ marginBottom: "5px" }}></div>

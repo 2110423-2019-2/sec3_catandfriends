@@ -29,18 +29,15 @@ export default class MyCourse extends Component {
           <div className="row">
             <div className="col-md-12" align="center">
               <div className="row justify-content-center">
-                <h2
+                <div className="inside-block textheader"
                   style={{
                     marginTop: "20px",
                     padding: "5px 15px",
-                    textAlign: "center",
-                    color: "black",
-                    backgroundColor: "rgba(255,255,255,0.3)",
-                    borderRadius: "12px"
+                    textAlign: "center"
                   }}
                 >
                   Course Request
-                </h2>
+                </div>
               </div>
               <div className="row justify-content-center">
                 <RequestScrollBar tutorId={this.state.data._id} />
@@ -50,17 +47,14 @@ export default class MyCourse extends Component {
           <div className="row">
             <div className="col-md-12" align="center">
               <div className="row justify-content-center">
-                <h2
+                <div className="inside-block textheader"
                   style={{
                     padding: "5px 15px",
-                    textAlign: "center",
-                    color: "black",
-                    backgroundColor: "rgba(255,255,255,0.3)",
-                    borderRadius: "12px"
+                    textAlign: "center"
                   }}
                 >
                   My Courses
-                </h2>
+                </div>
               </div>
               <div className="row justify-content-center">
                 <EditCourseCardLayout tutorId={this.state.data._id} />

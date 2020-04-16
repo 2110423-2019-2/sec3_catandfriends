@@ -6,11 +6,14 @@
 .logoImg:hover {
   transform: scale(1.2);
 }
-.bg-custom {
-  background-color: rgb(255, 255, 255);
+
+.navbar-white {
+  border: 0;
+  border-radius: 0;
   min-height: fit-content;
-  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.2);
-  /* background-color: rgb(172, 195, 207); */
+  background: var(--white-color);
+  box-shadow: var(--navbarwhite-shadow-color);
+  transition: all 1s ease, padding 1s ease;
 }
 
 .navbar-brand {
@@ -18,45 +21,38 @@
   font-size: 1.6em !important;
 }
 
-.primaryBtn:focus {
-  outline: none;
+.navtogglecolor{
+  background: var(--black-color);
 }
+
+.navbar-box{
+  -moz-transition: all .1s ease-in;
+  -o-transition: all .1s ease-in;
+  -webkit-transition: all .1s ease-in;
+  transition: all .1s ease-in;
+  border-radius: 10px;
+  background: var(--white-color-trans) !important;
+  box-shadow: var(--homebox-shadow-color) !important;
+}
+
 .brandName {
-  /* box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); */
-  color: rgb(89, 87, 87);
+  color: var(--black-color);
 }
-.brandName:hover {
-  color: rgb(39, 39, 39);
-}
-.demo {
-  background: rgb(25, 108, 70);
-  background: linear-gradient(
-    90deg,
-    rgba(25, 108, 70, 1) 0%,
-    rgba(19, 204, 169, 1) 100%
-  );
-}
+
 .nav-link {
   font-size: 1.1em;
   font-weight: 500;
 }
-.bgDD {
-  background-color: black;
-}
-.navbar-nav > li > .dropdown-menu {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: none;
-}
+
 .navbar-nav > li > .dropdown-menu .dropdown-item:hover {
-  background-color: rgba(184, 244, 253, 0.9);
+  color: var(--white-color) !important;
+  background: var(--black-color) !important;
 }
-.navbar-nav > li > .dropdown-menu a {
-  color: #000000;
-}
+
 .avatar {
   margin: 2px;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   background-size: cover;
   background-position: center;
   border-radius: 50%;

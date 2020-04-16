@@ -15,17 +15,31 @@
   max-width: 900px;
   height: auto;
   min-height: 400px;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--white-color-trans) !important;
   padding-right: 30px;
   padding-left: 30px;
   padding-top: 20px;
   padding-bottom: 20px;
-  border-radius: 20px;
+  border-radius: 10px;
   margin: 20px;
   margin-bottom: 100px;
   box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
     1px 3px 8px rgba(39, 44, 49, 0.03);
 }
+
+.filterCard {
+  width: auto;
+  height: auto;
+  background-color: var(--white-color-trans) !important;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
+}
+
 .nameM {
   height: 100px;
   line-height: 100px;
@@ -35,29 +49,21 @@
   font-style: normal;
   font-weight: 600;
   font-size: 28px;
-  color: #000000;
+  color: var(--black-color);
 }
 #nameK {
   display: inline-block;
   vertical-align: middle;
   line-height: normal;
 }
-.headerB {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 28px;
-  color: #000000;
-  text-align: center;
-}
+
 .nameB {
   font-family: Roboto;
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
   line-height: 28px;
-  color: #000000;
+  color: var(--black-color);
 }
 .valueB {
   font-family: Roboto;
@@ -65,10 +71,10 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 28px;
-  color: #000000;
+  color: var(--black-color);
 }
-.infoC {
-  background-color: rgb(245, 245, 245);
+.inside-block {
+  background-color: var(--white-color) !important;
   border-radius: 12px;
   padding: 10px;
   padding-left: 10px;
