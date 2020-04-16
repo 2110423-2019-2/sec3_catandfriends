@@ -15,7 +15,10 @@ export class CourseDetail extends Component {
     };
     this.onClick = this.onClick.bind(this);
   }
-
+  round_to_precision(x, precision) {
+    var y = +x + (precision === undefined ? 0.5 : precision/2);
+    return y - (y % (precision === undefined ? 1 : +precision));
+}
   render() {
     const date = (this.props.detail.lastModified + "").substring(0, 21);
     console.log(date);
@@ -90,8 +93,8 @@ export class CourseDetail extends Component {
                   </div>
                   <div className="col-md-8">
                     <div className="valueB"> 
-                      {this.props.detail.averageRating+" "}
-                      <Rating name="read-only" precision={0.01} value={this.props.detail.averageRating} readOnly />
+                      {this.props.detail.numberOfRating==0 ? 0 : Math.round(((this.props.detail.sumOfRating/this.props.detail.numberOfRating) + Number.EPSILON) * 100) / 100+" "}
+                      <Rating name="read-only" precision={0.01} value={this.props.detail.numberOfRating==0 ? 0 :Math.round(((this.props.detail.sumOfRating/this.props.detail.numberOfRating) + Number.EPSILON) * 100) / 100} readOnly />
                       </div>
                   </div>
                 </div>
