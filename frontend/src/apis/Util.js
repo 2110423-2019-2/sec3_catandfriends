@@ -340,8 +340,8 @@ const Util = {
     if (response.status == 500) return { error: true };
     if (response.status == 201) return response.json();
   },
-  getComment: async (userId, courseId) => {
-    const URL = `http://localhost:8000/comment?userId=${userId}&courseId=${courseId}`;
+  getComment: async (token, courseId) => {
+    const URL = `http://localhost:8000/comment?courseId=${courseId}&token=${token}`;
     const response = await fetch(URL, {
       method: "GET",
       mode: "cors",
@@ -349,7 +349,7 @@ const Util = {
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
   },
-  creatComment: async (courseId,text,star,token) => {
+  creatComment: async (token,topic,text,star) => {
     const URL = `http://localhost:8000/comment?token=${token}`;
     const response = await fetch(URL, {
       method: "POST",
@@ -359,7 +359,7 @@ const Util = {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        courseId,
+        topic,
         text,
         star,
       }),
@@ -368,7 +368,7 @@ const Util = {
     if (response.status == 400) return { error: true };
     if (response.status == 201) return response.json();
   },
-  editComment: async (_id,courseId,text,star,token)=> {
+  editComment: async (token,topic,text,star)=> {
     const URL = `http://localhost:8000/comment?token=${token}`;
     const response = await fetch(URL, {
       method: "PUT",
@@ -378,8 +378,7 @@ const Util = {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        _id,
-        courseId,
+        topic,
         text,
         star,
       }),

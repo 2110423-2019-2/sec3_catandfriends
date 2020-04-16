@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import history from "../history";
 import Rating from '@material-ui/lab/Rating';
 import Util from "../apis/Util";
 export default class CommentForm extends Component {
@@ -7,7 +6,7 @@ export default class CommentForm extends Component {
         super(props);
 
         this.state = {
-            title: "",
+            topic: "",
             text: "",
             star: 0,
             isCommented:false
@@ -16,25 +15,29 @@ export default class CommentForm extends Component {
         //this.handleChange = this.handleChange.bind(this);
     }
 
-    async handleSubmit(event){
+     handleSubmit(event){
         event.preventDefault();
-        alert(JSON.stringify(this.state));
-        let data = this.state.isCommented==false? await Util.editComment(
-            this.state._id,
-            this.state.courseId,
+        this.setState({
+            isCommented: true
+        });
+        let data = this.state.isCommented==false? Util.editComment(
+            localStorage.getItem("token"),
+            this.state.topic,
             this.state.text,
             this.state.star
-        ): await Util.creatComment(
-            this.state.courseId,
+        )
+        :  Util.creatComment(
+            localStorage.getItem("token"),
+            this.state.topic,
             this.state.text,
             this.state.star
         );
-        console.log(data);
+        alert(JSON.stringify(this.state));
         if (!data.error) {
-          alert("A course is edited");
+          alert("A comment is edited");
           console.log(data);
         } else {
-          window.alert("Cannot Edit Course");
+          window.alert("Cannot comment Course");
         }
     }
     render() {
@@ -50,10 +53,10 @@ export default class CommentForm extends Component {
                                 type="text"
                                 className="inbox"
                                 required
-                                valued={this.state.title}
+                                valued={this.state.topic}
                                 onChange={(event, newValue) => {
                                     this.setState({
-                                        title:event.target.value
+                                        topic:event.target.value
                                         });
                                     }
                                 } 
@@ -104,11 +107,9 @@ export default class CommentForm extends Component {
     }
     async componentDidMount(){
         console.log(window.location.search);
-        let data = await Util.getComment();
+        let data = await Util.getComment(localStorage.getItem("token"),window.location.search.substring(10));
         this.setState(data);
-        this.setState({
-            isCommented: true
-        });
         console.log(data)
+        console.log(this.state)
     }
 }
