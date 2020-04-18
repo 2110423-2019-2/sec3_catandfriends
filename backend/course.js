@@ -97,13 +97,16 @@ router.get("/", async (req, res) => {
     res.status(200).json(course);
   }
   else if(user.role =="tutor"){
-      course = { ...course.toObject() };
-      course.tutorName = user.firstName + " " + user.lastName;
-      course.owner = course.tutorId == user._id;
+      let course = await CourseModel.find({tutorId: user._id});
+      console.log(course);
+    for(i=0; i<course.length;i++){
+      course[i] = { ...course[i].toObject() };
+      course[i].tutorName = user.firstName + " " + user.lastName;
+      course[i].owner = course[i].tutorId == user._id;
       // console.log(course);
       let s = "";
       for (j = 0; j < 7; j++) {
-        if (course["dayAndStartTime"][j] == null) continue;
+        if (course[i]["dayAndStartTime"][j] == null) continue;
         if (j == 0) s += "Mon ";
         else if (j == 1) s += "Tue ";
         else if (j == 2) s += "Wed ";
@@ -113,29 +116,22 @@ router.get("/", async (req, res) => {
         else if (j == 6) s += "Sun ";
         s +=
           format.formatRangeOfTime(
-            course["dayAndStartTime"][j],
-            course["dayAndEndTime"][j]
+            course[i]["dayAndStartTime"][j],
+            course[i]["dayAndEndTime"][j]
           ) + "/ ";
       }
-      course.day = s.slice(0, s.length - 2);
-      let requestCount = await requestModel.countDocuments({
-        studentId: req.user._id,
-        courseId: course._id
-      });
+      course[i].day = s.slice(0, s.length - 2);
       let userCount = await userModel.countDocuments({
         _id: req.user._id,
         role: "tutor"
       });
-      if (!!requestCount || !!userCount || course.amountOfStudent == 0)
-        requestable = false;
+      course[i].startDate = format.formatDate(course[i].startDate);
+      course[i].endDate = format.formatDate(course[i].endDate);
+      course.requestable=false;
 
-      course.startDate = format.formatDate(course.startDate);
-      course.endDate = format.formatDate(course.endDate);
-
-      course = {
-        ...course,
-        requestable: requestable
-      };
+    }
+    res.status(200).json(course);
+      
   }
   else{
     for (i = 0; i < courses.length; i++) {
