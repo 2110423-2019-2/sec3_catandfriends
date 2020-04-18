@@ -23,8 +23,8 @@ export default class NewCourse extends Component {
       StartTimes: [null, null, null, null, null, null, null],
       EndTimes: [null, null, null, null, null, null, null],
       dayAndStartTime: [null, null, null, null, null, null, null],
-      dayAndEndTime: [null, null, null, null, null, null, null]
-    }
+      dayAndEndTime: [null, null, null, null, null, null, null],
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -60,7 +60,6 @@ export default class NewCourse extends Component {
       [name]: value,
       // dayAndStartTime:[this.timeToFloat(this.state.ST0),this.timeToFloat(this.state.ST1),this.timeToFloat(this.state.ST2),this.timeToFloat(this.state.ST3),this.timeToFloat(this.state.ST4),this.timeToFloat(this.state.ST5),this.timeToFloat(this.state.ST6)],
       // dayAndEndTime:[this.timeToFloat(this.state.ET0),this.timeToFloat(this.state.ET1),this.timeToFloat(this.state.ET2),this.timeToFloat(this.state.ET3),this.timeToFloat(this.state.ET4),this.timeToFloat(this.state.ET5),this.timeToFloat(this.state.ET6)],
-
     });
     this.enableTime();
   }
@@ -72,9 +71,20 @@ export default class NewCourse extends Component {
     } else if (!this.compareTime) {
       alert("Start Time must be before End Time");
     } else {
-      console.log(this.state)
-      alert(JSON.stringify(this.state))
-      let data = await Util.createCourse(this.state.courseName, this.state.dayAndStartTime, this.state.dayAndEndTime, this.state.startDate, this.state.endDate, localStorage.getItem("token"), this.state.totalAmountOfStudent, this.state.description, this.state.courseFee, this.state.category);
+      console.log(this.state);
+      alert(JSON.stringify(this.state));
+      let data = await Util.createCourse(
+        this.state.courseName,
+        this.state.dayAndStartTime,
+        this.state.dayAndEndTime,
+        this.state.startDate,
+        this.state.endDate,
+        localStorage.getItem("token"),
+        this.state.totalAmountOfStudent,
+        this.state.description,
+        this.state.courseFee,
+        this.state.category
+      );
       //let data = await Util.createCourse("ff",[6.3,null,null,null,null,null,null],[8.3,null,null,null,null,null,null],this.state.startDate,this.state.endDate,localStorage.getItem("token"),13,"dfsdfsdf",11111,"language");
       if (data.error) {
         window.alert("Cannot Create Course");
@@ -88,13 +98,12 @@ export default class NewCourse extends Component {
         console.log(data);
       }
     }
-
   }
   handleDayAndStartTimeChange = () => {
     var newArray = new Array();
     var j = 0;
     for (j = 0; j < 7; j++) {
-      var InputValue = document.getElementById('ST' + j).value;
+      var InputValue = document.getElementById("ST" + j).value;
       if (InputValue == "") {
         newArray.push(null);
       } else {
@@ -102,15 +111,15 @@ export default class NewCourse extends Component {
       }
     }
     this.setState({
-      dayAndStartTime: newArray
-    })
+      dayAndStartTime: newArray,
+    });
   };
 
   handleDayAndEndTimeChange = () => {
     var newArray = new Array();
     var j = 0;
     for (j = 0; j < 7; j++) {
-      var InputValue = document.getElementById('ET' + j).value;
+      var InputValue = document.getElementById("ET" + j).value;
       if (InputValue == "") {
         newArray.push(null);
       } else {
@@ -118,8 +127,8 @@ export default class NewCourse extends Component {
       }
     }
     this.setState({
-      dayAndEndTime: newArray
-    })
+      dayAndEndTime: newArray,
+    });
   };
 
   // hanndleCancel(event){
@@ -161,7 +170,6 @@ export default class NewCourse extends Component {
     if (!Wed) {
       document.getElementById("ST2").value = null;
       document.getElementById("ET2").value = null;
-
     }
 
     document.getElementById("ST3").disabled = !Thu;
@@ -171,7 +179,6 @@ export default class NewCourse extends Component {
     if (!Thu) {
       document.getElementById("ST3").value = null;
       document.getElementById("ET3").value = null;
-
     }
 
     document.getElementById("ST4").disabled = !Fri;
@@ -181,7 +188,6 @@ export default class NewCourse extends Component {
     if (!Fri) {
       document.getElementById("ST4").value = null;
       document.getElementById("ET4").value = null;
-
     }
 
     document.getElementById("ST5").disabled = !Sat;
@@ -191,7 +197,6 @@ export default class NewCourse extends Component {
     if (!Sat) {
       document.getElementById("ST5").value = null;
       document.getElementById("ET5").value = null;
-
     }
 
     document.getElementById("ST6").disabled = !Sun;
@@ -201,7 +206,6 @@ export default class NewCourse extends Component {
     if (!Sun) {
       document.getElementById("ST6").value = null;
       document.getElementById("ET6").value = null;
-
     }
 
     document.getElementById("Monday").required = !(
@@ -240,7 +244,7 @@ export default class NewCourse extends Component {
         <div className="inside-block textshadow">New Course</div>
         <br />
         <form
-          onSubmit={event => this.handleSubmit(event)}
+          onSubmit={(event) => this.handleSubmit(event)}
           style={{ marginLeft: 30 }}
         >
           <div class="row">
@@ -256,6 +260,7 @@ export default class NewCourse extends Component {
                   name="courseName"
                   onChange={this.handleChange}
                   style={{ width: 262 }}
+                  maxLength="30"
                 />
               </label>
             </div>
@@ -263,7 +268,13 @@ export default class NewCourse extends Component {
               <label>
                 Category
                 <br />
-                <select name="category" className="inbox" onChange={this.handleChange} value={this.state.category} required>
+                <select
+                  name="category"
+                  className="inbox"
+                  onChange={this.handleChange}
+                  value={this.state.category}
+                  required
+                >
                   <option value="Language">Language</option>
                   <option value="Mathematics">Mathematics</option>
                   <option value="Science">Science</option>
@@ -426,34 +437,216 @@ export default class NewCourse extends Component {
             <div class="col-md-3 textnormal text-left" width="100%">
               <label htmlFor="StartTime">Start Time</label>
               <div id="StartTime">
-                <input type="Time" className="inbox" name="ST0" id="ST0" min="06:00" max="22:00" value={this.state.StartTimes[0]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
-                <input type="Time" className="inbox" name="ST1" id="ST1" min="06:00" max="22:00" value={this.state.StartTimes[1]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
-                <input type="Time" className="inbox" name="ST2" id="ST2" min="06:00" max="22:00" value={this.state.StartTimes[2]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
-                <input type="Time" className="inbox" name="ST3" id="ST3" min="06:00" max="22:00" value={this.state.StartTimes[3]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
-                <input type="Time" className="inbox" name="ST4" id="ST4" min="06:00" max="22:00" value={this.state.StartTimes[4]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
-                <input type="Time" className="inbox" name="ST5" id="ST5" min="06:00" max="22:00" value={this.state.StartTimes[5]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
-                <input type="Time" className="inbox" name="ST6" id="ST6" min="06:00" max="22:00" value={this.state.StartTimes[6]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndStartTimeChange} disabled /><br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ST0"
+                  id="ST0"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.StartTimes[0]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndStartTimeChange}
+                  disabled
+                />
+                <br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ST1"
+                  id="ST1"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.StartTimes[1]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndStartTimeChange}
+                  disabled
+                />
+                <br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ST2"
+                  id="ST2"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.StartTimes[2]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndStartTimeChange}
+                  disabled
+                />
+                <br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ST3"
+                  id="ST3"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.StartTimes[3]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndStartTimeChange}
+                  disabled
+                />
+                <br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ST4"
+                  id="ST4"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.StartTimes[4]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndStartTimeChange}
+                  disabled
+                />
+                <br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ST5"
+                  id="ST5"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.StartTimes[5]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndStartTimeChange}
+                  disabled
+                />
+                <br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ST6"
+                  id="ST6"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.StartTimes[6]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndStartTimeChange}
+                  disabled
+                />
+                <br />
               </div>
             </div>
 
             <div class="col-md-3 textnormal text-left" width="100%">
               <label htmlFor="EndTime">End Time</label>
               <div id="EndTime">
-                <input type="Time" className="inbox" name="ET0" id="ET0" min="06:00" max="22:00" value={this.state.EndTimes[0]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
-                <input type="Time" className="inbox" name="ET1" id="ET1" min="06:00" max="22:00" value={this.state.EndTimes[1]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
-                <input type="Time" className="inbox" name="ET2" id="ET2" min="06:00" max="22:00" value={this.state.EndTimes[2]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
-                <input type="Time" className="inbox" name="ET3" id="ET3" min="06:00" max="22:00" value={this.state.EndTimes[3]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
-                <input type="Time" className="inbox" name="ET4" id="ET4" min="06:00" max="22:00" value={this.state.EndTimes[4]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
-                <input type="Time" className="inbox" name="ET5" id="ET5" min="06:00" max="22:00" value={this.state.EndTimes[5]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
-                <input type="Time" className="inbox" name="ET6" id="ET6" min="06:00" max="22:00" value={this.state.EndTimes[6]} style={{ marginBottom: "2px" }} onChange={this.handleDayAndEndTimeChange} disabled /><br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ET0"
+                  id="ET0"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.EndTimes[0]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndEndTimeChange}
+                  disabled
+                />
+                <br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ET1"
+                  id="ET1"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.EndTimes[1]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndEndTimeChange}
+                  disabled
+                />
+                <br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ET2"
+                  id="ET2"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.EndTimes[2]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndEndTimeChange}
+                  disabled
+                />
+                <br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ET3"
+                  id="ET3"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.EndTimes[3]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndEndTimeChange}
+                  disabled
+                />
+                <br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ET4"
+                  id="ET4"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.EndTimes[4]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndEndTimeChange}
+                  disabled
+                />
+                <br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ET5"
+                  id="ET5"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.EndTimes[5]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndEndTimeChange}
+                  disabled
+                />
+                <br />
+                <input
+                  type="Time"
+                  className="inbox"
+                  name="ET6"
+                  id="ET6"
+                  min="06:00"
+                  max="22:00"
+                  value={this.state.EndTimes[6]}
+                  style={{ marginBottom: "2px" }}
+                  onChange={this.handleDayAndEndTimeChange}
+                  disabled
+                />
+                <br />
               </div>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-md-6 textnormal text-left" width="100%" height="100px">
-              <label>Description<br />
-                <textarea type="text" className="inbox" required value={this.state.description} onChange={this.handleChange} style={{ width: 900, height: 200, resize: "none" }} name="description" />
+            <div
+              class="col-md-6 textnormal text-left"
+              width="100%"
+              height="100px"
+            >
+              <label>
+                Description
+                <br />
+                <textarea
+                  type="text"
+                  className="inbox"
+                  required
+                  value={this.state.description}
+                  onChange={this.handleChange}
+                  style={{ width: 900, height: 200, resize: "none" }}
+                  name="description"
+                />
               </label>
             </div>
           </div>

@@ -4,7 +4,7 @@ class format {
     constructor() { }
 
     formatTimeDate(timeStamp) {
-        let dateS = moment.tz(timeStamp, "Asia/Bangkok").format();
+        let dateS = moment.tz(timeStamp, "Etc/UCT").format();
         let yearMonthDay = dateS.slice(0, 10).split("-");
         let dayMonthYear = yearMonthDay.reverse().join("-");
         let time = dateS.slice(11, 19);
