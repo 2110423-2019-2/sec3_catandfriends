@@ -359,9 +359,9 @@ const Util = {
         star,
       }),
     });
-    console.log(response.status);
-    if (response.status == 400) return response.json().err;
-    if (response.status == 201) return "OK";
+
+    if (response.status == 400) return response.json();
+    if (response.status == 201) return { err: false };
   },
   editComment: async (courseId, topic, text, star) => {
     const URL = `http://localhost:8000/comment?token=${localStorage.getItem(
@@ -381,9 +381,8 @@ const Util = {
         star,
       }),
     });
-    console.log(response.status);
-    if (response.status == 400) return response.json().err;
-    if (response.status == 201) return "OK";
+    if (response.status == 400) return response.json();
+    if (response.status == 201) return { err: false };
   },
   getComment: async (courseId) => {
     const URL = `http://localhost:8000/comment?courseId=${courseId}&token=${localStorage.getItem(

@@ -21,23 +21,27 @@ export default class CourseInformation extends Component {
               className="inside-block textheader"
               style={{
                 padding: "5px 15px",
-                margin: "30px"
+                margin: "30px",
               }}
             >
               {"Course: " + this.state.data.courseName}
             </div>
 
-              <div className="col-md-12" align="center">
-                <CourseDetail detail={this.state.data} />
-              </div>
+            <div className="col-md-12" align="center">
+              <CourseDetail detail={this.state.data} />
+            </div>
 
-              <div className="col-md-12" align="center">
-                <CommentCardLayout detail={this.state.data} />
-              </div>
+            <div className="col-md-12" align="center">
+              <CommentCardLayout detail={this.state.data} />
+            </div>
 
+            {JSON.parse(localStorage.getItem("user")).role == "student" ? (
               <div className="col-md-12" align="center">
                 <CommentForm detail={this.state.data} />
               </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
       );
