@@ -9,6 +9,7 @@ const to = require("await-to-js").default;
 
 router.get("/", async (req, res) => {
   let courseId = req.query.courseId;
+  let user = await userModel.findById(req.user._id);
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
   // console.log(await CourseModel.find({listOfStudentId:["987654321"]
   // }));
@@ -61,14 +62,9 @@ router.get("/", async (req, res) => {
       course.startDate = format.formatDate(course.startDate);
       course.endDate = format.formatDate(course.endDate);
 
-      course = {
-        ...course,
-        requestable: requestable
-      };
-
     }
     console.log(req.user._id);
-    let user = await userModel.findById(req.user._id);
+    
     console.log(user);
   if (user.role == "tutor") {
       course.requestStatus = "unrequestable";
@@ -99,6 +95,47 @@ router.get("/", async (req, res) => {
   }
     console.log(course);
     res.status(200).json(course);
+  }
+  else if(user.role =="tutor"){
+      course = { ...course.toObject() };
+      course.tutorName = user.firstName + " " + user.lastName;
+      course.owner = course.tutorId == user._id;
+      // console.log(course);
+      let s = "";
+      for (j = 0; j < 7; j++) {
+        if (course["dayAndStartTime"][j] == null) continue;
+        if (j == 0) s += "Mon ";
+        else if (j == 1) s += "Tue ";
+        else if (j == 2) s += "Wed ";
+        else if (j == 3) s += "Thu ";
+        else if (j == 4) s += "Fri ";
+        else if (j == 5) s += "Sat ";
+        else if (j == 6) s += "Sun ";
+        s +=
+          format.formatRangeOfTime(
+            course["dayAndStartTime"][j],
+            course["dayAndEndTime"][j]
+          ) + "/ ";
+      }
+      course.day = s.slice(0, s.length - 2);
+      let requestCount = await requestModel.countDocuments({
+        studentId: req.user._id,
+        courseId: course._id
+      });
+      let userCount = await userModel.countDocuments({
+        _id: req.user._id,
+        role: "tutor"
+      });
+      if (!!requestCount || !!userCount || course.amountOfStudent == 0)
+        requestable = false;
+
+      course.startDate = format.formatDate(course.startDate);
+      course.endDate = format.formatDate(course.endDate);
+
+      course = {
+        ...course,
+        requestable: requestable
+      };
   }
   else{
     for (i = 0; i < courses.length; i++) {
