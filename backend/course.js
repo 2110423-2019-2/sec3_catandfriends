@@ -9,6 +9,7 @@ const to = require("await-to-js").default;
 
 router.get("/", async (req, res) => {
   let courseId = req.query.courseId;
+  const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
   // console.log(await CourseModel.find({listOfStudentId:["987654321"]
   // }));
   //console.log(courseId);
@@ -19,7 +20,8 @@ router.get("/", async (req, res) => {
     if (course == undefined || course.length == 0) {
       // var s = "this course hasn't been created yet";
       // console.log(s);
-      res.json([]);
+      res.status(400).json("course not found");
+      return ;
     } else {
       let tutor = await userModel.findById(course.tutorId);
       course = { ...course.toObject() };
@@ -65,16 +67,43 @@ router.get("/", async (req, res) => {
       };
 
     }
-    res.status(200).end();
-  } else if (req.user.role == "tutor") {
-      course.requestStatus = "requestable";
-  } if (req.user.role == "student") {
-    studentId = req.user.role;
-    let courses = await requestModel.find({studentId: req.user._id});
-    let s = [];
-    if (courseId == undefined){
-
+    console.log(req.user._id);
+    let user = await userModel.findById(req.user._id);
+    console.log(user);
+  if (user.role == "tutor") {
+      course.requestStatus = "unrequestable";
+  } if (user.role == "student") {
+    studentId= req.user._id
+    let c = await requestModel.find({courseId: courseId});
+      console.log("\n\nc\n"+c+"\n\n");
+    let reqcourse = await requestModel.find({StudentId: studentId, courseId: courseId});
+      console.log(reqcourse);
+    if(reqcourse.length!=0){
+      if(c.status ==1){
+        course.requestStatus = "enrolled";
+      }
+      else if(c.status = 0){
+        course.requestStatus = "requested";
+      }
+    }
+      else if(dateThailand._d > course.endDate)
+        course.requestStatus = "course expired";
+      else if(course.amountOfStudent > course.totalAmountOfStudent)
+        course.requestStatus = "course full";
+      else if(!checkAvailable(studentId,courseId))
+        course.requestStatus = "overlaped";
+      else
+        course.requestStatus = "requestable";
+    
+     //console.log(s);
+  }
+    console.log(course);
+    res.status(200).json(course);
+  }
+  else{
     for (i = 0; i < courses.length; i++) {
+      let s = [];
+      let courses = await requestModel.find({studentId: req.user._id});
       console.log(courses[i].courseId);
       let status = courses[i].status;
       console.log("status = "+status)
@@ -95,29 +124,9 @@ router.get("/", async (req, res) => {
         s.push(c);
         res.status(200).json(s);
         return ;
-      //console.log(s);
     }
   }
-    else{
-      let c = courses.find({courseId: courseId})
-      if(c.status ==1){
-        course.requestStatus = "enrolled";
-      }
-      else if(c.status = 0){
-        course.requestStatus = "requested";
-      }
-      else if(dateThailand._d > course.endDate)
-        course.requestStatus = "course expired";
-      else if(course.amountOfStudent > course.totalAmountOfStudent)
-        course.requestStatus = "course full";
-      else if(!checkAvailable(studentId,courseId))
-        course.requestStatus = "overlaped";
-      else
-        course.requestStatus = "requestable";
-    }
-     //console.log(s);
-  }
-    res.status(200).json(course);
+  
 });
 
 router.post("/", async (req, res) => {
