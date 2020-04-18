@@ -340,9 +340,11 @@ const Util = {
     if (response.status == 500) return { error: true };
     if (response.status == 201) return response.json();
   },
-  createComment: async (courseId,topic,text,star) => {
-    const URL = `http://localhost:8000/comment?token=${localStorage.getItem("token")}`;
-    console.log(URL)
+  createComment: async (courseId, topic, text, star) => {
+    const URL = `http://localhost:8000/comment?token=${localStorage.getItem(
+      "token"
+    )}`;
+    console.log(URL);
     const response = await fetch(URL, {
       method: "POST",
       mode: "cors",
@@ -354,15 +356,17 @@ const Util = {
         courseId,
         topic,
         text,
-        star
+        star,
       }),
     });
     console.log(response.status);
     if (response.status == 400) return response.json().err;
     if (response.status == 201) return "OK";
   },
-  editComment: async (courseId,topic,text,star)=> {
-    const URL = `http://localhost:8000/comment?token=${localStorage.getItem("token")}`;
+  editComment: async (courseId, topic, text, star) => {
+    const URL = `http://localhost:8000/comment?token=${localStorage.getItem(
+      "token"
+    )}`;
     const response = await fetch(URL, {
       method: "PUT",
       mode: "cors",
@@ -374,8 +378,9 @@ const Util = {
         courseId,
         topic,
         text,
-        star}),
-      });
+        star,
+      }),
+    });
     console.log(response.status);
     if (response.status == 400) return response.json().err;
     if (response.status == 201) return "OK";
@@ -412,6 +417,22 @@ const Util = {
     });
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
+  },
+  sendReport: async (data) => {
+    const URL = `http://localhost:8000/report?token=${localStorage.getItem(
+      "token"
+    )}`;
+    const response = await fetch(URL, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    console.log(response);
+    if (response.status == 500) return { error: true };
+    if (response.status == 201) return response.json();
   },
 };
 export default Util;

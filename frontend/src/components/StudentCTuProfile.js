@@ -3,6 +3,8 @@ import history from "../history";
 import "./StudentCTuProfile.css";
 import Util from "../apis/Util";
 import NormalButton from "./NormalButton";
+import ReportBox from "./ReportBox";
+
 export class StudentCTuProfile extends Component {
   constructor(props) {
     super(props);
@@ -112,6 +114,9 @@ export class StudentCTuProfile extends Component {
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div class="ml-auto">
+                    <ReportBox reportedUserId={this.props.data._id} />
                   </div>
                 </div>
               </div>
