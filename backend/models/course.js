@@ -23,9 +23,11 @@ const courseSchema = new Schema({
     premiumTutorStatus: Boolean,
     isAvailable: Boolean,
     sumOfRating: { type: Number, required: true, default: 0 },
+    requestStatus: String,
     numberOfRating: { type: Number, required: true, default: 0 },
     createdTime: { type: Date, required: true },
     lastModified: { type: Date, required: true }
+
 }, {
     collection: collectionName, versionKey: false
 });
