@@ -21,7 +21,7 @@ export class TutorProfile extends Component {
       premiumStatus: "false",
       verificationDocument: "link",
       PhoneNumber: "00000000",
-      bio: "my bio"
+      bio: "my bio",
     };
   }
   showWarn(warn) {
@@ -102,7 +102,10 @@ export class TutorProfile extends Component {
             </div>
 
             <div className="row">
-              <div className="col-md-12  inside-block" style={{ marginBottom: "5px" }}>
+              <div
+                className="col-md-12  inside-block"
+                style={{ marginBottom: "5px" }}
+              >
                 <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">SSN:</div>
@@ -151,15 +154,19 @@ export class TutorProfile extends Component {
                   </div>
                   <div className="col-md-8">
                     <div className="valueB">
-                      <span style={{ fontWeight: "bold", color: "blue" }}>
-                        {this.props.data.verifyStatus
-                          ? "VERIFIED"
-                          : "NOT VERIFIED"}
-                      </span>
+                      {this.props.data.verifyStatus ? (
+                        <span style={{ fontWeight: "bold", color: "blue" }}>
+                          VERIFIED
+                        </span>
+                      ) : (
+                        <span style={{ fontWeight: "bold", color: "red" }}>
+                          NOT VERIFIED
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">Verify document:</div>
                   </div>
@@ -170,8 +177,8 @@ export class TutorProfile extends Component {
                         : "-"}
                     </div>
                   </div>
-                </div>
-                <div className="row">
+                </div> */}
+                {/* <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">Verify payment:</div>
                   </div>
@@ -182,18 +189,26 @@ export class TutorProfile extends Component {
                         : "-"}
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">Premium status:</div>
                   </div>
                   <div className="col-md-8">
                     <div className="valueB">
-                      {this.props.data.premiumStatus ? "Premium" : "Standard"}
+                      {this.props.data.premiumStatus ? (
+                        <span style={{ fontWeight: "bold", color: "green" }}>
+                          PREMIUM
+                        </span>
+                      ) : (
+                        <span style={{ fontWeight: "bold", color: "black" }}>
+                          STANDARD
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">Premium payment:</div>
                   </div>
@@ -204,7 +219,7 @@ export class TutorProfile extends Component {
                         : "-"}
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             {this.showWarn(this.props.data.verifyStatus)}
@@ -213,7 +228,8 @@ export class TutorProfile extends Component {
               // style={{ marginTop: "10px" }}
             >
               <div className="col-md-12">
-                <button className="button-white"
+                <button
+                  className="button-white"
                   onClick={() => {
                     history.push(`/profile/edit`);
                   }}
