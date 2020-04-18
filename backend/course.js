@@ -9,8 +9,7 @@ const to = require("await-to-js").default;
 
 router.get("/", async (req, res) => {
   let courseId = req.query.courseId;
-  let tutorId = req.query.tutorId;
-  let studentId = req.query.studentId;
+  const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
   // console.log(await CourseModel.find({listOfStudentId:["987654321"]
   // }));
   //console.log(courseId);
@@ -21,7 +20,8 @@ router.get("/", async (req, res) => {
     if (course == undefined || course.length == 0) {
       // var s = "this course hasn't been created yet";
       // console.log(s);
-      res.json([]);
+      res.status(400).json("course not found");
+      return ;
     } else {
       let tutor = await userModel.findById(course.tutorId);
       course = { ...course.toObject() };
@@ -66,84 +66,49 @@ router.get("/", async (req, res) => {
         requestable: requestable
       };
 
-      res.json(course);
     }
-    res.status(200).end();
-  } else if (tutorId != undefined) {
-    //console.log(req);
-    //console.log("print");
-    let course = await CourseModel.find({ tutorId: tutorId });
-    if (course.length == 0) {
-      // var s = "tutor hasn't created the course";
-      // console.log(s);
-      res.json([]);
-    } else {
-      for (let i = 0; i < course.length; i++) {
-        let err, tutor;
-        [err, tutor] = await to(
-          userModel.findOne({
-            _id: course[i].tutorId
-          })
-        );
-        if (err) {
-          res.status(500).end();
-        }
-        course[i].premiumTutorStatus = tutor.premiumStatus;
-        let tutorName = tutor.firstName + " " + tutor.lastName;
-        let s = "";
-        for (j = 0; j < 7; j++) {
-          if (course[i]["dayAndStartTime"][j] == null) continue;
-          if (j == 0) s += "Mon ";
-          else if (j == 1) s += "Tue ";
-          else if (j == 2) s += "Wed ";
-          else if (j == 3) s += "Thu ";
-          else if (j == 4) s += "Fri ";
-          else if (j == 5) s += "Sat ";
-          else if (j == 6) s += "Sun ";
-          // s += course[i]['dayAndStartTime'][j] + "-" + course[i]['dayAndEndTime'][j] + "/ ";
-          s +=
-            format.formatRangeOfTime(
-              course[i]["dayAndStartTime"][j],
-              course[i]["dayAndEndTime"][j]
-            ) + "/ ";
-        }
-        course[i].day = s.slice(0, s.length - 2);
-        s = "";
-        let dateSplit = course[i].startDate.toString().split(" ");
-        s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
-        dateSplit = course[i].endDate.toString().split(" ");
-        s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
-        course[i].duration = s;
-        course[i].isAvailable = course[i].amountOfStudent > 0 ? true : false;
-        // let remaining = course[i].amountOfStudent;
-
-        //course[i].startDate = undefined;
-        //course[i].endDate = undefined;
-        course[i].dayAndStartTime = undefined;
-        course[i].dayAndEndTime = undefined;
-        course[i].listOfStudentId = undefined;
-        // course[i].amountOfStudent = undefined;
-        //course[i].createdTime = undefined;
-        //course[i].lastModified = undefined;
-
-        course[i] = {
-          ...course[i].toObject(),
-          tutorName: tutorName
-        };
+    console.log(req.user._id);
+    let user = await userModel.findById(req.user._id);
+    console.log(user);
+  if (user.role == "tutor") {
+      course.requestStatus = "unrequestable";
+  } if (user.role == "student") {
+    studentId= req.user._id
+    let c = await requestModel.find({courseId: courseId});
+      console.log("\n\nc\n"+c+"\n\n");
+    let reqcourse = await requestModel.find({StudentId: studentId, courseId: courseId});
+      console.log(reqcourse);
+    if(reqcourse.length!=0){
+      if(c.status ==1){
+        course.requestStatus = "enrolled";
+      }
+      else if(c.status = 0){
+        course.requestStatus = "requested";
       }
     }
+      else if(dateThailand._d > course.endDate)
+        course.requestStatus = "course expired";
+      else if(course.amountOfStudent > course.totalAmountOfStudent)
+        course.requestStatus = "course full";
+      else if(!checkAvailable(studentId,courseId))
+        course.requestStatus = "overlaped";
+      else
+        course.requestStatus = "requestable";
+    
+     //console.log(s);
+  }
+    console.log(course);
     res.status(200).json(course);
-  } else if (studentId != undefined) {
-    let course = await requestModel.find({studentId: studentId});
-    let s = [];
-    //console.log(course);
-    console.log("\n\n\n");
-    for (i = 0; i < course.length; i++) {
-      console.log(course[i].courseId);
-      let status = course[i].status;
+  }
+  else{
+    for (i = 0; i < courses.length; i++) {
+      let s = [];
+      let courses = await requestModel.find({studentId: req.user._id});
+      console.log(courses[i].courseId);
+      let status = courses[i].status;
       console.log("status = "+status)
       let message = "status: ";
-      let c = await CourseModel.findById(course[i].courseId,
+      let c = await CourseModel.findById(courses[i].courseId,
         {dayAndStartTime:0, dayAndEndTime:0, listOfStudentId:0, listOfStudentRequest:0, createdTime:0, lastModified:0});
         if(status ==1){
           message = message+"enroll successful";
@@ -157,15 +122,11 @@ router.get("/", async (req, res) => {
         console.log(c);
         s.push(message);
         s.push(c);
-        
-      //console.log(s);
+        res.status(200).json(s);
+        return ;
     }
-     //console.log(s);
-    res.status(200).json(s);
-    return ;
-  } else {
-    res.status(404).json("invalid");
   }
+  
 });
 
 router.post("/", async (req, res) => {
@@ -308,5 +269,38 @@ router.put("/", async (req, res) => {
   }
   //res.status(201).end();
 });
+async function checkAvailable(studentId, courseId) {
+  let err, course;
+  [err, course] = await to(CourseModel.findById(courseId));
+  let courses;
+  [err, courses] = await to(ScheduleModel.findOne({
+    studentId: studentId
+  }, {
+    _id: 0,
+    studentId: 0,
+    createdDate: 0,
+    lastModified: 0
+  }));
 
+  let listOfCourse = courses.listOfCourse;
+  let available = true;
+  for (let i = 0; i < listOfCourse.length; i++) {
+    let courseQ;
+    [err, courseQ] = await to(CourseModel.findOne({
+      _id: listOfCourse[i]
+    }, {
+      _id: 0,
+      dayAndStartTime: 1,
+      dayAndEndTime: 1
+    }));
+
+    for (let j = 0; j < 7; j++) {
+      if (courseQ.dayAndStartTime[j] == null || course.dayAndStartTime[j] == null) continue
+      let a = [courseQ.dayAndStartTime[j], courseQ.dayAndEndTime[j]];
+      let b = [course.dayAndStartTime[j], course.dayAndEndTime[j]];
+      if (set.isIntersect(a, b)) available = false;
+    }
+  }
+  return [err, available];
+}
 module.exports = router;
