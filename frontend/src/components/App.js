@@ -17,7 +17,6 @@ import VerifyPage from "../page/VerifyPage";
 import PremiumPage from "../page/PremiumPage";
 import PageNotFound from "../page/PageNotFound";
 import Chatbox from "./Chatbox";
-
 // import LogInFirst from "./LogInFirst";
 const About = () => <h1>About</h1>;
 const LogInFirst = () => {
@@ -53,7 +52,6 @@ class App extends Component {
       return SearchResult;
     }
   }
-
   render() {
     return (
       <Router history={history}>

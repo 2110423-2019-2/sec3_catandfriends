@@ -17,7 +17,7 @@ export default class CommentCardLayout extends Component {
           studentName: "Alice",
           studentId: "5e873efc43b0911cb2d5cc60",
           lastModified: "12 Jan",
-          editable: true
+          editable: true,
         },
         {
           topic: "B",
@@ -26,7 +26,7 @@ export default class CommentCardLayout extends Component {
             "คนสอนสอนดีมากก สอนดีกว่าอาจารย์สอนที่โรงเรียนอีก แถมยังหล่ออีกต่างหาก โฮ้ๆๆๆๆๆ คนสอนสอนดีมากก สอนดีกว่าอาจารย์สอนที่โรงเรียนอีก แถมยังหล่ออีกต่างหาก โฮ้ๆๆๆๆๆ",
           studentId: "5e873efc43b0911cb2d5dscc60",
           lastModified: "12 Jan",
-          editable: false
+          editable: false,
         },
         {
           topic: "C",
@@ -35,7 +35,7 @@ export default class CommentCardLayout extends Component {
             "คนสอนสอนดีมากก สอนดีกว่าอาจารย์สอนที่โรงเรียนอีก แถมยังหล่ออีกต่างหาก โฮ้ๆๆๆๆๆ คนสอนสอนดีมากก สอนดีกว่าอาจารย์สอนที่โรงเรียนอีก แถมยังหล่ออีกต่างหาก โฮ้ๆๆๆๆๆ",
           studentId: "5e873efc43dfdb0911cb2d5cc60",
           lastModified: "12 Jan",
-          editable: false
+          editable: false,
         },
         {
           topic: "D",
@@ -44,7 +44,7 @@ export default class CommentCardLayout extends Component {
             "คนสอนสอนดีมากก สอนดีกว่าอาจารย์สอนที่โรงเรียนอีก แถมยังหล่ออีกต่างหาก โฮ้ๆๆๆๆๆ คนสอนสอนดีมากก สอนดีกว่าอาจารย์สอนที่โรงเรียนอีก แถมยังหล่ออีกต่างหาก โฮ้ๆๆๆๆๆ",
           studentId: "5e873efsdsc43b0911cb2d5cc60",
           lastModified: "12 Jan",
-          editable: false
+          editable: false,
         },
         {
           topic: "E",
@@ -54,18 +54,18 @@ export default class CommentCardLayout extends Component {
           studentName: "Alex",
           studentId: "5e873edsssfc43b0911cb2d5cc60",
           lastModified: "12 Jan",
-          editable: false
-        }
-      ]
+          editable: false,
+        },
+      ],
     };
   }
   // {this.state.data.map(item => (
   //   <CourseCard detail={item} key={item._id.toString()} />
   // ))}
   getIndicator() {
-    let n = (this.state.comments.length + 1) / 2;
+    let n = Math.ceil(this.state.comments.length / 2);
     let items = [];
-    let i = 1;
+    let i;
     if (n <= 1) {
       return;
     } else {
@@ -96,11 +96,11 @@ export default class CommentCardLayout extends Component {
                 text: "There is no comment for this course.",
                 studentId: "",
                 lastModified: "",
-                editable: false
+                editable: false,
               }}
             />
           </div>
-        </div>
+        </div>,
       ];
     }
     if (n >= 1) {
@@ -112,7 +112,7 @@ export default class CommentCardLayout extends Component {
               key={this.state.comments[0]._id}
             />
           </div>
-        </div>
+        </div>,
       ];
     }
     if (n >= 2) {
@@ -128,7 +128,7 @@ export default class CommentCardLayout extends Component {
               key={this.state.comments[1]._id}
             />
           </div>
-        </div>
+        </div>,
       ];
     }
     if (n > 2) {

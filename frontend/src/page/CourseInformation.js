@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import CourseDetail from "../components/CourseDetail";
 // import TutorCard from "../components/TutorCard";
 import Comment from "../components/Comment";
+import CommentForm from "../components/CommentForm";
 import Util from "../apis/Util";
 import CommentCard from "../components/CommentCard";
 import CommentCardLayout from "../components/CommentCardLayout";
@@ -25,12 +26,18 @@ export default class CourseInformation extends Component {
             >
               {"Course: " + this.state.data.courseName}
             </div>
-            <div className="col-md-12" align="center">
-              <CourseDetail detail={this.state.data} />
-            </div>
-            <div className="col-md-12" align="center">
-              <CommentCardLayout detail={this.state.data} />
-            </div>
+
+              <div className="col-md-12" align="center">
+                <CourseDetail detail={this.state.data} />
+              </div>
+
+              <div className="col-md-12" align="center">
+                <CommentCardLayout detail={this.state.data} />
+              </div>
+
+              <div className="col-md-12" align="center">
+                <CommentForm detail={this.state.data} />
+              </div>
           </div>
         </div>
       );

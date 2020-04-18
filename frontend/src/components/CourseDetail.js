@@ -4,6 +4,7 @@ import TutorCard from "../components/TutorCard";
 import history from "../history";
 import Util from "../apis/Util";
 import NormalButton from "./NormalButton";
+import Rating from "@material-ui/lab/Rating";
 export class CourseDetail extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +15,10 @@ export class CourseDetail extends Component {
     };
     this.onClick = this.onClick.bind(this);
   }
-
+  round_to_precision(x, precision) {
+    var y = +x + (precision === undefined ? 0.5 : precision/2);
+    return y - (y % (precision === undefined ? 1 : +precision));
+}
   render() {
     const date = (this.props.detail.lastModified + "").substring(0, 21);
     console.log(date);
@@ -83,6 +87,17 @@ export class CourseDetail extends Component {
             </div>
             <div className="row" style={{ padding: "5px 20px" }}>
               <div className="col-md-12  infoC" style={{ marginBottom: "5px" }}>
+              <div className="row">
+                  <div className="col-md-4">
+                    <div className="nameB">Rating:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB"> 
+                      {this.props.detail.numberOfRating==0 ? 0 : Math.round(((this.props.detail.sumOfRating/this.props.detail.numberOfRating) + Number.EPSILON) * 100) / 100+" "}
+                      <Rating name="read-only" precision={0.01} value={this.props.detail.numberOfRating==0 ? 0 :Math.round(((this.props.detail.sumOfRating/this.props.detail.numberOfRating) + Number.EPSILON) * 100) / 100} readOnly />
+                      </div>
+                  </div>
+                </div>
                 <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">Category:</div>
