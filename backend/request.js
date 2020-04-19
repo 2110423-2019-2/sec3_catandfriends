@@ -24,7 +24,6 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log("3e2eqeweqewqwaeqw");
   const studentId = req.user._id;
   const payload = req.body;
   const courseId = payload.courseId;
@@ -87,6 +86,9 @@ router.put("/", async (req, res) => {
           courseId,
           dateThailand._d
         );
+        if (course.amountOfStudent == 1) {
+          err = await deleteOtherRequest(tutorId, studentId, courseId);
+        }
         err = await updateSchedule(studentId, courseId, dateThailand._d);
         err = await updateCourse(
           studentId,
@@ -95,7 +97,6 @@ router.put("/", async (req, res) => {
           dateThailand._d
         );
         message = "Request accepted";
-        console.log(message);
       } else if (status == -1) {
         err = await deleteRequest(tutorId, studentId, courseId);
         message = "Request rejected";
@@ -314,6 +315,17 @@ async function deleteRequest(tutorId, studentId, courseId) {
     RequestModel.deleteOne({
       tutorId: tutorId,
       studentId: studentId,
+      courseId: courseId,
+    })
+  );
+  return err;
+}
+
+async function deleteOtherRequest(tutorId, studentId, courseId) {
+  [err, value] = await to(
+    RequestModel.deleteMany({
+      tutorId: tutorId,
+      studentId: { $ne: studentId },
       courseId: courseId,
     })
   );
