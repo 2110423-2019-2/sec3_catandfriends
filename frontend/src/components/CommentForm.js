@@ -76,8 +76,11 @@ export default class CommentForm extends Component {
           onSubmit={(event) => this.handleSubmit(event)}
           style={{ marginLeft: 30 }}
         >
+          <div className="row textheader justify-content-center" style={{ marginBottom: 10 }}>
+            New Comment
+          </div>
           <div className="row" style={{ marginBottom: 5 }}>
-            <div className="col-8">
+            <div className="col-md-9">
               <textarea
                 type="text"
                 className="inbox"
@@ -95,7 +98,7 @@ export default class CommentForm extends Component {
                 style={{ width: 500, height: 30, resize: "none" }}
               />
             </div>
-            <div className="col-3">
+            <div className="col-md-3">
               <Rating
                 name="hover-feedback"
                 defalutvalue={this.state.comments.rating}
@@ -113,7 +116,7 @@ export default class CommentForm extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-8">
+            <div className="col-md-9">
               <textarea
                 type="text"
                 className="inbox"
@@ -131,7 +134,7 @@ export default class CommentForm extends Component {
                 style={{ width: 500, height: 150, resize: "none" }}
               />
             </div>
-            <div className="col-3" align="center">
+            <div className="col-md-3" align="center" style={{paddingTop: "15px"}}>
               {this.state.comments.isCommented ? (
                 <button
                   className="button-white"

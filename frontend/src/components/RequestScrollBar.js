@@ -25,7 +25,7 @@ export default class RequestScrollBar extends Component {
             if (item.status === 0) {
               return (
                 <div
-                  className="row justify-content-center tableR"
+                  className="row justify-content-center tableR inside-block"
                   key={item.requestId}
                 >
                   <div className="col-md-4 justify-content-center">
@@ -33,7 +33,7 @@ export default class RequestScrollBar extends Component {
                       {item.studentName}
                     </a>
                   </div>
-                  <div className="col-md-4 justify-content-center">
+                  <div className="col-md-4 justify-content-center textnormal">
                     <div>{item.courseName}</div>
                   </div>
                   <div className="col-md-2 justify-content-center">

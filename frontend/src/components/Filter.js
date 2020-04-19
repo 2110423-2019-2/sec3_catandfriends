@@ -379,12 +379,14 @@ class Filter extends React.Component {
       <div
         className="filterCard"
         style={{
-          minWidth: "250px",
+          minWidth: "230px",
           width: "auto",
+          height: "auto",
           margin: "25px",
           marginTop: "40px",
+          top: "80px",
           border: "none",
-          position: "fixed",
+          position: "sticky"
         }}
       >
         <form onSubmit={this.handleSubmit} style={{ textAlign: "center" }}>
