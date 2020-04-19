@@ -73,3 +73,9 @@
   padding: 10px;
   padding-left: 10px;
 }
+.insidetrans-block {
+  background-color: var(--white-color-trans) !important;
+  border-radius: 12px;
+  padding: 10px;
+  padding-left: 10px;
+}
