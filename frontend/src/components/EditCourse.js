@@ -123,7 +123,7 @@ export default class EditCourse extends Component {
     } else if (!this.compareTime) {
       alert("Start Time must be before End Time");
     } else {
-      alert(JSON.stringify(this.state));
+      // alert(JSON.stringify(this.state));
       let data = await Util.editCourse(
         this.state._id,
         this.state.courseName,
@@ -142,7 +142,7 @@ export default class EditCourse extends Component {
       if (!data.error) {
         alert("A course is edited");
         console.log(data);
-        history.push("/profile");
+        history.push("/mycourse");
       } else {
         window.alert("Cannot Edit Course");
       }

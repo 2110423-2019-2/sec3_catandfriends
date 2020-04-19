@@ -193,7 +193,7 @@ export default class VerifyTutor extends Component {
                     className="form-control-file p-1 textnormal"
                     type="file"
                     name="file"
-                    accept=".jpeg,.gif,.png"
+                    accept=".jpeg,.gif,.png,.jpg"
                     onChange={this.onChangeHandlerSlip}
                   />
                 </div>
@@ -215,7 +215,12 @@ export default class VerifyTutor extends Component {
     }
   }
   isImagefile(file) {
-    const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    const acceptedImageTypes = [
+      "image/gif",
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+    ];
     return file && acceptedImageTypes.includes(file.type);
   }
   isDocfile(file) {

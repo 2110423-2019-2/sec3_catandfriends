@@ -105,7 +105,7 @@ export default class EditTutorProfile extends Component {
                   className="form-control-file p-1"
                   type="file"
                   name="file"
-                  accept=".jpeg,.gif,.png"
+                  accept=".jpeg,.jpg,.gif,.png"
                   onChange={this.onChangeHandlerSlip}
                 />
                 <button
@@ -162,7 +162,7 @@ export default class EditTutorProfile extends Component {
               </div>
               <div class="row">
                 <div class="col-md-6" width="100%">
-                <label className="textnormal">
+                  <label className="textnormal">
                     Phone Number
                     <br />
                     <input
@@ -200,11 +200,7 @@ export default class EditTutorProfile extends Component {
               </div>
               <div className="row text-center" style={{ marginTop: "20px" }}>
                 <div className="col-md-12">
-                  <button
-                    className="button-white"
-                    type="submit"
-                    value="Submit"
-                  >
+                  <button className="button-white" type="submit" value="Submit">
                     Submit
                   </button>
                 </div>
@@ -252,7 +248,12 @@ export default class EditTutorProfile extends Component {
   };
 
   isImagefile(file) {
-    const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    const acceptedImageTypes = [
+      "image/gif",
+      "image/jpg",
+      "image/jpeg",
+      "image/png",
+    ];
 
     return file && acceptedImageTypes.includes(file.type);
   }
