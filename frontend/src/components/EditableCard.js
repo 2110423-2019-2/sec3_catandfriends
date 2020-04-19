@@ -8,7 +8,7 @@ export default class EditableCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png"
+      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png",
     };
   }
 
@@ -29,7 +29,7 @@ export default class EditableCard extends React.Component {
       price,
       category,
       day,
-      duration
+      duration,
     } = this.props.detail;
     // console.log(this.props.detail);
     const fullname = this.props.detail.tutorName
@@ -47,7 +47,7 @@ export default class EditableCard extends React.Component {
               this.props.detail.courseImg
                 ? this.props.detail.courseImg
                 : this.state.logoDark
-            })`
+            })`,
           }}
           id="image"
           className="mcard-header"
@@ -82,9 +82,10 @@ export default class EditableCard extends React.Component {
               {this.dayToString(day)}
             </textarea>
           </div>
-          <CourseButton className="width90"
+          <CourseButton
+            className="width90"
             onClick={() => this.onClickGotoCourseInform(courseid)}
-            full={!this.props.detail.isAvailable}
+            full={!this.props.detail.amountOfStudent}
           >
             {this.props.detail.amountOfStudent +
               "/" +
@@ -96,7 +97,7 @@ export default class EditableCard extends React.Component {
       </div>
     );
   }
-  onClickGotoCourseInform = courseId => {
+  onClickGotoCourseInform = (courseId) => {
     history.push(`/course?courseId=${courseId}`);
   };
 }

@@ -13,7 +13,7 @@ export class NavBar extends Component {
         "https://www.img.in.th/images/8517bda5f5991478fb667d1d086145ac.jpg",
       logoLight:
         "https://www.img.in.th/images/e67008d54a3a3f0bccaa782f25348e87.png",
-      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png"
+      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png",
     };
     this.hover = this.hover.bind(this);
     this.unhover = this.unhover.bind(this);
@@ -28,7 +28,7 @@ export class NavBar extends Component {
   }
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-white navbar-light" style={{zIndex: "9999"}}>
+      <nav className="navbar navbar-expand-lg navbar-white navbar-light">
         <a className="navbar-brand" onClick={() => this.onClickNavBar("/home")}>
           <img
             src={this.state.logoLight}
@@ -36,8 +36,8 @@ export class NavBar extends Component {
             className="logoImg"
             alt="Logo"
             id="imgLogo"
-          // onMouseOver={this.hover}
-          // onMouseOut={this.unhover}
+            // onMouseOver={this.hover}
+            // onMouseOut={this.unhover}
           />
           <span className="brandName">TutorHere</span>
         </a>
@@ -99,8 +99,8 @@ export class NavBar extends Component {
                     <span className="sr-only">(current)</span>
                   </button>
                 ) : (
-                    <div></div>
-                  )}
+                  <div></div>
+                )}
                 <div
                   class="dropdown-menu navbar-box"
                   aria-labelledby="navbarDropdownMenuLink"
@@ -129,18 +129,23 @@ export class NavBar extends Component {
                 </div>
               </li>
             ) : (
-                <li className="nav-item">
-                  <button className="button-white" style={{ width: "120px" }} onClick={() => this.onClickNavBar("/login")} isOn>
-                    Sign In
+              <li className="nav-item">
+                <button
+                  className="button-white"
+                  style={{ width: "120px" }}
+                  onClick={() => this.onClickNavBar("/login")}
+                  isOn
+                >
+                  Sign In
                 </button>
-                </li>
-              )}
+              </li>
+            )}
           </ul>
         </div>
       </nav>
     );
   }
-  onClickNavBar = page => {
+  onClickNavBar = (page) => {
     if (page == "/logout") {
       localStorage.clear();
       history.push("/home");
@@ -156,7 +161,7 @@ export class NavBar extends Component {
       this.setState({
         data,
         fullName: data.firstName + " " + data.lastName.substring(0, 1) + ".",
-        role: data.role
+        role: data.role,
       });
       console.log(this.state);
     }
@@ -176,7 +181,7 @@ export class NavBar extends Component {
         true
       );
       xhr.responseType = "arraybuffer";
-      xhr.onload = function (e, imageUrl) {
+      xhr.onload = function(e, imageUrl) {
         var arrayBufferView = new Uint8Array(this.response);
         var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
         var urlCreator = window.URL || window.webkitURL;
