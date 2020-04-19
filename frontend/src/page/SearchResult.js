@@ -16,11 +16,11 @@ export default class SearchResult extends Component {
       return (
         <div>
           <div className="row">
-            <div className="col-md-2">
+            <div className="col-md-3">
               <Filter search={this.onSearch} />
             </div>
             <div
-              className="col-md-10"
+              className="col-md-9"
               align="center"
               style={{ maxWidth: "1200px" }}
             >
