@@ -89,7 +89,7 @@ router.get("/", async (req, res) => {
           course.requestStatus = "Course Expired";
         } else if (course.amountOfStudent > course.totalAmountOfStudent) {
           course.requestStatus = "Course Full";
-        } else if (!available) {
+        } else if (!available[1]) {
           course.requestStatus = "Time Overlapped";
         } else {
           course.requestStatus = "requestable";
