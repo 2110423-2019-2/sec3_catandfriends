@@ -3,6 +3,8 @@ const router = express.Router();
 const CourseModel = require("./models/course");
 const userModel = require("./models/user");
 const requestModel = require("./models/request");
+const ScheduleModel = require("./models/schedule");
+const set = require("./commonFunc/set");
 const format = require("./commonFunc/format");
 const moment = require("moment-timezone");
 const to = require("await-to-js").default;
@@ -11,24 +13,24 @@ router.get("/", async (req, res) => {
   let courseId = req.query.courseId;
   let user = await userModel.findById(req.user._id);
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
-  // console.log(await CourseModel.find({listOfStudentId:["987654321"]
+  // //console.log(await CourseModel.find({listOfStudentId:["987654321"]
   // }));
-  //console.log(courseId);
+  ////console.log(courseId);
   if (courseId != undefined) {
-    // console.log(courseId);
+    // //console.log(courseId);
     let course = await CourseModel.findById(courseId);
     // console.log(course);
     if (course == undefined || course.length == 0) {
       // var s = "this course hasn't been created yet";
-      // console.log(s);
+      // //console.log(s);
       res.status(400).json("course not found");
-      return ;
+      return;
     } else {
       let tutor = await userModel.findById(course.tutorId);
       course = { ...course.toObject() };
       course.tutorName = tutor.firstName + " " + tutor.lastName;
       course.owner = course.tutorId == req.user._id;
-      // console.log(course);
+      // //console.log(course);
       let s = "";
       for (j = 0; j < 7; j++) {
         if (course["dayAndStartTime"][j] == null) continue;
@@ -50,11 +52,11 @@ router.get("/", async (req, res) => {
 
       let requestCount = await requestModel.countDocuments({
         studentId: req.user._id,
-        courseId: course._id
+        courseId: course._id,
       });
       let userCount = await userModel.countDocuments({
         _id: req.user._id,
-        role: "tutor"
+        role: "tutor",
       });
       if (!!requestCount || !!userCount || course.amountOfStudent == 0)
         requestable = false;
@@ -62,48 +64,52 @@ router.get("/", async (req, res) => {
       course.startDate = format.formatDate(course.startDate);
       course.endDate = format.formatDate(course.endDate);
 
-    }
-    console.log(req.user._id);
-    
-    console.log(user);
-  if (user.role == "tutor") {
-      course.requestStatus = "unrequestable";
-  } if (user.role == "student") {
-    studentId= req.user._id
-    let c = await requestModel.find({courseId: courseId});
-      console.log("\n\nc\n"+c+"\n\n");
-    let reqcourse = await requestModel.find({StudentId: studentId, courseId: courseId});
-      console.log(reqcourse);
-    if(reqcourse.length!=0){
-      if(c.status ==1){
-        course.requestStatus = "enrolled";
+      // //console.log(req.user._id);
+
+      if (user.role == "tutor") {
+        course.requestStatus = "unrequestable";
+        console.log("1");
+      } else if (user.role == "student") {
+        console.log("2");
+        studentId = req.user._id;
+        // let c = await requestModel.find({ courseId: courseId });
+        //console.log("\n\nc\n" + c + "\n\n");
+        let reqcourse = await requestModel.findOne({
+          studentId: studentId,
+          courseId: courseId,
+        });
+        const available = await checkAvailable(studentId, courseId);
+        if (reqcourse) {
+          if (reqcourse.status == 1) {
+            course.requestStatus = "Enrolled";
+          } else {
+            course.requestStatus = "Requested";
+          }
+        } else if (dateThailand._d > course.endDate) {
+          course.requestStatus = "Course Expired";
+        } else if (course.amountOfStudent > course.totalAmountOfStudent) {
+          course.requestStatus = "Course Full";
+        } else if (!available) {
+          course.requestStatus = "Time Overlapped";
+        } else {
+          course.requestStatus = "requestable";
+        }
+        console.log(course.requestStatus);
+      } else {
+        course.requestStatus = "TS1989";
+        console.log("3");
       }
-      else if(c.status = 0){
-        course.requestStatus = "requested";
-      }
+      console.log(course.requestStatus);
+      res.status(200).json(course);
     }
-      else if(dateThailand._d > course.endDate)
-        course.requestStatus = "course expired";
-      else if(course.amountOfStudent > course.totalAmountOfStudent)
-        course.requestStatus = "course full";
-      else if(!checkAvailable(studentId,courseId))
-        course.requestStatus = "overlaped";
-      else
-        course.requestStatus = "requestable";
-    
-     //console.log(s);
-  }
-    console.log(course);
-    res.status(200).json(course);
-  }
-  else if(user.role =="tutor"){
-      let course = await CourseModel.find({tutorId: user._id});
-      console.log(course);
-    for(i=0; i<course.length;i++){
+  } else if (user.role == "tutor") {
+    let course = await CourseModel.find({ tutorId: user._id });
+    //console.log(course);
+    for (i = 0; i < course.length; i++) {
       course[i] = { ...course[i].toObject() };
       course[i].tutorName = user.firstName + " " + user.lastName;
       course[i].owner = course[i].tutorId == user._id;
-      // console.log(course);
+      // //console.log(course);
       let s = "";
       for (j = 0; j < 7; j++) {
         if (course[i]["dayAndStartTime"][j] == null) continue;
@@ -123,43 +129,43 @@ router.get("/", async (req, res) => {
       course[i].day = s.slice(0, s.length - 2);
       let userCount = await userModel.countDocuments({
         _id: req.user._id,
-        role: "tutor"
+        role: "tutor",
       });
       course[i].startDate = format.formatDate(course[i].startDate);
       course[i].endDate = format.formatDate(course[i].endDate);
-      course.requestable=false;
-
+      course.requestable = false;
     }
     res.status(200).json(course);
-      
-  }
-  else{
+  } else {
     for (i = 0; i < courses.length; i++) {
       let s = [];
-      let courses = await requestModel.find({studentId: req.user._id});
-      console.log(courses[i].courseId);
+      let courses = await requestModel.find({ studentId: req.user._id });
+      //console.log(courses[i].courseId);
       let status = courses[i].status;
-      console.log("status = "+status)
+      //console.log("status = " + status);
       let message = "status: ";
-      let c = await CourseModel.findById(courses[i].courseId,
-        {dayAndStartTime:0, dayAndEndTime:0, listOfStudentId:0, listOfStudentRequest:0, createdTime:0, lastModified:0});
-        if(status ==1){
-          message = message+"enroll successful";
-        }
-        else if(status ==0){
-          message = message+"waiting for tutor confirmation";
-        }
-        else if(status ==-1){
-          message = message+"the enrollment was rejected";
-        }
-        console.log(c);
-        s.push(message);
-        s.push(c);
-        res.status(200).json(s);
-        return ;
+      let c = await CourseModel.findById(courses[i].courseId, {
+        dayAndStartTime: 0,
+        dayAndEndTime: 0,
+        listOfStudentId: 0,
+        listOfStudentRequest: 0,
+        createdTime: 0,
+        lastModified: 0,
+      });
+      if (status == 1) {
+        message = message + "enroll successful";
+      } else if (status == 0) {
+        message = message + "waiting for tutor confirmation";
+      } else if (status == -1) {
+        message = message + "the enrollment was rejected";
+      }
+      //console.log(c);
+      s.push(message);
+      s.push(c);
+      res.status(200).json(s);
+      return;
     }
   }
-  
 });
 
 router.post("/", async (req, res) => {
@@ -171,49 +177,54 @@ router.post("/", async (req, res) => {
   payload.tutorId = tutorId;
   payload.category = payload.category.toLowerCase();
   if (Object.keys(payload).length != 13) {
-    console.log(Object.keys(payload).length);
-    console.log("input is incomplete");
+    //console.log(Object.keys(payload).length);
+    //console.log("input is incomplete");
     res.status(400).json("input is incomplete");
   } else if (payload["dayAndStartTime"].length != 7) {
-    console.log("dayAndStartTime is incorrect");
+    //console.log("dayAndStartTime is incorrect");
     res.status(400).json("dayAndStartTime is incorrect");
     //res.status(400).end();
   } else if (payload["dayAndEndTime"].length != 7) {
-    console.log("dayAndEndTime is incorrect");
+    //console.log("dayAndEndTime is incorrect");
     res.status(400).json("dayAndEndTime is incorrect");
     //res.status(400).end();
-  }
-  else {
-    let course = await CourseModel.findOne({ courseName: payload["courseName"] });
+  } else {
+    let course = await CourseModel.findOne({
+      courseName: payload["courseName"],
+    });
     if (course != undefined) {
-      console.log(course);
-      console.log(course["courseName"] + " " + payload["courseName"]);
-      console.log("it's already has this courseName");
+      //console.log(course);
+      //console.log(course["courseName"] + " " + payload["courseName"]);
+      //console.log("it's already has this courseName");
       //res.status(400).json(course);
       res.status(400).json("it's already has this courseName");
       return;
     }
     for (i = 0; i < 7; i++) {
-      if (payload["dayAndStartTime"][i] == null && payload["dayAndEndTime"][i] != null) {
+      if (
+        payload["dayAndStartTime"][i] == null &&
+        payload["dayAndEndTime"][i] != null
+      ) {
         res.status(400).json("StartTime is invalid");
         return;
-      }
-      else if (payload["dayAndStartTime"][i] != null && payload["dayAndEndTime"][i] == null) {
+      } else if (
+        payload["dayAndStartTime"][i] != null &&
+        payload["dayAndEndTime"][i] == null
+      ) {
         res.status(400).json("EndTime is invalid");
         return;
-      }
-      else if (payload["dayAndStartTime"][i] > payload["dayAndEndTime"][i]) {
+      } else if (payload["dayAndStartTime"][i] > payload["dayAndEndTime"][i]) {
         res.status(400).json("StartTime must be before endTime");
         return;
       }
     }
     payload.tutorId = req.user._id;
     const courses = new CourseModel(payload);
-    console.log(courses);
+    //console.log(courses);
     res.status(201).json(courses);
     await courses.save();
 
-    console.log("klfsal");
+    //console.log("klfsal");
     //res.status(201).end();
   }
 });
@@ -221,73 +232,87 @@ router.post("/", async (req, res) => {
 router.put("/", async (req, res) => {
   const payload = req.body;
   const course = await CourseModel.findOne({ _id: payload["_id"] });
-  // console.log(course[0]);
-  //console.log(payload);
-  // console.log(course.length);
+  // //console.log(course[0]);
+  ////console.log(payload);
+  // //console.log(course.length);
   if (course == undefined || course.length == 0) {
     var s = "this course isn't create yet";
-    console.log(s);
+    //console.log(s);
     res.status(400).json(s);
   } else if (course.tutorId != req.user._id) {
-    console.log(course);
-    console.log(course.tutorId + " " + req.user._id);
+    //console.log(course);
+    //console.log(course.tutorId + " " + req.user._id);
     res.status(400).json("you are not the course owner");
     return;
-
   } else if (
     payload["dayAndStartTime"] != undefined &&
     payload["dayAndStartTime"].length != 7
   ) {
-    console.log("dayAndStartTime is incorrect");
+    //console.log("dayAndStartTime is incorrect");
     res.status(400).json("dayAndStartTime is incorrect");
     //res.status(400).end();
   } else if (
     payload["dayAndEndTime"] != undefined &&
     payload["dayAndEndTime"].length != 7
   ) {
-    console.log("dayAndEndTime is incorrect");
+    //console.log("dayAndEndTime is incorrect");
     res.status(400).json("dayAndEndTime is incorrect");
     //res.status(400).end();
   } else {
     for (i = 0; i < 7; i++) {
-      if (payload["dayAndStartTime"] != undefined && payload["dayAndEndTime"] != undefined) {
-        if (payload["dayAndStartTime"][i] == null && payload["dayAndEndTime"][i] != null) {
+      if (
+        payload["dayAndStartTime"] != undefined &&
+        payload["dayAndEndTime"] != undefined
+      ) {
+        if (
+          payload["dayAndStartTime"][i] == null &&
+          payload["dayAndEndTime"][i] != null
+        ) {
           res.status(400).json("StartTime is invalid");
           return;
-        }
-        else if (payload["dayAndStartTime"][i] != null && payload["dayAndEndTime"][i] == null) {
+        } else if (
+          payload["dayAndStartTime"][i] != null &&
+          payload["dayAndEndTime"][i] == null
+        ) {
           res.status(400).json("EndTime is invalid");
           return;
-        }
-        else if (payload["dayAndStartTime"][i] > payload["dayAndEndTime"][i]) {
+        } else if (
+          payload["dayAndStartTime"][i] > payload["dayAndEndTime"][i]
+        ) {
           res.status(400).json("StartTime must be before endTime");
           return;
         }
-      }
-      else if (payload["dayAndStartTime"] != undefined) {
-        if (payload["dayAndStartTime"][i] == null && course["dayAndEndTime"][i] != null) {
+      } else if (payload["dayAndStartTime"] != undefined) {
+        if (
+          payload["dayAndStartTime"][i] == null &&
+          course["dayAndEndTime"][i] != null
+        ) {
           res.status(400).json("StartTime is invalid");
           return;
-        }
-        else if (payload["dayAndStartTime"][i] != null && course["dayAndEndTime"][i] == null) {
+        } else if (
+          payload["dayAndStartTime"][i] != null &&
+          course["dayAndEndTime"][i] == null
+        ) {
           res.status(400).json("EndTime is invalid");
           return;
-        }
-        else if (payload["dayAndStartTime"][i] > course["dayAndEndTime"][i]) {
+        } else if (payload["dayAndStartTime"][i] > course["dayAndEndTime"][i]) {
           res.status(400).json("StartTime must be before endTime");
           return;
         }
-      }
-      else if (payload["dayAndEndTime"] != undefined) {
-        if (course["dayAndStartTime"][i] == null && payload["dayAndEndTime"][i] != null) {
+      } else if (payload["dayAndEndTime"] != undefined) {
+        if (
+          course["dayAndStartTime"][i] == null &&
+          payload["dayAndEndTime"][i] != null
+        ) {
           res.status(400).json("StartTime is invalid");
           return;
-        }
-        else if (course["dayAndStartTime"][i] != null && payload["dayAndEndTime"][i] == null) {
+        } else if (
+          course["dayAndStartTime"][i] != null &&
+          payload["dayAndEndTime"][i] == null
+        ) {
           res.status(400).json("EndTime is invalid");
           return;
-        }
-        else if (course["dayAndStartTime"][i] > payload["dayAndEndTime"][i]) {
+        } else if (course["dayAndStartTime"][i] > payload["dayAndEndTime"][i]) {
           res.status(400).json("StartTime must be before endTime");
           return;
         }
@@ -306,29 +331,43 @@ async function checkAvailable(studentId, courseId) {
   let err, course;
   [err, course] = await to(CourseModel.findById(courseId));
   let courses;
-  [err, courses] = await to(ScheduleModel.findOne({
-    studentId: studentId
-  }, {
-    _id: 0,
-    studentId: 0,
-    createdDate: 0,
-    lastModified: 0
-  }));
+  [err, courses] = await to(
+    ScheduleModel.findOne(
+      {
+        studentId: studentId,
+      },
+      {
+        _id: 0,
+        studentId: 0,
+        createdDate: 0,
+        lastModified: 0,
+      }
+    )
+  );
 
   let listOfCourse = courses.listOfCourse;
   let available = true;
   for (let i = 0; i < listOfCourse.length; i++) {
     let courseQ;
-    [err, courseQ] = await to(CourseModel.findOne({
-      _id: listOfCourse[i]
-    }, {
-      _id: 0,
-      dayAndStartTime: 1,
-      dayAndEndTime: 1
-    }));
+    [err, courseQ] = await to(
+      CourseModel.findOne(
+        {
+          _id: listOfCourse[i],
+        },
+        {
+          _id: 0,
+          dayAndStartTime: 1,
+          dayAndEndTime: 1,
+        }
+      )
+    );
 
     for (let j = 0; j < 7; j++) {
-      if (courseQ.dayAndStartTime[j] == null || course.dayAndStartTime[j] == null) continue
+      if (
+        courseQ.dayAndStartTime[j] == null ||
+        course.dayAndStartTime[j] == null
+      )
+        continue;
       let a = [courseQ.dayAndStartTime[j], courseQ.dayAndEndTime[j]];
       let b = [course.dayAndStartTime[j], course.dayAndEndTime[j]];
       if (set.isIntersect(a, b)) available = false;
