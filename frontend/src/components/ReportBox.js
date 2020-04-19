@@ -19,13 +19,13 @@ export default class TypeComment extends Component {
         modal
         closeOnDocumentClick
       >
-        {close => (
+        {(close) => (
           <div class="p-4">
             <p>Please fill the information to report</p>
             <br />
             <form
               class="text-left"
-              onSubmit={event => {
+              onSubmit={(event) => {
                 this.handleSubmit(event, close);
               }}
             >
@@ -89,6 +89,10 @@ export default class TypeComment extends Component {
         subject = subject[i].value;
         break;
       }
+    }
+    if (!subject instanceof String) {
+      window.alert("Please select a subject");
+      return;
     }
     var moreInfo = document.getElementById("message").value || "None";
     var data = { reportedUserId: this.props.reportedUserId, subject, moreInfo };
