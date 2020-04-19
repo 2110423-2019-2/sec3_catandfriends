@@ -8,7 +8,7 @@ export default class PremiumCard extends Component {
 
     this.state = {
       imgsrc:
-        "https://s3-ap-southeast-1.amazonaws.com/img-in-th/352a5d02815c1e50649a6f2987bda26d.png"
+        "https://s3-ap-southeast-1.amazonaws.com/img-in-th/352a5d02815c1e50649a6f2987bda26d.png",
       /*https://s3-ap-southeast-1.amazonaws.com/img-in-th/9f79ee3d9195d512adecddd66289b536.png*/
     };
   }
@@ -18,9 +18,9 @@ export default class PremiumCard extends Component {
       url: `http://localhost:8000/file/paymentFile/premium?token=${localStorage.getItem(
         "token"
       )}&tutorId=${this.state.data._id}`,
-      responseType: "blob"
+      responseType: "blob",
     })
-      .then(response => {
+      .then((response) => {
         this.setState({ imageDownloading: true }, () => {
           FileSaver.saveAs(response.data, "your-slip.jpg");
         });
@@ -32,7 +32,12 @@ export default class PremiumCard extends Component {
       });
   };
   isImagefile(file) {
-    const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    const acceptedImageTypes = [
+      "image/gif",
+      "image/jpg",
+      "image/jpeg",
+      "image/png",
+    ];
     return file && acceptedImageTypes.includes(file.type);
   }
   getImage() {
@@ -46,10 +51,10 @@ export default class PremiumCard extends Component {
       return <span>-</span>;
     }
   }
-  onChangeHandlerSlip = event => {
+  onChangeHandlerSlip = (event) => {
     this.setState({
       selectedSlip: event.target.files[0],
-      loadedSilp: 0
+      loadedSilp: 0,
     });
   };
   onClickHandlerSlip = () => {
@@ -76,7 +81,7 @@ export default class PremiumCard extends Component {
           // receive two    parameter endpoint url ,form data
         }
       )
-      .then(res => {
+      .then((res) => {
         // then print response status
         console.log(res.statusText);
         alert("File Uploaded");
@@ -130,7 +135,7 @@ export default class PremiumCard extends Component {
                   <input
                     id="bill"
                     className=" border border-dark textnormal"
-                    //className="form-control-file p-1"
+                    accept=".jpeg,.jpg,.gif,.png"
                     type="file"
                     name="file"
                     onChange={this.onChangeHandlerSlip}

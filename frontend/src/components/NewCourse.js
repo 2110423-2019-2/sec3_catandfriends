@@ -72,7 +72,7 @@ export default class NewCourse extends Component {
       alert("Start Time must be before End Time");
     } else {
       console.log(this.state);
-      alert(JSON.stringify(this.state));
+      // alert(JSON.stringify(this.state));
       let data = await Util.createCourse(
         this.state.courseName,
         this.state.dayAndStartTime,
@@ -91,7 +91,7 @@ export default class NewCourse extends Component {
       } else {
         if (!data.error) {
           alert("New course created");
-          history.push("/profile");
+          history.push("/mycourse");
         } else {
           window.alert("Cannot Create Course");
         }
