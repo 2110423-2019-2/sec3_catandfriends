@@ -105,7 +105,7 @@ export default class EditTutorProfile extends Component {
                   className="form-control-file p-1"
                   type="file"
                   name="file"
-                  accept=".jpeg,.jpg,.gif,.png"
+                  accept="image/*"
                   onChange={this.onChangeHandlerSlip}
                 />
                 <button
