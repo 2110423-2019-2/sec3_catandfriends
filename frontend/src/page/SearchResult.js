@@ -25,7 +25,7 @@ export default class SearchResult extends Component {
             >
               <div className="row justify-content-center">
                 <div
-                  className="inside-block textshadow"
+                  className="insidetrans-block textshadow"
                   style={{
                     marginTop: "20px",
                     padding: "5px 15px",
@@ -56,7 +56,7 @@ export default class SearchResult extends Component {
             >
               <div className="row justify-content-center">
                 <div
-                  className="inside-block textshadow"
+                  className="insidetrans-block textshadow"
                   style={{
                     marginTop: "20px",
                     padding: "5px 15px",

@@ -39,11 +39,10 @@ export default class TutorPage extends Component {
             <div className="col-md-12" align="center">
               <div className="row justify-content-center">
                 <h2
+                className="insidetrans-block textheader"
                   style={{
                     padding: "5px 15px",
                     textAlign: "center",
-                    color: "black",
-                    backgroundColor: "rgba(255,255,255,0.3)",
                     borderRadius: "12px"
                   }}
                 >
