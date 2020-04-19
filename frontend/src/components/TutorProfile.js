@@ -44,14 +44,14 @@ export class TutorProfile extends Component {
     let Premium;
     if (verify && !premium) {
       Premium = (
-        <NormalButton
-          color="rgba(21, 171, 168,0.8)"
+        <button
+          className="button-white"
           onClick={() => {
             history.push(`/profile/premium`);
           }}
         >
           Upgrade Premium
-        </NormalButton>
+        </button>
       );
       return Premium;
     } else {
