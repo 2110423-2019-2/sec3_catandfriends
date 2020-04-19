@@ -193,7 +193,7 @@ export default class VerifyTutor extends Component {
                     className="form-control-file p-1 textnormal"
                     type="file"
                     name="file"
-                    accept=".jpeg,.gif,.png,.jpg"
+                    accept="image/*"
                     onChange={this.onChangeHandlerSlip}
                   />
                 </div>

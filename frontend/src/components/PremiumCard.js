@@ -135,7 +135,7 @@ export default class PremiumCard extends Component {
                   <input
                     id="bill"
                     className=" border border-dark textnormal"
-                    accept=".jpeg,.jpg,.gif,.png"
+                    accept="image/*"
                     type="file"
                     name="file"
                     onChange={this.onChangeHandlerSlip}
