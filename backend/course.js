@@ -87,7 +87,7 @@ router.get("/", async (req, res) => {
           }
         } else if (dateThailand._d > course.endDate) {
           course.requestStatus = "Course Expired";
-        } else if (course.amountOfStudent > course.totalAmountOfStudent) {
+        } else if (course.amountOfStudent == 0) {
           course.requestStatus = "Course Full";
         } else if (!available[1]) {
           course.requestStatus = "Time Overlapped";
