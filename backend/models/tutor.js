@@ -32,7 +32,7 @@ const tutorSchema = new Schema(
       // sparse: true,
       default: null
     },
-    verfyStatus: {
+    verifyStatus: {
       type: Boolean,
       required: true,
       default: false
