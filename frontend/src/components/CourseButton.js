@@ -3,12 +3,14 @@ const CourseButton = styled.button`
   color: black;
   transition: 0.3s;
   background-color: ${props =>
-    props.full ? "rgb(244,141,140)" : "rgb(49, 234, 199)"};
+    props.full ? "rgb(244,141,140)" : "rgba(255, 255, 255, 0)"};
   font-size: 1.1em;
   outline: none;
   font-weight: 500;
   padding: 0.25em 0.5em;
-  border-radius: 10px;
+  color: var(--black-color) !important;
+  border: 1px solid var(--black-color) !important;
+  border-radius: 5px;
   border: none;
   &:hover {
     text-decoration: none;

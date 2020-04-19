@@ -29,7 +29,7 @@ class CommentCard extends React.Component {
     const myId = JSON.parse(localStorage.getItem("user"))._id;
     return (
       <Card
-        className="bg-dark text-white CommentCard-card"
+        className="inside-block textnormal CommentCard-card"
         style={{ width: "25rem" }}
       >
         <Card.Header>
@@ -42,7 +42,7 @@ class CommentCard extends React.Component {
                 onClick={() => {
                   this.deleteMyComment();
                 }}
-                className
+                className="button-red"
               >
                 delete
               </button>

@@ -41,7 +41,7 @@ export class NavBar extends Component {
           <span className="brandName">TutorHere</span>
         </a>
         <button
-          className="navbar-toggler"
+          className="navbar-toggler border"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNavDropdown"
@@ -49,7 +49,7 @@ export class NavBar extends Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon navtogglecolor"></span>
+          <span class="navbar-toggler-icon navtogglecolor" style={{backgroundColor: "#554433"}}></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav mr-auto">
@@ -86,7 +86,7 @@ export class NavBar extends Component {
                 {this.state.fullName ? (
                   <button
                     className="dropdown-toggle button-white"
-                    style={{ width: "fit-content" }}
+                    style={{ width: "fit-content !important" }}
                     href="#"
                     id="navbarDropdownMenuLink"
                     data-toggle="dropdown"

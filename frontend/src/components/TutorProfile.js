@@ -62,14 +62,14 @@ export class TutorProfile extends Component {
     let Verify;
     if (!verify) {
       Verify = (
-        <NormalButton
-          color="rgba(19, 124, 204,0.8)"
+        <button
+          className="button-white"
           onClick={() => {
             history.push(`/profile/verify`);
           }}
         >
           Verify Account
-        </NormalButton>
+        </button>
       );
       return Verify;
     } else {
@@ -155,7 +155,7 @@ export class TutorProfile extends Component {
                   <div className="col-md-8">
                     <div className="valueB">
                       {this.props.data.verifyStatus ? (
-                        <span style={{ fontWeight: "bold", color: "blue" }}>
+                        <span style={{ fontWeight: "bold", color: "#00BFFF" }}>
                           VERIFIED
                         </span>
                       ) : (

@@ -75,7 +75,7 @@ class CourseCard extends React.Component {
               {this.dayToString(day)}
             </textarea>
           </div>
-          <CourseButton className="button-white width90" full={!this.props.detail.isAvailable}>
+          <CourseButton className="width90" full={!this.props.detail.isAvailable}>
             {this.props.detail.amountOfStudent +
               "/" +
               this.props.detail.totalAmountOfStudent +
