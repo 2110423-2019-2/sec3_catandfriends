@@ -14,6 +14,7 @@ export default class RequestScrollBar extends Component {
     data = await Util.getRequests(this.props.tutorId);
     this.setState({ data });
     console.log(data);
+    window.location.reload();
     //add student to class
   };
 
@@ -21,7 +22,7 @@ export default class RequestScrollBar extends Component {
     if (this.state.data) {
       return (
         <div className="requestCard background-color-trans">
-          {this.state.data.map(item => {
+          {this.state.data.map((item) => {
             if (item.status === 0) {
               return (
                 <div
