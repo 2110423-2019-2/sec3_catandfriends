@@ -10,9 +10,12 @@
   padding-top: 20px;
   padding-bottom: 20px;
   border-radius: 10px;
-  margin-bottom: 100px;
   box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
     1px 3px 8px rgba(39, 44, 49, 0.03);
+  -moz-transition: all .1s ease-in;
+  -o-transition: all .1s ease-in;
+  -webkit-transition: all .1s ease-in;
+  transition: all .1s ease-in !important;
 }
 .arrowBtn {
   width: 35px !important;

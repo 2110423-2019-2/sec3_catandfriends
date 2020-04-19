@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
   if (courseId != undefined) {
     // //console.log(courseId);
     let course = await CourseModel.findById(courseId);
-    // console.log(course);
+    console.log(course);
     if (course == undefined || course.length == 0) {
       // var s = "this course hasn't been created yet";
       // //console.log(s);

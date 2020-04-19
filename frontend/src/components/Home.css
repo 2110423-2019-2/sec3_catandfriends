@@ -98,6 +98,10 @@
     text-align: left;
 }
 
+.text-bold{
+    font-weight: bold;
+}
+
 .inbox{
     -moz-transition: all .1s ease-in;
     -o-transition: all .1s ease-in;
@@ -158,6 +162,18 @@
     background: rgba(255, 255, 255, 0) !important;
     color: #999999 !important;
     border: 1px solid #999999 !important;
+  }
+
+  .button-red {
+    transition: all .1s ease-in;
+    width: fit-content;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: rgba(255, 255, 255, 0) !important;
+    color: #FF0000;
+    border: 1px solid #FF0000 !important;
+    box-sizing: border-box;
+    border-radius: 5px;
   }
 
   .button-static {

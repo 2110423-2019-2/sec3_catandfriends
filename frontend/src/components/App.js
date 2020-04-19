@@ -17,7 +17,6 @@ import VerifyPage from "../page/VerifyPage";
 import PremiumPage from "../page/PremiumPage";
 import PageNotFound from "../page/PageNotFound";
 import Chatbox from "./Chatbox";
-
 // import LogInFirst from "./LogInFirst";
 const About = () => <h1>About</h1>;
 const LogInFirst = () => {
@@ -53,7 +52,24 @@ class App extends Component {
       return SearchResult;
     }
   }
-
+  isStudent() {
+    if (!localStorage.getItem("token")) {
+      return false;
+    } else if (JSON.parse(localStorage.getItem("user")).role == "student") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  isTutor() {
+    if (!localStorage.getItem("token")) {
+      return false;
+    } else if (JSON.parse(localStorage.getItem("user")).role == "tutor") {
+      return true;
+    } else {
+      return false;
+    }
+  }
   render() {
     return (
       <Router history={history}>
@@ -67,17 +83,29 @@ class App extends Component {
           <Route path="/login" component={this.alreadylogin(Login)} />
           {/* <Route path="/search" component={this.getPage(SearchResult)} /> */}
           <Route path="/profile/edit" component={this.getPage(EditProfile)} />
-          <Route path="/profile/verify" component={this.getPage(VerifyPage)} />
+          <Route
+            path="/profile/verify"
+            component={this.isTutor() ? this.getPage(VerifyPage) : PageNotFound}
+          />
           <Route
             path="/profile/premium"
-            component={this.getPage(PremiumPage)}
+            component={
+              this.isTutor() ? this.getPage(PremiumPage) : PageNotFound
+            }
           />
           <Route path="/profile" component={Profile} />
-          <Route path="/course/edit" component={this.getPage(EditCourse)} />
-          <Route path="/course/create" component={this.getPage(NewCourse)} />
+          <Route
+            path="/course/edit"
+            component={this.isTutor() ? this.getPage(EditCourse) : PageNotFound}
+          />
+          <Route
+            path="/course/create"
+            component={this.isTutor() ? this.getPage(NewCourse) : PageNotFound}
+          />
           <Route path="/course" component={this.getPage(CourseInformation)} />
           <Route path="/mycourse" component={this.getPage(MyCourse)} />
           <Route path="/home" component={this.homePage()} />
+          <Route path exact="/" component={this.homePage()} />
           <Route component={PageNotFound} />
         </Switch>
       </Router>

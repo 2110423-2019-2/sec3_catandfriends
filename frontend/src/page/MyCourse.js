@@ -29,7 +29,7 @@ export default class MyCourse extends Component {
           <div className="row">
             <div className="col-md-12" align="center">
               <div className="row justify-content-center">
-                <div className="inside-block textheader"
+                <div className="insidetrans-block textheader"
                   style={{
                     marginTop: "20px",
                     padding: "5px 15px",
@@ -47,7 +47,7 @@ export default class MyCourse extends Component {
           <div className="row">
             <div className="col-md-12" align="center">
               <div className="row justify-content-center">
-                <div className="inside-block textheader"
+                <div className="insidetrans-block textheader"
                   style={{
                     padding: "5px 15px",
                     textAlign: "center"

@@ -8,7 +8,7 @@ export default class SearchResult extends Component {
     super(props);
     this.state = {};
   }
-  onSearch = async data => {
+  onSearch = async (data) => {
     await this.setState({ data });
   };
   render() {
@@ -16,23 +16,22 @@ export default class SearchResult extends Component {
       return (
         <div>
           <div className="row">
-            <div className="col-md-2">
+            <div className="col-md-3">
               <Filter search={this.onSearch} />
             </div>
             <div
-              className="col-md-10"
+              className="col-md-9"
               align="center"
-              style={{ maxWidth: "1200px" }}
             >
               <div className="row justify-content-center">
                 <div
-                className="inside-block textshadow"
+                  className="insidetrans-block textshadow"
                   style={{
                     marginTop: "20px",
                     padding: "5px 15px",
                     textAlign: "center",
                     backgroundColor: "rgba(255,255,255,0.3)",
-                    borderRadius: "12px"
+                    borderRadius: "12px",
                   }}
                 >
                   {"Search Result: Loading..."}
@@ -47,24 +46,24 @@ export default class SearchResult extends Component {
       return (
         <div>
           <div className="row">
-            <div className="col-md-2">
+            <div className="col-md-3">
               <Filter search={this.onSearch} />
             </div>
             <div
-              className="col-md-10"
+              className="col-md-9"
               align="center"
               style={{ maxWidth: "1200px" }}
             >
               <div className="row justify-content-center">
                 <div
-                  className="inside-block textshadow"
+                  className="insidetrans-block textshadow"
                   style={{
                     marginTop: "20px",
                     padding: "5px 15px",
                     textAlign: "center",
                     color: "black",
                     backgroundColor: "rgba(255,255,255,0.3)",
-                    borderRadius: "12px"
+                    borderRadius: "12px",
                   }}
                 >
                   {"Search Result: " +

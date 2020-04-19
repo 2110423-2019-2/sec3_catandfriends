@@ -13,6 +13,7 @@ const fileRoute = require("./file");
 const searchRoute = require("./search");
 const messageRoute = require("./message");
 const commentRoute = require("./comment");
+const reportRoute = require("./report");
 
 const verifyRoute = require("./verify");
 const mongoose = require("mongoose");
@@ -21,9 +22,9 @@ require("dotenv").config();
 
 mongoose.connect(process.env.MONGO_DB, {
   useUnifiedTopology: true,
-  useNewUrlParser: true
+  useNewUrlParser: true,
 });
-mongoose.connection.on("error", err => {
+mongoose.connection.on("error", (err) => {
   logError(err);
 });
 mongoose.connection.on("connected", () => {
@@ -73,6 +74,11 @@ app.use(
   "/comment",
   passport.authenticate("jwt-profile", { session: false }),
   commentRoute
+);
+app.use(
+  "/report",
+  passport.authenticate("jwt-profile", { session: false }),
+  reportRoute
 );
 
 app.listen(8000, () => {
