@@ -78,6 +78,7 @@ router.get("/", async (req, res) => {
           studentId: studentId,
           courseId: courseId,
         });
+        const available = await checkAvailable(studentId, courseId);
         if (reqcourse) {
           if (reqcourse.status == 1) {
             course.requestStatus = "Enrolled";
@@ -88,11 +89,12 @@ router.get("/", async (req, res) => {
           course.requestStatus = "Course Expired";
         } else if (course.amountOfStudent > course.totalAmountOfStudent) {
           course.requestStatus = "Course Full";
-        } else if (!checkAvailable(studentId, courseId)[1]) {
+        } else if (!available) {
           course.requestStatus = "Time Overlapped";
         } else {
           course.requestStatus = "requestable";
         }
+        console.log(course.requestStatus);
       } else {
         course.requestStatus = "TS1989";
         console.log("3");
