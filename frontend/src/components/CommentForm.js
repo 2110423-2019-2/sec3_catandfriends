@@ -71,13 +71,16 @@ export default class CommentForm extends Component {
   }
   render() {
     return (
-      <div className="bigCard">
+      <div className="bigCard" style={{ minHeight: "200px", height: "300px" }}>
         <form
           onSubmit={(event) => this.handleSubmit(event)}
           style={{ marginLeft: 30 }}
         >
-          <div className="row textheader justify-content-center" style={{ marginBottom: 10 }}>
-            New Comment
+          <div
+            className="row textheader justify-content-center"
+            style={{ marginBottom: 10 }}
+          >
+            {this.state.comments.isCommented ? "Edit Review" : "Write Review"}
           </div>
           <div className="row" style={{ marginBottom: 5 }}>
             <div className="col-md-9">
@@ -96,6 +99,7 @@ export default class CommentForm extends Component {
                 }}
                 placeholder="Title"
                 style={{ width: 500, height: 30, resize: "none" }}
+                maxLength="50"
               />
             </div>
             <div className="col-md-3">
@@ -132,9 +136,14 @@ export default class CommentForm extends Component {
                 }}
                 placeholder="Comment"
                 style={{ width: 500, height: 150, resize: "none" }}
+                maxLength="150"
               />
             </div>
-            <div className="col-md-3" align="center" style={{paddingTop: "15px"}}>
+            <div
+              className="col-md-3"
+              align="center"
+              style={{ paddingTop: "15px" }}
+            >
               {this.state.comments.isCommented ? (
                 <button
                   className="button-white"
