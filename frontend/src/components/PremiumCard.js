@@ -86,20 +86,20 @@ export default class PremiumCard extends Component {
   render() {
     if (!this.state.data) {
       return (
-        <div className="bigCard border" style={{ height: "600px" }}>
+        <div className="bigCard" style={{ height: "600px" }}>
           <div className="row">
-            <div className="col-md-12  infoC">
-              <div className="headerB">Premium Payment</div>
+            <div className="col-md-12 inside-block">
+              <div className="textheader">Premium Payment</div>
             </div>
           </div>
         </div>
       );
     } else {
       return (
-        <div className="bigCard border" style={{ height: "600px" }}>
+        <div className="bigCard" style={{ height: "600px" }}>
           <div className="row">
-            <div className="col-md-12  infoC">
-              <div className="headerB">Premium Payment</div>
+            <div className="col-md-12  inside-block">
+              <div className="textheader">Premium Payment</div>
             </div>
           </div>
           <div className="row">
@@ -111,13 +111,13 @@ export default class PremiumCard extends Component {
                 style={{ maxWidth: "250px" }}
                 alt="..."
               />
-              <h4>350 baht</h4>
+              <div className="textheader">350 baht</div>
               <br />
             </div>
           </div>
           <div className="row" style={{ marginBottom: "5px" }}>
             <div className="col-md-12 justify-content-center">
-              <div className="nameV justify-content-center text-center">
+              <div className="justify-content-center text-center textnormal text-bold">
                 {"Last uploaded slip image:" + "\xa0\xa0"}
                 {this.getImage()}
               </div>
@@ -129,7 +129,7 @@ export default class PremiumCard extends Component {
                 <label /*className="bg-success text-white"*/>
                   <input
                     id="bill"
-                    className=" border border-dark"
+                    className=" border border-dark textnormal"
                     //className="form-control-file p-1"
                     type="file"
                     name="file"
@@ -139,7 +139,7 @@ export default class PremiumCard extends Component {
                   <button
                     id="upload"
                     type="button"
-                    className="btn btn-block btn-dark btn-sm p-1"
+                    className="btn btn-block btn-sm p-1 button-white"
                     onClick={this.onClickHandlerSlip}
                   >
                     Upload slip

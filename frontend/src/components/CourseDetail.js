@@ -72,7 +72,7 @@ export class CourseDetail extends Component {
       studentList = <div></div>;
     }
     return (
-      <div className="bigCard" style={{ marginBottom: "5px" }}>
+      <div className="bigCard" style={{ marginBottom: "20px" }}>
         <div className="row ">
           <div className={this.props.detail.owner ? "col-md-9" : "col-md-12"}>
             <div className="row  text-center" className="myStyle">

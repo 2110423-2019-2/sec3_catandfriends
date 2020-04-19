@@ -44,6 +44,7 @@
   color: var(--black-color);
   width: 100%;
   min-height: 80px;
+  max-height: 80px;
 }
 .courseL {
   font-weight: bold;

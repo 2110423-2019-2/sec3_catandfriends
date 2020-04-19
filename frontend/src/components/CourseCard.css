@@ -3,6 +3,7 @@
   height: 380px;
   margin: 10px;
   text-align: center;
+  background: var(--white-color) !important;
   border-radius: 12px !important;
   border: none !important;
   /*normal*/
@@ -57,7 +58,7 @@
   font-weight: 650;
 }
 .mycard-title {
-  height: 25px;
+  height: 30px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

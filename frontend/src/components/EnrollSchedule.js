@@ -287,8 +287,8 @@ class RowInformation extends Component {
               {duration ? duration.split(" - ")[1] : "-"}
             </div>
           </div>
-          <div className="col-md-2 justify-content-center">
-            <textarea className="Eday" style={{ textAlign: "center" }}>
+          <div className="col-md-2 justify-content-center background-color textnormal">
+            <textarea class="Eday" style={{ textAlign: "center" }}>
               {day ? this.dayToString(day) : "-"}
             </textarea>
           </div>

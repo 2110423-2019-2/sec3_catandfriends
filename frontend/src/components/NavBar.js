@@ -4,6 +4,7 @@ import "./NavBar.css";
 import Util from "../apis/Util";
 import AccountButton from "./AccountButton";
 import NavButton from "./NavButton";
+import zIndex from "@material-ui/core/styles/zIndex";
 export class NavBar extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +28,7 @@ export class NavBar extends Component {
   }
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-white">
+      <nav className="navbar navbar-expand-lg navbar-white navbar-light" style={{zIndex: "9999"}}>
         <a className="navbar-brand" onClick={() => this.onClickNavBar("/home")}>
           <img
             src={this.state.logoLight}
@@ -41,7 +42,7 @@ export class NavBar extends Component {
           <span className="brandName">TutorHere</span>
         </a>
         <button
-          className="navbar-toggler"
+          className="navbar-toggler border"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNavDropdown"
@@ -86,7 +87,7 @@ export class NavBar extends Component {
                 {this.state.fullName ? (
                   <button
                     className="dropdown-toggle button-white"
-                    style={{ width: "fit-content" }}
+                    style={{ width: "fit-content !important" }}
                     href="#"
                     id="navbarDropdownMenuLink"
                     data-toggle="dropdown"

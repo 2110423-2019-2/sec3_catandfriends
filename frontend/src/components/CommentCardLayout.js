@@ -172,7 +172,7 @@ export default class CommentCardLayout extends Component {
         data-ride="carousel"
         data-interval="false"
       >
-        <h3>Comment</h3>
+        <div className="textheader">Comment</div>
         <ol class="carousel-indicators" style={{ height: "10px" }}>
           <li
             data-target="#carouselExampleIndicators"

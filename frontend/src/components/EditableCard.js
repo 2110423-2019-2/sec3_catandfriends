@@ -74,7 +74,7 @@ export default class EditableCard extends React.Component {
             </div>
           </div>
         </div>
-        <div className="card-body mycard-body background-color">
+        <div className="card-body mycard-body">
           <div className="textheader">{courseName}</div>
           <p className="card-text tutorname">{fullname}</p>
           <div align="center" style={{ marginBottom: "5px" }}>

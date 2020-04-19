@@ -22,7 +22,6 @@ export default class SearchResult extends Component {
             <div
               className="col-md-9"
               align="center"
-              style={{ maxWidth: "1200px" }}
             >
               <div className="row justify-content-center">
                 <div

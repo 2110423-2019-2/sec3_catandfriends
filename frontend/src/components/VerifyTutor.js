@@ -45,31 +45,31 @@ export default class VerifyTutor extends Component {
       );
     } else {
       return (
-        <div className="verifyTutorCard">
-          <h3 className="verifyTutorH text-center">Verify Tutor</h3>
-          <div className="row justify-content-center">
+        <div className="bigCard">
+          <h3 className="inside-block text-center textheader">Verify Tutor</h3>
+          <div className="row justify-content-center textnormal">
             To be able to create a course, your account have to be verified.
             <br></br>
           </div>
-          <div className="row justify-content-center">
+          <div className="row justify-content-center textnormal">
             We have to require 2 documents from you.
             <br></br>
           </div>
-          <div className="row justify-content-center">
+          <div className="row justify-content-center textnormal">
             1. your verification document 2. your verification payment.
             <br></br>
           </div>
-          <div className="row justify-content-center">
+          <div className="row justify-content-center textnormal">
             After receiving your documents, we will verify your account in 24
             hours.
             <br></br>
           </div>
           <div className="row " style={{ marginTop: "10px" }}>
             <div className="col-md-6 " style={{ marginBottom: "5px" }}>
-              <h3>File</h3>
+              <div className="textheader">File</div>
               <div className="row">
                 <div className="col-md-12 ">
-                  <div className="row justify-content-center">
+                  <div className="row justify-content-center textnormal">
                     Please upload your verification document in PDF format.
                     <br></br>
                   </div>
@@ -77,7 +77,7 @@ export default class VerifyTutor extends Component {
               </div>
               <div className="row" style={{ marginTop: "10px" }}>
                 <div className="col-md-12 ">
-                  <div className="nameV">
+                  <div className="textnormal text-bold">
                     {"Last uploaded file:" + "\xa0\xa0"}
                     {this.getfile()}
                   </div>
@@ -87,7 +87,7 @@ export default class VerifyTutor extends Component {
                 <div className="col-md-8 ">
                   <input
                     id="veridoc"
-                    className="form-control-file p-1"
+                    className="form-control-file p-1 textnormal"
                     type="file"
                     name="file"
                     accept=".pdf"
@@ -107,9 +107,9 @@ export default class VerifyTutor extends Component {
               </div>
             </div>
             <div className="col-md-6 ">
-              <h3>Payment</h3>
+              <div className="textheader">Payment</div>
               <div className="row">
-                <div className="col-md-12">
+                <div className="col-md-12 textnormal">
                   <div className="row justify-content-center">
                     Please upload your verification payment in image format.
                     <br></br>
@@ -180,7 +180,7 @@ export default class VerifyTutor extends Component {
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="nameV">
+                  <div className="textnormal text-bold">
                     {"Last uploaded slip image:" + "\xa0\xa0"}
                     {this.getImage()}
                   </div>
@@ -190,7 +190,7 @@ export default class VerifyTutor extends Component {
                 <div className="col-md-8 ">
                   <input
                     id="veridoc"
-                    className="form-control-file p-1"
+                    className="form-control-file p-1 textnormal"
                     type="file"
                     name="file"
                     accept=".jpeg,.gif,.png"
