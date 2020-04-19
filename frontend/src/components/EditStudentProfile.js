@@ -48,7 +48,7 @@ export default class EditStudentProfile extends Component {
     );
     // console.log("data"+data);
     if (!data.error) {
-      alert("A profile is edited");
+      alert("Your profile is edited");
       // console.log(data);
       history.push("/profile");
     } else {
@@ -198,11 +198,7 @@ export default class EditStudentProfile extends Component {
               </div>
               <div className="row text-center" style={{ marginTop: "20px" }}>
                 <div className="col-md-12">
-                  <button
-                    className="button-white"
-                    type="submit"
-                    value="Submit"
-                  >
+                  <button className="button-white" type="submit" value="Submit">
                     Submit
                   </button>
                 </div>

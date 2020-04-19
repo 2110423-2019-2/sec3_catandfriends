@@ -49,7 +49,7 @@ export default class EditTutorProfile extends Component {
     );
     // console.log("data"+data);
     if (!data.error) {
-      alert("A profile is edited");
+      alert("Your profile is edited");
       // console.log(data);
       history.push("/profile");
     } else {
