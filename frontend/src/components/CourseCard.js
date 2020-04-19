@@ -7,7 +7,7 @@ class CourseCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png"
+      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png",
     };
   }
   dayToString(day) {
@@ -27,7 +27,7 @@ class CourseCard extends React.Component {
       price,
       category,
       day,
-      duration
+      duration,
     } = this.props.detail;
     // console.log(this.props.detail);
     const fullname = this.props.detail.tutorName
@@ -48,7 +48,7 @@ class CourseCard extends React.Component {
               this.props.detail.courseImg
                 ? this.props.detail.courseImg
                 : this.state.logoDark
-            })`
+            })`,
           }}
           id="image"
           className="mcard-header"
@@ -75,7 +75,10 @@ class CourseCard extends React.Component {
               {this.dayToString(day)}
             </textarea>
           </div>
-          <CourseButton className="width90" full={!this.props.detail.isAvailable}>
+          <CourseButton
+            className="width90"
+            full={!this.props.detail.amountOfStudent}
+          >
             {this.props.detail.amountOfStudent +
               "/" +
               this.props.detail.totalAmountOfStudent +
@@ -86,7 +89,7 @@ class CourseCard extends React.Component {
       </div>
     );
   }
-  onClickGotoCourseInform = courseId => {
+  onClickGotoCourseInform = (courseId) => {
     history.push(`/course?courseId=${courseId}`);
   };
 }

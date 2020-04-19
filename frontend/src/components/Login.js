@@ -15,12 +15,16 @@ export class Login extends Component {
 
   render() {
     return (
-      <div className="justify-content-center whole">
+      <div className="justify-content-center">
+        <div className="row">
+          <div className="container-flex justify-content-center" style={{margin: "auto"}}>
           <img
             src="https://s3-ap-southeast-1.amazonaws.com/img-in-th/65614bbe7828a059d67aba5eb33639ff.png"
-            style={{ maxWidth: "300px" }}
+            style={{ maxWidth: "250px", maxHeight: "210px"}}
           />
-        <div className="container-flex homebox-login">
+          </div>
+        </div>
+        <div className="container-flex homebox-login justify-content-center" style={{margin: "auto"}}>
           <form onSubmit={event => this.onClickLogin(event)}>
             <div className="row">
               <div className="col-md-12" style={{ marginBottom: "20px" }}>
