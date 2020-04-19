@@ -22,24 +22,19 @@ export default class CommentForm extends Component {
   async handleSubmitCreate(event) {
     event.preventDefault();
     console.log(this.state.comments);
-    if (!this.state.comments.rating) {
+    if (!this.state.comments.topic || !this.state.comments.text) {
+      alert("Please fill every field");
+      return;
+    } else if (!this.state.comments.rating) {
       alert("Please input rating");
       return;
     }
-    let data = //this.state.comments.isCommented==false? Util.editComment(
-      //     window.location.search.substring(10),
-      //     this.state.comments.topic,
-      //     this.state.comments.text,
-      //     this.state.comments.rating,
-      //     localStorage.getItem("token")
-      // )
-      // :
-      await Util.createComment(
-        this.props.detail._id,
-        this.state.comments.topic,
-        this.state.comments.text,
-        this.state.comments.rating
-      );
+    let data = await Util.createComment(
+      this.props.detail._id,
+      this.state.comments.topic,
+      this.state.comments.text,
+      this.state.comments.rating
+    );
     if (data.err) {
       alert(data.err);
     }
@@ -87,7 +82,7 @@ export default class CommentForm extends Component {
               <textarea
                 type="text"
                 className="inbox"
-                required
+                required="required"
                 value={this.state.comments.topic}
                 onChange={(event) => {
                   const topic = event.target.value;
@@ -100,7 +95,7 @@ export default class CommentForm extends Component {
                 placeholder="Title"
                 style={{ width: 500, height: 30, resize: "none" }}
                 maxLength="50"
-              />
+              ></textarea>
             </div>
             <div className="col-md-3">
               <Rating
@@ -124,7 +119,7 @@ export default class CommentForm extends Component {
               <textarea
                 type="text"
                 className="inbox"
-                required
+                required="required"
                 value={this.state.comments.text}
                 onChange={(event) => {
                   const text = event.target.value;
@@ -137,7 +132,7 @@ export default class CommentForm extends Component {
                 placeholder="Comment"
                 style={{ width: 500, height: 150, resize: "none" }}
                 maxLength="150"
-              />
+              ></textarea>
             </div>
             <div
               className="col-md-3"
