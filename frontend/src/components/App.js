@@ -105,6 +105,7 @@ class App extends Component {
           <Route path="/course" component={this.getPage(CourseInformation)} />
           <Route path="/mycourse" component={this.getPage(MyCourse)} />
           <Route path="/home" component={this.homePage()} />
+          <Route path exact="/" component={this.homePage()} />
           <Route component={PageNotFound} />
         </Switch>
       </Router>
