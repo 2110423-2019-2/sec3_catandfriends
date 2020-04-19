@@ -17,19 +17,19 @@ const tutorSchema = new Schema(
     verificationDocument: {
       type: String,
       unique: true,
-      sparse: true,
+      // sparse: true,
       default: null
     },
     verificationPayment: {
       type: String,
       unique: true,
-      sparse: true,
+      // sparse: true,
       default: null
     },
     premiumPayment: {
       type: String,
       unique: true,
-      sparse: true,
+      // sparse: true,
       default: null
     },
     verfyStatus: {
