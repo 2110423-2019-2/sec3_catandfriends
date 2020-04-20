@@ -11,6 +11,7 @@ const to = require("await-to-js").default;
 
 router.get("/", async (req, res) => {
   let courseId = req.query.courseId;
+  let tutorId = req.query.tutorId;
   let user = await userModel.findById(req.user._id);
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
   // //console.log(await CourseModel.find({listOfStudentId:["987654321"]
@@ -19,7 +20,7 @@ router.get("/", async (req, res) => {
   if (courseId != undefined) {
     // //console.log(courseId);
     let course = await CourseModel.findById(courseId);
-    console.log(course);
+    // console.log(course);
     if (course == undefined || course.length == 0) {
       // var s = "this course hasn't been created yet";
       // //console.log(s);
@@ -48,7 +49,7 @@ router.get("/", async (req, res) => {
           ) + "/ ";
       }
       course.day = s.slice(0, s.length - 2);
-      let requestable = true;
+      // let requestable = true;
 
       let requestCount = await requestModel.countDocuments({
         studentId: req.user._id,
@@ -64,13 +65,13 @@ router.get("/", async (req, res) => {
       course.startDate = format.formatDate(course.startDate);
       course.endDate = format.formatDate(course.endDate);
 
-      // //console.log(req.user._id);
+      //console.log(req.user._id);
 
       if (user.role == "tutor") {
         course.requestStatus = "unrequestable";
-        console.log("1");
+        // console.log("1");
       } else if (user.role == "student") {
-        console.log("2");
+        // console.log("2");
         studentId = req.user._id;
         // let c = await requestModel.find({ courseId: courseId });
         //console.log("\n\nc\n" + c + "\n\n");
@@ -94,77 +95,65 @@ router.get("/", async (req, res) => {
         } else {
           course.requestStatus = "requestable";
         }
-        console.log(course.requestStatus);
+        // console.log(course.requestStatus);
       } else {
-        course.requestStatus = "TS1989";
-        console.log("3");
+        // course.requestStatus = "TS1989";
+        // console.log("3");
       }
-      console.log(course.requestStatus);
+      // console.log(course.requestStatus);
       res.status(200).json(course);
     }
-  } else if (user.role == "tutor") {
-    let course = await CourseModel.find({ tutorId: user._id });
-    //console.log(course);
-    for (i = 0; i < course.length; i++) {
-      course[i] = { ...course[i].toObject() };
-      course[i].tutorName = user.firstName + " " + user.lastName;
-      course[i].owner = course[i].tutorId == user._id;
-      // //console.log(course);
-      let s = "";
-      for (j = 0; j < 7; j++) {
-        if (course[i]["dayAndStartTime"][j] == null) continue;
-        if (j == 0) s += "Mon ";
-        else if (j == 1) s += "Tue ";
-        else if (j == 2) s += "Wed ";
-        else if (j == 3) s += "Thu ";
-        else if (j == 4) s += "Fri ";
-        else if (j == 5) s += "Sat ";
-        else if (j == 6) s += "Sun ";
-        s +=
-          format.formatRangeOfTime(
-            course[i]["dayAndStartTime"][j],
-            course[i]["dayAndEndTime"][j]
-          ) + "/ ";
+  } else if (tutorId != undefined) {
+    let course = await CourseModel.find({ tutorId: tutorId });
+    if (course.length == 0) {
+      res.json([]);
+    } else {
+      for (let i = 0; i < course.length; i++) {
+        let err, tutor;
+        [err, tutor] = await to(
+          userModel.findOne({
+            _id: course[i].tutorId
+          })
+        );
+        if (err) {
+          res.status(500).end();
+        }
+        course[i].premiumTutorStatus = tutor.premiumStatus;
+        let tutorName = tutor.firstName + " " + tutor.lastName;
+        let s = "";
+        for (j = 0; j < 7; j++) {
+          if (course[i]["dayAndStartTime"][j] == null) continue;
+          if (j == 0) s += "Mon ";
+          else if (j == 1) s += "Tue ";
+          else if (j == 2) s += "Wed ";
+          else if (j == 3) s += "Thu ";
+          else if (j == 4) s += "Fri ";
+          else if (j == 5) s += "Sat ";
+          else if (j == 6) s += "Sun ";
+          s +=
+            format.formatRangeOfTime(
+              course[i]["dayAndStartTime"][j],
+              course[i]["dayAndEndTime"][j]
+            ) + "/ ";
+        }
+        course[i].day = s.slice(0, s.length - 2);
+        s = "";
+        let dateSplit = course[i].startDate.toString().split(" ");
+        s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
+        dateSplit = course[i].endDate.toString().split(" ");
+        s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
+        course[i].duration = s;
+        course[i].isAvailable = course[i].amountOfStudent > 0 ? true : false;
+        course[i].dayAndStartTime = undefined;
+        course[i].dayAndEndTime = undefined;
+        course[i].listOfStudentId = undefined;
+        course[i] = {
+          ...course[i].toObject(),
+          tutorName: tutorName
+        };
       }
-      course[i].day = s.slice(0, s.length - 2);
-      let userCount = await userModel.countDocuments({
-        _id: req.user._id,
-        role: "tutor",
-      });
-      course[i].startDate = format.formatDate(course[i].startDate);
-      course[i].endDate = format.formatDate(course[i].endDate);
-      course.requestable = false;
     }
     res.status(200).json(course);
-  } else {
-    for (i = 0; i < courses.length; i++) {
-      let s = [];
-      let courses = await requestModel.find({ studentId: req.user._id });
-      //console.log(courses[i].courseId);
-      let status = courses[i].status;
-      //console.log("status = " + status);
-      let message = "status: ";
-      let c = await CourseModel.findById(courses[i].courseId, {
-        dayAndStartTime: 0,
-        dayAndEndTime: 0,
-        listOfStudentId: 0,
-        listOfStudentRequest: 0,
-        createdTime: 0,
-        lastModified: 0,
-      });
-      if (status == 1) {
-        message = message + "enroll successful";
-      } else if (status == 0) {
-        message = message + "waiting for tutor confirmation";
-      } else if (status == -1) {
-        message = message + "the enrollment was rejected";
-      }
-      //console.log(c);
-      s.push(message);
-      s.push(c);
-      res.status(200).json(s);
-      return;
-    }
   }
 });
 
