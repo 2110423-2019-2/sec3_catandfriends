@@ -252,6 +252,7 @@ class RowInformation extends Component {
       enrollDate,
       duration,
       day,
+      tutorId,
     } = this.props.detail;
     if (this.props.detail) {
       return (
@@ -268,9 +269,15 @@ class RowInformation extends Component {
             </a>
           </div>
           <div className="col-md-2 background-color textnormal">
-            <div style={{ textAlign: "center" }}>
+            <a
+              className="courseL"
+              style={{ textAlign: "center" }}
+              onClick={() => {
+                history.push(`/profile?userId=${tutorId}`);
+              }}
+            >
               {tutorName ? tutorName : "-"}
-            </div>
+            </a>
           </div>
 
           <div class="col-md-2 background-color textnormal">
