@@ -16,7 +16,16 @@ router.get("/", async (req, res) => {
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
   if (!courseId) {
     res.status(400).json({
-      err: "No courseId"
+      err: "No input courseId"
+    }).end();
+    return;
+  }
+  let haveCourseR = await checkHaveCourse(courseId);
+  err = haveCourseR[0];
+  let haveCourse = haveCourseR[1];
+  if (!haveCourse) {
+    res.status(400).json({
+      err: "This course is not in the system"
     }).end();
     return;
   }
@@ -370,4 +379,12 @@ async function checkAvailable(studentId, courseId) {
   }
   return [err, available];
 }
+
+async function checkHaveCourse(courseId) {
+  [err, course] = await to(CourseModel.findOne(
+    { _id: courseId },
+    { _id: 1 }));
+  return [err, !!course];
+}
+
 module.exports = router;
