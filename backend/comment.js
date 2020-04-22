@@ -207,19 +207,19 @@ async function checkPostInput(topic, text, star) {
     let err, msg;
     let isValid = true;
 
-    if (!topic && !text && !star) {
-        msg = "No entered topic, comment or star";
+    if (!topic || !text || !star) {
+        msg = "All of topic, text, and star must be filled";
         isValid = false;
     }
     if (topic) {
         if (topic.length > MAX_TOPIC_LENGTH) {
-            msg = `Topic is exceeding ${MAX_TOPIC_LENGTH} character`;
+            msg = `Topic is exceeding ${MAX_TOPIC_LENGTH} characters`;
             isValid = false;
         }
     }
     if (text) {
         if (text.length > MAX_TEXT_LENGTH) {
-            msg = `Text is exceeding ${MAX_TEXT_LENGTH} character`;
+            msg = `Text is exceeding ${MAX_TEXT_LENGTH} characters`;
             isValid = false;
         }
     }
