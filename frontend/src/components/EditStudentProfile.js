@@ -184,7 +184,7 @@ export default class EditStudentProfile extends Component {
                     <br />
                     <select
                       id="gender"
-                      value={this.state.Gender}
+                      value={this.state.gender}
                       className="field"
                       style={{ width: 250 }}
                       name="gender"
