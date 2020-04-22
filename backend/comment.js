@@ -14,6 +14,12 @@ router.get("/", async (req, res) => {
     const userId = req.user._id;
     const courseId = req.query.courseId;
     let err, comments;
+    if (!courseId) {
+        res.status(400).json({
+            err: "No courseId"
+        }).end();
+        return;
+    }
 
     let isAlreadyCommentedR = await checkAlreadyCommented(userId, courseId);
     err = isAlreadyCommentedR[0];
@@ -42,6 +48,12 @@ router.get("/myComment", async (req, res) => {
     const userId = req.user._id;
     const courseId = req.query.courseId;
     let err, comments;
+    if (!courseId) {
+        res.status(400).json({
+            err: "No courseId"
+        }).end();
+        return;
+    }
 
     let isAlreadyCommentedR = await checkAlreadyCommented(userId, courseId);
     err = isAlreadyCommentedR[0];
