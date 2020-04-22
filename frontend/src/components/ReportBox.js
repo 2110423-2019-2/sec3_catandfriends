@@ -84,13 +84,14 @@ export default class TypeComment extends Component {
   handleSubmit = async (event, close) => {
     event.preventDefault();
     var subject = document.getElementsByName("ReportingSubject");
+    console.log(subject);
     for (let i = 0; i < subject.length; i++) {
       if (subject[i].checked) {
         subject = subject[i].value;
         break;
       }
     }
-    if (!subject instanceof String) {
+    if (subject instanceof NodeList) {
       window.alert("Please select a subject");
       return;
     }
