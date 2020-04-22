@@ -460,9 +460,9 @@ async function findCommentOwnCommentTop(userId, courseId) {
 
 async function updateComment(studentId, courseId, topic, text, star, dateThailand) {
     let updateQuery = { lastModified: dateThailand };
-    if (topic) updateQuery.topic = topic;
-    if (text) updateQuery.text = text;
-    if (star) updateQuery.rating = star;
+    updateQuery.topic = topic;
+    updateQuery.text = text;
+    updateQuery.rating = star;
 
     [err, value] = await to(commentModel.findOneAndUpdate(
         {
