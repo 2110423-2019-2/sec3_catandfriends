@@ -28,7 +28,7 @@ export class NavBar extends Component {
   }
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-white navbar-light">
+      <nav className="navbar navbar-expand-lg navbar-white ">
         <a className="navbar-brand" onClick={() => this.onClickNavBar("/home")}>
           <img
             src={this.state.logoLight}
@@ -42,7 +42,7 @@ export class NavBar extends Component {
           <span className="brandName">TutorHere</span>
         </a>
         <button
-          className="navbar-toggler border"
+          className="navbar-toggler custom-toggler"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNavDropdown"
@@ -50,7 +50,7 @@ export class NavBar extends Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon navtogglecolor"></span>
+          <span class=" navbar-toggler-icon "></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav mr-auto">
