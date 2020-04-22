@@ -69,6 +69,13 @@ router.post("/", async (req, res) => {
     const star = req.body.star;
     const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
 
+    if (!courseId) {
+        res.status(400).json({
+            err: "No courseId"
+        }).end();
+        return;
+    }
+
     let err;
     let isValidInputR = await checkPostInput(topic, text, star);
     err = isValidInputR[0];
