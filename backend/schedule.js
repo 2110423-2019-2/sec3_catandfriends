@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
   // console.log(schedule);
 
   let listOfCourse = [];
-  (schedule.listOfCourse).forEach((id) => {
+  schedule.listOfCourse.forEach((id) => {
     listOfCourse.push({ _id: id });
   });
 
@@ -23,12 +23,19 @@ router.get("/", async (req, res) => {
     // console.log(listOfCourse[i]._id);
     const courseInfo = await CourseModel.findById(listOfCourse[i]._id);
     const userInfo = await UserModel.findOne({ _id: courseInfo.tutorId });
-    const requestInfo = await RequestModel.findOne({ tutorId: courseInfo.tutorId, studentId: studentId, courseId: courseInfo._id });
+    const requestInfo = await RequestModel.findOne({
+      tutorId: courseInfo.tutorId,
+      studentId: studentId,
+      courseId: courseInfo._id,
+    });
     // console.log(requestInfo);
 
     listOfCourse[i].courseName = courseInfo.courseName;
+    listOfCourse[i].tutorId = courseInfo.tutorId;
     listOfCourse[i].tutorName = userInfo.firstName + " " + userInfo.lastName;
-    listOfCourse[i].enrollDate = requestInfo ? format.formatDate(requestInfo.lastModified) : null;
+    listOfCourse[i].enrollDate = requestInfo
+      ? format.formatDate(requestInfo.lastModified)
+      : null;
     listOfCourse[i].duration = format.formatDuration(courseInfo);
     listOfCourse[i].day = format.formatCourseDay(courseInfo);
   }
