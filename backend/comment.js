@@ -7,6 +7,9 @@ const moment = require("moment-timezone");
 const format = require("./commonFunc/format")
 const to = require("await-to-js").default;
 
+const MAX_TOPIC_LENGTH = 50;
+const MAX_TEXT_LENGTH = 150;
+
 router.get("/", async (req, res) => {
     const userId = req.user._id;
     const courseId = req.query.courseId;
@@ -125,7 +128,26 @@ router.put("/", async (req, res) => {
     const star = req.body.star;
     const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
 
+    if (!courseId) {
+        res.status(400).json({
+            err: "No courseId"
+        }).end();
+        return;
+    }
+
     let err;
+    let isValidInputR = await checkPutInput(topic, text, star);
+    err = isValidInputR[0];
+    let isValidInput = isValidInputR[1];
+    let invalidInputMessage = isValidInputR[2];
+
+    if (!isValidInput) {
+        res.status(400).json({
+            err: invalidInputMessage
+        }).end();
+        return;
+    }
+
     let isEnrolledR = await checkEnrollment(studentId, courseId);
     err = isEnrolledR[0];
     let isEnrolled = isEnrolledR[1];
@@ -209,13 +231,50 @@ router.delete("/", async (req, res) => {
 });
 
 async function checkPostInput(topic, text, star) {
-    const MAX_TOPIC_LENGTH = 50;
-    const MAX_TEXT_LENGTH = 150;
     let err, msg;
     let isValid = true;
 
     if (!topic || !text || !star) {
         msg = "All of topic, text, and star must be filled";
+        isValid = false;
+    }
+    if (topic) {
+        if (topic.length > MAX_TOPIC_LENGTH) {
+            msg = `Topic is exceeding ${MAX_TOPIC_LENGTH} characters`;
+            isValid = false;
+        }
+    }
+    if (text) {
+        if (text.length > MAX_TEXT_LENGTH) {
+            msg = `Text is exceeding ${MAX_TEXT_LENGTH} characters`;
+            isValid = false;
+        }
+    }
+    if (star) {
+        if (star < 0 || star > 5) {
+            msg = "Star is must be 0-5";
+            isValid = false;
+        }
+        star = star.toString();
+        let p = (parseFloat(star.slice(0, 3)) * 10) % 5;
+
+        if (star.length > 3) {
+            msg = "Star is must has 0.5 precision";
+            isValid = false;
+        } else if (!!p) {
+            msg = "Star is must has 0.5 precision";
+            isValid = false;
+        }
+    }
+    return [err, isValid, msg];
+}
+
+async function checkPutInput(topic, text, star) {
+    let err, msg;
+    let isValid = true;
+
+    if (!star) {
+        msg = "star must be filled";
         isValid = false;
     }
     if (topic) {
