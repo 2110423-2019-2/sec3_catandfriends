@@ -14,6 +14,12 @@ router.get("/", async (req, res) => {
   let tutorId = req.query.tutorId;
   let user = await userModel.findById(req.user._id);
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
+  if (!courseId) {
+    res.status(400).json({
+      err: "No courseId"
+    }).end();
+    return;
+  }
   // //console.log(await CourseModel.find({listOfStudentId:["987654321"]
   // }));
   ////console.log(courseId);
