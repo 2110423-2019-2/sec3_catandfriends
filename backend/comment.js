@@ -7,10 +7,19 @@ const moment = require("moment-timezone");
 const format = require("./commonFunc/format")
 const to = require("await-to-js").default;
 
+const MAX_TOPIC_LENGTH = 50;
+const MAX_TEXT_LENGTH = 150;
+
 router.get("/", async (req, res) => {
     const userId = req.user._id;
     const courseId = req.query.courseId;
     let err, comments;
+    if (!courseId) {
+        res.status(400).json({
+            err: "No courseId"
+        }).end();
+        return;
+    }
 
     let isAlreadyCommentedR = await checkAlreadyCommented(userId, courseId);
     err = isAlreadyCommentedR[0];
@@ -39,6 +48,12 @@ router.get("/myComment", async (req, res) => {
     const userId = req.user._id;
     const courseId = req.query.courseId;
     let err, comments;
+    if (!courseId) {
+        res.status(400).json({
+            err: "No courseId"
+        }).end();
+        return;
+    }
 
     let isAlreadyCommentedR = await checkAlreadyCommented(userId, courseId);
     err = isAlreadyCommentedR[0];
@@ -69,14 +84,26 @@ router.post("/", async (req, res) => {
     const star = req.body.star;
     const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
 
-    if (!topic && !text && !star) {
+    if (!courseId) {
         res.status(400).json({
-            err: "No entered topic, comment or star"
+            err: "No courseId"
         }).end();
         return;
     }
 
     let err;
+    let isValidInputR = await checkPostInput(topic, text, star);
+    err = isValidInputR[0];
+    let isValidInput = isValidInputR[1];
+    let invalidInputMessage = isValidInputR[2];
+
+    if (!isValidInput) {
+        res.status(400).json({
+            err: invalidInputMessage
+        }).end();
+        return;
+    }
+
     let isEnrolledR = await checkEnrollment(studentId, courseId);
     err = isEnrolledR[0];
     let isEnrolled = isEnrolledR[1];
@@ -113,7 +140,26 @@ router.put("/", async (req, res) => {
     const star = req.body.star;
     const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
 
+    if (!courseId) {
+        res.status(400).json({
+            err: "No courseId"
+        }).end();
+        return;
+    }
+
     let err;
+    let isValidInputR = await checkPutInput(topic, text, star);
+    err = isValidInputR[0];
+    let isValidInput = isValidInputR[1];
+    let invalidInputMessage = isValidInputR[2];
+
+    if (!isValidInput) {
+        res.status(400).json({
+            err: invalidInputMessage
+        }).end();
+        return;
+    }
+
     let isEnrolledR = await checkEnrollment(studentId, courseId);
     err = isEnrolledR[0];
     let isEnrolled = isEnrolledR[1];
@@ -195,6 +241,84 @@ router.delete("/", async (req, res) => {
     }
     res.status(201).end();
 });
+
+async function checkPostInput(topic, text, star) {
+    let err, msg;
+    let isValid = true;
+
+    if (!topic || !text || !star) {
+        msg = "All of topic, text, and star must be filled";
+        isValid = false;
+    }
+    if (topic) {
+        if (topic.length > MAX_TOPIC_LENGTH) {
+            msg = `Topic is exceeding ${MAX_TOPIC_LENGTH} characters`;
+            isValid = false;
+        }
+    }
+    if (text) {
+        if (text.length > MAX_TEXT_LENGTH) {
+            msg = `Text is exceeding ${MAX_TEXT_LENGTH} characters`;
+            isValid = false;
+        }
+    }
+    if (star) {
+        if (star < 0 || star > 5) {
+            msg = "Star is must be 0-5";
+            isValid = false;
+        }
+        star = star.toString();
+        let p = (parseFloat(star.slice(0, 3)) * 10) % 5;
+
+        if (star.length > 3) {
+            msg = "Star is must has 0.5 precision";
+            isValid = false;
+        } else if (!!p) {
+            msg = "Star is must has 0.5 precision";
+            isValid = false;
+        }
+    }
+    return [err, isValid, msg];
+}
+
+async function checkPutInput(topic, text, star) {
+    let err, msg;
+    let isValid = true;
+
+    if (!star) {
+        msg = "star must be filled";
+        isValid = false;
+    }
+    if (topic) {
+        if (topic.length > MAX_TOPIC_LENGTH) {
+            msg = `Topic is exceeding ${MAX_TOPIC_LENGTH} characters`;
+            isValid = false;
+        }
+    }
+    if (text) {
+        if (text.length > MAX_TEXT_LENGTH) {
+            msg = `Text is exceeding ${MAX_TEXT_LENGTH} characters`;
+            isValid = false;
+        }
+    }
+    if (star) {
+        if (star < 0 || star > 5) {
+            msg = "Star is must be 0-5";
+            isValid = false;
+        }
+        star = star.toString();
+        let p = (parseFloat(star.slice(0, 3)) * 10) % 5;
+
+        if (star.length > 3) {
+            msg = "Star is must has 0.5 precision";
+            isValid = false;
+        } else if (!!p) {
+            msg = "Star is must has 0.5 precision";
+            isValid = false;
+        }
+    }
+    return [err, isValid, msg];
+}
 
 async function checkEnrollment(studentId, courseId) {
     [err, course] = await to(courseModel.findOne(
@@ -414,9 +538,9 @@ async function findCommentOwnCommentTop(userId, courseId) {
 
 async function updateComment(studentId, courseId, topic, text, star, dateThailand) {
     let updateQuery = { lastModified: dateThailand };
-    if (topic) updateQuery.topic = topic;
-    if (text) updateQuery.text = text;
-    if (star) updateQuery.rating = star;
+    updateQuery.topic = topic;
+    updateQuery.text = text;
+    updateQuery.rating = star;
 
     [err, value] = await to(commentModel.findOneAndUpdate(
         {
