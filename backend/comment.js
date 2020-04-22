@@ -16,7 +16,16 @@ router.get("/", async (req, res) => {
     let err, comments;
     if (!courseId) {
         res.status(400).json({
-            err: "No courseId"
+            err: "No input courseId"
+        }).end();
+        return;
+    }
+    let haveCourseR = await checkHaveCourse(courseId);
+    err = haveCourseR[0];
+    let haveCourse = haveCourseR[1];
+    if (!haveCourse) {
+        res.status(400).json({
+            err: "This course is not in the system"
         }).end();
         return;
     }
@@ -50,7 +59,17 @@ router.get("/myComment", async (req, res) => {
     let err, comments;
     if (!courseId) {
         res.status(400).json({
-            err: "No courseId"
+            err: "No input courseId"
+        }).end();
+        return;
+    }
+
+    let haveCourseR = await checkHaveCourse(courseId);
+    err = haveCourseR[0];
+    let haveCourse = haveCourseR[1];
+    if (!haveCourse) {
+        res.status(400).json({
+            err: "This course is not in the system"
         }).end();
         return;
     }
@@ -83,15 +102,24 @@ router.post("/", async (req, res) => {
     const text = req.body.text;
     const star = req.body.star;
     const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
+    let err;
 
     if (!courseId) {
         res.status(400).json({
-            err: "No courseId"
+            err: "No input courseId"
         }).end();
         return;
     }
 
-    let err;
+    let haveCourseR = await checkHaveCourse(courseId);
+    err = haveCourseR[0];
+    let haveCourse = haveCourseR[1];
+    if (!haveCourse) {
+        res.status(400).json({
+            err: "This course is not in the system"
+        }).end();
+        return;
+    }
     let isValidInputR = await checkPostInput(topic, text, star);
     err = isValidInputR[0];
     let isValidInput = isValidInputR[1];
@@ -139,15 +167,24 @@ router.put("/", async (req, res) => {
     const text = req.body.text;
     const star = req.body.star;
     const dateThailand = (moment.tz(Date.now(), "Asia/Bangkok")._d);
+    let err;
 
     if (!courseId) {
         res.status(400).json({
-            err: "No courseId"
+            err: "No input courseId"
+        }).end();
+        return;
+    }
+    let haveCourseR = await checkHaveCourse(courseId);
+    err = haveCourseR[0];
+    let haveCourse = haveCourseR[1];
+    if (!haveCourse) {
+        res.status(400).json({
+            err: "This course is not in the system"
         }).end();
         return;
     }
 
-    let err;
     let isValidInputR = await checkPutInput(topic, text, star);
     err = isValidInputR[0];
     let isValidInput = isValidInputR[1];
@@ -207,8 +244,24 @@ router.put("/", async (req, res) => {
 router.delete("/", async (req, res) => {
     const studentId = req.user._id;
     const courseId = req.query.courseId;
-
     let err;
+
+    if (!courseId) {
+        res.status(400).json({
+            err: "No input courseId"
+        }).end();
+        return;
+    }
+    let haveCourseR = await checkHaveCourse(courseId);
+    err = haveCourseR[0];
+    let haveCourse = haveCourseR[1];
+    if (!haveCourse) {
+        res.status(400).json({
+            err: "This course is not in the system"
+        }).end();
+        return;
+    }
+
     let isEnrolledR = await checkEnrollment(studentId, courseId);
     err = isEnrolledR[0];
     let isEnrolled = isEnrolledR[1];
@@ -318,6 +371,13 @@ async function checkPutInput(topic, text, star) {
         }
     }
     return [err, isValid, msg];
+}
+
+async function checkHaveCourse(courseId) {
+    [err, course] = await to(courseModel.findOne(
+        { _id: courseId },
+        { _id: 1 }));
+    return [err, !!course];
 }
 
 async function checkEnrollment(studentId, courseId) {
