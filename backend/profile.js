@@ -61,7 +61,6 @@ router.get("/", async (req, res, next) => {
 router.put("/", async (req, res) => {
   const userId = req.user._id;
   profile = await userModel.findById(userId);
-  console.log(profile);
   const payload = req.body;
   if(payload.role != undefined){
     res.status(400).json("you can't change your role");
@@ -87,7 +86,24 @@ router.put("/", async (req, res) => {
     res.status(400).json("you can't chage your verification");
     return ;
   }
+  if(payload.firstName!= undefined &&payload.firstName.length > 32){
+    res.status(400).json("your first name is too long");
+    return ;
+  }
+  if(payload.lastName!= undefined && payload.lastName.length > 32){
+    res.status(400).json("your last name is too long");
+    return ;
+  }
+  if(payload.phoneNumber!=undefined){
+    if(/^[0-9]+$/.test(payload.phoneNumber)==false || payload.phoneNumber.length!=10){
+      res.status(400).json("your phone number must be 10 digit");
+      return ;
+    }
+    
+  }
+  
   await userModel.updateOne({ _id: userId }, { $set: payload });
+  await profile.save();
   console.log("after update");
   console.log(profile);
   res.status(201).json("update complete");
