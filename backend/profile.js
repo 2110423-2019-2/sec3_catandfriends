@@ -101,7 +101,10 @@ router.put("/", async (req, res) => {
     }
     
   }
-  
+  if(payload.gender != "Female" || payload.gender != "Male"){
+    res.status(400).json("your gender can only be Female or Male");
+      return ;
+  }
   await userModel.updateOne({ _id: userId }, { $set: payload });
   await profile.save();
   console.log("after update");
