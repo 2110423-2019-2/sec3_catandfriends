@@ -15,25 +15,23 @@ router.get("/", async (req, res) => {
   let tutorId = req.query.tutorId;
   let user = await userModel.findById(req.user._id);
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
-  if (!courseId) {
-    res.status(400).json({
-      err: "No input courseId"
-    }).end();
-    return;
-  }
-  let haveCourseR = await checkHaveCourse(courseId);
-  err = haveCourseR[0];
-  let haveCourse = haveCourseR[1];
-  if (!haveCourse) {
-    res.status(400).json({
-      err: "This course is not in the system"
-    }).end();
-    return;
-  }
+
   // //console.log(await CourseModel.find({listOfStudentId:["987654321"]
   // }));
-  ////console.log(courseId);
-  if (courseId != undefined) {
+  // console.log(courseId);
+  if (courseId) {
+    let haveCourseR = await checkHaveCourse(courseId);
+    err = haveCourseR[0];
+    let haveCourse = haveCourseR[1];
+    if (!haveCourse) {
+      res
+        .status(400)
+        .json({
+          err: "This course is not in the system",
+        })
+        .end();
+      return;
+    }
     // //console.log(courseId);
     let course = await CourseModel.findById(courseId);
     // console.log(course);
@@ -119,7 +117,7 @@ router.get("/", async (req, res) => {
       // console.log(course.requestStatus);
       res.status(200).json(course);
     }
-  } else if (tutorId != undefined) {
+  } else if (tutorId) {
     let course = await CourseModel.find({ tutorId: tutorId });
     if (course.length == 0) {
       res.json([]);
@@ -128,7 +126,7 @@ router.get("/", async (req, res) => {
         let err, tutor;
         [err, tutor] = await to(
           userModel.findOne({
-            _id: course[i].tutorId
+            _id: course[i].tutorId,
           })
         );
         if (err) {
@@ -165,11 +163,18 @@ router.get("/", async (req, res) => {
         course[i].listOfStudentId = undefined;
         course[i] = {
           ...course[i].toObject(),
-          tutorName: tutorName
+          tutorName: tutorName,
         };
       }
     }
     res.status(200).json(course);
+  } else {
+    res
+      .status(400)
+      .json({
+        err: "Bad request",
+      })
+      .end();
   }
 });
 
@@ -387,9 +392,7 @@ async function checkAvailable(studentId, courseId) {
 }
 
 async function checkHaveCourse(courseId) {
-  [err, course] = await to(CourseModel.findOne(
-    { _id: courseId },
-    { _id: 1 }));
+  [err, course] = await to(CourseModel.findOne({ _id: courseId }, { _id: 1 }));
   return [err, !!course];
 }
 

@@ -17,6 +17,7 @@ import VerifyPage from "../page/VerifyPage";
 import PremiumPage from "../page/PremiumPage";
 import PageNotFound from "../page/PageNotFound";
 import Chatbox from "./Chatbox";
+import Util from "../apis/Util";
 // import LogInFirst from "./LogInFirst";
 const About = () => <h1>About</h1>;
 const LogInFirst = () => {
@@ -70,6 +71,14 @@ class App extends Component {
       return false;
     }
   }
+  isVerifiedTutor = async () => {
+    if (this.isTutor()) {
+      let data = await Util.getProfile();
+      return data.verifyStatus;
+    } else {
+      return false;
+    }
+  };
   render() {
     return (
       <Router history={history}>
@@ -85,22 +94,28 @@ class App extends Component {
           <Route path="/profile/edit" component={this.getPage(EditProfile)} />
           <Route
             path="/profile/verify"
-            component={this.isTutor() ? this.getPage(VerifyPage) : PageNotFound}
+            component={
+              !this.isVerifiedTutor() ? this.getPage(VerifyPage) : PageNotFound
+            }
           />
           <Route
             path="/profile/premium"
             component={
-              this.isTutor() ? this.getPage(PremiumPage) : PageNotFound
+              this.isVerifiedTutor() ? this.getPage(PremiumPage) : PageNotFound
             }
           />
           <Route path="/profile" component={Profile} />
           <Route
             path="/course/edit"
-            component={this.isTutor() ? this.getPage(EditCourse) : PageNotFound}
+            component={
+              this.isVerifiedTutor() ? this.getPage(EditCourse) : PageNotFound
+            }
           />
           <Route
             path="/course/create"
-            component={this.isTutor() ? this.getPage(NewCourse) : PageNotFound}
+            component={
+              this.isVerifiedTutor() ? this.getPage(NewCourse) : PageNotFound
+            }
           />
           <Route path="/course" component={this.getPage(CourseInformation)} />
           <Route path="/mycourse" component={this.getPage(MyCourse)} />
