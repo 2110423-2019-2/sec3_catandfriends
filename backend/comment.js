@@ -392,10 +392,10 @@ async function checkPostInput(topic, text, star) {
     let p = (parseFloat(star.slice(0, 3)) * 10) % 5;
 
     if (star.length > 3) {
-      msg = "Star must has 0.5 precision";
+      msg = "Star must have 0.5 precision";
       isValid = false;
     } else if (!!p) {
-      msg = "Star must has 0.5 precision";
+      msg = "Star must have 0.5 precision";
       isValid = false;
     }
   }
@@ -431,10 +431,10 @@ async function checkPutInput(topic, text, star) {
     let p = (parseFloat(star.slice(0, 3)) * 10) % 5;
 
     if (star.length > 3) {
-      msg = "Star must has 0.5 precision";
+      msg = "Star must have 0.5 precision";
       isValid = false;
     } else if (!!p) {
-      msg = "Star must has 0.5 precision";
+      msg = "Star must have 0.5 precision";
       isValid = false;
     }
   }
