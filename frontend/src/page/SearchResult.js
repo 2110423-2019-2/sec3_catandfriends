@@ -22,6 +22,7 @@ export default class SearchResult extends Component {
             <div
               className="col-md-9"
               align="center"
+              style={{ maxWidth: "1200px" }}
             >
               <div className="row justify-content-center">
                 <div
@@ -30,14 +31,15 @@ export default class SearchResult extends Component {
                     marginTop: "20px",
                     padding: "5px 15px",
                     textAlign: "center",
+                    color: "black",
                     backgroundColor: "rgba(255,255,255,0.3)",
                     borderRadius: "12px",
                   }}
                 >
-                  {"Search Result: Loading..."}
+                  {"Search Result: Loading"}
                 </div>
               </div>
-              <CourseCardLayout data={[]} />
+              <CourseCardLayout data={this.state.data} />
             </div>
           </div>
         </div>
