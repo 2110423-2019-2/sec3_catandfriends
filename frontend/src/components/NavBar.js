@@ -105,21 +105,35 @@ export class NavBar extends Component {
                   class="dropdown-menu navbar-box"
                   aria-labelledby="navbarDropdownMenuLink"
                 >
-                  <a class="dropdown-item textnormal" href="/profile">
-                    My Profile<span className="sr-only">(current)</span>
-                  </a>
-                  <a class="dropdown-item textnormal" href="/mycourse">
-                    {this.state.role == "tutor"
-                      ? "My Course & Request"
-                      : "My Course & Schedule"}
-                    <span className="sr-only">(current)</span>
-                  </a>
                   <a
                     class="dropdown-item textnormal"
-                    onClick={() => this.onClickNavBar("/chat")}
+                    onClick={() => this.onClickNavBar("/profile")}
                   >
-                    Chat <span class="sr-only">(current)</span>
+                    My Profile<span className="sr-only">(current)</span>
                   </a>
+                  {this.state.unverified ? (
+                    <div></div>
+                  ) : (
+                    <a
+                      class="dropdown-item textnormal"
+                      onClick={() => this.onClickNavBar("/mycourse")}
+                    >
+                      {this.state.role == "tutor"
+                        ? "My Course & Request"
+                        : "My Course & Schedule"}
+                      <span className="sr-only">(current)</span>
+                    </a>
+                  )}
+                  {this.state.unverified ? (
+                    <div></div>
+                  ) : (
+                    <a
+                      class="dropdown-item textnormal"
+                      onClick={() => this.onClickNavBar("/chat")}
+                    >
+                      Chat <span class="sr-only">(current)</span>
+                    </a>
+                  )}
                   <a
                     class="dropdown-item textnormal"
                     onClick={() => this.onClickNavBar("/logout")}
@@ -145,13 +159,14 @@ export class NavBar extends Component {
       </nav>
     );
   }
-  onClickNavBar = (page) => {
+  onClickNavBar = async (page) => {
     if (page == "/logout") {
-      localStorage.clear();
-      history.push("/home");
+      await localStorage.clear();
+      history.push("/blank");
       window.location.reload();
     } else {
       history.push(page);
+      // window.location.reload();
     }
   };
   async componentDidMount() {
@@ -162,6 +177,7 @@ export class NavBar extends Component {
         data,
         fullName: data.firstName + " " + data.lastName.substring(0, 1) + ".",
         role: data.role,
+        unverified: data.role == "tutor" && !data.verifyStatus,
       });
       console.log(this.state);
     }

@@ -6,7 +6,9 @@
 .logoImg:hover {
   transform: scale(1.2);
 }
-
+.navbar {
+  min-height: 80px !important;
+}
 .navbar-white {
   border: 0;
   border-radius: 0;
@@ -44,7 +46,9 @@
   font-size: 1.1em;
   font-weight: 500;
 }
-
+.navbar-nav > li > .dropdown-menu {
+  min-width: 220px;
+}
 .navbar-nav > li > .dropdown-menu .dropdown-item:hover {
   color: var(--white-color) !important;
   background: var(--black-color) !important;
