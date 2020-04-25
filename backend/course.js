@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const CourseModel = require("./models/course");
 const userModel = require("./models/user");
+const tutorModel = require("./models/tutor");
 const requestModel = require("./models/request");
 const ScheduleModel = require("./models/schedule");
 const set = require("./commonFunc/set");
@@ -179,6 +180,11 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   let tutorId = req.user._id;
+  const tutor = await tutorModel.findOne({userId:tutorId});
+  if (tutor.verifyStatus == false){
+    res.status(400).json("you must verify document first");
+    return;
+  }
   const payload = req.body;
   const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
   payload.createdTime = dateThailand._d;
