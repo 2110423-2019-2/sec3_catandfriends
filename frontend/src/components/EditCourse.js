@@ -731,10 +731,12 @@ export default class EditCourse extends Component {
   async componentDidMount() {
     console.log(window.location.search);
     let data = await Util.getCourseById(window.location.search.substring(10));
-    let startDate = new Date(data.startDate);
-    startDate = this.dateToYMD(startDate);
-    let endDate = new Date(data.endDate);
-    endDate = this.dateToYMD(endDate);
+    let startDate = data ? new Date(data.startDate) : "";
+    let endDate = data ? new Date(data.endDate) : "";
+    if (data) {
+      startDate = this.dateToYMD(startDate);
+      endDate = this.dateToYMD(endDate);
+    }
     this.setState(data);
     this.setState({
       startDate: startDate,
