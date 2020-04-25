@@ -17,15 +17,19 @@ export class StudentCTuProfile extends Component {
       gender: "MaleFeMale",
       email: "hahaha",
       PhoneNumber: "00000000",
-      bio: "my bio"
+      bio: "my bio",
     };
   }
   chat() {
     if (!this.state.me || !this.state.me.role) {
       return <div></div>;
-    } else if (this.state.me.role == "student") {
+    } else if (
+      this.state.me.role == "student" &&
+      this.props.data.verifyStatus
+    ) {
       return (
-        <button className="button-white width90"
+        <button
+          className="button-white width90"
           onClick={this.onClickChat}
           color="rgb(0, 255, 0)"
           textcolor="black"
