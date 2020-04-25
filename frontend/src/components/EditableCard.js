@@ -8,7 +8,7 @@ export default class EditableCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png"
+      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png",
     };
   }
 
@@ -29,7 +29,7 @@ export default class EditableCard extends React.Component {
       price,
       category,
       day,
-      duration
+      duration,
     } = this.props.detail;
     // console.log(this.props.detail);
     const fullname = this.props.detail.tutorName
@@ -47,7 +47,7 @@ export default class EditableCard extends React.Component {
               this.props.detail.courseImg
                 ? this.props.detail.courseImg
                 : this.state.logoDark
-            })`
+            })`,
           }}
           id="image"
           className="mcard-header"
@@ -75,14 +75,17 @@ export default class EditableCard extends React.Component {
           </div>
         </div>
         <div className="card-body mycard-body">
-          <h5 className="card-title mycard-title">{courseName}</h5>
+          <div className="mycard-title textheader">{courseName}</div>
           <p className="card-text tutorname">{fullname}</p>
-          <div align="center" style={{ marginBottom: "15px" }}>
-            <p className="card-text day border">{this.dayToString(day)}</p>
+          <div align="center" style={{ marginBottom: "5px" }}>
+            <textarea className="card-text day day-coursecard">
+              {this.dayToString(day)}
+            </textarea>
           </div>
           <CourseButton
+            className="width90"
             onClick={() => this.onClickGotoCourseInform(courseid)}
-            full={!this.props.detail.isAvailable}
+            full={!this.props.detail.amountOfStudent}
           >
             {this.props.detail.amountOfStudent +
               "/" +
@@ -94,7 +97,7 @@ export default class EditableCard extends React.Component {
       </div>
     );
   }
-  onClickGotoCourseInform = courseId => {
+  onClickGotoCourseInform = (courseId) => {
     history.push(`/course?courseId=${courseId}`);
   };
 }

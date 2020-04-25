@@ -14,30 +14,33 @@ export default class RequestScrollBar extends Component {
     data = await Util.getRequests(this.props.tutorId);
     this.setState({ data });
     console.log(data);
+    window.location.reload();
     //add student to class
   };
 
   render() {
     if (this.state.data) {
       return (
-        <div className="card" data-spy="scroll" id="overflowTest">
-          <h5 align="center">Request List</h5>
-          {this.state.data.map(item => {
+        <div className="requestCard background-color-trans">
+          {this.state.data.map((item) => {
             if (item.status === 0) {
               return (
-                <table class="table table-borderless" key={item.requestId}>
-                  <td>
+                <div
+                  className="row justify-content-center tableR inside-block"
+                  key={item.requestId}
+                >
+                  <div className="col-md-4 justify-content-center">
                     <a href={`/profile?userId=${item.studentId}`}>
                       {item.studentName}
                     </a>
-                  </td>
-                  <td>
-                    <label>{item.courseName}</label>
-                  </td>
-                  <td>
+                  </div>
+                  <div className="col-md-4 justify-content-center textnormal">
+                    <div>{item.courseName}</div>
+                  </div>
+                  <div className="col-md-2 justify-content-center">
                     <button
                       type="button"
-                      className="btn btn-success"
+                      className="btn btn-success btn-block"
                       onClick={() =>
                         this.handleButton(
                           item.requestId,
@@ -49,11 +52,11 @@ export default class RequestScrollBar extends Component {
                     >
                       Accept
                     </button>
-                  </td>
-                  <td>
+                  </div>
+                  <div className="col-md-2 justify-content-center">
                     <button
                       type="button"
-                      className="btn btn-danger"
+                      className="btn btn-danger btn-block"
                       onClick={() =>
                         this.handleButton(
                           item.requestId,
@@ -65,15 +68,19 @@ export default class RequestScrollBar extends Component {
                     >
                       Reject
                     </button>
-                  </td>
-                </table>
+                  </div>
+                </div>
               );
             }
           })}
         </div>
       );
     } else {
-      return <div>...Loading</div>;
+      return (
+        <div className="requestCard background-color-trans">
+          {/* <h5 align="center">Request List</h5> */}
+        </div>
+      );
     }
   }
 

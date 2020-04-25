@@ -3,19 +3,14 @@ import TutorPage from "../page/TutorPage";
 import StudentPage from "../page/StudentPage";
 import Util from "../apis/Util";
 
-export class Home extends Component {
+export class Profile extends Component {
   state = { data: {} };
 
   render() {
     // window.location.reload();
     console.log(this.state.data);
     if (!this.state.data.role) {
-      return (
-        <div>
-          {/* <div>Loading...</div> */}
-          <div></div>
-        </div>
-      );
+      return <div className="justify-content-center"></div>;
     } else {
       if (this.state.data.role == "tutor") {
         return (
@@ -40,4 +35,4 @@ export class Home extends Component {
   }
 }
 
-export default Home;
+export default Profile;

@@ -15,23 +15,30 @@ export class Login extends Component {
 
   render() {
     return (
-      <div className="whole justify-content-center">
-        <div className="container-flex login">
+      <div className="justify-content-center">
+        <div className="row">
+          <div className="container-flex justify-content-center" style={{margin: "auto"}}>
+          <img
+            src="https://s3-ap-southeast-1.amazonaws.com/img-in-th/65614bbe7828a059d67aba5eb33639ff.png"
+            style={{ maxWidth: "250px", maxHeight: "210px"}}
+          />
+          </div>
+        </div>
+        <div className="container-flex homebox-login justify-content-center" style={{margin: "auto"}}>
           <form onSubmit={event => this.onClickLogin(event)}>
             <div className="row">
               <div className="col-md-12" style={{ marginBottom: "20px" }}>
-                <h2>Welcome!</h2>
+                <div className="textshadow" style={{ textAlign: "center" }}>
+                  WELCOME
+                </div>
               </div>
             </div>
             <div className="row">
-              <div className="col-md-3">
-                <h5>Email:</h5>
-              </div>
-              <div className="col-md-9">
+              <div className="col-md-12">
                 <input
                   type="email"
                   id="email"
-                  placeholder="email"
+                  placeholder="Email Address"
                   className="field"
                   value={this.state.email}
                   onChange={e => {
@@ -41,15 +48,12 @@ export class Login extends Component {
                 />
               </div>
             </div>
-            <div className="row">
-              <div className="col-md-4">
-                <h5>Password:</h5>
-              </div>
-              <div className="col-md-8">
+            <div className="row" style={{ marginTop: "10px" }}>
+              <div className="col-md-12">
                 <input
                   type="password"
                   id="password"
-                  placeholder="password"
+                  placeholder="Password"
                   value={this.state.password}
                   // onKeyDown={this.handleOnKeyDown}
                   className="field"
@@ -60,12 +64,12 @@ export class Login extends Component {
                 />
               </div>
             </div>
-            <div className="row" style={{ marginTop: "10px" }}>
-              <div class="col-md-12" align="right">
+            <div className="row" style={{ marginTop: "30px" }}>
+              <div class="col-md-12" align="center">
                 <button
                   id="submit"
                   type="submit"
-                  class="btn btn-success loginBtn"
+                  class="button-white"
                 >
                   Log In
                 </button>
@@ -88,7 +92,7 @@ export class Login extends Component {
       this.setState({ password: "" });
     } else {
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", data.user);
+      localStorage.setItem("user", JSON.stringify(data.user));
       console.log(data);
       history.push("/profile");
       window.location.reload();

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Util from "../apis/Util";
 import history from "../history";
+import "./TutorPage.css";
 import EditStudentProfile from "../components/EditStudentProfile";
 import EditTutorProfile from "../components/EditTutorProfile";
 export default class EditProfile extends Component {
@@ -13,13 +14,21 @@ export default class EditProfile extends Component {
     let tt;
     if (!this.state.data) {
       tt = <div></div>;
-    } else if ((this.state.data.role = "tutor")) {
+    } else if (this.state.data.role == "tutor") {
       tt = <EditTutorProfile />;
-    } else if ((this.state.data.role = "student")) {
+    } else if (this.state.data.role == "student") {
       tt = <EditStudentProfile />;
     }
     // console.log(this.state.data);
-    return <p>{tt}</p>;
+    return (
+      <div className="justify-content-center">
+        <div className="row">
+          <div className="col-md-12" align="center">
+            {tt}
+          </div>
+        </div>
+      </div>
+    );
   }
   async componentDidMount() {
     // console.log(window.location.search);

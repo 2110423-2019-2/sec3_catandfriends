@@ -12,17 +12,20 @@ export default class StudentPage extends Component {
       console.log(this.props.owner);
       return (
         <div className="justify-content-center">
-          <div className="row justify-content-center">
-            <MyStudentCard data={this.props.data} />
-            <EnrollSchedule userId={this.props.data._id} />
+          <div className="row">
+            <div className="col-md-12" align="center">
+              <MyStudentCard data={this.props.data} />
+            </div>
           </div>
         </div>
       );
     } else {
       return (
         <div className="justify-content-center">
-          <div className="row justify-content-center">
-            <StudentCard data={this.props.data} />
+          <div className="row">
+            <div className="col-md-12" align="center">
+              <StudentCard data={this.props.data} />
+            </div>
           </div>
         </div>
       );

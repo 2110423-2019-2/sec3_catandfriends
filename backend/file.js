@@ -128,7 +128,6 @@ const storage = new GridFsStorage({
             console.log("No route");
             return reject(err);
         }
-
         resolve(fileInfo);
       });
     });
@@ -139,6 +138,10 @@ const upload = multer({ storage });
 router.get('/verifyFile', async (req, res) => {
   const tutorId = req.query.tutorId;
   const userId = req.user._id;
+  if (!tutorId) {
+    res.status(400).json({ err: 'bad request' });
+    return;
+  }
 
   let owner = tutorId == userId ? true : false;
   let admin = await UserModel.countDocuments({
@@ -170,6 +173,10 @@ router.get('/verifyFile', async (req, res) => {
 router.get('/paymentFile/verify', async (req, res) => {
   const tutorId = req.query.tutorId;
   const userId = req.user._id;
+  if (!tutorId) {
+    res.status(400).json({ err: 'bad request' });
+    return;
+  }
 
   let owner = tutorId == userId ? true : false;
   let admin = await UserModel.countDocuments({
@@ -201,6 +208,10 @@ router.get('/paymentFile/verify', async (req, res) => {
 router.get('/paymentFile/premium', async (req, res) => {
   const tutorId = req.query.tutorId;
   const userId = req.user._id;
+  if (!tutorId) {
+    res.status(400).json({ err: 'bad request' });
+    return;
+  }
 
   let owner = tutorId == userId ? true : false;
   let admin = await UserModel.countDocuments({
@@ -231,6 +242,10 @@ router.get('/paymentFile/premium', async (req, res) => {
 
 router.get('/images/user', async (req, res) => {
   const userId = req.query.userId;
+  if (!userId) {
+    res.status(400).json({ err: 'bad request' });
+    return;
+  }
 
   let userInfo = await UserModel.findOne({
     _id: userId,
@@ -247,7 +262,20 @@ router.get('/images/user', async (req, res) => {
     readstream.pipe(res);
     res.status(200);
   });
+});
 
+router.get('/images/qrcode', async (req, res) => {
+  const filename = 'qrcode.png';
+  imagesGFS.files.findOne({ filename: filename }, (err, file) => {
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exist'
+      });
+    }
+    const readstream = imagesGFS.createReadStream(file.filename);
+    readstream.pipe(res);
+    res.status(200);
+  });
 });
 
 router.post(VERIFY_DOCUMENTS_PATH, upload.single('file'), (req, res) => {

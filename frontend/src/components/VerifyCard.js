@@ -18,11 +18,19 @@ export default class VerifyCard extends Component {
     });
   };
   onClickHandler = () => {
+    if (!this.state.selectedFile) {
+      alert("Please select a file");
+      return;
+    }
+    if (this.state.selectedFile.type !== 'application/pdf') {
+      alert("Not a PDF");
+      return;
+    }
     const data = new FormData();
     data.append("file", this.state.selectedFile);
     axios
       .post(
-        `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem("token")}`,
+        `http://localhost:8000/file/verifyFile/upload?token=${localStorage.getItem("token")}`,
         data,
         {
           // receive two    parameter endpoint url ,form data
@@ -31,6 +39,7 @@ export default class VerifyCard extends Component {
       .then(res => {
         // then print response status
         console.log(res.statusText);
+        alert("Uploaded");
       });
   };
   render() {
@@ -47,6 +56,7 @@ export default class VerifyCard extends Component {
               onChange={this.onChangeHandler}
             />
             <button
+              id="upload"
               type="button"
               className="btn btn-block btn-success btn-sm p-1"
               onClick={this.onClickHandler}

@@ -41,7 +41,7 @@ export class Register extends Component {
     return (
       <div
         className="card mb-3 p-4 bg-light border-secondary mb-1 "
-        style={{ maxWidth: 800 }}
+        style={{ maxWidth: 800}}
       >
         <h3 className="card-title border text-center bg-dark text-white ">
           Create an account
