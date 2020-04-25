@@ -32,6 +32,12 @@ const LogInAlready = () => {
 };
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { data: {} };
+  }
+
   getPage(page) {
     if (!localStorage.getItem("token")) {
       return LogInFirst;
@@ -53,32 +59,6 @@ class App extends Component {
       return SearchResult;
     }
   }
-  isStudent() {
-    if (!localStorage.getItem("token")) {
-      return false;
-    } else if (JSON.parse(localStorage.getItem("user")).role == "student") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  isTutor() {
-    if (!localStorage.getItem("token")) {
-      return false;
-    } else if (JSON.parse(localStorage.getItem("user")).role == "tutor") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  isVerifiedTutor = async () => {
-    if (this.isTutor()) {
-      let data = await Util.getProfile();
-      return data.verifyStatus;
-    } else {
-      return false;
-    }
-  };
   render() {
     return (
       <Router history={history}>
@@ -95,26 +75,34 @@ class App extends Component {
           <Route
             path="/profile/verify"
             component={
-              !this.isVerifiedTutor() ? this.getPage(VerifyPage) : PageNotFound
+              !this.state.isVerifiedTutor
+                ? this.getPage(VerifyPage)
+                : PageNotFound
             }
           />
           <Route
             path="/profile/premium"
             component={
-              this.isVerifiedTutor() ? this.getPage(PremiumPage) : PageNotFound
+              this.state.isVerifiedTutor
+                ? this.getPage(PremiumPage)
+                : PageNotFound
             }
           />
           <Route path="/profile" component={Profile} />
           <Route
             path="/course/edit"
             component={
-              this.isVerifiedTutor() ? this.getPage(EditCourse) : PageNotFound
+              this.state.isVerifiedTutor
+                ? this.getPage(EditCourse)
+                : PageNotFound
             }
           />
           <Route
             path="/course/create"
             component={
-              this.isVerifiedTutor() ? this.getPage(NewCourse) : PageNotFound
+              this.state.isVerifiedTutor
+                ? this.getPage(NewCourse)
+                : PageNotFound
             }
           />
           <Route path="/course" component={this.getPage(CourseInformation)} />
@@ -125,6 +113,15 @@ class App extends Component {
         </Switch>
       </Router>
     );
+  }
+  async componentDidMount() {
+    let data = await Util.getProfile();
+    this.setState({ data: data });
+    this.setState({ isTutor: data && data.role == "tutor" });
+    this.setState({ isStudent: data && data.role == "student" });
+    this.setState({
+      isVerifiedTutor: data && data.role == "tutor" && data.verifyStatus,
+    });
   }
 }
 
