@@ -94,3 +94,6 @@
   resize: none; */
   border-right: 3px double rgb(215, 215, 215);
 }
+.margintop {
+  margin-top: 20px;
+}

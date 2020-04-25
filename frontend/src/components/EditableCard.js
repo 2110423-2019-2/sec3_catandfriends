@@ -83,7 +83,7 @@ export default class EditableCard extends React.Component {
             </textarea>
           </div>
           <CourseButton
-            className="width90"
+            className="width90 margintop"
             onClick={() => this.onClickGotoCourseInform(courseid)}
             full={!this.props.detail.amountOfStudent}
           >

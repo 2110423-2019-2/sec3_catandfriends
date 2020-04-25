@@ -76,7 +76,7 @@ class CourseCard extends React.Component {
             </textarea>
           </div>
           <CourseButton
-            className="width90"
+            className="width90 margintop"
             full={!this.props.detail.amountOfStudent}
           >
             {this.props.detail.amountOfStudent +

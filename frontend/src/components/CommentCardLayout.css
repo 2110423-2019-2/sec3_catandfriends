@@ -3,7 +3,7 @@
   max-width: 900px;
   height: auto !important;
   /* max-height: 270px; */
-  margin: 0px 20px;
+  margin: 10px 20px;
   background-color: var(--white-color-trans) !important;
   padding-right: 30px;
   padding-left: 30px;
@@ -12,10 +12,10 @@
   border-radius: 10px;
   box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
     1px 3px 8px rgba(39, 44, 49, 0.03);
-  -moz-transition: all .1s ease-in;
-  -o-transition: all .1s ease-in;
-  -webkit-transition: all .1s ease-in;
-  transition: all .1s ease-in !important;
+  -moz-transition: all 0.1s ease-in;
+  -o-transition: all 0.1s ease-in;
+  -webkit-transition: all 0.1s ease-in;
+  transition: all 0.1s ease-in !important;
 }
 .arrowBtn {
   width: 35px !important;
