@@ -62,54 +62,57 @@ router.put("/", async (req, res) => {
   const userId = req.user._id;
   profile = await userModel.findById(userId);
   const payload = req.body;
-  if(payload.role != undefined){
+  if (payload.role != undefined) {
     res.status(400).json("you can't change your role");
-    return ;
+    return;
   }
-  if(payload.ssn != undefined){
+  if (payload.ssn != undefined) {
     res.status(400).json("you can't chage your ssn");
-    return ;
+    return;
   }
-  if(payload.email != undefined){
+  if (payload.email != undefined) {
     res.status(400).json("you can't chage your email");
-    return ;
+    return;
   }
-  if(payload.password != undefined){
+  if (payload.password != undefined) {
     res.status(400).json("you can't chage your password");
-    return ;
+    return;
   }
-  if(payload.birthDate != undefined){
+  if (payload.birthDate != undefined) {
     res.status(400).json("you can't chage your birthDate");
-    return ;
+    return;
   }
-  if(payload.verified != undefined){
+  if (payload.verified != undefined) {
     res.status(400).json("you can't chage your verification");
-    return ;
+    return;
   }
-  if(payload.firstName!= undefined &&payload.firstName.length > 32){
+  if (payload.firstName != undefined && payload.firstName.length > 32) {
     res.status(400).json("your first name is too long");
-    return ;
+    return;
   }
-  if(payload.lastName!= undefined && payload.lastName.length > 32){
+  if (payload.lastName != undefined && payload.lastName.length > 32) {
     res.status(400).json("your last name is too long");
-    return ;
+    return;
   }
-  if(payload.phoneNumber!=undefined){
-    if(/^[0-9]+$/.test(payload.phoneNumber)==false || payload.phoneNumber.length!=10){
+  if (payload.phoneNumber != undefined) {
+    if (
+      /^[0-9]+$/.test(payload.phoneNumber) == false ||
+      payload.phoneNumber.length != 10
+    ) {
       res.status(400).json("your phone number must be 10 digit");
-      return ;
+      return;
     }
-    
   }
-  if(payload.gender != "Female" || payload.gender != "Male"){
+  console.log(payload.gender);
+
+  if (payload.gender !== "Female" && payload.gender !== "Male") {
     res.status(400).json("your gender can only be Female or Male");
-      return ;
+    return;
   }
   await userModel.updateOne({ _id: userId }, { $set: payload });
   await profile.save();
   console.log("after update");
   console.log(profile);
   res.status(201).json("update complete");
-
 });
 module.exports = router;
