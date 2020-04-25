@@ -52,10 +52,10 @@ const Util = {
     if (response.status == 200) return response.json();
   },
   getProfile: async (userId) => {
-    // if (!localStorage.getItem("token")) {
-    //   window.alert("Please login first!");
-    //   return history.push("./login");
-    // }
+    if (!localStorage.getItem("token")) {
+      // window.alert("Please login first!");
+      return null;
+    }
     console.log(userId);
     const URL = userId
       ? `http://localhost:8000/profile?userId=${userId}&token=${localStorage.getItem(

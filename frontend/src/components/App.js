@@ -18,19 +18,24 @@ import PremiumPage from "../page/PremiumPage";
 import PageNotFound from "../page/PageNotFound";
 import Chatbox from "./Chatbox";
 import Util from "../apis/Util";
+import { ThemeConsumer } from "styled-components";
 // import LogInFirst from "./LogInFirst";
 const About = () => <h1>About</h1>;
 const LogInFirst = () => {
-  alert("Please Log in first");
+  // alert("Please Log in first");
   history.push("/login");
   return <div></div>;
 };
 const LogInAlready = () => {
-  alert("You are already logged in");
+  // alert("You are already logged in");
   history.push("/profile");
   return <div></div>;
 };
-
+const VerifyFirst = () => {
+  window.alert("You have to verify first");
+  // history.push("/profile");
+  return <Profile />;
+};
 class App extends Component {
   constructor(props) {
     super(props);
@@ -38,28 +43,81 @@ class App extends Component {
     this.state = { data: {} };
   }
 
-  getPage(page) {
-    if (!localStorage.getItem("token")) {
-      return LogInFirst;
+  notlogin = () => {
+    return !localStorage.getItem("token");
+  };
+  tutor = () => {
+    if (localStorage.getItem("token")) {
+      return JSON.parse(localStorage.getItem("user")).role == "tutor";
     } else {
-      return page;
+      return false;
     }
-  }
-  alreadylogin(page) {
-    if (!localStorage.getItem("token")) {
-      return page;
+  };
+  verifiedTuror = async () => {
+    if (localStorage.getItem("token")) {
+      let data = await Util.getProfile();
+      return data.role == "tutor" && data.verifyStatus;
     } else {
-      return LogInAlready;
+      return false;
     }
-  }
-  homePage() {
-    if (!localStorage.getItem("token")) {
-      return Home;
+  };
+  user = () => {
+    return localStorage.getItem("token");
+  };
+  student = () => {
+    if (localStorage.getItem("token")) {
+      return JSON.parse(localStorage.getItem("user")).role == "student";
     } else {
-      return SearchResult;
+      return false;
     }
-  }
+  };
   render() {
+    return (
+      <Router history={history}>
+        <NavBar />
+        <Switch>
+          {this.notlogin() && <Route path="/login" component={Login} />}
+          {this.notlogin() && <Route path="/home" component={Home} />}
+          {this.notlogin() && <Route path exact="/" component={Home} />}
+          {this.student() && <Route path="/chat" component={Chatbox} />}
+          {this.verifiedTuror() && <Route path="/chat" component={Chatbox} />}
+          {this.tutor() && !this.verifiedTuror() && (
+            <Route path="/profile/verify" component={VerifyPage} />
+          )}
+          {this.verifiedTuror() && (
+            <Route path="/profile/premium" component={PremiumPage} />
+          )}
+          {this.verifiedTuror() && (
+            <Route path="/course/create" component={NewCourse} />
+          )}
+          {this.verifiedTuror() && (
+            <Route path="/course/edit" component={EditCourse} />
+          )}
+          {this.user() && (
+            <Route path="/profile/edit" component={EditProfile} />
+          )}
+          {this.user() && <Route path="/profile" component={Profile} />}
+          {this.user() && (
+            <Route path="/course" component={CourseInformation} />
+          )}
+          {this.verifiedTuror() && (
+            <Route path="/mycourse" component={MyCourse} />
+          )}
+          {this.student() && <Route path="/mycourse" component={MyCourse} />}
+          {this.user() && <Route path="/home" component={SearchResult} />}
+          {this.user() && <Route path exact="/" component={SearchResult} />}
+          {/* {this.tutor() && !this.verifiedTuror() && (
+            <Route path="/mycourse" component={VerifyFirst} />
+          )}
+          {this.tutor() && !this.verifiedTuror() && (
+            <Route path="/chat" component={VerifyFirst} />
+          )} */}
+          <Route path="/blank" component={Home} />
+        </Switch>
+      </Router>
+    );
+  }
+  render2() {
     return (
       <Router history={history}>
         <NavBar />
@@ -68,60 +126,24 @@ class App extends Component {
               path="/register"
               component={this.alreadylogin(RegisterPage)}
             /> */}
-          <Route path="/chat" component={this.getPage(Chatbox)} />
-          <Route path="/login" component={this.alreadylogin(Login)} />
           {/* <Route path="/search" component={this.getPage(SearchResult)} /> */}
-          <Route path="/profile/edit" component={this.getPage(EditProfile)} />
-          <Route
-            path="/profile/verify"
-            component={
-              !this.state.isVerifiedTutor && this.state.isTutor
-                ? this.getPage(VerifyPage)
-                : PageNotFound
-            }
-          />
-          <Route
-            path="/profile/premium"
-            component={
-              this.state.isVerifiedTutor
-                ? this.getPage(PremiumPage)
-                : PageNotFound
-            }
-          />
+
+          <Route path="/chat" component={Chatbox} />
+          <Route path="/login" component={Login} />
+          <Route path="/profile/edit" component={EditProfile} />
+          <Route path="/profile/verify" component={VerifyPage} />
+          <Route path="/profile/premium" component={PremiumPage} />
           <Route path="/profile" component={Profile} />
-          <Route
-            path="/course/edit"
-            component={
-              this.state.isVerifiedTutor
-                ? this.getPage(EditCourse)
-                : PageNotFound
-            }
-          />
-          <Route
-            path="/course/create"
-            component={
-              this.state.isVerifiedTutor
-                ? this.getPage(NewCourse)
-                : PageNotFound
-            }
-          />
-          <Route path="/course" component={this.getPage(CourseInformation)} />
-          <Route path="/mycourse" component={this.getPage(MyCourse)} />
-          <Route path="/home" component={this.homePage()} />
-          <Route path exact="/" component={this.homePage()} />
+          <Route path="/course/edit" component={EditCourse} />
+          <Route path="/course/create" component={NewCourse} />
+          <Route path="/course" component={CourseInformation} />
+          <Route path="/mycourse" component={MyCourse} />
+          <Route path="/home" component={Home} />
+          <Route path exact="/" component={Home} />
           <Route component={PageNotFound} />
         </Switch>
       </Router>
     );
-  }
-  async componentDidMount() {
-    let data = await Util.getProfile();
-    this.setState({ data: data });
-    this.setState({ isTutor: data && data.role == "tutor" });
-    this.setState({ isStudent: data && data.role == "student" });
-    this.setState({
-      isVerifiedTutor: data && data.role == "tutor" && data.verifyStatus,
-    });
   }
 }
 
