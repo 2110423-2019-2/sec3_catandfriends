@@ -3,7 +3,8 @@
   max-width: 900px;
   height: auto !important;
   /* max-height: 270px; */
-  margin: 10px 20px;
+  margin: 0px 20px;
+  margin-bottom: 15px;
   background-color: var(--white-color-trans) !important;
   padding-right: 30px;
   padding-left: 30px;

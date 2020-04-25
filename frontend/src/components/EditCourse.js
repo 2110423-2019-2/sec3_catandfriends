@@ -288,6 +288,12 @@ export default class EditCourse extends Component {
   }
 
   render() {
+    if (this.state.amountOfStudent < this.state.totoalAmountOfStudent) {
+      alert(
+        "There is a student enrolled this course, you are not able to edit the course"
+      );
+      history.push("/mycourse");
+    }
     return (
       <div className="justify-content-center">
         <div className="row">

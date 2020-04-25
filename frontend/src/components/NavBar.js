@@ -86,7 +86,7 @@ export class NavBar extends Component {
               <li className="nav-item dropdown">
                 {this.state.fullName ? (
                   <button
-                    className="dropdown-toggle button-white"
+                    className="dropdown-toggle accountbtn button-white"
                     style={{ width: "fit-content !important" }}
                     href="#"
                     id="navbarDropdownMenuLink"
