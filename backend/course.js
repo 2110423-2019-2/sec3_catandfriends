@@ -120,6 +120,7 @@ router.get("/", async (req, res) => {
     let course = await CourseModel.find({ tutorId: tutorId });
     if (course.length == 0) {
       res.json([]);
+      return;
     } else {
       for (let i = 0; i < course.length; i++) {
         let err, tutor;
@@ -130,6 +131,7 @@ router.get("/", async (req, res) => {
         );
         if (err) {
           res.status(500).end();
+          return;
         }
         course[i].premiumTutorStatus = tutor.premiumStatus;
         let tutorName = tutor.firstName + " " + tutor.lastName;
