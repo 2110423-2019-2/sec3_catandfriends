@@ -201,7 +201,7 @@ export class TutorProfile extends Component {
                           PREMIUM
                         </span>
                       ) : (
-                        <span style={{ fontWeight: "bold", color: "black" }}>
+                        <span className="text-color" style={{ fontWeight: "bold" }}>
                           STANDARD
                         </span>
                       )}

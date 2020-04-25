@@ -18,7 +18,7 @@ export default class CourseInformation extends Component {
         <div className="justify-content-center">
           <div className="row justify-content-center">
             <div
-              className="inside-block textheader"
+              className="insidetrans-block textheader"
               style={{
                 padding: "5px 15px",
                 margin: "30px",
