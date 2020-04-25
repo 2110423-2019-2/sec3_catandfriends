@@ -75,7 +75,7 @@ class App extends Component {
           <Route
             path="/profile/verify"
             component={
-              !this.state.isVerifiedTutor
+              !this.state.isVerifiedTutor && this.state.isTutor
                 ? this.getPage(VerifyPage)
                 : PageNotFound
             }
