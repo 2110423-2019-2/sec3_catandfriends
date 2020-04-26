@@ -17,7 +17,7 @@ passport.use(
     {
       usernameField: "email",
       passwordField: "password",
-      passReqToCallback: true
+      passReqToCallback: true,
     },
     async (req, email, password, done) => {
       try {
@@ -28,7 +28,7 @@ passport.use(
           birthDate,
           gender,
           phoneNumber,
-          role
+          role,
         } = req.body;
         const hash = await bcrypt.hash(password, 10);
         //Save the information provided by the user to the the database
@@ -41,7 +41,7 @@ passport.use(
           birthDate,
           gender,
           phoneNumber,
-          role
+          role,
         });
         if (role == "tutor") {
           const tutor = await tutorModel.create({ userId: user._id });
@@ -50,25 +50,25 @@ passport.use(
           const schedule = await scheduleModel.create({
             studentId: user._id,
             createdDate: dateThailand._d,
-            lastModified: dateThailand._d
+            lastModified: dateThailand._d,
           });
           const student = await studentModel.create({
             userId: user._id,
-            scheduleId: schedule._id
+            scheduleId: schedule._id,
           });
         }
 
         var transporter = nodemailer.createTransport({
           service: "gmail",
-          auth: { user: process.env.EMAIL, pass: process.env.MAILPASSWORD }
+          auth: { user: process.env.EMAIL, pass: process.env.MAILPASSWORD },
         });
         var mailOptions = {
           from: process.env.EMAIL,
           to: user.email,
           subject: "Verify Your Email",
-          text: `Please click this link to verify your account\nhttp://localhost:8000/verify?email=${user.email}&hash=${hash}`
+          text: `Please click this link to verify your account\nhttp://localhost:8000/verify?email=${user.email}&hash=${hash}`,
         };
-        transporter.sendMail(mailOptions, function(error, info) {
+        transporter.sendMail(mailOptions, function (error, info) {
           if (error) {
             return error;
           } else {
@@ -96,7 +96,7 @@ passport.use(
   new localStrategy(
     {
       usernameField: "email",
-      passwordField: "password"
+      passwordField: "password",
     },
     async (email, password, done) => {
       try {
@@ -105,7 +105,7 @@ passport.use(
         if (!user) {
           //If the user isn't found in the database, return a message
           return done({ errmsg: "User not found" }, false, {
-            message: "User not found"
+            message: "User not found",
           });
         }
         //Validate password and make sure it matches with the corresponding hash stored in the database
@@ -113,19 +113,19 @@ passport.use(
         const validate = await user.isValidPassword(password);
         if (!validate) {
           return done({ errmsg: "Wrong Password" }, false, {
-            message: "Wrong Password"
+            message: "Wrong Password",
           });
         }
         if (!user.verified) {
           return done({ errmsg: "Plese verify your account" }, false, {
-            message: "Plese verify your account"
+            message: "Plese verify your account",
           });
         }
         //Send the user information to the next middleware
-        console.log("aaaa");
+        // console.log("aaaa");
 
         return done(null, user, {
-          message: "Logged in Successfully"
+          message: "Logged in Successfully",
         });
       } catch (error) {
         return done(error);
@@ -141,7 +141,7 @@ passport.use(
       //secret we used to sign our JWT
       secretOrKey: "top_secret",
       //we expect the user to send the token as a query parameter with the name 'secret_token'
-      jwtFromRequest: ExtractJWT.fromUrlQueryParameter("token")
+      jwtFromRequest: ExtractJWT.fromUrlQueryParameter("token"),
     },
     async (token, done) => {
       try {
@@ -161,7 +161,7 @@ passport.use(
       //secret we used to sign our JWT
       secretOrKey: "top_secret",
       //we expect the user to send the token as a query parameter with the name 'secret_token'
-      jwtFromRequest: ExtractJWT.fromUrlQueryParameter("token")
+      jwtFromRequest: ExtractJWT.fromUrlQueryParameter("token"),
     },
     async (token, done) => {
       try {

@@ -136,7 +136,9 @@ class App extends Component {
           )}
           {this.student() && <Route path="/mycourse" component={MyCourse} />}
 
-          {this.loggedIn() && <Route path exact="/" component={SearchResult} />}
+          {this.loggedIn() && (
+            <Route exact="true" path="/" component={SearchResult} />
+          )}
           <Route path="/pagenotfound" component={PageNotFound} />
           {/* {this.tutor() && !this.verifiedTuror() && (
             <Route path="/mycourse" component={VerifyFirst} />
@@ -145,7 +147,7 @@ class App extends Component {
             <Route path="/chat" component={VerifyFirst} />
           )} */}
           {!this.loggedIn() && <Route path="/signup" component={Home} />}
-          {!this.loggedIn() && <Route exact path="/" component={Home} />}
+          {!this.loggedIn() && <Route exact="true" path="/" component={Home} />}
         </Switch>
       </Router>
     );

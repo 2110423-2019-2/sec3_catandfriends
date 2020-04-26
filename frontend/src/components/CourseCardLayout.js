@@ -5,15 +5,15 @@ class CourseCardLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
     };
   }
   render() {
     return (
       <div className="container-fluid">
         <div className="row cardblock justify-content-center">
-          {this.state.data.map(item => (
-            <CourseCard detail={item} key={item._id.toString()} />
+          {this.state.data.map((item) => (
+            <CourseCard detail={item} key={item._id} />
           ))}
         </div>
       </div>

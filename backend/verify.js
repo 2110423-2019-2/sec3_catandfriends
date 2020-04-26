@@ -8,14 +8,14 @@ router.get("/", async (req, res, next) => {
     if (err) {
       res.send(err);
     } else {
-      console.log(user);
+      // console.log(user);
       if (user.password == req.query.hash) {
-        console.log("password mathced");
+        // console.log("password mathced");
         userModel.findOneAndUpdate(
           user.toObject(),
           { $set: { verified: true } },
           {
-            useFindAndModify: false
+            useFindAndModify: false,
           },
           (err, updatedUser) => {
             if (err) {

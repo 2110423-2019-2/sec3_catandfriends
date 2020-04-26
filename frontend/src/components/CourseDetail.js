@@ -85,7 +85,13 @@ export class CourseDetail extends Component {
               <div className="col-md-6 ">
                 <a
                   className="textshadow"
-                  href={`/profile?userId=${this.props.detail.tutorId}`}
+                  onClick={() => {
+                    history.push(
+                      `/profile?userId=${this.props.detail.tutorId}`
+                    );
+                  }}
+                  href="#"
+                  // href={`/profile?userId=${this.props.detail.tutorId}`}
                 >
                   {" by " + this.props.detail.tutorName}
                 </a>

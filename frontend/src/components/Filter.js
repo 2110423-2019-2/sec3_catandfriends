@@ -1,7 +1,7 @@
 import React from "react";
 import Util from "../apis/Util";
 import NormalButton from "./NormalButton";
-import "./Filter.css";
+// import "./Filter.css";
 function CheckboxTemplate(props) {
   return (
     <div>
@@ -406,7 +406,7 @@ class Filter extends React.Component {
           marginTop: "40px",
           top: "80px",
           border: "none",
-          position: "fixed",
+          position: "sticky",
         }}
       >
         <form onSubmit={this.handleSubmit} style={{ textAlign: "center" }}>
