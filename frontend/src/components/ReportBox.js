@@ -12,7 +12,7 @@ export default class TypeComment extends Component {
       <Popup
         trigger={
           <a>
-            <u>Report</u>
+            <u className="textnormal">Report</u>
           </a>
         }
         position="center center"
