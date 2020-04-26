@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./RequestScrollBar.css";
 import Util from "../apis/Util";
-
+import history from "../history";
 export default class RequestScrollBar extends Component {
   constructor(props) {
     super(props);
@@ -27,15 +27,27 @@ export default class RequestScrollBar extends Component {
               return (
                 <div
                   className="row justify-content-center tableR inside-block"
-                  key={item.requestId}
+                  key={item.requestId + item.courseId + item.studentId}
                 >
                   <div className="col-md-4 justify-content-center">
-                    <a href={`/profile?userId=${item.studentId}`}>
+                    <a
+                      onClick={() => {
+                        history.push(`/profile?userId=${item.studentId}`);
+                      }}
+                      href="#"
+                    >
                       {item.studentName}
                     </a>
                   </div>
                   <div className="col-md-4 justify-content-center textnormal">
-                    <div>{item.courseName}</div>
+                    <a
+                      onClick={() => {
+                        history.push(`/course?courseId=${item.courseId}`);
+                      }}
+                      href="#"
+                    >
+                      {item.courseName}
+                    </a>
                   </div>
                   <div className="col-md-2 justify-content-center">
                     <button
