@@ -1,7 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Merienda+One&display=swap");
 .logoImg {
-  width: 60px;
+  width: 40px;
+  transition: 0.6s;
+}
+.logoImg:hover {
+  transform: scale(1.2);
+}
+.navbar {
+  min-height: 85px !important;
+}
+.navbar-white {
+  border: 0;
+  border-radius: 0;
+  min-height: fit-content;
+  background: var(--white-color);
+  box-shadow: var(--navbarwhite-shadow-color);
+  transition: all 1s ease, padding 1s ease;
 }
 
-h1 {
-  color: green;
+.navbar-brand {
+  font-family: "Merienda One", cursive;
+  font-size: 1.6em !important;
+}
+.custom-toggler .navbar-toggler-icon {
+  background-image: var(--black-nav);
+}
+.custom-toggler.navbar-toggler {
+  border-color: var(--black-color);
+}
+.navbar-box {
+  -moz-transition: all 0.1s ease-in;
+  -o-transition: all 0.1s ease-in;
+  -webkit-transition: all 0.1s ease-in;
+  transition: all 0.1s ease-in;
+  border-radius: 10px;
+  background: var(--white-color-trans) !important;
+  box-shadow: var(--homebox-shadow-color) !important;
+}
+
+.brandName {
+  color: var(--black-color);
+}
+
+.nav-link {
+  font-size: 1.1em;
+  font-weight: 500;
+}
+.navbar-nav > li > .dropdown-menu {
+  min-width: 220px;
+}
+.navbar-nav > li > .dropdown-menu .dropdown-item:hover {
+  color: var(--white-color) !important;
+  background: var(--black-color) !important;
+}
+
+.avatar {
+  margin: 2px;
+  width: 20px;
+  height: 20px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
 }

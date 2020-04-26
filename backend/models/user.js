@@ -51,7 +51,7 @@ const userSchema = new Schema(
     profileImage: {
       type: String,
       unique: true,
-      sparse: true,
+      // sparse: true,
       default: null
     }
   },

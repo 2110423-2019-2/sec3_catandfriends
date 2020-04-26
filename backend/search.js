@@ -1,44 +1,27 @@
 const express = require("express");
 const router = express.Router();
+const moment = require("moment-timezone");
+const to = require("await-to-js").default;
 const CourseModel = require("./models/course");
 const tutorModel = require("./models/tutor");
 const userModel = require("./models/user");
-const moment = require("moment-timezone");
-const to = require("await-to-js").default;
-
-function formatTime(time) {
-  let timeS = time.toString();
-  if (timeS.includes(".")) {
-    hour = timeS.slice(0, timeS.indexOf("."));
-    min = timeS.slice(timeS.indexOf(".") + 1, timeS.length);
-  } else {
-    hour = timeS;
-    min = "0";
-  }
-  if (hour.length == 1) hour = "0" + hour;
-  if (min.length == 1) min = min + "0";
-  return hour + ":" + min;
-}
-
-function formatRangeOfTime(start, end) {
-  return formatTime(start) + "-" + formatTime(end);
-}
+const format = require("./commonFunc/format");
 
 router.get("/", async (req, res) => {
   let category =
-    req.query.category == undefined || req.query.category == "0000"
+    req.query.category === undefined || req.query.category == "0000"
       ? "1111"
       : req.query.category;
   let price =
-    req.query.price == undefined || req.query.price == "00000"
+    req.query.price === undefined || req.query.price == "00000"
       ? "11111"
       : req.query.price;
   let day =
-    req.query.day == undefined || req.query.day == "0000000"
+    req.query.day === undefined || req.query.day == "0000000"
       ? "1111111"
       : req.query.day;
   let time =
-    req.query.time == undefined || req.query.time == "00000000"
+    req.query.time === undefined || req.query.time == "00000000"
       ? "11111111"
       : req.query.time;
 
@@ -49,14 +32,14 @@ router.get("/", async (req, res) => {
     thursday: parseInt(day[3]),
     friday: parseInt(day[4]),
     saturday: parseInt(day[5]),
-    sunday: parseInt(day[6])
+    sunday: parseInt(day[6]),
   };
 
   category = {
     mathematics: parseInt(category[0]),
     science: parseInt(category[1]),
     social: parseInt(category[2]),
-    language: parseInt(category[3])
+    language: parseInt(category[3]),
   };
 
   time = {
@@ -67,7 +50,7 @@ router.get("/", async (req, res) => {
     time14To16: parseInt(time[4]),
     time16To18: parseInt(time[5]),
     time18To20: parseInt(time[6]),
-    time20To22: parseInt(time[7])
+    time20To22: parseInt(time[7]),
   };
 
   price = {
@@ -75,7 +58,7 @@ router.get("/", async (req, res) => {
     price500To1500: parseInt(price[1]),
     price1500To3500: parseInt(price[2]),
     price3500To6500: parseInt(price[3]),
-    price6500AndAbove: parseInt(price[4])
+    price6500AndAbove: parseInt(price[4]),
   };
 
   // console.log(time);
@@ -166,7 +149,7 @@ router.get("/", async (req, res) => {
     time.time14To16,
     time.time16To18,
     time.time18To20,
-    time.time20To22
+    time.time20To22,
   ];
   // console.log(times);
 
@@ -199,52 +182,54 @@ router.get("/", async (req, res) => {
       query.$and[3].$or.push({
         $and: [
           { "dayAndStartTime.0": { $gte: start } },
-          { "dayAndEndTime.0": { $lte: end } }
-        ]
+          { "dayAndEndTime.0": { $lte: end } },
+        ],
       });
       query.$and[3].$or.push({
         $and: [
           { "dayAndStartTime.1": { $gte: start } },
-          { "dayAndEndTime.1": { $lte: end } }
-        ]
+          { "dayAndEndTime.1": { $lte: end } },
+        ],
       });
       query.$and[3].$or.push({
         $and: [
           { "dayAndStartTime.2": { $gte: start } },
-          { "dayAndEndTime.2": { $lte: end } }
-        ]
+          { "dayAndEndTime.2": { $lte: end } },
+        ],
       });
       query.$and[3].$or.push({
         $and: [
           { "dayAndStartTime.3": { $gte: start } },
-          { "dayAndEndTime.3": { $lte: end } }
-        ]
+          { "dayAndEndTime.3": { $lte: end } },
+        ],
       });
       query.$and[3].$or.push({
         $and: [
           { "dayAndStartTime.4": { $gte: start } },
-          { "dayAndEndTime.4": { $lte: end } }
-        ]
+          { "dayAndEndTime.4": { $lte: end } },
+        ],
       });
       query.$and[3].$or.push({
         $and: [
           { "dayAndStartTime.5": { $gte: start } },
-          { "dayAndEndTime.5": { $lte: end } }
-        ]
+          { "dayAndEndTime.5": { $lte: end } },
+        ],
       });
       query.$and[3].$or.push({
         $and: [
           { "dayAndStartTime.6": { $gte: start } },
-          { "dayAndEndTime.6": { $lte: end } }
-        ]
+          { "dayAndEndTime.6": { $lte: end } },
+        ],
       });
     }
   }
   // ///////////////////////////////
   query.$and.push({ endDate: { $gte: dateThailand._d } });
-  // console.log(JSON.stringify(query));
+  // console.log(query);
 
-  [err, courses] = await to(CourseModel.find(query));
+  [err, courses] = await to(
+    CourseModel.aggregate([{ $match: query }, { $sort: { startDate: 1 } }])
+  );
   if (err) {
     res.status(500).end();
   }
@@ -252,70 +237,54 @@ router.get("/", async (req, res) => {
 
   for (let i = 0; i < courses.length; i++) {
     //add tutor information//
-    let err, tutor;
-    [err, tutor] = await to(
+    let err, user, tutor;
+    [err, user] = await to(
       userModel.findOne({
-        _id: courses[i].tutorId
+        _id: courses[i].tutorId,
       })
     );
+    [err, tutor] = await to(
+      tutorModel.findOne({
+        userId: courses[i].tutorId,
+      })
+    );
+
     if (err) {
       res.status(500).end();
     }
-    courses[i].premiumTutorStatus = tutor.premiumStatus;
-    let tutorName = tutor.firstName + " " + tutor.lastName;
+    let tutorName = user.firstName + " " + user.lastName;
     /////////////////////////
-
-    let s = "";
-    for (j = 0; j < 7; j++) {
-      if (courses[i]["dayAndStartTime"][j] == null) continue;
-      if (j == 0) s += "Mon ";
-      else if (j == 1) s += "Tue ";
-      else if (j == 2) s += "Wed ";
-      else if (j == 3) s += "Thu ";
-      else if (j == 4) s += "Fri ";
-      else if (j == 5) s += "Sat ";
-      else if (j == 6) s += "Sun ";
-      // s += courses[i]['dayAndStartTime'][j] + "-" + courses[i]['dayAndEndTime'][j] + "/ ";
-      s +=
-        formatRangeOfTime(
-          courses[i]["dayAndStartTime"][j],
-          courses[i]["dayAndEndTime"][j]
-        ) + "/ ";
-    }
-    courses[i].day = s.slice(0, s.length - 2);
-    //[Mon Feb 10 2020 19:46:05 GMT+0700 (GMT+07:00)]
-    s = "";
-    let dateSplit = courses[i].startDate.toString().split(" ");
-    s += dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
-    dateSplit = courses[i].endDate.toString().split(" ");
-    s += " - " + dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[3];
-    courses[i].duration = s;
-    courses[i].isAvailable = courses[i].amountOfStudent > 0 ? true : false;
-    // let remaining = courses[i].amountOfStudent;
-
+    courses[i].day = format.formatCourseDay(courses[i]);
+    courses[i].duration = format.formatDuration(courses[i]);
+    courses[i].isAvailable = undefined;
+    courses[i].premiumTutorStatus = undefined;
     courses[i].startDate = undefined;
     courses[i].endDate = undefined;
     courses[i].dayAndStartTime = undefined;
     courses[i].dayAndEndTime = undefined;
     courses[i].listOfStudentId = undefined;
-    // courses[i].amountOfStudent = undefined;
     courses[i].createdTime = undefined;
     courses[i].lastModified = undefined;
 
     courses[i] = {
-      ...courses[i].toObject(),
-      tutorName: tutorName
+      ...courses[i],
+      tutorName: tutorName,
+      isAvailable: courses[i].amountOfStudent > 0 ? true : false,
+      premiumTutorStatus: tutor.premiumStatus,
       // remaining: remaining
     };
   }
 
-  console.log(courses);
   courses.sort((a, b) => {
-    return (
-      b.isAvailable - a.isAvailable ||
-      b.premiumTutorStatus - a.premiumTutorStatus ||
-      a.startDate - b.startDate
-    );
+    if (a.isAvailable > b.isAvailable) return -1;
+    if (a.isAvailable < b.isAvailable) return 1;
+
+    if (a.premiumTutorStatus > b.premiumTutorStatus) return -1;
+    if (a.premiumTutorStatus < b.premiumTutorStatus) return 1;
+
+    return 0;
+    // b.isAvailable - a.isAvailable
+    // b.premiumTutorStatus - a.premiumTutorStatus ||
   });
   // console.log(courses);
 

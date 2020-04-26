@@ -1,0 +1,15 @@
+.bigCardN {
+  width: auto;
+  max-width: 900px;
+  height: auto;
+  min-height: 400px;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 20px;
+  margin: 150px;
+  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
+}

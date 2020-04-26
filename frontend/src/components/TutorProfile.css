@@ -1,3 +1,81 @@
-.myStyle{
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+.myStyle {
   text-align: center;
+}
+.picPro {
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}
+.bigCard {
+  width: auto;
+  max-width: 900px;
+  height: auto;
+  min-height: 400px;
+  background-color: var(--white-color-trans) !important;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+  margin: 20px;
+  margin-bottom: 100px;
+  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
+}
+
+.filterCard {
+  background-color: var(--white-color-trans) !important;
+  border-radius: 10px;
+  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
+}
+
+.nameM {
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  /* border: 2px dashed #f69c55; */
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  color: var(--black-color);
+}
+#nameK {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+
+.nameB {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--black-color);
+}
+.valueB {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--black-color);
+}
+.inside-block {
+  background-color: var(--white-color) !important;
+  border-radius: 12px;
+  padding: 10px;
+  padding-left: 10px;
+}
+.insidetrans-block {
+  background-color: var(--white-color-trans) !important;
+  border-radius: 12px;
+  padding: 10px;
+  padding-left: 10px;
 }

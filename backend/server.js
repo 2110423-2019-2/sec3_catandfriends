@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const loginRoute = require("./login");
@@ -9,8 +9,12 @@ const courseRoute = require("./course");
 const requestRoute = require("./request");
 const profileRoute = require("./profile");
 const scheduleRoute = require("./schedule");
-const searchRoute = require("./search");
 const fileRoute = require("./file");
+const searchRoute = require("./search");
+const messageRoute = require("./message");
+const commentRoute = require("./comment");
+const reportRoute = require("./report");
+
 const verifyRoute = require("./verify");
 const mongoose = require("mongoose");
 require("./auth/auth");
@@ -18,9 +22,9 @@ require("dotenv").config();
 
 mongoose.connect(process.env.MONGO_DB, {
   useUnifiedTopology: true,
-  useNewUrlParser: true
+  useNewUrlParser: true,
 });
-mongoose.connection.on("error", err => {
+mongoose.connection.on("error", (err) => {
   logError(err);
 });
 mongoose.connection.on("connected", () => {
@@ -34,11 +38,13 @@ app.use(cors());
 
 app.use("/login", loginRoute);
 app.use("/signup", signupRoute);
-app.use("/courses",
+app.use(
+  "/courses",
   passport.authenticate("jwt-profile", { session: false }),
   courseRoute
 );
-app.use("/requests",
+app.use(
+  "/requests",
   passport.authenticate("jwt-profile", { session: false }),
   requestRoute
 );
@@ -47,7 +53,11 @@ app.use(
   passport.authenticate("jwt-profile", { session: false }),
   profileRoute
 );
-app.use("/schedule", scheduleRoute);
+app.use(
+  "/schedule",
+  passport.authenticate("jwt-profile", { session: false }),
+  scheduleRoute
+);
 app.use("/search", searchRoute);
 app.use(
   "/file",
@@ -55,6 +65,21 @@ app.use(
   fileRoute
 );
 app.use("/verify", verifyRoute);
+app.use(
+  "/message",
+  passport.authenticate("jwt-profile", { session: false }),
+  messageRoute
+);
+app.use(
+  "/comment",
+  passport.authenticate("jwt-profile", { session: false }),
+  commentRoute
+);
+app.use(
+  "/report",
+  passport.authenticate("jwt-profile", { session: false }),
+  reportRoute
+);
 
 app.listen(8000, () => {
   console.log("Start server at port 8000.");

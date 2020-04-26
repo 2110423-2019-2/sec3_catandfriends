@@ -1,0 +1,14 @@
+body {
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  min-height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background: linear-gradient(229deg, #2edefb, #6046c6, #d04599);
+  background-size: 100% 100%;
+
+  -webkit-animation: AnimationName 59s ease infinite;
+  -moz-animation: AnimationName 59s ease infinite;
+  animation: AnimationName 59s ease infinite;
+}

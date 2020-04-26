@@ -1,39 +1,55 @@
-body,
-html {
-  font-family: "Montserrat", sans-serif;
-  background-color: #ffffff;
+.mycard {
+  width: 230px;
+  height: 380px;
+  margin: 10px;
+  text-align: center;
+  background: var(--white-color) !important;
+  border-radius: 12px !important;
+  border: none !important;
+  /*normal*/
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s; */
+  /*normal*/
+  /*new*/
+  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
+  transition: all 0.5s ease; /* back to normal */
+  /*new*/
 }
 
-.CourseCard {
-  width: 200px;
-  height: 270px;
-  display: inline-block;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 5px;
-  margin-right: 5px;
-  box-shadow: 2px 2px 2px 2px rgb(224, 224, 224);
-  transition: 0.2s;
-  text-align: left;
-  border-radius: 12px 12px;
+.mycard:hover {
+  /*normal*/
+  /* box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); */
+  /*normal*/
+  /*new*/
+  transform: translate3D(0, -1px, 0) scale(1.03); /* move up slightly and zoom in */
+  box-shadow: 8px 28px 50px rgba(39, 44, 49, 0.07),
+    1px 6px 12px rgba(39, 44, 49, 0.04);
+  transition: all 0.4s ease; /* zoom in */
+  /*new*/
 }
-
-.CourseCard:hover {
-  box-shadow: 2px 2px 2px 2px #4e4e4e;
+.clickable:hover {
   cursor: pointer;
-}
-.CourseCard:hover .button-primary {
-  transform: translate(10px, 0);
 }
 
 .mcard-header {
+  background-color: rgb(120, 142, 189);
   border-radius: 12px 12px 0px 0px;
-  height: 110px;
-  width: 100%;
-  padding: 0px;
+  width: 230px;
+  height: 150px;
+  /* padding: 5px; */
   background-size: cover;
   color: #fff;
-  text-shadow: 2px 2px 4px #000000;
+  text-shadow: 4px 4px 4px #000000;
+}
+.mcard-headerS {
+  border-radius: 12px 12px 0px 0px;
+  width: 230px;
+  height: 150px;
+  /* padding: 5px; */
+  background-size: cover;
+  color: #fff;
+  text-shadow: 4px 4px 4px #000000;
 }
 
 .mcard-header--title {
@@ -41,64 +57,43 @@ html {
   text-transform: uppercase;
   font-weight: 650;
 }
-
-.mcard-body {
-  height: 160px;
-  padding: 5px;
-  background-color: #ffffff;
-  width: auto;
-  border-radius: 0px 0px 12px 12px;
-}
-.course-name {
-  margin-top: 8px;
-  color: #000000;
-  font-weight: 600;
+.mycard-title {
+  height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
 }
 .date {
-  font-size: 10px;
-  font-weight: 700;
-  color: gray;
-  overflow: auto;
-  height: 20px;
+  font-size: small;
+  display: inline-block;
+  height: 100%;
+  vertical-align: bottom;
 }
-.name {
+.tutorname {
+  height: 22px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.day {
   text-align: center;
-  font-size: 13px;
-  font-weight: 500;
-  color: gray;
-}
-.body-content {
-  padding-bottom: 5px;
-  font-size: 10px;
-  line-height: 1;
-  color: #000000;
+  width: 150px;
+  height: 45px;
   overflow: auto;
-  height: 30px;
-  text-indent: 15px;
-}
-
-.button-primary {
   border: none;
-  box-shadow: none;
-  font-family: inherit;
-  background-color: transparent;
-  color: rgb(97, 94, 94);
-  font-size: 12px;
-  transition: 0.25s;
-  font-weight: 600;
+  resize: none;
+  border-right: 3px double rgb(215, 215, 215);
 }
-.button-primary i {
-  padding-right: 4px;
+.dayK {
+  text-align: center;
+  width: 150px;
+  height: 45px;
+  overflow: auto;
+  /* border: none;
+  resize: none; */
+  border-right: 3px double rgb(215, 215, 215);
 }
-.amount {
-  font-weight: 600;
-}
-.price {
-  text-align: right;
-}
-.full {
-  color: red;
-}
-.notfull {
-  color: green;
+.margintop {
+  margin-top: 20px;
 }

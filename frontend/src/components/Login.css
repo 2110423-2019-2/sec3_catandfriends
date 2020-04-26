@@ -1,7 +1,83 @@
-.login{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.left{
+  text-align: left;
+}
 
+.textcolor {
+  color: var(--black-color);
+}
+.homebox-login{
+  -moz-transition: all .1s ease-in;
+  -o-transition: all .1s ease-in;
+  -webkit-transition: all .1s ease-in;
+  transition: all .1s ease-in;
+  padding: 30px;
+  width: 400px;
+  border-radius: 10px;
+  background: var(--white-color-trans);
+  box-shadow: var(--homebox-shadow-color);
+}
+
+.field {
+  -moz-transition: all .1s ease-in;
+    -o-transition: all .1s ease-in;
+    -webkit-transition: all .1s ease-in;
+    transition: all .1s ease-in;
+    background: var(--white-color-trans);
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    border-width: 0px;
+    border-radius: 5px;
+    padding-left: 10px;
+    margin-right: 10px;
+    color: var(--black-color);
+}
+
+.whole {
+  padding: 0;
+  margin: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  /* background: rgba(255, 255, 255, 0.5); */
+  background: linear-gradient(229deg, #2edefb, #6046c6, #d04599);
+  background-size: 150% 150%;
+
+  -webkit-animation: AnimationName 59s ease infinite;
+  -moz-animation: AnimationName 59s ease infinite;
+  animation: AnimationName 59s ease infinite;
+}
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 0% 51%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 51%;
+  }
+}
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 0% 51%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 51%;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 51%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 51%;
+  }
 }

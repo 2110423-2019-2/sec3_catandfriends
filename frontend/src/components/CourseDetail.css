@@ -8,12 +8,67 @@
 .center {
   text-align: center;
 }
-.studentlist:hover {
-  background-color: beige;
+.button-studentList:hover {
+  background: var(--black-color) !important;
+  color: var(--white-color) !important;
+  border: 1px solid var(--white-color) !important;
 }
-.studentlist {
-  height: 30px;
+.button-studentList {
+  transition: all .1s ease-in;
+  width: 100%;
+  padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background: rgba(255, 255, 255, 0) !important;
+  color: var(--black-color) !important;
+  border: 1px solid var(--black-color) !important;
+  box-sizing: border-box;
+  border-radius: 5px;
+  
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
 }
 .slist {
-  vertical-align: middle;
+  padding: 5px;
+  /* vertical-align: middle; */
+}
+.headerD {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  color: #000000;
+  text-align: center;
+}
+.nameD {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  color: #000000;
+}
+.valueD {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  color: #000000;
+}
+.infoD {
+  background-color: rgb(245, 245, 245);
+  border-radius: 12px;
+  padding: 10px;
+  padding-left: 10px;
+}
+
+.dayDetail {
+  border: none;
+  box-sizing: border-box;
+  min-height: 120px;
+  text-align: center;
 }
