@@ -132,7 +132,10 @@ export class CourseDetail extends Component {
                     <div className="nameB">Category:</div>
                   </div>
                   <div className="col-md-8">
-                    <div className="valueB">{this.props.detail.category}</div>
+                    <div className="valueB">
+                      {this.props.detail.category.charAt(0).toUpperCase() +
+                        this.props.detail.category.slice(1)}
+                    </div>
                   </div>
                 </div>
                 <div className="row ">
