@@ -643,23 +643,24 @@ export default class NewCourse extends Component {
 
                 <div class="row">
                   <div
-                    class="col-md-6 textnormal text-left"
+                    class="col-md-12 textnormal text-left"
                     width="100%"
                     height="100px"
                   >
-                    <label>
-                      Description
-                      <br />
-                      <textarea
-                        type="text"
-                        className="inbox"
-                        required
-                        value={this.state.description}
-                        onChange={this.handleChange}
-                        style={{ width: 900, height: 200, resize: "none" }}
-                        name="description"
-                      />
-                    </label>
+                    <label>Description</label>
+                    <textarea
+                      type="text"
+                      className="inbox"
+                      required
+                      value={this.state.description}
+                      onChange={this.handleChange}
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        resize: "none",
+                      }}
+                      name="description"
+                    />
                   </div>
                 </div>
                 <div className="text-center">

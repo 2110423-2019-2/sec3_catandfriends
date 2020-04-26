@@ -66,7 +66,7 @@ export default class CommentForm extends Component {
   }
   render() {
     return (
-      <div className="bigCard" style={{ minHeight: "200px", height: "300px" }}>
+      <div className="bigCard" style={{ minHeight: "200px", height: "auto" }}>
         <form
           onSubmit={(event) => this.handleSubmit(event)}
           style={{ marginLeft: 30 }}
@@ -79,6 +79,16 @@ export default class CommentForm extends Component {
           </div>
           <div className="row" style={{ marginBottom: 5 }}>
             <div className="col-md-9">
+              <div
+                className="textheader"
+                style={{
+                  textAlign: "left",
+                  textIndent: "5px",
+                  marginBottom: "10px",
+                }}
+              >
+                Topic
+              </div>
               <textarea
                 type="text"
                 className="inbox"
@@ -93,7 +103,7 @@ export default class CommentForm extends Component {
                   });
                 }}
                 placeholder="Title"
-                style={{ width: 500, height: 30, resize: "none" }}
+                style={{ width: "100%", height: "30px", resize: "none" }}
                 maxLength="50"
               ></textarea>
             </div>
@@ -116,6 +126,16 @@ export default class CommentForm extends Component {
           </div>
           <div className="row">
             <div className="col-md-9">
+              <div
+                className="textheader"
+                style={{
+                  textAlign: "left",
+                  textIndent: "5px",
+                  marginBottom: "10px",
+                }}
+              >
+                Detail
+              </div>
               <textarea
                 type="text"
                 className="inbox"
@@ -130,7 +150,7 @@ export default class CommentForm extends Component {
                   });
                 }}
                 placeholder="Comment"
-                style={{ width: 500, height: 150, resize: "none" }}
+                style={{ width: "100%", height: "150px", resize: "none" }}
                 maxLength="150"
               ></textarea>
             </div>
