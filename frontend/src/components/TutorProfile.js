@@ -252,6 +252,15 @@ export class TutorProfile extends Component {
     );
   }
   async componentDidMount() {
+    let user = this.props.data;
+    localStorage.setItem(
+      "role",
+      user.role == "student"
+        ? "student"
+        : user.verifyStatus
+        ? "verifiedTutor"
+        : "tutor"
+    );
     if (this.props.data.profileImage) {
       var xhr = new XMLHttpRequest();
       var myurl = "";
