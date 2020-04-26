@@ -39,8 +39,8 @@ export default class VerifyTutor extends Component {
   render() {
     if (!this.state.data) {
       return (
-        <div className="verifyTutorCard">
-          <h3 className="verifyTutorH text-center">Verify Tutor</h3>
+        <div className="bigCard">
+          <h3 className="inside-block text-center textheader">Verify Tutor</h3>
         </div>
       );
     } else {

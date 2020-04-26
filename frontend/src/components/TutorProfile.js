@@ -31,7 +31,7 @@ export class TutorProfile extends Component {
         <div className="row justify-content-center">
           <p class="alert alert-warning" style={{ textAlign: "center" }}>
             <strong>Warning!</strong> You are an unverified tutor. You are not
-            able to create any courses.
+            able to chat or create any courses.
           </p>
         </div>
       );
@@ -201,7 +201,10 @@ export class TutorProfile extends Component {
                           PREMIUM
                         </span>
                       ) : (
-                        <span className="text-color" style={{ fontWeight: "bold" }}>
+                        <span
+                          className="text-color"
+                          style={{ fontWeight: "bold" }}
+                        >
                           STANDARD
                         </span>
                       )}

@@ -49,7 +49,7 @@ class App extends Component {
     return localStorage.getItem("role") == "tutor";
   }
   verifiedTutor() {
-    return localStorage.getItem("role") == "varifiedTutor";
+    return localStorage.getItem("role") == "verifiedTutor";
   }
   student() {
     return localStorage.getItem("role") == "student";
