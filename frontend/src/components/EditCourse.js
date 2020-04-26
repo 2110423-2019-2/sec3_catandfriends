@@ -288,12 +288,6 @@ export default class EditCourse extends Component {
   }
 
   render() {
-    if (this.state.amountOfStudent < this.state.totoalAmountOfStudent) {
-      alert(
-        "There is a student enrolled this course, you are not able to edit the course"
-      );
-      history.push("/mycourse");
-    }
     return (
       <div className="justify-content-center">
         <div className="row">
@@ -747,7 +741,20 @@ export default class EditCourse extends Component {
     this.setState({
       startDate: startDate,
       endDate: endDate,
+      hasStudent: data
+        ? data.amountOfStudent < data.totalAmountOfStudent
+        : true,
+      isOwner: data ? data.owner : true,
     });
     this.setObject();
+    if (!this.state.isOwner) {
+      alert("You're not the owner of this course");
+      history.push("/pagenotfound");
+    } else if (this.state.hasStudent) {
+      alert(
+        "There is a student enrolled this course, you are not able to edit the course"
+      );
+      history.push("/mycourse");
+    }
   }
 }

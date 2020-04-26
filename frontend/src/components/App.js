@@ -48,30 +48,53 @@ class App extends Component {
   };
   tutor = () => {
     if (localStorage.getItem("token")) {
-      return JSON.parse(localStorage.getItem("user")).role == "tutor";
+      return localStorage.getItem("role") == "tutor";
     } else {
       return false;
     }
   };
-  verifiedTuror = async () => {
-    if (localStorage.getItem("token")) {
-      let data = await Util.getProfile();
-      return data.role == "tutor" && data.verifyStatus;
-    } else {
-      return false;
+  verifiedTuror() {
+    if (this.tutor()) {
+      // let data = await Util.getProfile();
+      // let isVerified = await data.verifyStatus;
+      return this.state.verifiedTuror;
     }
-  };
+    // http://localhost:3000/course/edit?courseId=5ea44d4934a53e043877906d
+    return false;
+  }
   user = () => {
     return localStorage.getItem("token");
   };
   student = () => {
     if (localStorage.getItem("token")) {
-      return JSON.parse(localStorage.getItem("user")).role == "student";
+      return localStorage.getItem("role") == "student";
     } else {
       return false;
     }
   };
   render() {
+    return (
+      <Router history={history}>
+        <NavBar />
+        <Switch>
+          <Route path="/chat" component={Chatbox} />
+          <Route path="/login" component={Login} />
+          <Route path="/profile/edit" component={EditProfile} />
+          <Route path="/profile/verify" component={VerifyPage} />
+          <Route path="/profile/premium" component={PremiumPage} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/course/edit" component={EditCourse} />
+          <Route path="/course/create" component={NewCourse} />
+          <Route path="/course" component={CourseInformation} />
+          <Route path="/mycourse" component={MyCourse} />
+          <Route path="/home" component={Home} />
+          <Route path exact="/" component={Home} />
+          <Route component={PageNotFound} />
+        </Switch>
+      </Router>
+    );
+  }
+  renderReal() {
     return (
       <Router history={history}>
         <NavBar />
@@ -106,6 +129,7 @@ class App extends Component {
           {this.student() && <Route path="/mycourse" component={MyCourse} />}
           {this.user() && <Route path="/home" component={SearchResult} />}
           {this.user() && <Route path exact="/" component={SearchResult} />}
+          <Route path="/pagenotfound" component={PageNotFound} />
           {/* {this.tutor() && !this.verifiedTuror() && (
             <Route path="/mycourse" component={VerifyFirst} />
           )}
