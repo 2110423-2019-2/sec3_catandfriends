@@ -162,7 +162,7 @@ export class NavBar extends Component {
   onClickNavBar = async (page) => {
     if (page == "/logout") {
       await localStorage.clear();
-      history.push("/blank");
+      history.push("/signup");
       window.location.reload();
     } else {
       history.push(page);
