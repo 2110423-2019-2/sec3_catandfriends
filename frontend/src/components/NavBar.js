@@ -166,7 +166,7 @@ export class NavBar extends Component {
       window.location.reload();
     } else {
       history.push(page);
-      // window.location.reload();
+      window.location.reload();
     }
   };
   async componentDidMount() {
