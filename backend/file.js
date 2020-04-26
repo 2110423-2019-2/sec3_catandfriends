@@ -72,7 +72,7 @@ const storage = new GridFsStorage({
         };
 
         let tutorInfo = await tutorModel.findOne({ userId: req.user._id });
-
+        let updateQuery;
         switch (routePath) {
           case VERIFY_DOCUMENTS_PATH:
             if (tutorInfo.verificationDocument !== null) {
@@ -82,9 +82,11 @@ const storage = new GridFsStorage({
               });
               console.log("old verifyFile removed");
             }
+            updateQuery = { verificationDocument: filename };
+            if (tutorInfo.verificationPayment) updateQuery.verifyStatus = true;
             await tutorModel.findOneAndUpdate(
               { userId: req.user._id },
-              { verificationDocument: filename },
+              updateQuery,
               { useFindAndModify: false }
             );
             console.log("verifyFile Updated");
@@ -97,9 +99,11 @@ const storage = new GridFsStorage({
               });
               console.log("old verify paymentFile removed");
             }
+            updateQuery = { verificationPayment: filename };
+            if (tutorInfo.verificationDocument) updateQuery.verifyStatus = true;
             await tutorModel.findOneAndUpdate(
               { userId: req.user._id },
-              { verificationPayment: filename },
+              updateQuery,
               { useFindAndModify: false }
             );
             console.log("verify paymentFile updated");
@@ -112,9 +116,10 @@ const storage = new GridFsStorage({
               });
               console.log("old premium paymentFile removed");
             }
+            updateQuery = { premiumPayment: filename, premiumStatus: true };
             await tutorModel.findOneAndUpdate(
               { userId: req.user._id },
-              { premiumPayment: filename },
+              updateQuery,
               { useFindAndModify: false }
             );
             console.log("premium paymentFile updated");
