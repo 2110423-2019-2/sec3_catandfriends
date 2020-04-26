@@ -288,489 +288,474 @@ export default class EditCourse extends Component {
   }
 
   render() {
-    if (!this.state.data) {
-      return <div></div>;
-    } else {
-      if (!this.state.data.owner) {
-        alert("You're not the owner of this course");
-        history.push("/mycourse");
-        window.location.reload();
-        return <div></div>;
-      } else if (
-        this.state.data.amountOfStudent < this.state.data.totalAmountOfStudent
-      ) {
-        alert(
-          "There is a student enrolled this course, you cannot edit the course"
-        );
-        history.push("/mycourse");
-        window.location.reload();
-        return <div></div>;
-      } else {
-        return (
-          <div className="justify-content-center">
-            <div className="row">
-              <div className="col-md-12 justify-content-center" align="center">
-                <div className="bigCard" style={{ maxWidth: 1000 }}>
-                  <div className="inside-block textshadow">Edit Course</div>
-                  <br />
-                  <form
-                    onSubmit={(event) => this.handleSubmit(event)}
-                    style={{ marginLeft: 30 }}
-                  >
-                    <div class="row">
-                      <div class="col-md-6 textnormal text-left">
-                        <label>
-                          Course Name
-                          <br />
-                          <input
-                            type="text"
-                            className="inbox"
-                            required
-                            value={this.state.courseName}
-                            name="courseName"
-                            onChange={this.handleChange}
-                            maxLength="30"
-                            style={{ width: 262 }}
-                          />
-                        </label>
-                      </div>
-                      <div class="col-md-6 textnormal text-left">
-                        <label>
-                          Category
-                          <br />
-                          <select
-                            name="category"
-                            className="inbox"
-                            onChange={this.handleChange}
-                            value={this.state.category}
-                            required
-                          >
-                            <option value="Language">Language</option>
-                            <option value="Mathematics">Mathematics</option>
-                            <option value="Science">Science</option>
-                            <option value="Social">Social</option>
-                          </select>
-                        </label>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-3 textnormal text-left" width="100%">
-                        <label>
-                          Start Date
-                          <br />
-                          <input
-                            type="Date"
-                            className="inbox"
-                            required
-                            value={this.state.startDate}
-                            onChange={this.handleChange}
-                            name="startDate"
-                            id="startDate"
-                          />
-                        </label>
-                      </div>
-                      <div class="col-md-3 textnormal text-left" width="100%">
-                        <label>
-                          End Date
-                          <br />
-                          <input
-                            type="Date"
-                            className="inbox"
-                            required
-                            value={this.state.endDate}
-                            onChange={this.handleChange}
-                            name="endDate"
-                            id="endDate"
-                          />
-                        </label>
-                      </div>
-                      <div class="col-md-3 textnormal text-left" width="100%">
-                        <label>
-                          Price
-                          <br />
-                          <input
-                            type="Number"
-                            min="0"
-                            className="inbox"
-                            required
-                            value={this.state.courseFee}
-                            onChange={this.handleChange}
-                            name="courseFee"
-                          />
-                        </label>
-                      </div>
-                      <div class="col-md-3 textnormal text-left" width="100%">
-                        <label>
-                          Student amount
-                          <br />
-                          <input
-                            type="Number"
-                            min="0"
-                            className="inbox"
-                            required
-                            value={this.state.totalAmountOfStudent}
-                            onChange={this.handleChange}
-                            name="totalAmountOfStudent"
-                          />
-                        </label>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-3 textnormal text-left" width="100%">
-                        <label htmlFor="Weekday">
-                          Week day
-                          <div id="Weekday" style={{ paddingTop: "5px" }}>
-                            <input
-                              required
-                              type="checkbox"
-                              name="Monday"
-                              id="Monday"
-                              value={this.Monday}
-                              onChange={this.handleChange}
-                            />
-                            <label
-                              htmlFor="Monday"
-                              style={{ marginLeft: "10px", paddingTop: "2px" }}
-                            >
-                              Monday
-                            </label>
-                            <br />
-                            <input
-                              type="checkbox"
-                              name="Tuesday"
-                              id="Tuesday"
-                              value={this.Tuesday}
-                              onChange={this.handleChange}
-                            />
-                            <label
-                              htmlFor="Tuesday"
-                              style={{ marginLeft: "10px" }}
-                            >
-                              Tuesday
-                            </label>
-                            <br />
-                            <input
-                              type="checkbox"
-                              name="Wednesday"
-                              id="Wednesday"
-                              value={this.Wednesday}
-                              onChange={this.handleChange}
-                            />
-                            <label
-                              htmlFor="Wednesday"
-                              style={{ marginLeft: "10px" }}
-                            >
-                              Wednesday
-                            </label>
-                            <br />
-                            <input
-                              type="checkbox"
-                              name="Thursday"
-                              id="Thursday"
-                              value={this.Thursday}
-                              onChange={this.handleChange}
-                            />
-                            <label
-                              htmlFor="Thursday"
-                              style={{ marginLeft: "10px" }}
-                            >
-                              Thursday
-                            </label>
-                            <br />
-                            <input
-                              type="checkbox"
-                              name="Friday"
-                              id="Friday"
-                              value={this.Friday}
-                              onChange={this.handleChange}
-                            />
-                            <label
-                              htmlFor="Friday"
-                              style={{ marginLeft: "10px" }}
-                            >
-                              Friday
-                            </label>
-                            <br />
-                            <input
-                              type="checkbox"
-                              name="Saturday"
-                              id="Saturday"
-                              value={this.Saturday}
-                              onChange={this.handleChange}
-                            />
-                            <label
-                              htmlFor="Saturday"
-                              style={{ marginLeft: "10px" }}
-                            >
-                              Saturday
-                            </label>
-                            <br />
-                            <input
-                              type="checkbox"
-                              name="Sunday"
-                              id="Sunday"
-                              value={this.Sunday}
-                              onChange={this.handleChange}
-                            />
-                            <label
-                              htmlFor="Sunday"
-                              style={{ marginLeft: "10px" }}
-                            >
-                              Sunday
-                            </label>
-                            <br />
-                          </div>
-                        </label>
-                      </div>
-                      <div class="col-md-3 textnormal text-left" width="100%">
-                        <label htmlFor="StartTime">Start Time</label>
-                        <div id="StartTime">
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ST0"
-                            id="ST0"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.StartTimes[0]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndStartTimeChange}
-                            disabled
-                          />
-                          <br />
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ST1"
-                            id="ST1"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.StartTimes[1]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndStartTimeChange}
-                            disabled
-                          />
-                          <br />
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ST2"
-                            id="ST2"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.StartTimes[2]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndStartTimeChange}
-                            disabled
-                          />
-                          <br />
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ST3"
-                            id="ST3"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.StartTimes[3]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndStartTimeChange}
-                            disabled
-                          />
-                          <br />
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ST4"
-                            id="ST4"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.StartTimes[4]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndStartTimeChange}
-                            disabled
-                          />
-                          <br />
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ST5"
-                            id="ST5"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.StartTimes[5]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndStartTimeChange}
-                            disabled
-                          />
-                          <br />
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ST6"
-                            id="ST6"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.StartTimes[6]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndStartTimeChange}
-                            disabled
-                          />
-                          <br />
-                        </div>
-                      </div>
-
-                      <div class="col-md-3 textnormal text-left" width="100%">
-                        <label htmlFor="EndTime">End Time</label>
-                        <div id="EndTime">
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ET0"
-                            id="ET0"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.EndTimes[0]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndEndTimeChange}
-                            disabled
-                          />
-                          <br />
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ET1"
-                            id="ET1"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.EndTimes[1]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndEndTimeChange}
-                            disabled
-                          />
-                          <br />
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ET2"
-                            id="ET2"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.EndTimes[2]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndEndTimeChange}
-                            disabled
-                          />
-                          <br />
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ET3"
-                            id="ET3"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.EndTimes[3]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndEndTimeChange}
-                            disabled
-                          />
-                          <br />
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ET4"
-                            id="ET4"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.EndTimes[4]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndEndTimeChange}
-                            disabled
-                          />
-                          <br />
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ET5"
-                            id="ET5"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.EndTimes[5]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndEndTimeChange}
-                            disabled
-                          />
-                          <br />
-                          <input
-                            type="Time"
-                            className="inbox"
-                            name="ET6"
-                            id="ET6"
-                            min="06:00"
-                            max="22:00"
-                            value={this.state.EndTimes[6]}
-                            style={{ marginBottom: "2px" }}
-                            onChange={this.handleDayAndEndTimeChange}
-                            disabled
-                          />
-                          <br />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div
-                        class="col-md-12 textnormal text-left"
-                        width="100%"
-                        height="100px"
-                      >
-                        <label>Description</label>
-                        <textarea
-                          type="text"
-                          className="inbox"
-                          required
-                          value={this.state.description}
-                          onChange={this.handleChange}
-                          style={{
-                            width: "100%",
-                            height: "200px",
-                            resize: "none",
-                          }}
-                          name="description"
-                        />
-                      </div>
-                    </div>
-                    <div className="text-center">
+    return (
+      <div className="justify-content-center">
+        <div className="row">
+          <div className="col-md-12 justify-content-center" align="center">
+            <div className="bigCard" style={{ maxWidth: 1000 }}>
+              <div className="inside-block textshadow">Edit Course</div>
+              <br />
+              <form
+                onSubmit={(event) => this.handleSubmit(event)}
+                style={{ marginLeft: 30 }}
+              >
+                <div class="row">
+                  <div class="col-md-6 textnormal text-left">
+                    <label>
+                      Course Name
+                      <br />
                       <input
-                        type="submit"
-                        value="Submit"
-                        className="button-white"
-                        style={{ marginBottom: 10 }}
+                        type="text"
+                        className="inbox"
+                        required
+                        value={this.state.courseName}
+                        name="courseName"
+                        onChange={this.handleChange}
+                        maxLength="30"
+                        style={{ width: 262 }}
                       />
-                      {/* <input type="cancel" value="Cancel" className="btn btn-danger" style={{width:76.5, height:38}}/> */}
-                    </div>
-                  </form>
+                    </label>
+                  </div>
+                  <div class="col-md-6 textnormal text-left">
+                    <label>
+                      Category
+                      <br />
+                      <select
+                        name="category"
+                        className="inbox"
+                        onChange={this.handleChange}
+                        value={this.state.category}
+                        required
+                      >
+                        <option value="Language">Language</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Science">Science</option>
+                        <option value="Social">Social</option>
+                      </select>
+                    </label>
+                  </div>
                 </div>
-              </div>
+                <div class="row">
+                  <div class="col-md-3 textnormal text-left" width="100%">
+                    <label>
+                      Start Date
+                      <br />
+                      <input
+                        type="Date"
+                        className="inbox"
+                        required
+                        value={this.state.startDate}
+                        onChange={this.handleChange}
+                        name="startDate"
+                        id="startDate"
+                      />
+                    </label>
+                  </div>
+                  <div class="col-md-3 textnormal text-left" width="100%">
+                    <label>
+                      End Date
+                      <br />
+                      <input
+                        type="Date"
+                        className="inbox"
+                        required
+                        value={this.state.endDate}
+                        onChange={this.handleChange}
+                        name="endDate"
+                        id="endDate"
+                      />
+                    </label>
+                  </div>
+                  <div class="col-md-3 textnormal text-left" width="100%">
+                    <label>
+                      Price
+                      <br />
+                      <input
+                        type="Number"
+                        min="0"
+                        className="inbox"
+                        required
+                        value={this.state.courseFee}
+                        onChange={this.handleChange}
+                        name="courseFee"
+                      />
+                    </label>
+                  </div>
+                  <div class="col-md-3 textnormal text-left" width="100%">
+                    <label>
+                      Student amount
+                      <br />
+                      <input
+                        type="Number"
+                        min="1"
+                        className="inbox"
+                        required
+                        value={this.state.totalAmountOfStudent}
+                        onChange={this.handleChange}
+                        name="totalAmountOfStudent"
+                      />
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 textnormal text-left" width="100%">
+                    <label htmlFor="Weekday">
+                      Week day
+                      <div id="Weekday" style={{ paddingTop: "5px" }}>
+                        <input
+                          required
+                          type="checkbox"
+                          name="Monday"
+                          id="Monday"
+                          value={this.Monday}
+                          onChange={this.handleChange}
+                        />
+                        <label
+                          htmlFor="Monday"
+                          style={{ marginLeft: "10px", paddingTop: "2px" }}
+                        >
+                          Monday
+                        </label>
+                        <br />
+                        <input
+                          type="checkbox"
+                          name="Tuesday"
+                          id="Tuesday"
+                          value={this.Tuesday}
+                          onChange={this.handleChange}
+                        />
+                        <label htmlFor="Tuesday" style={{ marginLeft: "10px" }}>
+                          Tuesday
+                        </label>
+                        <br />
+                        <input
+                          type="checkbox"
+                          name="Wednesday"
+                          id="Wednesday"
+                          value={this.Wednesday}
+                          onChange={this.handleChange}
+                        />
+                        <label
+                          htmlFor="Wednesday"
+                          style={{ marginLeft: "10px" }}
+                        >
+                          Wednesday
+                        </label>
+                        <br />
+                        <input
+                          type="checkbox"
+                          name="Thursday"
+                          id="Thursday"
+                          value={this.Thursday}
+                          onChange={this.handleChange}
+                        />
+                        <label
+                          htmlFor="Thursday"
+                          style={{ marginLeft: "10px" }}
+                        >
+                          Thursday
+                        </label>
+                        <br />
+                        <input
+                          type="checkbox"
+                          name="Friday"
+                          id="Friday"
+                          value={this.Friday}
+                          onChange={this.handleChange}
+                        />
+                        <label htmlFor="Friday" style={{ marginLeft: "10px" }}>
+                          Friday
+                        </label>
+                        <br />
+                        <input
+                          type="checkbox"
+                          name="Saturday"
+                          id="Saturday"
+                          value={this.Saturday}
+                          onChange={this.handleChange}
+                        />
+                        <label
+                          htmlFor="Saturday"
+                          style={{ marginLeft: "10px" }}
+                        >
+                          Saturday
+                        </label>
+                        <br />
+                        <input
+                          type="checkbox"
+                          name="Sunday"
+                          id="Sunday"
+                          value={this.Sunday}
+                          onChange={this.handleChange}
+                        />
+                        <label htmlFor="Sunday" style={{ marginLeft: "10px" }}>
+                          Sunday
+                        </label>
+                        <br />
+                      </div>
+                    </label>
+                  </div>
+                  <div class="col-md-3 textnormal text-left" width="100%">
+                    <label htmlFor="StartTime">Start Time</label>
+                    <div id="StartTime">
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ST0"
+                        id="ST0"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.StartTimes[0]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndStartTimeChange}
+                        disabled
+                      />
+                      <br />
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ST1"
+                        id="ST1"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.StartTimes[1]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndStartTimeChange}
+                        disabled
+                      />
+                      <br />
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ST2"
+                        id="ST2"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.StartTimes[2]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndStartTimeChange}
+                        disabled
+                      />
+                      <br />
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ST3"
+                        id="ST3"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.StartTimes[3]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndStartTimeChange}
+                        disabled
+                      />
+                      <br />
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ST4"
+                        id="ST4"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.StartTimes[4]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndStartTimeChange}
+                        disabled
+                      />
+                      <br />
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ST5"
+                        id="ST5"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.StartTimes[5]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndStartTimeChange}
+                        disabled
+                      />
+                      <br />
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ST6"
+                        id="ST6"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.StartTimes[6]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndStartTimeChange}
+                        disabled
+                      />
+                      <br />
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 textnormal text-left" width="100%">
+                    <label htmlFor="EndTime">End Time</label>
+                    <div id="EndTime">
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ET0"
+                        id="ET0"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.EndTimes[0]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndEndTimeChange}
+                        disabled
+                      />
+                      <br />
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ET1"
+                        id="ET1"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.EndTimes[1]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndEndTimeChange}
+                        disabled
+                      />
+                      <br />
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ET2"
+                        id="ET2"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.EndTimes[2]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndEndTimeChange}
+                        disabled
+                      />
+                      <br />
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ET3"
+                        id="ET3"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.EndTimes[3]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndEndTimeChange}
+                        disabled
+                      />
+                      <br />
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ET4"
+                        id="ET4"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.EndTimes[4]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndEndTimeChange}
+                        disabled
+                      />
+                      <br />
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ET5"
+                        id="ET5"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.EndTimes[5]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndEndTimeChange}
+                        disabled
+                      />
+                      <br />
+                      <input
+                        type="Time"
+                        className="inbox"
+                        name="ET6"
+                        id="ET6"
+                        min="06:00"
+                        max="22:00"
+                        value={this.state.EndTimes[6]}
+                        style={{ marginBottom: "2px" }}
+                        onChange={this.handleDayAndEndTimeChange}
+                        disabled
+                      />
+                      <br />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div
+                    class="col-md-12 textnormal text-left"
+                    width="100%"
+                    height="100px"
+                  >
+                    <label>Description</label>
+                    <textarea
+                      type="text"
+                      className="inbox"
+                      required
+                      value={this.state.description}
+                      onChange={this.handleChange}
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        resize: "none",
+                      }}
+                      name="description"
+                    />
+                  </div>
+                </div>
+                <div className="text-center">
+                  <input
+                    type="submit"
+                    value="Submit"
+                    className="button-white"
+                    style={{ marginBottom: 10 }}
+                  />
+                  {/* <input type="cancel" value="Cancel" className="btn btn-danger" style={{width:76.5, height:38}}/> */}
+                </div>
+              </form>
             </div>
           </div>
-        );
-      }
-    }
+        </div>
+      </div>
+    );
   }
 
   async componentDidMount() {
     console.log(window.location.search);
     let data = await Util.getCourseById(window.location.search.substring(10));
-    let startDate = new Date(data.startDate);
-    let endDate = new Date(data.endDate);
-
-    startDate = this.dateToYMD(startDate);
-    endDate = this.dateToYMD(endDate);
+    let startDate = data ? new Date(data.startDate) : "";
+    let endDate = data ? new Date(data.endDate) : "";
+    if (data) {
+      startDate = this.dateToYMD(startDate);
+      endDate = this.dateToYMD(endDate);
+    }
+    this.setState(data);
     this.setState({
       startDate: startDate,
       endDate: endDate,
-      data: data,
+      hasStudent: data
+        ? data.amountOfStudent < data.totalAmountOfStudent
+        : true,
+      isOwner: data ? data.owner : true,
     });
     this.setObject();
+    if (!this.state.isOwner) {
+      alert("You're not the owner of this course");
+      history.push("/pagenotfound");
+    } else if (this.state.hasStudent) {
+      alert(
+        "There is a student enrolled this course, you are not able to edit the course"
+      );
+      history.push("/mycourse");
+    }
   }
 }
