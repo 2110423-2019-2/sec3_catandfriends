@@ -142,6 +142,7 @@ class App extends Component {
             <Route path="/chat" component={VerifyFirst} />
           )} */}
           {!this.loggedIn() && <Route path="/signup" component={Home} />}
+          {!this.loggedIn() && <Route exact path="/" component={Home} />}
         </Switch>
       </Router>
     );

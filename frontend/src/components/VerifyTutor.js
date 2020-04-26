@@ -4,6 +4,7 @@ import Util from "../apis/Util";
 import axios from "axios";
 import FileSaver from "file-saver";
 import GradientButton from "./GradientButton";
+import history from "../history";
 export default class VerifyTutor extends Component {
   constructor(props) {
     super(props);
@@ -267,6 +268,9 @@ export default class VerifyTutor extends Component {
         // then print response status
         console.log(res.statusText);
         alert("File Uploaded");
+        if (this.state.complete) {
+          history.push("/profile");
+        }
         window.location.reload();
       });
   };
@@ -298,6 +302,9 @@ export default class VerifyTutor extends Component {
         // then print response status
         console.log(res.statusText);
         alert("File Uploaded");
+        if (this.state.complete) {
+          history.push("/profile");
+        }
         window.location.reload();
       });
   };
@@ -342,6 +349,11 @@ export default class VerifyTutor extends Component {
     let params = new URLSearchParams(window.location.search);
     let data = await Util.getProfile(params.get("userId"));
     await this.setState({ data });
+    await this.setState({
+      complete:
+        this.state.data.verificationDocument ||
+        this.state.data.verificationPayment,
+    });
     await console.log(data);
     console.log(this.state);
   }

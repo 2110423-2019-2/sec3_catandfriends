@@ -4,6 +4,8 @@ import Util from "../apis/Util";
 import history from "../history";
 import VerifyCard from "./VerifyCard";
 import NormalButton from "./NormalButton";
+import FileSaver from "file-saver";
+import axios from "axios";
 export class TutorProfile extends Component {
   constructor(props) {
     super(props);
@@ -76,6 +78,43 @@ export class TutorProfile extends Component {
       return;
     }
   }
+  onClickGetVeriFile = () => {
+    axios({
+      method: "GET",
+      url: `http://localhost:8000/file/verifyFile?token=${localStorage.getItem(
+        "token"
+      )}&tutorId=${this.props.data._id}`,
+      responseType: "blob",
+    })
+      .then((response) => {
+        this.setState({ fileDownloading: true }, () => {
+          FileSaver.saveAs(response.data, "your-veridoc.pdf");
+        });
+      })
+      .then(() => {
+        this.setState({ fileDownloading: false });
+        console.log("Completed");
+      });
+  };
+  onClickGetSlipImg = () => {
+    axios({
+      method: "GET",
+      url: `http://localhost:8000/file/paymentFile/verify?token=${localStorage.getItem(
+        "token"
+      )}&tutorId=${this.props.data._id}`,
+      responseType: "blob",
+    })
+      .then((response) => {
+        this.setState({ imageDownloading: true }, () => {
+          FileSaver.saveAs(response.data, "your-slip.jpg");
+        });
+        console.log(response);
+      })
+      .then(() => {
+        this.setState({ imageDownloading: false });
+        console.log("Completed");
+      });
+  };
   render() {
     return (
       <div className="bigCard">
@@ -150,7 +189,7 @@ export class TutorProfile extends Component {
                 </div>
                 <div className="row">
                   <div className="col-md-4">
-                    <div className="nameB">Verify status:</div>
+                    <div className="nameB">Verify Status:</div>
                   </div>
                   <div className="col-md-8">
                     <div className="valueB">
@@ -190,9 +229,43 @@ export class TutorProfile extends Component {
                     </div>
                   </div>
                 </div> */}
+                {this.props.data.verifyStatus && (
+                  <div className="row">
+                    <div className="col-md-4">
+                      <div className="nameB">Verify Document:</div>
+                    </div>
+                    <div className="col-md-8">
+                      <div className="valueB">
+                        <div
+                          className="fileNameG"
+                          onClick={this.onClickGetVeriFile}
+                        >
+                          <i>download file</i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {this.props.data.verifyStatus && (
+                  <div className="row">
+                    <div className="col-md-4">
+                      <div className="nameB">Verify Payment:</div>
+                    </div>
+                    <div className="col-md-8">
+                      <div className="valueB">
+                        <div
+                          className="fileNameB"
+                          onClick={this.onClickGetSlipImg}
+                        >
+                          <i>download file</i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}{" "}
                 <div className="row">
                   <div className="col-md-4">
-                    <div className="nameB">Premium status:</div>
+                    <div className="nameB">Premium Status:</div>
                   </div>
                   <div className="col-md-8">
                     <div className="valueB">
