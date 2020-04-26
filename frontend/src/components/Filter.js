@@ -386,7 +386,7 @@ class Filter extends React.Component {
           marginTop: "40px",
           top: "80px",
           border: "none",
-          position: "sticky"
+          position: "fixed"
         }}
       >
         <form onSubmit={this.handleSubmit} style={{ textAlign: "center" }}>
