@@ -41,7 +41,7 @@ export class CourseDetail extends Component {
         <button
           className="button-white"
           onClick={() => {
-            history.push(`/course/edit?courseId=${this.props.detail.courseid}`);
+            history.push(`/course/edit?courseId=${this.props.detail._id}`);
           }}
         >
           Edit Course
