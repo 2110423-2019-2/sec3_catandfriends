@@ -95,6 +95,15 @@ export class Login extends Component {
     } else {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
+      let user = await Util.getProfile();
+      localStorage.setItem(
+        "role",
+        user.role == "student"
+          ? "student"
+          : user.verifyStatus
+          ? "verifiedTutor"
+          : "tutor"
+      );
       console.log(data);
       history.push("/profile");
       window.location.reload();

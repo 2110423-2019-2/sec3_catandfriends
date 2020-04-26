@@ -17,7 +17,9 @@
   box-shadow: var(--navbarwhite-shadow-color);
   transition: all 1s ease, padding 1s ease;
 }
-
+.accountbtn:focus {
+  outline: none;
+}
 .navbar-brand {
   font-family: "Merienda One", cursive;
   font-size: 1.6em !important;
