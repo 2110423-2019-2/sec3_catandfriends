@@ -8,52 +8,52 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     password: {
       type: String,
-      required: true
+      required: true,
     },
     firstName: {
       type: String,
-      required: true
+      required: true,
     },
     lastName: {
       type: String,
-      required: true
+      required: true,
     },
     ssn: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     birthDate: {
       type: Date,
-      required: true
+      required: true,
     },
     gender: {
       type: String,
-      required: true
+      required: true,
     },
     phoneNumber: {
       type: String,
-      required: true
+      required: true,
     },
     role: {
       type: String,
-      required: true
+      required: true,
     },
     verified: {
       type: Boolean,
       required: true,
-      default: false
+      default: false,
     },
     profileImage: {
       type: String,
-      unique: true,
+      // unique: true,
       // sparse: true,
-      default: null
-    }
+      default: null,
+    },
   },
   { collection: collectionName, versionKey: false }
 );
