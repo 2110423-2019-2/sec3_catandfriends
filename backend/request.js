@@ -175,7 +175,7 @@ async function findTheRequest(tutorId, studentId, courseId) {
 async function checkAvailable(studentId, courseId) {
   let err, course;
   [err, course] = await to(CourseModel.findById(courseId));
-  console.log(courseId);
+  // console.log(courseId);
 
   let dayCourse = [course.startDate, course.endDate];
 
