@@ -435,7 +435,7 @@ class Filter extends React.Component {
             <button
               type="submit"
               value="submit"
-              class="button-white"
+              className="button-white"
               style={{ width: "90%" }}
             >
               Search

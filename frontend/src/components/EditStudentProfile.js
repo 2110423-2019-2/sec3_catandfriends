@@ -122,10 +122,10 @@ export default class EditStudentProfile extends Component {
           <div className="col-md-9">
             <form onSubmit={(event) => this.handleSubmit(event)}>
               <div
-                class="row"
+                className="row"
                 style={{ marginTop: "10px", textAlign: "center" }}
               >
-                <div class="col-md-6">
+                <div className="col-md-6">
                   <label className="textnormal" htmlFor="firstName">
                     First Name
                     <br />
@@ -142,7 +142,7 @@ export default class EditStudentProfile extends Component {
                   </label>
                 </div>
 
-                <div class="col-md-6">
+                <div className="col-md-6">
                   <label className="textnormal" htmlFor="lastName">
                     Last Name
                     <br />
@@ -159,8 +159,8 @@ export default class EditStudentProfile extends Component {
                   </label>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6" width="100%">
+              <div className="row">
+                <div className="col-md-6" width="100%">
                   <label className="textnormal">
                     Phone Number
                     <br />
@@ -178,7 +178,7 @@ export default class EditStudentProfile extends Component {
                     />
                   </label>
                 </div>
-                <div class="col-md-6">
+                <div className="col-md-6">
                   <label className="textnormal">
                     Gender
                     <br />

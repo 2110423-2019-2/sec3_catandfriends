@@ -50,14 +50,14 @@ export class NavBar extends Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class=" navbar-toggler-icon "></span>
+          <span className=" navbar-toggler-icon "></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav mr-auto">
             {/* {!localStorage.getItem("token") ? (
               <li className="nav-item">
                 <NavButton onClick={() => this.onClickNavBar("/register")}>
-                  Register <span class="sr-only">(current)</span>
+                  Register <span className="sr-only">(current)</span>
                 </NavButton>
               </li>
             ) : (
@@ -76,7 +76,7 @@ export class NavBar extends Component {
             {/* {localStorage.getItem("token") ? (
               <li className="nav-item">
                 <NavButton onClick={() => this.onClickNavBar("/chat")}>
-                  Chat <span class="sr-only">(current)</span>
+                  Chat <span className="sr-only">(current)</span>
                 </NavButton>
               </li>
             ) : (
@@ -102,11 +102,11 @@ export class NavBar extends Component {
                   <div></div>
                 )}
                 <div
-                  class="dropdown-menu navbar-box"
+                  className="dropdown-menu navbar-box"
                   aria-labelledby="navbarDropdownMenuLink"
                 >
                   <a
-                    class="dropdown-item textnormal"
+                    className="dropdown-item textnormal"
                     onClick={() => this.onClickNavBar("/profile")}
                   >
                     My Profile<span className="sr-only">(current)</span>
@@ -115,7 +115,7 @@ export class NavBar extends Component {
                     <div></div>
                   ) : (
                     <a
-                      class="dropdown-item textnormal"
+                      className="dropdown-item textnormal"
                       onClick={() => this.onClickNavBar("/mycourse")}
                     >
                       {this.state.role == "tutor"
@@ -128,14 +128,14 @@ export class NavBar extends Component {
                     <div></div>
                   ) : (
                     <a
-                      class="dropdown-item textnormal"
+                      className="dropdown-item textnormal"
                       onClick={() => this.onClickNavBar("/chat")}
                     >
-                      Chat <span class="sr-only">(current)</span>
+                      Chat <span className="sr-only">(current)</span>
                     </a>
                   )}
                   <a
-                    class="dropdown-item textnormal"
+                    className="dropdown-item textnormal"
                     onClick={() => this.onClickNavBar("/logout")}
                   >
                     Sign Out<span className="sr-only">(current)</span>

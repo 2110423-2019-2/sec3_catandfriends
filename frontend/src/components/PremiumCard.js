@@ -132,7 +132,7 @@ export default class PremiumCard extends Component {
           </div>
           <div className="row">
             <div className="col-md-12 ">
-              <div class="container">
+              <div className="container">
                 <label /*className="bg-success text-white"*/>
                   <input
                     id="bill"

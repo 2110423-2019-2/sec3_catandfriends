@@ -55,7 +55,7 @@ export default class EditableCard extends React.Component {
           <div style={{ height: "120px", paddingLeft: "5px" }}>
             <div className="mcard-header--title">{category}</div>{" "}
             <button
-              class="button button-secondary"
+              className="button button-secondary"
               onClick={() => {
                 history.push(`/course/edit?courseId=${courseid}`);
               }}

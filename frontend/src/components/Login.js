@@ -71,8 +71,8 @@ export class Login extends Component {
               </div>
             </div>
             <div className="row" style={{ marginTop: "30px" }}>
-              <div class="col-md-12" align="center">
-                <button id="submit" type="submit" class="button-white">
+              <div className="col-md-12" align="center">
+                <button id="submit" type="submit" className="button-white">
                   Log In
                 </button>
               </div>

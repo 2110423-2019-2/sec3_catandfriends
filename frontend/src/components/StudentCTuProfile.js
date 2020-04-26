@@ -110,7 +110,7 @@ export class StudentCTuProfile extends Component {
                       </div>
                       <div className="col-md-8">
                         <div className="valueB">
-                          <span style={{ fontWeight: "bold", color: "blue" }}>
+                          <span style={{ fontWeight: "bold", color: "#00BFFF" }}>
                             {this.props.data.verifyStatus
                               ? "VERIFIED"
                               : "NOT VERIFIED"}
@@ -119,7 +119,7 @@ export class StudentCTuProfile extends Component {
                       </div>
                     </div>
                   </div>
-                  <div class="ml-auto">
+                  <div className="ml-auto">
                     <ReportBox reportedUserId={this.props.data._id} />
                   </div>
                 </div>

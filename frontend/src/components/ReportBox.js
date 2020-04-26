@@ -20,11 +20,11 @@ export default class TypeComment extends Component {
         closeOnDocumentClick
       >
         {(close) => (
-          <div class="p-4">
+          <div className="p-4">
             <p>Please fill the information to report</p>
             <br />
             <form
-              class="text-left"
+              className="text-left"
               onSubmit={(event) => {
                 this.handleSubmit(event, close);
               }}
@@ -66,13 +66,13 @@ export default class TypeComment extends Component {
               <textarea
                 typr="text"
                 id="message"
-                class="pt-0 pl-0"
+                className="pt-0 pl-0"
                 style={{ height: "100px", width: "100%" }}
               ></textarea>
               <input
                 type="submit"
                 value="submit"
-                class="float-right m-3"
+                className="float-right m-3"
               ></input>
             </form>
           </div>

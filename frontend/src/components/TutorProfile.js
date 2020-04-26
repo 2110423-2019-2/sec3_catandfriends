@@ -31,7 +31,7 @@ export class TutorProfile extends Component {
     if (!warn) {
       Warn = (
         <div className="row justify-content-center">
-          <p class="alert alert-warning" style={{ textAlign: "center" }}>
+          <p className="alert alert-warning" style={{ textAlign: "center" }}>
             <strong>Warning!</strong> You are an unverified tutor. You are not
             able to chat or create any courses.
           </p>

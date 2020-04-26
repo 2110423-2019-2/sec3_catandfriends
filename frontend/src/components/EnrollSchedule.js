@@ -280,24 +280,24 @@ class RowInformation extends Component {
             </a>
           </div>
 
-          <div class="col-md-2 background-color textnormal">
+          <div className="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {enrollDate ? enrollDate : "-"}
             </div>
           </div>
 
-          <div class="col-md-2 background-color textnormal">
+          <div className="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {duration ? duration.split(" - ")[0] : "-"}
             </div>
           </div>
-          <div class="col-md-2 background-color textnormal">
+          <div className="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {duration ? duration.split(" - ")[1] : "-"}
             </div>
           </div>
           <div className="col-md-2 justify-content-center background-color textnormal">
-            <textarea class="Eday" style={{ textAlign: "center" }} disabled>
+            <textarea className="Eday" style={{ textAlign: "center" }} disabled>
               {day ? this.dayToString(day) : "-"}
             </textarea>
           </div>

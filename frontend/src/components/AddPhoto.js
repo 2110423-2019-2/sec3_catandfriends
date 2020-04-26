@@ -14,7 +14,7 @@ export class AddPhoto extends Component {
 
   render() {
     return (
-      <div class="container">
+      <div className="container">
         <label>
           <input type="file" />
         </label>
