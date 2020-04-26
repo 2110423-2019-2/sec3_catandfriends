@@ -387,7 +387,7 @@ export default class EditCourse extends Component {
                       <br />
                       <input
                         type="Number"
-                        min="0"
+                        min="1"
                         className="inbox"
                         required
                         value={this.state.totalAmountOfStudent}
