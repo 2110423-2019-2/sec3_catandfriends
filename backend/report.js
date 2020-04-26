@@ -6,11 +6,11 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   var reportingUserId = req.user._id;
   var createdTime = moment.tz(Date.now(), "Asia/Bangkok")._d;
-  console.log({
-    ...req.body,
-    reportingUserId,
-    createdTime,
-  });
+  // console.log({
+  //   ...req.body,
+  //   reportingUserId,
+  //   createdTime,
+  // });
   var report = await reportModel.create({
     ...req.body,
     reportingUserId,
