@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import Util from "../apis/Util";
 import FileSaver from "file-saver";
+import history from "../history";
 export default class PremiumCard extends Component {
   constructor(props) {
     super(props);
@@ -85,6 +86,7 @@ export default class PremiumCard extends Component {
         // then print response status
         console.log(res.statusText);
         alert("File Uploaded");
+        history.push("/profile");
         window.location.reload();
       });
   };

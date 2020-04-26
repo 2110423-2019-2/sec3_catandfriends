@@ -104,6 +104,9 @@ export class Login extends Component {
           ? "verifiedTutor"
           : "tutor"
       );
+      if (user.role == "tutor") {
+        localStorage.setItem("premium", user.premiumStatus ? "yes" : "no");
+      }
       console.log(data);
       history.push("/profile");
       window.location.reload();

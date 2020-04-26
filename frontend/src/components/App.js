@@ -54,6 +54,9 @@ class App extends Component {
   student() {
     return localStorage.getItem("role") == "student";
   }
+  premiumTutor() {
+    return localStorage.getItem("premium") == "yes";
+  }
   render3() {
     return (
       <Router history={history}>
@@ -112,7 +115,7 @@ class App extends Component {
           {this.tutor() && !this.verifiedTutor() && (
             <Route path="/profile/verify" component={VerifyPage} />
           )}
-          {this.verifiedTutor() && (
+          {this.verifiedTutor() && !this.premiumTutor() && (
             <Route path="/profile/premium" component={PremiumPage} />
           )}
           {this.verifiedTutor() && (

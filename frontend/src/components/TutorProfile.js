@@ -115,6 +115,25 @@ export class TutorProfile extends Component {
         console.log("Completed");
       });
   };
+  onClickGetSlipPremium = () => {
+    axios({
+      method: "GET",
+      url: `http://localhost:8000/file/paymentFile/premium?token=${localStorage.getItem(
+        "token"
+      )}&tutorId=${this.props.data._id}`,
+      responseType: "blob",
+    })
+      .then((response) => {
+        this.setState({ imageDownloading: true }, () => {
+          FileSaver.saveAs(response.data, "your-slip.jpg");
+        });
+        console.log(response);
+      })
+      .then(() => {
+        this.setState({ imageDownloading: false });
+        console.log("Completed");
+      });
+  };
   render() {
     return (
       <div className="bigCard">
@@ -262,7 +281,7 @@ export class TutorProfile extends Component {
                       </div>
                     </div>
                   </div>
-                )}{" "}
+                )}
                 <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">Premium Status:</div>
@@ -284,6 +303,23 @@ export class TutorProfile extends Component {
                     </div>
                   </div>
                 </div>
+                {this.props.data.premiumStatus && (
+                  <div className="row">
+                    <div className="col-md-4">
+                      <div className="nameB">Premium Payment:</div>
+                    </div>
+                    <div className="col-md-8">
+                      <div className="valueB">
+                        <div
+                          className="fileNameB"
+                          onClick={this.onClickGetSlipPremium}
+                        >
+                          <i>download file</i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 {/* <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">Premium payment:</div>
@@ -334,6 +370,9 @@ export class TutorProfile extends Component {
         ? "verifiedTutor"
         : "tutor"
     );
+    if (user.role == "tutor") {
+      localStorage.setItem("premium", user.premiumStatus ? "yes" : "no");
+    }
     if (this.props.data.profileImage) {
       var xhr = new XMLHttpRequest();
       var myurl = "";
