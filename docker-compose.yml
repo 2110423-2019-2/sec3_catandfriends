@@ -23,6 +23,7 @@ services:
       MONGO_DB_UPLOAD: ${MONGO_DB_UPLOAD}
       EMAIL: ${EMAIL}
       MAILPASSWORD: ${MAILPASSWORD}
+      SERVERIP: ${SERVERIP}
 
   mongo:
     image: mongo
