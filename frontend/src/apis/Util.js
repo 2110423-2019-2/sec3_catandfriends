@@ -53,8 +53,8 @@ const Util = {
   },
   getProfile: async (userId) => {
     if (!localStorage.getItem("token")) {
-      window.alert("Please login first!");
-      return history.push("./login");
+      // window.alert("Please login first!");
+      return null;
     }
     console.log(userId);
     const URL = userId

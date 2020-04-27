@@ -53,9 +53,10 @@ export default class EnrollSchedule extends Component {
                     </div>
                     <div className="row">
                       <div className="col-md-12">
-                        <div className="textshadow"
+                        <div
+                          className="textshadow"
                           style={{
-                            paddingTop: "20px"
+                            paddingTop: "20px",
                           }}
                         >
                           Loading...
@@ -131,7 +132,7 @@ export default class EnrollSchedule extends Component {
                           </div>
                         </div>
                       </div>
-                      {this.state.schedule.map(item => (
+                      {this.state.schedule.map((item) => (
                         <RowInformation detail={item} />
                       ))}
                     </div>
@@ -204,9 +205,10 @@ export default class EnrollSchedule extends Component {
                       </div>
                       <div className="row">
                         <div className="col-md-12 ">
-                          <div className="textshadow"
+                          <div
+                            className="textshadow"
                             style={{
-                              paddingTop: "20px"
+                              paddingTop: "20px",
                             }}
                           >
                             You have no course enrollment
@@ -249,7 +251,8 @@ class RowInformation extends Component {
       tutorName,
       enrollDate,
       duration,
-      day
+      day,
+      tutorId,
     } = this.props.detail;
     if (this.props.detail) {
       return (
@@ -266,29 +269,35 @@ class RowInformation extends Component {
             </a>
           </div>
           <div className="col-md-2 background-color textnormal">
-            <div style={{ textAlign: "center" }}>
+            <a
+              className="courseL"
+              style={{ textAlign: "center" }}
+              onClick={() => {
+                history.push(`/profile?userId=${tutorId}`);
+              }}
+            >
               {tutorName ? tutorName : "-"}
-            </div>
+            </a>
           </div>
 
-          <div class="col-md-2 background-color textnormal">
+          <div className="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {enrollDate ? enrollDate : "-"}
             </div>
           </div>
 
-          <div class="col-md-2 background-color textnormal">
+          <div className="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {duration ? duration.split(" - ")[0] : "-"}
             </div>
           </div>
-          <div class="col-md-2 background-color textnormal">
+          <div className="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {duration ? duration.split(" - ")[1] : "-"}
             </div>
           </div>
           <div className="col-md-2 justify-content-center background-color textnormal">
-            <textarea class="Eday" style={{ textAlign: "center" }}>
+            <textarea className="Eday" style={{ textAlign: "center" }} disabled>
               {day ? this.dayToString(day) : "-"}
             </textarea>
           </div>

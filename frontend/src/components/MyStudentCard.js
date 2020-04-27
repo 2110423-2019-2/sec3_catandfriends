@@ -143,7 +143,7 @@ export default class MyStudentCard extends Component {
                   <br />
                   <br />
                   <div className="row">
-                    <div class="col-md-4 border">
+                    <div className="col-md-4 border">
                       <strong>SSN : </strong>
                       <br />
                       <strong>Gender : </strong>
@@ -153,7 +153,7 @@ export default class MyStudentCard extends Component {
                       <strong>Phone Number : </strong>
                       <br />
                     </div>
-                    <div class="col-md-8 border">
+                    <div className="col-md-8 border">
                       <body>{this.props.data.ssn}</body>
                       <body>{this.props.data.gender}</body>
                       <body>{this.props.data.email}</body>

@@ -87,7 +87,7 @@ export default class CommentCardLayout extends Component {
     let i = 2;
     if (n >= 0) {
       items = [
-        <div class="carousel-item active">
+        <div className="carousel-item active">
           <div className="row justify-content-center">
             <CommentCard
               data={{
@@ -105,7 +105,7 @@ export default class CommentCardLayout extends Component {
     }
     if (n >= 1) {
       items = [
-        <div class="carousel-item active">
+        <div className="carousel-item active">
           <div className="row justify-content-center">
             <CommentCard
               data={this.state.comments[0]}
@@ -117,7 +117,7 @@ export default class CommentCardLayout extends Component {
     }
     if (n >= 2) {
       items = [
-        <div class="carousel-item active">
+        <div className="carousel-item active">
           <div className="row justify-content-center">
             <CommentCard
               data={this.state.comments[0]}
@@ -135,7 +135,7 @@ export default class CommentCardLayout extends Component {
       for (i = 2; i < n; i += 2) {
         if (i + 1 == n) {
           items.push(
-            <div class="carousel-item">
+            <div className="carousel-item">
               <div className="row justify-content-center">
                 <CommentCard
                   data={this.state.comments[i]}
@@ -146,7 +146,7 @@ export default class CommentCardLayout extends Component {
           );
         } else {
           items.push(
-            <div class="carousel-item">
+            <div className="carousel-item">
               <div className="row justify-content-center">
                 <CommentCard
                   data={this.state.comments[i]}
@@ -168,39 +168,39 @@ export default class CommentCardLayout extends Component {
     return (
       <div
         id="carouselExampleControls"
-        class="carousel slide CommentCardLayout-card"
+        className="carousel slide CommentCardLayout-card"
         data-ride="carousel"
         data-interval="false"
       >
         <div className="textheader">Comment</div>
-        <ol class="carousel-indicators" style={{ height: "10px" }}>
+        <ol className="carousel-indicators" style={{ height: "10px" }}>
           <li
             data-target="#carouselExampleIndicators"
             data-slide-to="0"
-            class="active"
+            className="active"
           ></li>
           {this.state.comments && this.getIndicator()}
         </ol>
-        <div class="carousel-inner">
+        <div className="carousel-inner">
           {this.state.comments && this.getComment()}
         </div>
         <a
-          class="carousel-control-prev arrowBtn"
+          className="carousel-control-prev arrowBtn"
           href="#carouselExampleControls"
           role="button"
           data-slide="prev"
         >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
+          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span className="sr-only">Previous</span>
         </a>
         <a
-          class="carousel-control-next arrowBtn"
+          className="carousel-control-next arrowBtn"
           href="#carouselExampleControls"
           role="button"
           data-slide="next"
         >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
+          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="sr-only">Next</span>
         </a>
       </div>
     );

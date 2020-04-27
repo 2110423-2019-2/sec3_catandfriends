@@ -30,7 +30,7 @@ class BlankCard extends React.Component {
           </div>
         </div>
         <div className="card-body mycard-body">
-          <button class="button-white width90" onClick={() => this.onClickAddNewCourse()}>
+          <button className="button-white width90" onClick={() => this.onClickAddNewCourse()}>
             Create Course
           </button>
           <p className="card-text tutorname"></p>

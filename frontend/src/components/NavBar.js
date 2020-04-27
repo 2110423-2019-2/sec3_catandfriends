@@ -13,7 +13,7 @@ export class NavBar extends Component {
         "https://www.img.in.th/images/8517bda5f5991478fb667d1d086145ac.jpg",
       logoLight:
         "https://www.img.in.th/images/e67008d54a3a3f0bccaa782f25348e87.png",
-      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png"
+      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png",
     };
     this.hover = this.hover.bind(this);
     this.unhover = this.unhover.bind(this);
@@ -28,7 +28,7 @@ export class NavBar extends Component {
   }
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-white navbar-light" style={{zIndex: "9999"}}>
+      <nav className="navbar navbar-expand-lg navbar-white ">
         <a className="navbar-brand" onClick={() => this.onClickNavBar("/home")}>
           <img
             src={this.state.logoLight}
@@ -36,13 +36,13 @@ export class NavBar extends Component {
             className="logoImg"
             alt="Logo"
             id="imgLogo"
-          // onMouseOver={this.hover}
-          // onMouseOut={this.unhover}
+            // onMouseOver={this.hover}
+            // onMouseOut={this.unhover}
           />
           <span className="brandName">TutorHere</span>
         </a>
         <button
-          className="navbar-toggler border"
+          className="navbar-toggler custom-toggler"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNavDropdown"
@@ -50,14 +50,14 @@ export class NavBar extends Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon navtogglecolor"></span>
+          <span className=" navbar-toggler-icon "></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav mr-auto">
             {/* {!localStorage.getItem("token") ? (
               <li className="nav-item">
                 <NavButton onClick={() => this.onClickNavBar("/register")}>
-                  Register <span class="sr-only">(current)</span>
+                  Register <span className="sr-only">(current)</span>
                 </NavButton>
               </li>
             ) : (
@@ -76,7 +76,7 @@ export class NavBar extends Component {
             {/* {localStorage.getItem("token") ? (
               <li className="nav-item">
                 <NavButton onClick={() => this.onClickNavBar("/chat")}>
-                  Chat <span class="sr-only">(current)</span>
+                  Chat <span className="sr-only">(current)</span>
                 </NavButton>
               </li>
             ) : (
@@ -86,7 +86,7 @@ export class NavBar extends Component {
               <li className="nav-item dropdown">
                 {this.state.fullName ? (
                   <button
-                    className="dropdown-toggle button-white"
+                    className="dropdown-toggle accountbtn button-white"
                     style={{ width: "fit-content !important" }}
                     href="#"
                     id="navbarDropdownMenuLink"
@@ -99,29 +99,43 @@ export class NavBar extends Component {
                     <span className="sr-only">(current)</span>
                   </button>
                 ) : (
-                    <div></div>
-                  )}
+                  <div></div>
+                )}
                 <div
-                  class="dropdown-menu navbar-box"
+                  className="dropdown-menu navbar-box"
                   aria-labelledby="navbarDropdownMenuLink"
                 >
-                  <a class="dropdown-item textnormal" href="/profile">
+                  <a
+                    className="dropdown-item textnormal"
+                    onClick={() => this.onClickNavBar("/profile")}
+                  >
                     My Profile<span className="sr-only">(current)</span>
                   </a>
-                  <a class="dropdown-item textnormal" href="/mycourse">
-                    {this.state.role == "tutor"
-                      ? "My Course & Request"
-                      : "My Course & Schedule"}
-                    <span className="sr-only">(current)</span>
-                  </a>
+                  {this.state.unverified ? (
+                    <div></div>
+                  ) : (
+                    <a
+                      className="dropdown-item textnormal"
+                      onClick={() => this.onClickNavBar("/mycourse")}
+                    >
+                      {this.state.role == "tutor"
+                        ? "My Course & Request"
+                        : "My Course & Schedule"}
+                      <span className="sr-only">(current)</span>
+                    </a>
+                  )}
+                  {this.state.unverified ? (
+                    <div></div>
+                  ) : (
+                    <a
+                      className="dropdown-item textnormal"
+                      onClick={() => this.onClickNavBar("/chat")}
+                    >
+                      Chat <span className="sr-only">(current)</span>
+                    </a>
+                  )}
                   <a
-                    class="dropdown-item textnormal"
-                    onClick={() => this.onClickNavBar("/chat")}
-                  >
-                    Chat <span class="sr-only">(current)</span>
-                  </a>
-                  <a
-                    class="dropdown-item textnormal"
+                    className="dropdown-item textnormal"
                     onClick={() => this.onClickNavBar("/logout")}
                   >
                     Sign Out<span className="sr-only">(current)</span>
@@ -129,24 +143,30 @@ export class NavBar extends Component {
                 </div>
               </li>
             ) : (
-                <li className="nav-item">
-                  <button className="button-white" style={{ width: "120px" }} onClick={() => this.onClickNavBar("/login")} isOn>
-                    Sign In
+              <li className="nav-item">
+                <button
+                  className="button-white"
+                  style={{ width: "120px" }}
+                  onClick={() => this.onClickNavBar("/login")}
+                  isOn
+                >
+                  Sign In
                 </button>
-                </li>
-              )}
+              </li>
+            )}
           </ul>
         </div>
       </nav>
     );
   }
-  onClickNavBar = page => {
+  onClickNavBar = async (page) => {
     if (page == "/logout") {
-      localStorage.clear();
-      history.push("/home");
+      await localStorage.clear();
+      history.push("/signup");
       window.location.reload();
     } else {
       history.push(page);
+      window.location.reload();
     }
   };
   async componentDidMount() {
@@ -156,7 +176,8 @@ export class NavBar extends Component {
       this.setState({
         data,
         fullName: data.firstName + " " + data.lastName.substring(0, 1) + ".",
-        role: data.role
+        role: data.role,
+        unverified: data.role == "tutor" && !data.verifyStatus,
       });
       console.log(this.state);
     }
@@ -176,7 +197,7 @@ export class NavBar extends Component {
         true
       );
       xhr.responseType = "arraybuffer";
-      xhr.onload = function (e, imageUrl) {
+      xhr.onload = function(e, imageUrl) {
         var arrayBufferView = new Uint8Array(this.response);
         var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
         var urlCreator = window.URL || window.webkitURL;

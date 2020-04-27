@@ -41,7 +41,7 @@ export class CourseDetail extends Component {
         <button
           className="button-white"
           onClick={() => {
-            history.push(`/course/edit?courseId=${this.props.detail.courseid}`);
+            history.push(`/course/edit?courseId=${this.props.detail._id}`);
           }}
         >
           Edit Course
@@ -85,7 +85,13 @@ export class CourseDetail extends Component {
               <div className="col-md-6 ">
                 <a
                   className="textshadow"
-                  href={`/profile?userId=${this.props.detail.tutorId}`}
+                  onClick={() => {
+                    history.push(
+                      `/profile?userId=${this.props.detail.tutorId}`
+                    );
+                  }}
+                  href="#"
+                  // href={`/profile?userId=${this.props.detail.tutorId}`}
                 >
                   {" by " + this.props.detail.tutorName}
                 </a>
@@ -132,7 +138,10 @@ export class CourseDetail extends Component {
                     <div className="nameB">Category:</div>
                   </div>
                   <div className="col-md-8">
-                    <div className="valueB">{this.props.detail.category}</div>
+                    <div className="valueB">
+                      {this.props.detail.category.charAt(0).toUpperCase() +
+                        this.props.detail.category.slice(1)}
+                    </div>
                   </div>
                 </div>
                 <div className="row ">

@@ -1,0 +1,6 @@
+@media only screen and (max-width: 600px) {
+  .filterCard {
+    position: static !important;
+    top: 0px !important;
+  }
+}

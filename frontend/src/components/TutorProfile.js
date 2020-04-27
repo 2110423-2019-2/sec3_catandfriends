@@ -4,6 +4,8 @@ import Util from "../apis/Util";
 import history from "../history";
 import VerifyCard from "./VerifyCard";
 import NormalButton from "./NormalButton";
+import FileSaver from "file-saver";
+import axios from "axios";
 export class TutorProfile extends Component {
   constructor(props) {
     super(props);
@@ -29,9 +31,9 @@ export class TutorProfile extends Component {
     if (!warn) {
       Warn = (
         <div className="row justify-content-center">
-          <p class="alert alert-warning" style={{ textAlign: "center" }}>
+          <p className="alert alert-warning" style={{ textAlign: "center" }}>
             <strong>Warning!</strong> You are an unverified tutor. You are not
-            able to create any courses.
+            able to chat or create any courses.
           </p>
         </div>
       );
@@ -44,14 +46,14 @@ export class TutorProfile extends Component {
     let Premium;
     if (verify && !premium) {
       Premium = (
-        <NormalButton
-          color="rgba(21, 171, 168,0.8)"
+        <button
+          className="button-white"
           onClick={() => {
             history.push(`/profile/premium`);
           }}
         >
           Upgrade Premium
-        </NormalButton>
+        </button>
       );
       return Premium;
     } else {
@@ -76,6 +78,62 @@ export class TutorProfile extends Component {
       return;
     }
   }
+  onClickGetVeriFile = () => {
+    axios({
+      method: "GET",
+      url: `http://localhost:8000/file/verifyFile?token=${localStorage.getItem(
+        "token"
+      )}&tutorId=${this.props.data._id}`,
+      responseType: "blob",
+    })
+      .then((response) => {
+        this.setState({ fileDownloading: true }, () => {
+          FileSaver.saveAs(response.data, "your-veridoc.pdf");
+        });
+      })
+      .then(() => {
+        this.setState({ fileDownloading: false });
+        console.log("Completed");
+      });
+  };
+  onClickGetSlipImg = () => {
+    axios({
+      method: "GET",
+      url: `http://localhost:8000/file/paymentFile/verify?token=${localStorage.getItem(
+        "token"
+      )}&tutorId=${this.props.data._id}`,
+      responseType: "blob",
+    })
+      .then((response) => {
+        this.setState({ imageDownloading: true }, () => {
+          FileSaver.saveAs(response.data, "your-slip.jpg");
+        });
+        console.log(response);
+      })
+      .then(() => {
+        this.setState({ imageDownloading: false });
+        console.log("Completed");
+      });
+  };
+  onClickGetSlipPremium = () => {
+    axios({
+      method: "GET",
+      url: `http://localhost:8000/file/paymentFile/premium?token=${localStorage.getItem(
+        "token"
+      )}&tutorId=${this.props.data._id}`,
+      responseType: "blob",
+    })
+      .then((response) => {
+        this.setState({ imageDownloading: true }, () => {
+          FileSaver.saveAs(response.data, "your-slip.jpg");
+        });
+        console.log(response);
+      })
+      .then(() => {
+        this.setState({ imageDownloading: false });
+        console.log("Completed");
+      });
+  };
   render() {
     return (
       <div className="bigCard">
@@ -150,7 +208,7 @@ export class TutorProfile extends Component {
                 </div>
                 <div className="row">
                   <div className="col-md-4">
-                    <div className="nameB">Verify status:</div>
+                    <div className="nameB">Verify Status:</div>
                   </div>
                   <div className="col-md-8">
                     <div className="valueB">
@@ -190,9 +248,43 @@ export class TutorProfile extends Component {
                     </div>
                   </div>
                 </div> */}
+                {this.props.data.verifyStatus && (
+                  <div className="row">
+                    <div className="col-md-4">
+                      <div className="nameB">Verify Document:</div>
+                    </div>
+                    <div className="col-md-8">
+                      <div className="valueB">
+                        <div
+                          className="fileNameG"
+                          onClick={this.onClickGetVeriFile}
+                        >
+                          <i>download file</i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {this.props.data.verifyStatus && (
+                  <div className="row">
+                    <div className="col-md-4">
+                      <div className="nameB">Verify Payment:</div>
+                    </div>
+                    <div className="col-md-8">
+                      <div className="valueB">
+                        <div
+                          className="fileNameB"
+                          onClick={this.onClickGetSlipImg}
+                        >
+                          <i>download file</i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className="row">
                   <div className="col-md-4">
-                    <div className="nameB">Premium status:</div>
+                    <div className="nameB">Premium Status:</div>
                   </div>
                   <div className="col-md-8">
                     <div className="valueB">
@@ -201,13 +293,33 @@ export class TutorProfile extends Component {
                           PREMIUM
                         </span>
                       ) : (
-                        <span style={{ fontWeight: "bold", color: "black" }}>
+                        <span
+                          className="text-color"
+                          style={{ fontWeight: "bold" }}
+                        >
                           STANDARD
                         </span>
                       )}
                     </div>
                   </div>
                 </div>
+                {this.props.data.premiumStatus && (
+                  <div className="row">
+                    <div className="col-md-4">
+                      <div className="nameB">Premium Payment:</div>
+                    </div>
+                    <div className="col-md-8">
+                      <div className="valueB">
+                        <div
+                          className="fileNameB"
+                          onClick={this.onClickGetSlipPremium}
+                        >
+                          <i>download file</i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 {/* <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">Premium payment:</div>
@@ -249,6 +361,18 @@ export class TutorProfile extends Component {
     );
   }
   async componentDidMount() {
+    let user = this.props.data;
+    localStorage.setItem(
+      "role",
+      user.role == "student"
+        ? "student"
+        : user.verifyStatus
+        ? "verifiedTutor"
+        : "tutor"
+    );
+    if (user.role == "tutor") {
+      localStorage.setItem("premium", user.premiumStatus ? "yes" : "no");
+    }
     if (this.props.data.profileImage) {
       var xhr = new XMLHttpRequest();
       var myurl = "";

@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import axios from "axios";
 import Util from "../apis/Util";
 import FileSaver from "file-saver";
+import history from "../history";
 export default class PremiumCard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       imgsrc:
-        "https://s3-ap-southeast-1.amazonaws.com/img-in-th/352a5d02815c1e50649a6f2987bda26d.png"
+        "https://s3-ap-southeast-1.amazonaws.com/img-in-th/352a5d02815c1e50649a6f2987bda26d.png",
       /*https://s3-ap-southeast-1.amazonaws.com/img-in-th/9f79ee3d9195d512adecddd66289b536.png*/
     };
   }
@@ -18,9 +19,9 @@ export default class PremiumCard extends Component {
       url: `http://localhost:8000/file/paymentFile/premium?token=${localStorage.getItem(
         "token"
       )}&tutorId=${this.state.data._id}`,
-      responseType: "blob"
+      responseType: "blob",
     })
-      .then(response => {
+      .then((response) => {
         this.setState({ imageDownloading: true }, () => {
           FileSaver.saveAs(response.data, "your-slip.jpg");
         });
@@ -32,7 +33,12 @@ export default class PremiumCard extends Component {
       });
   };
   isImagefile(file) {
-    const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    const acceptedImageTypes = [
+      "image/gif",
+      "image/jpg",
+      "image/jpeg",
+      "image/png",
+    ];
     return file && acceptedImageTypes.includes(file.type);
   }
   getImage() {
@@ -46,10 +52,10 @@ export default class PremiumCard extends Component {
       return <span>-</span>;
     }
   }
-  onChangeHandlerSlip = event => {
+  onChangeHandlerSlip = (event) => {
     this.setState({
       selectedSlip: event.target.files[0],
-      loadedSilp: 0
+      loadedSilp: 0,
     });
   };
   onClickHandlerSlip = () => {
@@ -76,10 +82,11 @@ export default class PremiumCard extends Component {
           // receive two    parameter endpoint url ,form data
         }
       )
-      .then(res => {
+      .then((res) => {
         // then print response status
         console.log(res.statusText);
         alert("File Uploaded");
+        history.push("/profile");
         window.location.reload();
       });
   };
@@ -125,12 +132,12 @@ export default class PremiumCard extends Component {
           </div>
           <div className="row">
             <div className="col-md-12 ">
-              <div class="container">
+              <div className="container">
                 <label /*className="bg-success text-white"*/>
                   <input
                     id="bill"
                     className=" border border-dark textnormal"
-                    //className="form-control-file p-1"
+                    accept="image/*"
                     type="file"
                     name="file"
                     onChange={this.onChangeHandlerSlip}

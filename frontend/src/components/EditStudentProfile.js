@@ -48,7 +48,7 @@ export default class EditStudentProfile extends Component {
     );
     // console.log("data"+data);
     if (!data.error) {
-      alert("A profile is edited");
+      alert("Your profile is edited");
       // console.log(data);
       history.push("/profile");
     } else {
@@ -122,10 +122,10 @@ export default class EditStudentProfile extends Component {
           <div className="col-md-9">
             <form onSubmit={(event) => this.handleSubmit(event)}>
               <div
-                class="row"
+                className="row"
                 style={{ marginTop: "10px", textAlign: "center" }}
               >
-                <div class="col-md-6">
+                <div className="col-md-6">
                   <label className="textnormal" htmlFor="firstName">
                     First Name
                     <br />
@@ -142,7 +142,7 @@ export default class EditStudentProfile extends Component {
                   </label>
                 </div>
 
-                <div class="col-md-6">
+                <div className="col-md-6">
                   <label className="textnormal" htmlFor="lastName">
                     Last Name
                     <br />
@@ -159,8 +159,8 @@ export default class EditStudentProfile extends Component {
                   </label>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6" width="100%">
+              <div className="row">
+                <div className="col-md-6" width="100%">
                   <label className="textnormal">
                     Phone Number
                     <br />
@@ -178,13 +178,13 @@ export default class EditStudentProfile extends Component {
                     />
                   </label>
                 </div>
-                <div class="col-md-6">
+                <div className="col-md-6">
                   <label className="textnormal">
                     Gender
                     <br />
                     <select
                       id="gender"
-                      value={this.state.Gender}
+                      value={this.state.gender}
                       className="field"
                       style={{ width: 250 }}
                       name="gender"
@@ -198,11 +198,7 @@ export default class EditStudentProfile extends Component {
               </div>
               <div className="row text-center" style={{ marginTop: "20px" }}>
                 <div className="col-md-12">
-                  <button
-                    className="button-white"
-                    type="submit"
-                    value="Submit"
-                  >
+                  <button className="button-white" type="submit" value="Submit">
                     Submit
                   </button>
                 </div>

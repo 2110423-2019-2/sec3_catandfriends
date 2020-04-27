@@ -6,7 +6,9 @@
 .logoImg:hover {
   transform: scale(1.2);
 }
-
+.navbar {
+  min-height: 85px !important;
+}
 .navbar-white {
   border: 0;
   border-radius: 0;
@@ -15,21 +17,24 @@
   box-shadow: var(--navbarwhite-shadow-color);
   transition: all 1s ease, padding 1s ease;
 }
-
+.accountbtn:focus {
+  outline: none;
+}
 .navbar-brand {
   font-family: "Merienda One", cursive;
   font-size: 1.6em !important;
 }
-
-.navtogglecolor{
-  background: var(--black-color);
+.custom-toggler .navbar-toggler-icon {
+  background-image: var(--black-nav);
 }
-
-.navbar-box{
-  -moz-transition: all .1s ease-in;
-  -o-transition: all .1s ease-in;
-  -webkit-transition: all .1s ease-in;
-  transition: all .1s ease-in;
+.custom-toggler.navbar-toggler {
+  border-color: var(--black-color);
+}
+.navbar-box {
+  -moz-transition: all 0.1s ease-in;
+  -o-transition: all 0.1s ease-in;
+  -webkit-transition: all 0.1s ease-in;
+  transition: all 0.1s ease-in;
   border-radius: 10px;
   background: var(--white-color-trans) !important;
   box-shadow: var(--homebox-shadow-color) !important;
@@ -43,7 +48,9 @@
   font-size: 1.1em;
   font-weight: 500;
 }
-
+.navbar-nav > li > .dropdown-menu {
+  min-width: 220px;
+}
 .navbar-nav > li > .dropdown-menu .dropdown-item:hover {
   color: var(--white-color) !important;
   background: var(--black-color) !important;

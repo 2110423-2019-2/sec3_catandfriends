@@ -72,7 +72,7 @@ export default class NewCourse extends Component {
       alert("Start Time must be before End Time");
     } else {
       console.log(this.state);
-      alert(JSON.stringify(this.state));
+      // alert(JSON.stringify(this.state));
       let data = await Util.createCourse(
         this.state.courseName,
         this.state.dayAndStartTime,
@@ -91,7 +91,7 @@ export default class NewCourse extends Component {
       } else {
         if (!data.error) {
           alert("New course created");
-          history.push("/profile");
+          history.push("/mycourse");
         } else {
           window.alert("Cannot Create Course");
         }
@@ -250,8 +250,8 @@ export default class NewCourse extends Component {
                 onSubmit={(event) => this.handleSubmit(event)}
                 style={{ marginLeft: 30 }}
               >
-                <div class="row">
-                  <div class="col-md-6 textnormal text-left">
+                <div className="row">
+                  <div className="col-md-6 textnormal text-left">
                     <label>
                       Course Name
                       <br />
@@ -267,7 +267,7 @@ export default class NewCourse extends Component {
                       />
                     </label>
                   </div>
-                  <div class="col-md-6 textnormal text-left">
+                  <div className="col-md-6 textnormal text-left">
                     <label>
                       Category
                       <br />
@@ -286,8 +286,8 @@ export default class NewCourse extends Component {
                     </label>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-3 textnormal text-left" width="100%">
+                <div className="row">
+                  <div className="col-md-3 textnormal text-left" width="100%">
                     <label>
                       Start Date
                       <br />
@@ -302,7 +302,7 @@ export default class NewCourse extends Component {
                       />
                     </label>
                   </div>
-                  <div class="col-md-3 textnormal text-left" width="100%">
+                  <div className="col-md-3 textnormal text-left" width="100%">
                     <label>
                       End Date
                       <br />
@@ -317,7 +317,7 @@ export default class NewCourse extends Component {
                       />
                     </label>
                   </div>
-                  <div class="col-md-3 textnormal text-left" width="100%">
+                  <div className="col-md-3 textnormal text-left" width="100%">
                     <label>
                       Price
                       <br />
@@ -332,13 +332,13 @@ export default class NewCourse extends Component {
                       />
                     </label>
                   </div>
-                  <div class="col-md-3 textnormal text-left" width="100%">
+                  <div className="col-md-3 textnormal text-left" width="100%">
                     <label>
                       Student amount
                       <br />
                       <input
                         type="Number"
-                        min="0"
+                        min="1"
                         className="inbox"
                         required
                         value={this.state.totalAmountOfStudent}
@@ -348,8 +348,8 @@ export default class NewCourse extends Component {
                     </label>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-3 textnormal text-left" width="100%">
+                <div className="row">
+                  <div className="col-md-3 textnormal text-left" width="100%">
                     <label htmlFor="Weekday">
                       Week day
                       <div id="Weekday" style={{ paddingTop: "5px" }}>
@@ -446,7 +446,7 @@ export default class NewCourse extends Component {
                       </div>
                     </label>
                   </div>
-                  <div class="col-md-3 textnormal text-left" width="100%">
+                  <div className="col-md-3 textnormal text-left" width="100%">
                     <label htmlFor="StartTime">Start Time</label>
                     <div id="StartTime">
                       <input
@@ -543,7 +543,7 @@ export default class NewCourse extends Component {
                     </div>
                   </div>
 
-                  <div class="col-md-3 textnormal text-left" width="100%">
+                  <div className="col-md-3 textnormal text-left" width="100%">
                     <label htmlFor="EndTime">End Time</label>
                     <div id="EndTime">
                       <input
@@ -641,25 +641,26 @@ export default class NewCourse extends Component {
                   </div>
                 </div>
 
-                <div class="row">
+                <div className="row">
                   <div
-                    class="col-md-6 textnormal text-left"
+                    className="col-md-12 textnormal text-left"
                     width="100%"
                     height="100px"
                   >
-                    <label>
-                      Description
-                      <br />
-                      <textarea
-                        type="text"
-                        className="inbox"
-                        required
-                        value={this.state.description}
-                        onChange={this.handleChange}
-                        style={{ width: 900, height: 200, resize: "none" }}
-                        name="description"
-                      />
-                    </label>
+                    <label>Description</label>
+                    <textarea
+                      type="text"
+                      className="inbox"
+                      required
+                      value={this.state.description}
+                      onChange={this.handleChange}
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        resize: "none",
+                      }}
+                      name="description"
+                    />
                   </div>
                 </div>
                 <div className="text-center">

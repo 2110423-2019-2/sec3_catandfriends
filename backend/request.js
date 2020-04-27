@@ -24,7 +24,6 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log("3e2eqeweqewqwaeqw");
   const studentId = req.user._id;
   const payload = req.body;
   const courseId = payload.courseId;
@@ -87,6 +86,9 @@ router.put("/", async (req, res) => {
           courseId,
           dateThailand._d
         );
+        if (course.amountOfStudent == 1) {
+          err = await deleteOtherRequest(tutorId, studentId, courseId);
+        }
         err = await updateSchedule(studentId, courseId, dateThailand._d);
         err = await updateCourse(
           studentId,
@@ -95,7 +97,6 @@ router.put("/", async (req, res) => {
           dateThailand._d
         );
         message = "Request accepted";
-        console.log(message);
       } else if (status == -1) {
         err = await deleteRequest(tutorId, studentId, courseId);
         message = "Request rejected";
@@ -174,6 +175,10 @@ async function findTheRequest(tutorId, studentId, courseId) {
 async function checkAvailable(studentId, courseId) {
   let err, course;
   [err, course] = await to(CourseModel.findById(courseId));
+  // console.log(courseId);
+
+  let dayCourse = [course.startDate, course.endDate];
+
   let courses;
   [err, courses] = await to(
     ScheduleModel.findOne(
@@ -191,6 +196,7 @@ async function checkAvailable(studentId, courseId) {
 
   let listOfCourse = courses.listOfCourse;
   let available = true;
+  let outerBreak = false;
   for (let i = 0; i < listOfCourse.length; i++) {
     let courseQ;
     [err, courseQ] = await to(
@@ -202,9 +208,17 @@ async function checkAvailable(studentId, courseId) {
           _id: 0,
           dayAndStartTime: 1,
           dayAndEndTime: 1,
+          startDate: 1,
+          endDate: 1,
         }
       )
     );
+
+    let dayCourseQ = [courseQ.startDate, courseQ.endDate];
+
+    if (!set.isIntersect(dayCourse, dayCourseQ)) {
+      break;
+    }
 
     for (let j = 0; j < 7; j++) {
       if (
@@ -214,7 +228,14 @@ async function checkAvailable(studentId, courseId) {
         continue;
       let a = [courseQ.dayAndStartTime[j], courseQ.dayAndEndTime[j]];
       let b = [course.dayAndStartTime[j], course.dayAndEndTime[j]];
-      if (set.isIntersect(a, b)) available = false;
+      if (set.isIntersect(a, b)) {
+        available = false;
+        outerBreak = true;
+        break;
+      }
+    }
+    if (outerBreak) {
+      break;
     }
   }
   return [err, available];
@@ -314,6 +335,17 @@ async function deleteRequest(tutorId, studentId, courseId) {
     RequestModel.deleteOne({
       tutorId: tutorId,
       studentId: studentId,
+      courseId: courseId,
+    })
+  );
+  return err;
+}
+
+async function deleteOtherRequest(tutorId, studentId, courseId) {
+  [err, value] = await to(
+    RequestModel.deleteMany({
+      tutorId: tutorId,
+      studentId: { $ne: studentId },
       courseId: courseId,
     })
   );

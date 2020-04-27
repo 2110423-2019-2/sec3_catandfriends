@@ -42,7 +42,7 @@ router.get("/rooms", async (req, res) => {
     delete room2[i].userId0;
   }
   var rooms = [...room1, ...room2];
-  console.log(rooms);
+  // console.log(rooms);
 
   return res.status(200).send(rooms);
 });
@@ -57,7 +57,7 @@ router.post("/", async (req, res) => {
     roomId,
     message,
     timeStamp,
-    userId
+    userId,
   });
 
   return res.status(201).send({ message: "Message sent successfully" });

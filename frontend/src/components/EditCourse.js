@@ -123,7 +123,7 @@ export default class EditCourse extends Component {
     } else if (!this.compareTime) {
       alert("Start Time must be before End Time");
     } else {
-      alert(JSON.stringify(this.state));
+      // alert(JSON.stringify(this.state));
       let data = await Util.editCourse(
         this.state._id,
         this.state.courseName,
@@ -142,7 +142,7 @@ export default class EditCourse extends Component {
       if (!data.error) {
         alert("A course is edited");
         console.log(data);
-        history.push("/profile");
+        history.push("/mycourse");
       } else {
         window.alert("Cannot Edit Course");
       }
@@ -387,7 +387,7 @@ export default class EditCourse extends Component {
                       <br />
                       <input
                         type="Number"
-                        min="0"
+                        min="1"
                         className="inbox"
                         required
                         value={this.state.totalAmountOfStudent}
@@ -692,23 +692,24 @@ export default class EditCourse extends Component {
 
                 <div class="row">
                   <div
-                    class="col-md-6 textnormal text-left"
+                    class="col-md-12 textnormal text-left"
                     width="100%"
                     height="100px"
                   >
-                    <label>
-                      Description
-                      <br />
-                      <textarea
-                        type="text"
-                        className="inbox"
-                        required
-                        value={this.state.description}
-                        onChange={this.handleChange}
-                        style={{ width: 900, height: 200, resize: "none" }}
-                        name="description"
-                      />
-                    </label>
+                    <label>Description</label>
+                    <textarea
+                      type="text"
+                      className="inbox"
+                      required
+                      value={this.state.description}
+                      onChange={this.handleChange}
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        resize: "none",
+                      }}
+                      name="description"
+                    />
                   </div>
                 </div>
                 <div className="text-center">
@@ -731,15 +732,30 @@ export default class EditCourse extends Component {
   async componentDidMount() {
     console.log(window.location.search);
     let data = await Util.getCourseById(window.location.search.substring(10));
-    let startDate = new Date(data.startDate);
-    startDate = this.dateToYMD(startDate);
-    let endDate = new Date(data.endDate);
-    endDate = this.dateToYMD(endDate);
+    let startDate = data ? new Date(data.startDate) : "";
+    let endDate = data ? new Date(data.endDate) : "";
+    if (data) {
+      startDate = this.dateToYMD(startDate);
+      endDate = this.dateToYMD(endDate);
+    }
     this.setState(data);
     this.setState({
       startDate: startDate,
       endDate: endDate,
+      hasStudent: data
+        ? data.amountOfStudent < data.totalAmountOfStudent
+        : true,
+      isOwner: data ? data.owner : true,
     });
     this.setObject();
+    if (!this.state.isOwner) {
+      alert("You're not the owner of this course");
+      history.push("/pagenotfound");
+    } else if (this.state.hasStudent) {
+      alert(
+        "There is a student enrolled this course, you are not able to edit the course"
+      );
+      history.push("/mycourse");
+    }
   }
 }

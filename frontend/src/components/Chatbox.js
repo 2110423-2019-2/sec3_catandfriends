@@ -8,8 +8,8 @@ export class Chatbox extends Component {
   render() {
     if (this.state.users) {
       return (
-        <div class="container py-5 px-4">
-          <div class="row rounded-lg overflow-hidden shadow">
+        <div className="container py-5 px-4">
+          <div className="row rounded-lg overflow-hidden shadow">
             <UserBoxes
               users={this.state.users}
               onClickUser={this.onClickUser}
@@ -64,14 +64,14 @@ class UserBoxes extends Component {
   render() {
     console.log(this.props.users);
     return (
-      <div class="col-5 px-0">
-        <div class="background-color-trans">
-          <div class="px-4 py-2 background-color-trans text-color">
-            <p class="h5 mb-0 py-1">Recent</p>
+      <div className="col-5 px-0">
+        <div className="background-color-trans">
+          <div className="px-4 py-2 background-color-trans text-color">
+            <p className="h5 mb-0 py-1">Recent</p>
           </div>
 
-          <div class="messages-box">
-            <div class="list-group rounded-0">
+          <div className="messages-box">
+            <div className="list-group rounded-0">
               {this.props.users.map(user => {
                 var userProfile = Util.getProfile(user.userId);
                 delete userProfile._id;
@@ -93,21 +93,21 @@ class UserBox extends Component {
     return (
       <a
         href="#"
-        class="list-group-item list-group-item-action rounded-0 background-color"
+        className="list-group-item list-group-item-action rounded-0 background-color"
         onClick={() => {
           this.props.onClickUser(this.props.user.roomId);
         }}
       >
-        <div class="media">
+        <div className="media">
           <img
             src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
             alt="user"
             width="50"
-            class="rounded-circle"
+            className="rounded-circle"
           />
-          <div class="media-body ml-4">
-            <div class="d-flex align-items-center justify-content-between mb-1 textnormal">
-              <h6 class="mb-0">{this.props.user.firstName}</h6>
+          <div className="media-body ml-4">
+            <div className="d-flex align-items-center justify-content-between mb-1 textnormal">
+              <h6 className="mb-0">{this.props.user.firstName}</h6>
             </div>
           </div>
         </div>
@@ -120,8 +120,8 @@ class MessageBox extends Component {
   render() {
     console.log(this.props.message);
     return (
-      <div class="col-7 px-0">
-        <div class="px-4 py-5 chat-box background-color" id="messageBox">
+      <div className="col-7 px-0">
+        <div className="px-4 py-5 chat-box background-color" id="messageBox">
           {this.props.message.map(msg => {
             if (msg.userId == JSON.parse(localStorage.getItem("user"))._id) {
               return <RecieverMessage message={msg} />;
@@ -150,20 +150,20 @@ class MessageBox extends Component {
 class SenderMessage extends Component {
   render() {
     return (
-      <div class="media w-50 mb-3">
+      <div className="media w-50 mb-3">
         <img
           src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
           alt="user"
           width="50"
-          class="rounded-circle"
+          className="rounded-circle"
         />
-        <div class="media-body ml-3">
-          <div class="background-color-invert rounded py-2 px-3 mb-2">
-            <p class="text-small mb-0 text-color-invert">
+        <div className="media-body ml-3">
+          <div className="background-color-invert rounded py-2 px-3 mb-2">
+            <p className="text-small mb-0 text-color-invert">
               {this.props.message.message}{" "}
             </p>
           </div>
-          <p class="small text-muted">
+          <p className="small text-muted">
             {this.props.message.timeStamp.substring(0, 10) +
               " " +
               this.props.message.timeStamp.substring(11, 16)}
@@ -177,14 +177,14 @@ class SenderMessage extends Component {
 class RecieverMessage extends Component {
   render() {
     return (
-      <div class="media w-50 ml-auto mb-3">
-        <div class="media-body">
-          <div class="bg-primary rounded py-2 px-3 mb-2">
-            <p class="text-small mb-0 text-white">
+      <div className="media w-50 ml-auto mb-3">
+        <div className="media-body">
+          <div className="bg-primary rounded py-2 px-3 mb-2">
+            <p className="text-small mb-0 text-white">
               {this.props.message.message}
             </p>
           </div>
-          <p class="small text-muted">
+          <p className="small text-muted">
             {this.props.message.timeStamp.substring(0, 10) +
               " " +
               this.props.message.timeStamp.substring(11, 16)}
@@ -200,21 +200,21 @@ class TypingArea extends Component {
     return (
       <form
         onSubmit={event => this.onSubmit(event)}
-        class="background-color"
+        className="background-color"
         autoComplete="off"
       >
-        <div class="input-group">
+        <div className="input-group">
           <input
             type="text"
             placeholder="Type a message"
             aria-describedby="button-addon2"
-            class="form-control rounded-0 border-0 py-4 background-light"
+            className="form-control rounded-0 border-0 py-4 background-light"
             id="message"
           />
-          <div class="input-group-append">
-            <button id="button-addon2" type="submit" class="btn btn-link">
+          <div className="input-group-append">
+            <button id="button-addon2" type="submit" className="btn btn-link">
               {" "}
-              <span class="material-icons">send</span>
+              <span className="material-icons">send</span>
             </button>
           </div>
         </div>

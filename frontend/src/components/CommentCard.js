@@ -60,7 +60,7 @@ class CommentCard extends React.Component {
               />
             </div>
             <div className="col-md-8">
-              <div class="col-50 text-right">{this.props.data.studentName}</div>
+              <div className="col-50 text-right">{this.props.data.studentName}</div>
             </div>
           </div>
           <Card.Text className="CommentCard-textDot">

@@ -49,7 +49,7 @@ export default class EditTutorProfile extends Component {
     );
     // console.log("data"+data);
     if (!data.error) {
-      alert("A profile is edited");
+      alert("Your profile is edited");
       // console.log(data);
       history.push("/profile");
     } else {
@@ -105,7 +105,7 @@ export default class EditTutorProfile extends Component {
                   className="form-control-file p-1"
                   type="file"
                   name="file"
-                  accept=".jpeg,.gif,.png"
+                  accept="image/*"
                   onChange={this.onChangeHandlerSlip}
                 />
                 <button
@@ -123,10 +123,10 @@ export default class EditTutorProfile extends Component {
           <div className="col-md-9">
             <form onSubmit={(event) => this.handleSubmit(event)}>
               <div
-                class="row"
+                className="row"
                 style={{ marginTop: "10px", textAlign: "center" }}
               >
-                <div class="col-md-6">
+                <div className="col-md-6">
                   <label className="textnormal" htmlFor="firstName">
                     First Name
                     <br />
@@ -143,7 +143,7 @@ export default class EditTutorProfile extends Component {
                   </label>
                 </div>
 
-                <div class="col-md-6">
+                <div className="col-md-6">
                   <label className="textnormal" htmlFor="lastName">
                     Last Name
                     <br />
@@ -160,9 +160,9 @@ export default class EditTutorProfile extends Component {
                   </label>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6" width="100%">
-                <label className="textnormal">
+              <div className="row">
+                <div className="col-md-6" width="100%">
+                  <label className="textnormal">
                     Phone Number
                     <br />
                     <input
@@ -180,13 +180,13 @@ export default class EditTutorProfile extends Component {
                     />
                   </label>
                 </div>
-                <div class="col-md-6">
+                <div className="col-md-6">
                   <label className="textnormal">
                     Gender
                     <br />
                     <select
                       id="gender"
-                      value={this.state.Gender}
+                      value={this.state.gender}
                       className="field"
                       style={{ width: 250 }}
                       name="gender"
@@ -200,11 +200,7 @@ export default class EditTutorProfile extends Component {
               </div>
               <div className="row text-center" style={{ marginTop: "20px" }}>
                 <div className="col-md-12">
-                  <button
-                    className="button-white"
-                    type="submit"
-                    value="Submit"
-                  >
+                  <button className="button-white" type="submit" value="Submit">
                     Submit
                   </button>
                 </div>
@@ -252,7 +248,12 @@ export default class EditTutorProfile extends Component {
   };
 
   isImagefile(file) {
-    const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    const acceptedImageTypes = [
+      "image/gif",
+      "image/jpg",
+      "image/jpeg",
+      "image/png",
+    ];
 
     return file && acceptedImageTypes.includes(file.type);
   }

@@ -53,14 +53,14 @@
   margin-bottom: 0px;
 }
 .fileNameG {
-  color: green;
+  /* color: green; */
   cursor: pointer;
 }
 .fileNameG:hover {
   text-decoration: underline;
 }
 .fileNameB {
-  color: blue;
+  /* color: blue; */
   cursor: pointer;
 }
 .fileNameB:hover {

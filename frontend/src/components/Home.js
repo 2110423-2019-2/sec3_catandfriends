@@ -38,8 +38,8 @@ export class Home extends Component {
 
   render() {
     return (
-      <div className="justify-content-center whole">
-        <div class="container block">
+      <div className="justify-content-center">
+        <div className="container block">
           <div className="row">
             <div className="col-md-6 justify-content-center" align="center">
               <img

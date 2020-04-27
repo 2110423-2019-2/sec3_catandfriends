@@ -4,6 +4,7 @@ import Util from "../apis/Util";
 import axios from "axios";
 import FileSaver from "file-saver";
 import GradientButton from "./GradientButton";
+import history from "../history";
 export default class VerifyTutor extends Component {
   constructor(props) {
     super(props);
@@ -39,8 +40,8 @@ export default class VerifyTutor extends Component {
   render() {
     if (!this.state.data) {
       return (
-        <div className="verifyTutorCard">
-          <h3 className="verifyTutorH text-center">Verify Tutor</h3>
+        <div className="bigCard">
+          <h3 className="inside-block text-center textheader">Verify Tutor</h3>
         </div>
       );
     } else {
@@ -131,29 +132,29 @@ export default class VerifyTutor extends Component {
                   </div>
 
                   <div
-                    class="modal fade"
+                    className="modal fade"
                     id="exampleModal"
                     tabindex="-1"
                     role="dialog"
                     aria-labelledby="exampleModalLabel"
                     aria-hidden="true"
                   >
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">
+                    <div className="modal-dialog" role="document">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h5 className="modal-title" id="exampleModalLabel">
                             QR Code Payment
                           </h5>
                           <button
                             type="button"
-                            class="close"
+                            className="close"
                             data-dismiss="modal"
                             aria-label="Close"
                           >
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                           <img src={this.state.testQR} />
                           <div className="row justify-content-center">
                             <a
@@ -164,10 +165,10 @@ export default class VerifyTutor extends Component {
                             </a>
                           </div>
                         </div>
-                        <div class="modal-footer">
+                        <div className="modal-footer">
                           <button
                             type="button"
-                            class="btn btn-secondary"
+                            className="btn btn-secondary"
                             data-dismiss="modal"
                           >
                             Close
@@ -193,7 +194,7 @@ export default class VerifyTutor extends Component {
                     className="form-control-file p-1 textnormal"
                     type="file"
                     name="file"
-                    accept=".jpeg,.gif,.png"
+                    accept="image/*"
                     onChange={this.onChangeHandlerSlip}
                   />
                 </div>
@@ -215,7 +216,12 @@ export default class VerifyTutor extends Component {
     }
   }
   isImagefile(file) {
-    const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    const acceptedImageTypes = [
+      "image/gif",
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+    ];
     return file && acceptedImageTypes.includes(file.type);
   }
   isDocfile(file) {
@@ -262,6 +268,9 @@ export default class VerifyTutor extends Component {
         // then print response status
         console.log(res.statusText);
         alert("File Uploaded");
+        if (this.state.complete) {
+          history.push("/profile");
+        }
         window.location.reload();
       });
   };
@@ -293,6 +302,9 @@ export default class VerifyTutor extends Component {
         // then print response status
         console.log(res.statusText);
         alert("File Uploaded");
+        if (this.state.complete) {
+          history.push("/profile");
+        }
         window.location.reload();
       });
   };
@@ -337,6 +349,11 @@ export default class VerifyTutor extends Component {
     let params = new URLSearchParams(window.location.search);
     let data = await Util.getProfile(params.get("userId"));
     await this.setState({ data });
+    await this.setState({
+      complete:
+        this.state.data.verificationDocument ||
+        this.state.data.verificationPayment,
+    });
     await console.log(data);
     console.log(this.state);
   }
