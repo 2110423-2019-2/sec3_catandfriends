@@ -15,7 +15,7 @@ export default class StudentCard extends Component {
       faceurl: "/kkk",
       bio:
         "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-      phoneNumber: "19891989"
+      phoneNumber: "19891989",
     };
   }
 
@@ -138,9 +138,11 @@ export default class StudentCard extends Component {
       var myurl = "";
       xhr.open(
         "GET",
-        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
-          "token"
-        )}&userId=${this.props.data._id}`,
+        `http://${
+          process.env.SERVERIP
+        }:8000/file/images/user?token=${localStorage.getItem("token")}&userId=${
+          this.props.data._id
+        }`,
         true
       );
       xhr.responseType = "arraybuffer";

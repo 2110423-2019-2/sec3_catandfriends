@@ -110,7 +110,9 @@ export class StudentCTuProfile extends Component {
                       </div>
                       <div className="col-md-8">
                         <div className="valueB">
-                          <span style={{ fontWeight: "bold", color: "#00BFFF" }}>
+                          <span
+                            style={{ fontWeight: "bold", color: "#00BFFF" }}
+                          >
                             {this.props.data.verifyStatus
                               ? "VERIFIED"
                               : "NOT VERIFIED"}
@@ -138,9 +140,11 @@ export class StudentCTuProfile extends Component {
       var myurl = "";
       xhr.open(
         "GET",
-        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
-          "token"
-        )}&userId=${this.props.data._id}`,
+        `http://${
+          process.env.SERVERIP
+        }:8000/file/images/user?token=${localStorage.getItem("token")}&userId=${
+          this.props.data._id
+        }`,
         true
       );
       xhr.responseType = "arraybuffer";

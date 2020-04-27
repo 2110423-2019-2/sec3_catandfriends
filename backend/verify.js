@@ -21,7 +21,7 @@ router.get("/", async (req, res, next) => {
             if (err) {
               res.send(err);
             } else {
-              res.redirect("http://localhost:3000/login");
+              res.redirect("http://${process.env.SERVERIP}:3000/login");
               res.end();
             }
           }

@@ -21,7 +21,7 @@ export default class MyStudentCard extends Component {
         "https://www.img.in.th/images/3f2b15dc36aa6aa06ce42f1c1ed84a22.jpg",
       faceurl: "/kkk",
       bio:
-        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."
+        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
     };
   }
 
@@ -50,7 +50,10 @@ export default class MyStudentCard extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-12  inside-block" style={{ marginBottom: "5px" }}>
+              <div
+                className="col-md-12  inside-block"
+                style={{ marginBottom: "5px" }}
+              >
                 <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">SSN:</div>
@@ -99,7 +102,8 @@ export default class MyStudentCard extends Component {
         </div>
         <br />
         <div className="mystyle">
-          <button className="button-white"
+          <button
+            className="button-white"
             onClick={() => {
               history.push(
                 `/profile/edit?token=${localStorage.getItem("token")}`
@@ -190,9 +194,11 @@ export default class MyStudentCard extends Component {
       var myurl = "";
       xhr.open(
         "GET",
-        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
-          "token"
-        )}&userId=${this.props.data._id}`,
+        `http://${
+          process.env.SERVERIP
+        }:8000/file/images/user?token=${localStorage.getItem("token")}&userId=${
+          this.props.data._id
+        }`,
         true
       );
       xhr.responseType = "arraybuffer";

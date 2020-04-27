@@ -64,7 +64,7 @@ export default class EditStudentProfile extends Component {
   //   data.append("file", this.state.profileImage);
   //   axios
   //     .post(
-  //       `http://localhost:8000/file/images/user/upload?token=${localStorage.getItem(
+  //       `http://${process.env.SERVERIP}:8000/file/images/user/upload?token=${localStorage.getItem(
   //         "token"
   //       )}`,
   //       data,

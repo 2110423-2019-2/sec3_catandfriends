@@ -256,9 +256,9 @@ export default class VerifyTutor extends Component {
     data.append("file", this.state.selectedFile);
     axios
       .post(
-        `http://localhost:8000/file/verifyFile/upload?token=${localStorage.getItem(
-          "token"
-        )}`,
+        `http://${
+          process.env.SERVERIP
+        }:8000/file/verifyFile/upload?token=${localStorage.getItem("token")}`,
         data,
         {
           // receive two    parameter endpoint url ,form data
@@ -290,7 +290,9 @@ export default class VerifyTutor extends Component {
     data.append("file", this.state.selectedSlip);
     axios
       .post(
-        `http://localhost:8000/file/paymentFile/verify/upload?token=${localStorage.getItem(
+        `http://${
+          process.env.SERVERIP
+        }:8000/file/paymentFile/verify/upload?token=${localStorage.getItem(
           "token"
         )}`,
         data,
@@ -311,9 +313,11 @@ export default class VerifyTutor extends Component {
   onClickGetVeriFile = () => {
     axios({
       method: "GET",
-      url: `http://localhost:8000/file/verifyFile?token=${localStorage.getItem(
-        "token"
-      )}&tutorId=${this.state.data._id}`,
+      url: `http://${
+        process.env.SERVERIP
+      }:8000/file/verifyFile?token=${localStorage.getItem("token")}&tutorId=${
+        this.state.data._id
+      }`,
       responseType: "blob",
     })
       .then((response) => {
@@ -329,7 +333,9 @@ export default class VerifyTutor extends Component {
   onClickGetSlipImg = () => {
     axios({
       method: "GET",
-      url: `http://localhost:8000/file/paymentFile/verify?token=${localStorage.getItem(
+      url: `http://${
+        process.env.SERVERIP
+      }:8000/file/paymentFile/verify?token=${localStorage.getItem(
         "token"
       )}&tutorId=${this.state.data._id}`,
       responseType: "blob",

@@ -16,7 +16,9 @@ export default class PremiumCard extends Component {
   onClickGetSlipImg = () => {
     axios({
       method: "GET",
-      url: `http://localhost:8000/file/paymentFile/premium?token=${localStorage.getItem(
+      url: `http://${
+        process.env.SERVERIP
+      }:8000/file/paymentFile/premium?token=${localStorage.getItem(
         "token"
       )}&tutorId=${this.state.data._id}`,
       responseType: "blob",
@@ -74,7 +76,9 @@ export default class PremiumCard extends Component {
     data.append("file", this.state.selectedSlip);
     axios
       .post(
-        `http://localhost:8000/file/paymentFile/premium/upload?token=${localStorage.getItem(
+        `http://${
+          process.env.SERVERIP
+        }:8000/file/paymentFile/premium/upload?token=${localStorage.getItem(
           "token"
         )}`,
         data,

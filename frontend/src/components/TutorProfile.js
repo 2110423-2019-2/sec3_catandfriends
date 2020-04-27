@@ -81,9 +81,11 @@ export class TutorProfile extends Component {
   onClickGetVeriFile = () => {
     axios({
       method: "GET",
-      url: `http://localhost:8000/file/verifyFile?token=${localStorage.getItem(
-        "token"
-      )}&tutorId=${this.props.data._id}`,
+      url: `http://${
+        process.env.SERVERIP
+      }:8000/file/verifyFile?token=${localStorage.getItem("token")}&tutorId=${
+        this.props.data._id
+      }`,
       responseType: "blob",
     })
       .then((response) => {
@@ -99,7 +101,9 @@ export class TutorProfile extends Component {
   onClickGetSlipImg = () => {
     axios({
       method: "GET",
-      url: `http://localhost:8000/file/paymentFile/verify?token=${localStorage.getItem(
+      url: `http://${
+        process.env.SERVERIP
+      }:8000/file/paymentFile/verify?token=${localStorage.getItem(
         "token"
       )}&tutorId=${this.props.data._id}`,
       responseType: "blob",
@@ -118,7 +122,9 @@ export class TutorProfile extends Component {
   onClickGetSlipPremium = () => {
     axios({
       method: "GET",
-      url: `http://localhost:8000/file/paymentFile/premium?token=${localStorage.getItem(
+      url: `http://${
+        process.env.SERVERIP
+      }:8000/file/paymentFile/premium?token=${localStorage.getItem(
         "token"
       )}&tutorId=${this.props.data._id}`,
       responseType: "blob",
@@ -378,9 +384,11 @@ export class TutorProfile extends Component {
       var myurl = "";
       xhr.open(
         "GET",
-        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
-          "token"
-        )}&userId=${this.props.data._id}`,
+        `http://${
+          process.env.SERVERIP
+        }:8000/file/images/user?token=${localStorage.getItem("token")}&userId=${
+          this.props.data._id
+        }`,
         true
       );
       xhr.responseType = "arraybuffer";

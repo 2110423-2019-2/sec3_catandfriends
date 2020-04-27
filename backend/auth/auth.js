@@ -66,7 +66,7 @@ passport.use(
           from: process.env.EMAIL,
           to: user.email,
           subject: "Verify Your Email",
-          text: `Please click this link to verify your account\nhttp://localhost:8000/verify?email=${user.email}&hash=${hash}`,
+          text: `Please click this link to verify your account\nhttp://${process.env.SERVERIP}:8000/verify?email=${user.email}&hash=${hash}`,
         };
         transporter.sendMail(mailOptions, function (error, info) {
           if (error) {
