@@ -2,7 +2,7 @@ import history from "../history";
 //IceBranch
 const Util = {
   login: async (email, password) => {
-    const URL = "http://${process.env.SERVERIP}:8000/login";
+    const URL = `http://${process.env.SERVERIP}:8000/login`;
     const response = await fetch(URL, {
       method: "POST",
       mode: "cors",
@@ -27,7 +27,7 @@ const Util = {
     birthDate,
     ssn
   ) => {
-    const URL = "http://${process.env.SERVERIP}:8000/signup";
+    const URL = `http://${process.env.SERVERIP}:8000/signup`;
     const response = await fetch(URL, {
       method: "POST",
       mode: "cors",
