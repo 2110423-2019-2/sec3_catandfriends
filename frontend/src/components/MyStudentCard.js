@@ -21,18 +21,18 @@ export default class MyStudentCard extends Component {
         "https://www.img.in.th/images/3f2b15dc36aa6aa06ce42f1c1ed84a22.jpg",
       faceurl: "/kkk",
       bio:
-        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."
+        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
     };
   }
 
   render() {
     return (
-      <div className="bigCard border">
+      <div className="bigCard">
         <div className="row">
           <div className="col-md-12">
             <div className="row">
-              <div className="col-md-12  infoC">
-                <div className="headerB">My Profile</div>
+              <div className="col-md-12  inside-block">
+                <div className="textheader">My Profile</div>
               </div>
             </div>
             <div className="row">
@@ -50,7 +50,10 @@ export default class MyStudentCard extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-12  infoC" style={{ marginBottom: "5px" }}>
+              <div
+                className="col-md-12  inside-block"
+                style={{ marginBottom: "5px" }}
+              >
                 <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">SSN:</div>
@@ -99,8 +102,8 @@ export default class MyStudentCard extends Component {
         </div>
         <br />
         <div className="mystyle">
-          <NormalButton
-            color="rgba(107, 63, 233, 0.8)"
+          <button
+            className="button-white"
             onClick={() => {
               history.push(
                 `/profile/edit?token=${localStorage.getItem("token")}`
@@ -108,7 +111,7 @@ export default class MyStudentCard extends Component {
             }}
           >
             Edit Profile
-          </NormalButton>
+          </button>
         </div>
         <br />
       </div>
@@ -144,7 +147,7 @@ export default class MyStudentCard extends Component {
                   <br />
                   <br />
                   <div className="row">
-                    <div class="col-md-4 border">
+                    <div className="col-md-4 border">
                       <strong>SSN : </strong>
                       <br />
                       <strong>Gender : </strong>
@@ -154,7 +157,7 @@ export default class MyStudentCard extends Component {
                       <strong>Phone Number : </strong>
                       <br />
                     </div>
-                    <div class="col-md-8 border">
+                    <div className="col-md-8 border">
                       <body>{this.props.data.ssn}</body>
                       <body>{this.props.data.gender}</body>
                       <body>{this.props.data.email}</body>
@@ -191,9 +194,11 @@ export default class MyStudentCard extends Component {
       var myurl = "";
       xhr.open(
         "GET",
-        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
-          "token"
-        )}&userId=${this.props.data._id}`,
+        `http://${
+          process.env.SERVERIP
+        }:8000/file/images/user?token=${localStorage.getItem("token")}&userId=${
+          this.props.data._id
+        }`,
         true
       );
       xhr.responseType = "arraybuffer";

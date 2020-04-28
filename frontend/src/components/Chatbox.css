@@ -5,12 +5,12 @@
 * ==========================================
 *
 */
-body {
+/* body {
   background-color: #74ebd5;
   background-image: linear-gradient(90deg, #74ebd5 0%, #9face6 100%);
 
   min-height: 100vh;
-}
+} */
 
 /* ::-webkit-scrollbar {
   width: 5px;

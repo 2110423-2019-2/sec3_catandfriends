@@ -8,15 +8,14 @@ import styled from "styled-components";
 const AddButton = styled(CourseButton)`
   background: rgba(255, 255, 255, 0.6);
   &:hover {
-    background: linear-gradient(90deg, #a67ca8 0%, #4d65a6 100%);
+    background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
   }
 `;
 class BlankCard extends React.Component {
   render() {
     return (
       <div
-        className="card mycard clickable"
-        style={{ backgroundColor: "rgba(255,255,255,0.5)" }}
+        className="card mycard clickable background-color-trans"
       >
         <div
           id="image"
@@ -31,9 +30,9 @@ class BlankCard extends React.Component {
           </div>
         </div>
         <div className="card-body mycard-body">
-          <AddButton onClick={() => this.onClickAddNewCourse()}>
+          <button className="button-white width90" onClick={() => this.onClickAddNewCourse()}>
             Create Course
-          </AddButton>
+          </button>
           <p className="card-text tutorname"></p>
 
           <div align="center" style={{ marginBottom: "5px" }}></div>

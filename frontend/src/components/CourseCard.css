@@ -1,8 +1,9 @@
 .mycard {
   width: 230px;
-  height: 350px;
+  height: 380px;
   margin: 10px;
   text-align: center;
+  background: var(--white-color) !important;
   border-radius: 12px !important;
   border: none !important;
   /*normal*/
@@ -32,7 +33,7 @@
 }
 
 .mcard-header {
-  background-color: rgb(56, 87, 153);
+  background-color: rgb(120, 142, 189);
   border-radius: 12px 12px 0px 0px;
   width: 230px;
   height: 150px;
@@ -57,7 +58,7 @@
   font-weight: 650;
 }
 .mycard-title {
-  height: 25px;
+  height: 30px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -92,4 +93,7 @@
   /* border: none;
   resize: none; */
   border-right: 3px double rgb(215, 215, 215);
+}
+.margintop {
+  margin-top: 20px;
 }

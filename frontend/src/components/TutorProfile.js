@@ -4,6 +4,8 @@ import Util from "../apis/Util";
 import history from "../history";
 import VerifyCard from "./VerifyCard";
 import NormalButton from "./NormalButton";
+import FileSaver from "file-saver";
+import axios from "axios";
 export class TutorProfile extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +23,7 @@ export class TutorProfile extends Component {
       premiumStatus: "false",
       verificationDocument: "link",
       PhoneNumber: "00000000",
-      bio: "my bio"
+      bio: "my bio",
     };
   }
   showWarn(warn) {
@@ -29,9 +31,9 @@ export class TutorProfile extends Component {
     if (!warn) {
       Warn = (
         <div className="row justify-content-center">
-          <p class="alert alert-warning" style={{ textAlign: "center" }}>
+          <p className="alert alert-warning" style={{ textAlign: "center" }}>
             <strong>Warning!</strong> You are an unverified tutor. You are not
-            able to create any courses.
+            able to chat or create any courses.
           </p>
         </div>
       );
@@ -44,14 +46,14 @@ export class TutorProfile extends Component {
     let Premium;
     if (verify && !premium) {
       Premium = (
-        <NormalButton
-          color="rgba(21, 171, 168,0.8)"
+        <button
+          className="button-white"
           onClick={() => {
             history.push(`/profile/premium`);
           }}
         >
           Upgrade Premium
-        </NormalButton>
+        </button>
       );
       return Premium;
     } else {
@@ -62,28 +64,90 @@ export class TutorProfile extends Component {
     let Verify;
     if (!verify) {
       Verify = (
-        <NormalButton
-          color="rgba(19, 124, 204,0.8)"
+        <button
+          className="button-white"
           onClick={() => {
             history.push(`/profile/verify`);
           }}
         >
           Verify Account
-        </NormalButton>
+        </button>
       );
       return Verify;
     } else {
       return;
     }
   }
+  onClickGetVeriFile = () => {
+    axios({
+      method: "GET",
+      url: `http://${
+        process.env.SERVERIP
+      }:8000/file/verifyFile?token=${localStorage.getItem("token")}&tutorId=${
+        this.props.data._id
+      }`,
+      responseType: "blob",
+    })
+      .then((response) => {
+        this.setState({ fileDownloading: true }, () => {
+          FileSaver.saveAs(response.data, "your-veridoc.pdf");
+        });
+      })
+      .then(() => {
+        this.setState({ fileDownloading: false });
+        console.log("Completed");
+      });
+  };
+  onClickGetSlipImg = () => {
+    axios({
+      method: "GET",
+      url: `http://${
+        process.env.SERVERIP
+      }:8000/file/paymentFile/verify?token=${localStorage.getItem(
+        "token"
+      )}&tutorId=${this.props.data._id}`,
+      responseType: "blob",
+    })
+      .then((response) => {
+        this.setState({ imageDownloading: true }, () => {
+          FileSaver.saveAs(response.data, "your-slip.jpg");
+        });
+        console.log(response);
+      })
+      .then(() => {
+        this.setState({ imageDownloading: false });
+        console.log("Completed");
+      });
+  };
+  onClickGetSlipPremium = () => {
+    axios({
+      method: "GET",
+      url: `http://${
+        process.env.SERVERIP
+      }:8000/file/paymentFile/premium?token=${localStorage.getItem(
+        "token"
+      )}&tutorId=${this.props.data._id}`,
+      responseType: "blob",
+    })
+      .then((response) => {
+        this.setState({ imageDownloading: true }, () => {
+          FileSaver.saveAs(response.data, "your-slip.jpg");
+        });
+        console.log(response);
+      })
+      .then(() => {
+        this.setState({ imageDownloading: false });
+        console.log("Completed");
+      });
+  };
   render() {
     return (
-      <div className="bigCard border">
+      <div className="bigCard">
         <div className="row">
           <div className="col-md-12">
             <div className="row">
-              <div className="col-md-12  infoC">
-                <div className="headerB">My Profile</div>
+              <div className="col-md-12  inside-block">
+                <div className="textheader">My Profile</div>
               </div>
             </div>
             <div className="row">
@@ -102,7 +166,10 @@ export class TutorProfile extends Component {
             </div>
 
             <div className="row">
-              <div className="col-md-12  infoC" style={{ marginBottom: "5px" }}>
+              <div
+                className="col-md-12  inside-block"
+                style={{ marginBottom: "5px" }}
+              >
                 <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">SSN:</div>
@@ -147,19 +214,23 @@ export class TutorProfile extends Component {
                 </div>
                 <div className="row">
                   <div className="col-md-4">
-                    <div className="nameB">Verify status:</div>
+                    <div className="nameB">Verify Status:</div>
                   </div>
                   <div className="col-md-8">
                     <div className="valueB">
-                      <span style={{ fontWeight: "bold", color: "blue" }}>
-                        {this.props.data.verifyStatus
-                          ? "VERIFIED"
-                          : "NOT VERIFIED"}
-                      </span>
+                      {this.props.data.verifyStatus ? (
+                        <span style={{ fontWeight: "bold", color: "#00BFFF" }}>
+                          VERIFIED
+                        </span>
+                      ) : (
+                        <span style={{ fontWeight: "bold", color: "red" }}>
+                          NOT VERIFIED
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">Verify document:</div>
                   </div>
@@ -170,37 +241,103 @@ export class TutorProfile extends Component {
                         : "-"}
                     </div>
                   </div>
-                </div>
-                <div className="row">
+                </div> */}
+                {/* <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">Verify payment:</div>
                   </div>
                   <div className="col-md-8">
                     <div className="valueB">
-                      {this.props.data.verificationPayment}
+                      {this.props.data.verificationPayment
+                        ? this.props.data.verificationPayment
+                        : "-"}
                     </div>
                   </div>
-                </div>
+                </div> */}
+                {this.props.data.verifyStatus && (
+                  <div className="row">
+                    <div className="col-md-4">
+                      <div className="nameB">Verify Document:</div>
+                    </div>
+                    <div className="col-md-8">
+                      <div className="valueB">
+                        <div
+                          className="fileNameG"
+                          onClick={this.onClickGetVeriFile}
+                        >
+                          <i>download file</i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {this.props.data.verifyStatus && (
+                  <div className="row">
+                    <div className="col-md-4">
+                      <div className="nameB">Verify Payment:</div>
+                    </div>
+                    <div className="col-md-8">
+                      <div className="valueB">
+                        <div
+                          className="fileNameB"
+                          onClick={this.onClickGetSlipImg}
+                        >
+                          <i>download file</i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className="row">
                   <div className="col-md-4">
-                    <div className="nameB">Premium status:</div>
+                    <div className="nameB">Premium Status:</div>
                   </div>
                   <div className="col-md-8">
                     <div className="valueB">
-                      {this.props.data.premiumStatus ? "Premium" : "Standard"}
+                      {this.props.data.premiumStatus ? (
+                        <span style={{ fontWeight: "bold", color: "green" }}>
+                          PREMIUM
+                        </span>
+                      ) : (
+                        <span
+                          className="text-color"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          STANDARD
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
-                <div className="row">
+                {this.props.data.premiumStatus && (
+                  <div className="row">
+                    <div className="col-md-4">
+                      <div className="nameB">Premium Payment:</div>
+                    </div>
+                    <div className="col-md-8">
+                      <div className="valueB">
+                        <div
+                          className="fileNameB"
+                          onClick={this.onClickGetSlipPremium}
+                        >
+                          <i>download file</i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {/* <div className="row">
                   <div className="col-md-4">
                     <div className="nameB">Premium payment:</div>
                   </div>
                   <div className="col-md-8">
                     <div className="valueB">
-                      {this.props.data.premiumPayment}
+                      {this.props.data.premiumPayment
+                        ? this.props.data.premiumPaymen
+                        : "-"}
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             {this.showWarn(this.props.data.verifyStatus)}
@@ -209,14 +346,14 @@ export class TutorProfile extends Component {
               // style={{ marginTop: "10px" }}
             >
               <div className="col-md-12">
-                <NormalButton
-                  color="rgba(127, 83, 253, 0.8)"
+                <button
+                  className="button-white"
                   onClick={() => {
                     history.push(`/profile/edit`);
                   }}
                 >
                   Edit Profile
-                </NormalButton>
+                </button>
                 {this.showVerify(this.props.data.verifyStatus)}
                 {this.showPremium(
                   this.props.data.premiumStatus,
@@ -230,14 +367,28 @@ export class TutorProfile extends Component {
     );
   }
   async componentDidMount() {
+    let user = this.props.data;
+    localStorage.setItem(
+      "role",
+      user.role == "student"
+        ? "student"
+        : user.verifyStatus
+        ? "verifiedTutor"
+        : "tutor"
+    );
+    if (user.role == "tutor") {
+      localStorage.setItem("premium", user.premiumStatus ? "yes" : "no");
+    }
     if (this.props.data.profileImage) {
       var xhr = new XMLHttpRequest();
       var myurl = "";
       xhr.open(
         "GET",
-        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
-          "token"
-        )}&userId=${this.props.data._id}`,
+        `http://${
+          process.env.SERVERIP
+        }:8000/file/images/user?token=${localStorage.getItem("token")}&userId=${
+          this.props.data._id
+        }`,
         true
       );
       xhr.responseType = "arraybuffer";

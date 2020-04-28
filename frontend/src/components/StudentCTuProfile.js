@@ -3,6 +3,8 @@ import history from "../history";
 import "./StudentCTuProfile.css";
 import Util from "../apis/Util";
 import NormalButton from "./NormalButton";
+import ReportBox from "./ReportBox";
+
 export class StudentCTuProfile extends Component {
   constructor(props) {
     super(props);
@@ -15,21 +17,25 @@ export class StudentCTuProfile extends Component {
       gender: "MaleFeMale",
       email: "hahaha",
       PhoneNumber: "00000000",
-      bio: "my bio"
+      bio: "my bio",
     };
   }
   chat() {
     if (!this.state.me || !this.state.me.role) {
       return <div></div>;
-    } else if (this.state.me.role == "student") {
+    } else if (
+      this.state.me.role == "student" &&
+      this.props.data.verifyStatus
+    ) {
       return (
-        <NormalButton
+        <button
+          className="button-white width90"
           onClick={this.onClickChat}
           color="rgb(0, 255, 0)"
           textcolor="black"
         >
           Chat Now
-        </NormalButton>
+        </button>
       );
     } else {
       return <div></div>;
@@ -38,14 +44,14 @@ export class StudentCTuProfile extends Component {
   render() {
     return (
       <div
-        className="bigCard border"
+        className="bigCard"
         style={{ minHeight: "auto", marginBottom: "20px" }}
       >
         <div className="row">
           <div className="col-md-12">
             <div className="row">
-              <div className="col-md-12  infoC">
-                <div className="headerB">Tutor Profile</div>
+              <div className="col-md-12  inside-block">
+                <div className="textheader">Tutor Profile</div>
               </div>
             </div>
             <div className="row">
@@ -104,7 +110,9 @@ export class StudentCTuProfile extends Component {
                       </div>
                       <div className="col-md-8">
                         <div className="valueB">
-                          <span style={{ fontWeight: "bold", color: "blue" }}>
+                          <span
+                            style={{ fontWeight: "bold", color: "#00BFFF" }}
+                          >
                             {this.props.data.verifyStatus
                               ? "VERIFIED"
                               : "NOT VERIFIED"}
@@ -112,6 +120,9 @@ export class StudentCTuProfile extends Component {
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div className="ml-auto">
+                    <ReportBox reportedUserId={this.props.data._id} />
                   </div>
                 </div>
               </div>
@@ -129,9 +140,11 @@ export class StudentCTuProfile extends Component {
       var myurl = "";
       xhr.open(
         "GET",
-        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
-          "token"
-        )}&userId=${this.props.data._id}`,
+        `http://${
+          process.env.SERVERIP
+        }:8000/file/images/user?token=${localStorage.getItem("token")}&userId=${
+          this.props.data._id
+        }`,
         true
       );
       xhr.responseType = "arraybuffer";

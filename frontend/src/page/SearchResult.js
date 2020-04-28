@@ -8,7 +8,7 @@ export default class SearchResult extends Component {
     super(props);
     this.state = {};
   }
-  onSearch = async data => {
+  onSearch = async (data) => {
     await this.setState({ data });
   };
   render() {
@@ -16,29 +16,30 @@ export default class SearchResult extends Component {
       return (
         <div>
           <div className="row">
-            <div className="col-md-2">
+            <div className="col-md-3 col-sm-6">
               <Filter search={this.onSearch} />
             </div>
             <div
-              className="col-md-10"
+              className="col-md-9 col-sm-6"
               align="center"
               style={{ maxWidth: "1200px" }}
             >
               <div className="row justify-content-center">
-                <h2
+                <div
+                  className="insidetrans-block textshadow"
                   style={{
                     marginTop: "20px",
                     padding: "5px 15px",
                     textAlign: "center",
                     color: "black",
                     backgroundColor: "rgba(255,255,255,0.3)",
-                    borderRadius: "12px"
+                    borderRadius: "12px",
                   }}
                 >
-                  {"Search Result: Loading..."}
-                </h2>
+                  {"Search Result: Loading"}
+                </div>
               </div>
-              <CourseCardLayout data={[]} />
+              <CourseCardLayout data={this.state.data} />
             </div>
           </div>
         </div>
@@ -47,29 +48,30 @@ export default class SearchResult extends Component {
       return (
         <div>
           <div className="row">
-            <div className="col-md-2">
+            <div className="col-md-3 col-sm-6">
               <Filter search={this.onSearch} />
             </div>
             <div
-              className="col-md-10"
+              className="col-md-9 col-sm-6"
               align="center"
               style={{ maxWidth: "1200px" }}
             >
               <div className="row justify-content-center">
-                <h2
+                <div
+                  className="insidetrans-block textshadow"
                   style={{
                     marginTop: "20px",
                     padding: "5px 15px",
                     textAlign: "center",
                     color: "black",
                     backgroundColor: "rgba(255,255,255,0.3)",
-                    borderRadius: "12px"
+                    borderRadius: "12px",
                   }}
                 >
                   {"Search Result: " +
                     this.state.data.length +
                     (this.state.data.length <= 1 ? " course" : " courses")}
-                </h2>
+                </div>
               </div>
               <CourseCardLayout data={this.state.data} />
             </div>

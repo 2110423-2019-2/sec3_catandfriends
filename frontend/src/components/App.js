@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch, Link, NavLink, Router } from "react-router-dom";
+import { Route, Switch, Redirect, NavLink, Router } from "react-router-dom";
 import "./App.css";
 import SearchResult from "../page/SearchResult";
 import NavBar from "./NavBar";
@@ -17,72 +17,166 @@ import VerifyPage from "../page/VerifyPage";
 import PremiumPage from "../page/PremiumPage";
 import PageNotFound from "../page/PageNotFound";
 import Chatbox from "./Chatbox";
+import Util from "../apis/Util";
+import { ThemeConsumer } from "styled-components";
 // import LogInFirst from "./LogInFirst";
 const About = () => <h1>About</h1>;
 const LogInFirst = () => {
-  alert("Please Log in first");
+  // alert("Please Log in first");
   history.push("/login");
   return <div></div>;
 };
 const LogInAlready = () => {
-  alert("You are already logged in");
+  // alert("You are already logged in");
   history.push("/profile");
   return <div></div>;
 };
-
+const VerifyFirst = () => {
+  window.alert("You have to verify first");
+  // history.push("/profile");
+  return <Profile />;
+};
 class App extends Component {
-  getPage(page) {
-    if (!localStorage.getItem("token")) {
-      return LogInFirst;
-    } else {
-      return page;
-    }
+  constructor(props) {
+    super(props);
+
+    this.state = { data: {} };
   }
-  alreadylogin(page) {
-    if (!localStorage.getItem("token")) {
-      return page;
-    } else {
-      return LogInAlready;
-    }
+  loggedIn() {
+    return localStorage.getItem("token");
   }
-  homePage() {
-    if (!localStorage.getItem("token")) {
-      return Home;
-    } else {
-      return SearchResult;
-    }
+  tutor() {
+    return localStorage.getItem("role") == "tutor";
+  }
+  verifiedTutor() {
+    return localStorage.getItem("role") == "verifiedTutor";
+  }
+  student() {
+    return localStorage.getItem("role") == "student";
+  }
+  premiumTutor() {
+    return localStorage.getItem("premium") == "yes";
+  }
+  render3() {
+    return (
+      <Router history={history}>
+        <NavBar />
+        <Switch>
+          <Route path="/chat">
+            {this.verifiedTutor() || this.student() ? (
+              <Chatbox />
+            ) : this.tutor() ? (
+              <Redirect to="/profile" />
+            ) : (
+              <PageNotFound />
+            )}
+          </Route>
+          <Route path="/login">
+            {this.loggedIn() ? <Redirect to="/profile" /> : <Login />}
+          </Route>
+          <Route path="/profile/edit" component={EditProfile} />
+          <Route path="/profile/verify" component={VerifyPage} />
+          <Route path="/profile/premium" component={PremiumPage} />
+          <Route path="/profile">
+            {this.loggedIn() ? <Profile /> : <Login />}
+          </Route>
+          <Route path="/course/edit" component={EditCourse} />
+          <Route path="/course/create" component={NewCourse} />
+          <Route path="/course" component={CourseInformation} />
+          <Route path="/mycourse" component={MyCourse} />
+          <Route path="/search" component={SearchResult} />
+          <Route path="/home">
+            {this.loggedIn() ? (
+              <Redirect to="/search" />
+            ) : (
+              <Redirect to="/signup" />
+            )}
+          </Route>{" "}
+          <Route path="/signup">
+            {this.loggedIn() ? <Profile /> : <Home />}
+          </Route>
+          <Route path exact="/" component={Home} />
+          <Route component={PageNotFound} />
+        </Switch>
+      </Router>
+    );
   }
   render() {
     return (
       <Router history={history}>
         <NavBar />
-        <div className="TS">
-          <Switch>
-            {/* <Route
+        <Switch>
+          {!this.loggedIn() && <Route path="/login" component={Login} />}
+          {this.loggedIn() && <Route path="/home" component={SearchResult} />}
+          {!this.loggedIn() && <Route path="/home" component={Home} />}
+          {/* {!this.loggedIn() && <Route path exact="/" component={Home} />} */}
+          {this.student() && <Route path="/chat" component={Chatbox} />}
+          {this.verifiedTutor() && <Route path="/chat" component={Chatbox} />}
+          {this.tutor() && !this.verifiedTutor() && (
+            <Route path="/profile/verify" component={VerifyPage} />
+          )}
+          {this.verifiedTutor() && !this.premiumTutor() && (
+            <Route path="/profile/premium" component={PremiumPage} />
+          )}
+          {this.verifiedTutor() && (
+            <Route path="/course/create" component={NewCourse} />
+          )}
+          {this.verifiedTutor() && (
+            <Route path="/course/edit" component={EditCourse} />
+          )}
+          {this.loggedIn() && (
+            <Route path="/profile/edit" component={EditProfile} />
+          )}
+          {this.loggedIn() && <Route path="/profile" component={Profile} />}
+          {this.loggedIn() && (
+            <Route path="/course" component={CourseInformation} />
+          )}
+          {this.verifiedTutor() && (
+            <Route path="/mycourse" component={MyCourse} />
+          )}
+          {this.student() && <Route path="/mycourse" component={MyCourse} />}
+
+          {this.loggedIn() && (
+            <Route exact="true" path="/" component={SearchResult} />
+          )}
+          <Route path="/pagenotfound" component={PageNotFound} />
+          {/* {this.tutor() && !this.verifiedTuror() && (
+            <Route path="/mycourse" component={VerifyFirst} />
+          )}
+          {this.tutor() && !this.verifiedTuror() && (
+            <Route path="/chat" component={VerifyFirst} />
+          )} */}
+          {!this.loggedIn() && <Route path="/signup" component={Home} />}
+          {!this.loggedIn() && <Route exact="true" path="/" component={Home} />}
+        </Switch>
+      </Router>
+    );
+  }
+  render2() {
+    return (
+      <Router history={history}>
+        <NavBar />
+        <Switch>
+          {/* <Route
               path="/register"
               component={this.alreadylogin(RegisterPage)}
             /> */}
-            <Route path="/chat" component={this.getPage(Chatbox)} />
-            <Route path="/login" component={this.alreadylogin(Login)} />
-            {/* <Route path="/search" component={this.getPage(SearchResult)} /> */}
-            <Route path="/profile/edit" component={this.getPage(EditProfile)} />
-            <Route
-              path="/profile/verify"
-              component={this.getPage(VerifyPage)}
-            />
-            <Route
-              path="/profile/premium"
-              component={this.getPage(PremiumPage)}
-            />
-            <Route path="/profile" component={Profile} />
-            <Route path="/course/edit" component={this.getPage(EditCourse)} />
-            <Route path="/course/create" component={this.getPage(NewCourse)} />
-            <Route path="/course" component={this.getPage(CourseInformation)} />
-            <Route path="/mycourse" component={this.getPage(MyCourse)} />
-            <Route path="/home" component={this.homePage()} />
-            <Route component={PageNotFound} />
-          </Switch>
-        </div>
+          {/* <Route path="/search" component={this.getPage(SearchResult)} /> */}
+
+          <Route path="/chat" component={Chatbox} />
+          <Route path="/login" component={Login} />
+          <Route path="/profile/edit" component={EditProfile} />
+          <Route path="/profile/verify" component={VerifyPage} />
+          <Route path="/profile/premium" component={PremiumPage} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/course/edit" component={EditCourse} />
+          <Route path="/course/create" component={NewCourse} />
+          <Route path="/course" component={CourseInformation} />
+          <Route path="/mycourse" component={MyCourse} />
+          <Route path="/home" component={Home} />
+          <Route path exact="/" component={Home} />
+          <Route component={PageNotFound} />
+        </Switch>
       </Router>
     );
   }

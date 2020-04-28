@@ -1,51 +1,65 @@
 @import url("https://fonts.googleapis.com/css2?family=Merienda+One&display=swap");
 .logoImg {
-  width: 60px;
+  width: 40px;
+  transition: 0.6s;
 }
-.bg-custom {
-  background-color: rgb(0, 0, 0);
-  /* background-color: rgb(172, 195, 207); */
+.logoImg:hover {
+  transform: scale(1.2);
 }
-
-.navbar-brand {
-  font-family: "Merienda One", cursive;
-  font-size: 1.7em !important;
+.navbar {
+  min-height: 85px !important;
 }
-
-.primaryBtn:focus {
+.navbar-white {
+  border: 0;
+  border-radius: 0;
+  min-height: fit-content;
+  background: var(--white-color);
+  box-shadow: var(--navbarwhite-shadow-color);
+  transition: all 1s ease, padding 1s ease;
+}
+.accountbtn:focus {
   outline: none;
 }
+.navbar-brand {
+  font-family: "Merienda One", cursive;
+  font-size: 1.6em !important;
+}
+.custom-toggler .navbar-toggler-icon {
+  background-image: var(--black-nav);
+}
+.custom-toggler.navbar-toggler {
+  border-color: var(--black-color);
+}
+.navbar-box {
+  -moz-transition: all 0.1s ease-in;
+  -o-transition: all 0.1s ease-in;
+  -webkit-transition: all 0.1s ease-in;
+  transition: all 0.1s ease-in;
+  border-radius: 10px;
+  background: var(--white-color-trans) !important;
+  box-shadow: var(--homebox-shadow-color) !important;
+}
+
 .brandName {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  color: var(--black-color);
 }
-.demo {
-  background: rgb(25, 108, 70);
-  background: linear-gradient(
-    90deg,
-    rgba(25, 108, 70, 1) 0%,
-    rgba(19, 204, 169, 1) 100%
-  );
-}
+
 .nav-link {
   font-size: 1.1em;
   font-weight: 500;
 }
-.bgDD {
-  background-color: black;
-}
 .navbar-nav > li > .dropdown-menu {
-  background-color: rgba(0, 0, 0, 0.8);
+  min-width: 220px;
 }
 .navbar-nav > li > .dropdown-menu .dropdown-item:hover {
-  background-color: rgba(64, 124, 133, 0.9);
+  color: var(--white-color) !important;
+  background: var(--black-color) !important;
 }
-.navbar-nav > li > .dropdown-menu a {
-  color: #ffffff;
-}
+
 .avatar {
   margin: 2px;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   background-size: cover;
   background-position: center;
   border-radius: 50%;

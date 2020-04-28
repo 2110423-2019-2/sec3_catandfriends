@@ -4,6 +4,7 @@ import "./NavBar.css";
 import Util from "../apis/Util";
 import AccountButton from "./AccountButton";
 import NavButton from "./NavButton";
+import zIndex from "@material-ui/core/styles/zIndex";
 export class NavBar extends Component {
   constructor(props) {
     super(props);
@@ -12,36 +13,36 @@ export class NavBar extends Component {
         "https://www.img.in.th/images/8517bda5f5991478fb667d1d086145ac.jpg",
       logoLight:
         "https://www.img.in.th/images/e67008d54a3a3f0bccaa782f25348e87.png",
-      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png"
+      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png",
     };
     this.hover = this.hover.bind(this);
     this.unhover = this.unhover.bind(this);
   }
   hover() {
+    document.getElementById("imgLogo").setAttribute("src", this.state.logoDark);
+  }
+  unhover() {
     document
       .getElementById("imgLogo")
       .setAttribute("src", this.state.logoLight);
   }
-  unhover() {
-    document.getElementById("imgLogo").setAttribute("src", this.state.logoDark);
-  }
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-custom">
+      <nav className="navbar navbar-expand-lg navbar-white ">
         <a className="navbar-brand" onClick={() => this.onClickNavBar("/home")}>
           <img
-            src={this.state.logoDark}
+            src={this.state.logoLight}
             style={{ marginRight: "10px" }}
             className="logoImg"
             alt="Logo"
             id="imgLogo"
-            onMouseOver={this.hover}
-            onMouseOut={this.unhover}
+            // onMouseOver={this.hover}
+            // onMouseOut={this.unhover}
           />
           <span className="brandName">TutorHere</span>
         </a>
         <button
-          className="navbar-toggler"
+          className="navbar-toggler custom-toggler"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNavDropdown"
@@ -49,14 +50,14 @@ export class NavBar extends Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className=" navbar-toggler-icon "></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav mr-auto">
             {/* {!localStorage.getItem("token") ? (
               <li className="nav-item">
                 <NavButton onClick={() => this.onClickNavBar("/register")}>
-                  Register <span class="sr-only">(current)</span>
+                  Register <span className="sr-only">(current)</span>
                 </NavButton>
               </li>
             ) : (
@@ -72,20 +73,21 @@ export class NavBar extends Component {
             )} */}
           </ul>
           <ul className="navbar-nav ml-auto">
-            {localStorage.getItem("token") ? (
+            {/* {localStorage.getItem("token") ? (
               <li className="nav-item">
                 <NavButton onClick={() => this.onClickNavBar("/chat")}>
-                  Chat <span class="sr-only">(current)</span>
+                  Chat <span className="sr-only">(current)</span>
                 </NavButton>
               </li>
             ) : (
               <div></div>
-            )}
+            )} */}
             {localStorage.getItem("token") ? (
               <li className="nav-item dropdown">
                 {this.state.fullName ? (
-                  <AccountButton
-                    className="dropdown-toggle "
+                  <button
+                    className="dropdown-toggle accountbtn button-white"
+                    style={{ width: "fit-content !important" }}
                     href="#"
                     id="navbarDropdownMenuLink"
                     data-toggle="dropdown"
@@ -95,25 +97,45 @@ export class NavBar extends Component {
                     <img id="photo" className="avatar" />
                     <span>{"\xa0" + this.state.fullName}</span>
                     <span className="sr-only">(current)</span>
-                  </AccountButton>
+                  </button>
                 ) : (
                   <div></div>
                 )}
                 <div
-                  class="dropdown-menu bgDD"
+                  className="dropdown-menu navbar-box"
                   aria-labelledby="navbarDropdownMenuLink"
                 >
-                  <a class="dropdown-item" href="/profile">
+                  <a
+                    className="dropdown-item textnormal"
+                    onClick={() => this.onClickNavBar("/profile")}
+                  >
                     My Profile<span className="sr-only">(current)</span>
                   </a>
-                  <a class="dropdown-item" href="/mycourse">
-                    {this.state.role == "tutor"
-                      ? "My Course & Request"
-                      : "My Course & Schedule"}
-                    <span className="sr-only">(current)</span>
-                  </a>
+                  {this.state.unverified ? (
+                    <div></div>
+                  ) : (
+                    <a
+                      className="dropdown-item textnormal"
+                      onClick={() => this.onClickNavBar("/mycourse")}
+                    >
+                      {this.state.role == "tutor"
+                        ? "My Course & Request"
+                        : "My Course & Schedule"}
+                      <span className="sr-only">(current)</span>
+                    </a>
+                  )}
+                  {this.state.unverified ? (
+                    <div></div>
+                  ) : (
+                    <a
+                      className="dropdown-item textnormal"
+                      onClick={() => this.onClickNavBar("/chat")}
+                    >
+                      Chat <span className="sr-only">(current)</span>
+                    </a>
+                  )}
                   <a
-                    class="dropdown-item"
+                    className="dropdown-item textnormal"
                     onClick={() => this.onClickNavBar("/logout")}
                   >
                     Sign Out<span className="sr-only">(current)</span>
@@ -122,9 +144,14 @@ export class NavBar extends Component {
               </li>
             ) : (
               <li className="nav-item">
-                <NavButton onClick={() => this.onClickNavBar("/login")} isOn>
+                <button
+                  className="button-white"
+                  style={{ width: "120px" }}
+                  onClick={() => this.onClickNavBar("/login")}
+                  isOn
+                >
                   Sign In
-                </NavButton>
+                </button>
               </li>
             )}
           </ul>
@@ -132,13 +159,14 @@ export class NavBar extends Component {
       </nav>
     );
   }
-  onClickNavBar = page => {
+  onClickNavBar = async (page) => {
     if (page == "/logout") {
-      localStorage.clear();
-      history.push("/home");
+      await localStorage.clear();
+      history.push("/signup");
       window.location.reload();
     } else {
       history.push(page);
+      window.location.reload();
     }
   };
   async componentDidMount() {
@@ -148,7 +176,8 @@ export class NavBar extends Component {
       this.setState({
         data,
         fullName: data.firstName + " " + data.lastName.substring(0, 1) + ".",
-        role: data.role
+        role: data.role,
+        unverified: data.role == "tutor" && !data.verifyStatus,
       });
       console.log(this.state);
     }
@@ -162,9 +191,11 @@ export class NavBar extends Component {
       var myurl = "";
       xhr.open(
         "GET",
-        `http://localhost:8000/file/images/user?token=${localStorage.getItem(
-          "token"
-        )}&userId=${this.state.data._id}`,
+        `http://${
+          process.env.SERVERIP
+        }:8000/file/images/user?token=${localStorage.getItem("token")}&userId=${
+          this.state.data._id
+        }`,
         true
       );
       xhr.responseType = "arraybuffer";

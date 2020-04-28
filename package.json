@@ -4,13 +4,18 @@
   "description": "Member: \r + Nathabordine Wonghirundecha 6030183821\r + Nuttrawanee Kitwatthanachai 6030184421\r + Natcha Manasuntorn 6030177021\r + Suparerk Pochchongdech 6030575121\r + Karnkitti Kittikamron 6031006621\r + Natthanon Manop 6031013021\r + Suchut Sapsathien 6030609921\r + Yanika Dontong 6031010021",
   "main": "index.js",
   "dependencies": {
+    "@material-ui/core": "^4.9.10",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.49",
     "bootstrap": "^4.4.1",
     "express": "^4.17.1",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
     "react-bootstrap": "^1.0.0-beta.17"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^7.1.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"

@@ -2,49 +2,53 @@
   width: auto;
   max-width: 1000px;
   height: auto;
-  min-height: 300px;
-  background-color: rgb(255, 255, 255);
+  min-height: 400px;
+  background-color: var(--white-color-trans) !important;
   padding-right: 30px;
   padding-left: 30px;
   padding-top: 20px;
   padding-bottom: 20px;
-  border-radius: 20px;
-  margin: 40px;
-  margin-bottom: 300px;
+  border-radius: 10px;
+  margin: 20px;
+  margin-bottom: 100px;
   box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
     1px 3px 8px rgba(39, 44, 49, 0.03);
 }
 .enrollH {
-  background-color: rgb(245, 245, 245);
+  background-color: var(--white-color);
   border-radius: 12px;
   padding: 10px;
-
+  color: var(--black-color);
   /* padding-left: 10px; */
 }
 .nameR {
-  background-color: rgb(245, 245, 245);
+  background-color: var(--white-color);
   font-family: Roboto;
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
   line-height: 28px;
-  color: #000000;
+  color: var(--black-color);
   text-align: center;
   width: auto;
-  border: 1px solid rgb(255, 255, 255);
+  border: 0;
   padding: 10px;
   /* padding-left: 10px;
   padding-right: 10px; */
 }
 .Eday {
-  border: none;
-  box-sizing: border-box;
+  background: var(--white-color);
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
+  border-width: 0px;
+  border-radius: 5px;
+  color: var(--black-color);
   width: 100%;
   min-height: 80px;
+  max-height: 80px;
 }
 .courseL {
   font-weight: bold;
-  color: rgb(82, 136, 136) !important;
+  color: var(--black-color) !important;
 }
 .courseL:hover {
   font-weight: bolder;

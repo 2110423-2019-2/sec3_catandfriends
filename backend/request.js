@@ -51,9 +51,12 @@ router.post("/", async (req, res) => {
     res.status(500).end();
     return;
   }
-  res.status(201).json({
-    message: message
-  }).end();
+  res
+    .status(201)
+    .json({
+      message: message,
+    })
+    .end();
 });
 
 router.put("/", async (req, res) => {
@@ -63,6 +66,7 @@ router.put("/", async (req, res) => {
   const studentId = payload.studentId;
   const courseId = payload.courseId;
   const status = payload.status;
+
   let err, message;
 
   let theRequest = await findTheRequest(tutorId, studentId, courseId);
@@ -76,14 +80,29 @@ router.put("/", async (req, res) => {
     let course = theCourse[1];
     if (course.amountOfStudent > 0) {
       if (status == 1) {
-        err = await updateRequest(tutorId, studentId, courseId, dateThailand._d);
+        err = await updateRequest(
+          tutorId,
+          studentId,
+          courseId,
+          dateThailand._d
+        );
+        if (course.amountOfStudent == 1) {
+          err = await deleteOtherRequest(tutorId, studentId, courseId);
+        }
         err = await updateSchedule(studentId, courseId, dateThailand._d);
-        err = await updateCourse(studentId, courseId, dateThailand._d);
+        err = await updateCourse(
+          studentId,
+          courseId,
+          course.amountOfStudent,
+          dateThailand._d
+        );
         message = "Request accepted";
       } else if (status == -1) {
         err = await deleteRequest(tutorId, studentId, courseId);
         message = "Request rejected";
-      } else { message = `"status" attribute is invalid`; }
+      } else {
+        message = `"status" attribute is invalid`;
+      }
     } else {
       await deleteRequest(tutorId, studentId, courseId);
       message = "Course is already full";
@@ -93,9 +112,12 @@ router.put("/", async (req, res) => {
     res.status(500).end();
     return;
   }
-  res.status(201).json({
-    message: message
-  }).end();
+  res
+    .status(201)
+    .json({
+      message: message,
+    })
+    .end();
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 async function findRequests(tutorId) {
@@ -108,13 +130,13 @@ async function findRequests(tutorId) {
     let course, user;
     [err, course] = await to(
       CourseModel.findOne({
-        _id: requests[i].courseId
+        _id: requests[i].courseId,
       })
     );
 
     [err, user] = await to(
       UserModel.findOne({
-        _id: requests[i].studentId
+        _id: requests[i].studentId,
       })
     );
 
@@ -123,7 +145,7 @@ async function findRequests(tutorId) {
       isAvailable: course.amountOfStudent > 0 ? true : false,
       studentName: user["firstName"] + " " + user["lastName"],
       createdTime: format.formatTimeDate(requests[i].createdTime),
-      courseName: course.courseName
+      courseName: course.courseName,
     };
   }
   return [err, requests];
@@ -133,7 +155,7 @@ async function checkRequest(studentId, courseId) {
   [err, request] = await to(
     RequestModel.countDocuments({
       studentId: studentId,
-      courseId: courseId
+      courseId: courseId,
     })
   );
   let isRequested = request != 0 ? true : false;
@@ -145,7 +167,7 @@ async function findTheRequest(tutorId, studentId, courseId) {
     RequestModel.findOne({
       tutorId: tutorId,
       studentId: studentId,
-      courseId: courseId
+      courseId: courseId,
     })
   );
   return [err, request];
@@ -153,33 +175,67 @@ async function findTheRequest(tutorId, studentId, courseId) {
 async function checkAvailable(studentId, courseId) {
   let err, course;
   [err, course] = await to(CourseModel.findById(courseId));
+  // console.log(courseId);
+
+  let dayCourse = [course.startDate, course.endDate];
+
   let courses;
-  [err, courses] = await to(ScheduleModel.findOne({
-    studentId: studentId
-  }, {
-    _id: 0,
-    studentId: 0,
-    createdDate: 0,
-    lastModified: 0
-  }));
+  [err, courses] = await to(
+    ScheduleModel.findOne(
+      {
+        studentId: studentId,
+      },
+      {
+        _id: 0,
+        studentId: 0,
+        createdDate: 0,
+        lastModified: 0,
+      }
+    )
+  );
 
   let listOfCourse = courses.listOfCourse;
   let available = true;
+  let outerBreak = false;
   for (let i = 0; i < listOfCourse.length; i++) {
     let courseQ;
-    [err, courseQ] = await to(CourseModel.findOne({
-      _id: listOfCourse[i]
-    }, {
-      _id: 0,
-      dayAndStartTime: 1,
-      dayAndEndTime: 1
-    }));
+    [err, courseQ] = await to(
+      CourseModel.findOne(
+        {
+          _id: listOfCourse[i],
+        },
+        {
+          _id: 0,
+          dayAndStartTime: 1,
+          dayAndEndTime: 1,
+          startDate: 1,
+          endDate: 1,
+        }
+      )
+    );
+
+    let dayCourseQ = [courseQ.startDate, courseQ.endDate];
+
+    if (!set.isIntersect(dayCourse, dayCourseQ)) {
+      break;
+    }
 
     for (let j = 0; j < 7; j++) {
-      if (courseQ.dayAndStartTime[j] == null || course.dayAndStartTime[j] == null) continue
+      if (
+        courseQ.dayAndStartTime[j] == null ||
+        course.dayAndStartTime[j] == null
+      )
+        continue;
       let a = [courseQ.dayAndStartTime[j], courseQ.dayAndEndTime[j]];
       let b = [course.dayAndStartTime[j], course.dayAndEndTime[j]];
-      if (set.isIntersect(a, b)) available = false;
+      if (set.isIntersect(a, b)) {
+        available = false;
+        outerBreak = true;
+        break;
+      }
+    }
+    if (outerBreak) {
+      break;
     }
   }
   return [err, available];
@@ -194,12 +250,12 @@ async function saveRequest(payload, studentId, dateThailand) {
   const requests = new RequestModel(payload);
   let save;
   [err, save] = await to(requests.save());
-  return err
+  return err;
 }
 async function findTheCourse(courseId) {
   [err, course] = await to(
     CourseModel.findOne({
-      _id: courseId
+      _id: courseId,
     })
   );
   return [err, course];
@@ -211,57 +267,63 @@ async function updateRequest(tutorId, studentId, courseId, dateThailand) {
       {
         tutorId: tutorId,
         studentId: studentId,
-        courseId: courseId
+        courseId: courseId,
       },
       {
         status: 1,
-        lastModified: dateThailand
+        lastModified: dateThailand,
       },
       {
-        useFindAndModify: false
+        useFindAndModify: false,
       }
     )
   );
-  return err
+  return err;
 }
 
 async function updateSchedule(studentId, courseId, dateThailand) {
   [err, value] = await to(
     ScheduleModel.findOneAndUpdate(
       {
-        studentId: studentId
+        studentId: studentId,
       },
       {
         $push: {
-          listOfCourse: courseId
+          listOfCourse: courseId,
         },
-        lastModified: dateThailand
+        lastModified: dateThailand,
       },
       {
-        useFindAndModify: false
+        useFindAndModify: false,
       }
     )
   );
-  return err
+  return err;
 }
 
-async function updateCourse(studentId, courseId, dateThailand) {
+async function updateCourse(
+  studentId,
+  courseId,
+  amountOfStudent,
+  dateThailand
+) {
   [err, value] = await to(
     CourseModel.findOneAndUpdate(
       {
-        _id: courseId
+        _id: courseId,
       },
       {
         $push: {
-          listOfStudentId: studentId
+          listOfStudentId: studentId,
         },
         $inc: {
-          amountOfStudent: -1
+          amountOfStudent: -1,
         },
-        lastModified: dateThailand
+        lastModified: dateThailand,
+        isAvailable: amountOfStudent == 1 ? false : true,
       },
       {
-        useFindAndModify: false
+        useFindAndModify: false,
       }
     )
   );
@@ -273,7 +335,18 @@ async function deleteRequest(tutorId, studentId, courseId) {
     RequestModel.deleteOne({
       tutorId: tutorId,
       studentId: studentId,
-      courseId: courseId
+      courseId: courseId,
+    })
+  );
+  return err;
+}
+
+async function deleteOtherRequest(tutorId, studentId, courseId) {
+  [err, value] = await to(
+    RequestModel.deleteMany({
+      tutorId: tutorId,
+      studentId: { $ne: studentId },
+      courseId: courseId,
     })
   );
   return err;

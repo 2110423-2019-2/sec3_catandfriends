@@ -5,7 +5,7 @@ html {
 }
 
 .BlankCard {
-  background-color: rgb(243, 241, 241);
+  background-color: var(--white-color) !important;
   width: 200px;
   height: 350px;
   display: inline-block;

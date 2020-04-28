@@ -7,7 +7,7 @@ class CourseCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png"
+      logoDark: "https://i.ibb.co/jM8cWXv/logoDark.png",
     };
   }
   dayToString(day) {
@@ -27,7 +27,7 @@ class CourseCard extends React.Component {
       price,
       category,
       day,
-      duration
+      duration,
     } = this.props.detail;
     // console.log(this.props.detail);
     const fullname = this.props.detail.tutorName
@@ -48,7 +48,7 @@ class CourseCard extends React.Component {
               this.props.detail.courseImg
                 ? this.props.detail.courseImg
                 : this.state.logoDark
-            })`
+            })`,
           }}
           id="image"
           className="mcard-header"
@@ -67,15 +67,18 @@ class CourseCard extends React.Component {
           </div>
         </div>
         <div className="card-body mycard-body">
-          <h5 className="card-title mycard-title">{courseName}</h5>
+          <div className="mycard-title textheader">{courseName}</div>
           <p className="card-text tutorname">{fullname}</p>
           {/* <p className="card-text date">{duration}</p> */}
           <div align="center" style={{ marginBottom: "5px" }}>
-            <textarea className="card-text day" disabled>
+            <textarea className="card-text day day-coursecard" disabled>
               {this.dayToString(day)}
             </textarea>
           </div>
-          <CourseButton full={!this.props.detail.isAvailable}>
+          <CourseButton
+            className="width90 margintop"
+            full={!this.props.detail.amountOfStudent}
+          >
             {this.props.detail.amountOfStudent +
               "/" +
               this.props.detail.totalAmountOfStudent +
@@ -86,7 +89,7 @@ class CourseCard extends React.Component {
       </div>
     );
   }
-  onClickGotoCourseInform = courseId => {
+  onClickGotoCourseInform = (courseId) => {
     history.push(`/course?courseId=${courseId}`);
   };
 }

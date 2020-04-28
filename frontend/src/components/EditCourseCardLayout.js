@@ -79,7 +79,7 @@ class EditCourseCardLayout extends React.Component {
         >
           <div className="row ecardblock justify-content-center">
             <BlankCouseCard />
-            {this.state.data.map(item => (
+            {this.state.data.map((item) => (
               <EditableCard detail={item} key={item._id.toString()} />
             ))}
           </div>

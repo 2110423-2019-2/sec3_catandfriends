@@ -2,15 +2,15 @@ import history from "../history";
 //IceBranch
 const Util = {
   login: async (email, password) => {
-    const URL = "http://localhost:8000/login";
+    const URL = `http://${process.env.SERVERIP}:8000/login`;
     const response = await fetch(URL, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
     });
     console.log(response.status);
     if (response.status == 500) return response.json();
@@ -27,13 +27,13 @@ const Util = {
     birthDate,
     ssn
   ) => {
-    const URL = "http://localhost:8000/signup";
+    const URL = `http://${process.env.SERVERIP}:8000/signup`;
     const response = await fetch(URL, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         firstName,
@@ -44,111 +44,113 @@ const Util = {
         phoneNumber,
         role,
         birthDate,
-        ssn
-      })
+        ssn,
+      }),
     });
     console.log(response);
     if (response.status == 400) return response.json();
     if (response.status == 200) return response.json();
   },
-  getProfile: async userId => {
+  getProfile: async (userId) => {
     if (!localStorage.getItem("token")) {
-      window.alert("Please login first!");
-      return history.push("./login");
+      // window.alert("Please login first!");
+      return null;
     }
     console.log(userId);
     const URL = userId
-      ? `http://localhost:8000/profile?userId=${userId}&token=${localStorage.getItem(
-          "token"
-        )}`
-      : `http://localhost:8000/profile?token=${localStorage.getItem("token")}`;
+      ? `http://${
+          process.env.SERVERIP
+        }:8000/profile?userId=${userId}&token=${localStorage.getItem("token")}`
+      : `http://${
+          process.env.SERVERIP
+        }:8000/profile?token=${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "GET",
-      mode: "cors"
+      mode: "cors",
     });
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
   },
-  getSchedule: async userId => {
-    const URL = `http://localhost:8000/schedule?userId=${userId}&token=${localStorage.getItem(
-      "token"
-    )}`;
+  getSchedule: async (userId) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/schedule?userId=${userId}&token=${localStorage.getItem("token")}`;
     let response = await fetch(URL, {
       method: "GET",
-      mode: "cors"
+      mode: "cors",
     });
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
   },
-  getCourseById: async courseId => {
-    let URL = `http://localhost:8000/courses?courseId=${courseId}&token=${localStorage.getItem(
-      "token"
-    )}`;
+  getCourseById: async (courseId) => {
+    let URL = `http://${
+      process.env.SERVERIP
+    }:8000/courses?courseId=${courseId}&token=${localStorage.getItem("token")}`;
     let response = await fetch(URL, {
       method: "GET",
-      mode: "cors"
+      mode: "cors",
     });
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
   },
-  getCourseByTutorId: async userId => {
-    const URL = `http://localhost:8000/courses?tutorId=${userId}&token=${localStorage.getItem(
-      "token"
-    )}`;
+  getCourseByTutorId: async (userId) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/courses?tutorId=${userId}&token=${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "GET",
-      mode: "cors"
+      mode: "cors",
     });
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
   },
-  getRequests: async userId => {
-    const URL = `http://localhost:8000/requests?tutorId=${userId}&token=${localStorage.getItem(
-      "token"
-    )}`;
+  getRequests: async (userId) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/requests?tutorId=${userId}&token=${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "GET",
-      mode: "cors"
+      mode: "cors",
     });
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
   },
   updateRequest: async (requestId, status, studentId, courseId) => {
-    const URL = `http://localhost:8000/requests?token=${localStorage.getItem(
-      "token"
-    )}`;
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/requests?token=${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "PUT",
       mode: "cors",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ requestId, status, studentId, courseId })
+      body: JSON.stringify({ requestId, status, studentId, courseId }),
     });
     if (response.status == 500) return { error: true };
     if (response.status == 201) return response.json();
   },
   getSearchResult: async (day, subject, time, price) => {
-    const URL = `http://localhost:8000/search?day=${day}&time=${time}&category=${subject}&price=${price}`;
+    const URL = `http://${process.env.SERVERIP}:8000/search?day=${day}&time=${time}&category=${subject}&price=${price}`;
     const response = await fetch(URL, {
       method: "GET",
-      mode: "cors"
+      mode: "cors",
     });
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response.json();
   },
   createRequests: async (tutorId, courseId) => {
-    const URL = `http://localhost:8000/requests?token=${localStorage.getItem(
-      "token"
-    )}`;
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/requests?token=${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ tutorId, courseId })
+      body: JSON.stringify({ tutorId, courseId }),
     });
     console.log(response.status);
     if (response.status == 500) return { error: true };
@@ -166,14 +168,14 @@ const Util = {
     courseFee,
     category
   ) => {
-    const URL = `http://localhost:8000/courses?token=${token}`;
+    const URL = `http://${process.env.SERVERIP}:8000/courses?token=${token}`;
     const amountOfStudent = totalAmountOfStudent;
     const response = await fetch(URL, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         courseName,
@@ -185,8 +187,8 @@ const Util = {
         totalAmountOfStudent,
         description,
         courseFee,
-        category
-      })
+        category,
+      }),
     });
     console.log(response.status);
     if (response.status == 400) return { error: true };
@@ -205,14 +207,14 @@ const Util = {
     courseFee,
     category
   ) => {
-    const URL = `http://localhost:8000/courses?token=${token}`;
+    const URL = `http://${process.env.SERVERIP}:8000/courses?token=${token}`;
     const amountOfStudent = totalAmountOfStudent;
     const response = await fetch(URL, {
       method: "PUT",
       mode: "cors",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         _id,
@@ -225,21 +227,29 @@ const Util = {
         totalAmountOfStudent,
         description,
         courseFee,
-        category
-      })
+        category,
+      }),
     });
     console.log(response.status);
     if (response.status == 400) return { error: true };
     if (response.status == 201) return response.json();
   },
-  editProfile: async (_id,firstName, lastName, gender, phoneNumber,profileImage, token) => {
-    const URL = `http://localhost:8000/profile?token=${token}`;
+  editProfile: async (
+    _id,
+    firstName,
+    lastName,
+    gender,
+    phoneNumber,
+    profileImage,
+    token
+  ) => {
+    const URL = `http://${process.env.SERVERIP}:8000/profile?token=${token}`;
     const response = await fetch(URL, {
       method: "PUT",
       mode: "cors",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         _id,
@@ -247,77 +257,189 @@ const Util = {
         lastName,
         gender,
         phoneNumber,
-        profileImage
-      })
+        profileImage,
+      }),
     });
     console.log(response.status);
     if (response.status == 400) return { error: true };
     if (response.status == 201) return response.json();
   },
-  getVeriDoc: async tutorId => {
-    const URL = `http://localhost:8000/file/verifyFile?token=${localStorage.getItem(
+  getVeriDoc: async (tutorId) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/file/verifyFile?token=${localStorage.getItem(
       "token"
     )}&tutorId=${tutorId}`;
     const response = await fetch(URL, {
       method: "GET",
-      mode: "cors"
+      mode: "cors",
     });
     console.log(response);
     if (response.status == 404) return { error: true };
     if (response.status == 200) return response;
   },
-  getMessage: async roomId => {
-    const URL = `http://localhost:8000/message?roomId=${roomId}&token=${localStorage.getItem(
-      "token"
-    )}`;
+  getMessage: async (roomId) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/message?roomId=${roomId}&token=${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "GET",
-      mode: "cors"
+      mode: "cors",
     });
     console.log(response);
     if (response.status == 500) return { error: true };
     if (response.status == 200) return response.json();
   },
   sendMessage: async (message, roomId) => {
-    const URL = `http://localhost:8000/message?token=${localStorage.getItem(
-      "token"
-    )}`;
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/message?token=${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "POST",
       mode: "cors",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message, roomId })
+      body: JSON.stringify({ message, roomId }),
     });
     console.log(response);
     if (response.status == 500) return { error: true };
     if (response.status == 201) return response.json();
   },
   getChatUserBoxes: async () => {
-    const URL = `http://localhost:8000/message/rooms?token=${localStorage.getItem(
-      "token"
-    )}`;
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/message/rooms?token=${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "GET",
-      mode: "cors"
+      mode: "cors",
     });
     console.log(response);
     if (response.status == 500) return { error: true };
     if (response.status == 200) return response.json();
   },
-  getChatUserBox: async userId => {
-    const URL = `http://localhost:8000/message/room?userId=${userId}&token=${localStorage.getItem(
+  getChatUserBox: async (userId) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/message/room?userId=${userId}&token=${localStorage.getItem(
       "token"
     )}`;
     const response = await fetch(URL, {
       method: "GET",
-      mode: "cors"
+      mode: "cors",
     });
     console.log(response);
     if (response.status == 500) return { error: true };
     if (response.status == 200) return response.json();
-  }
-};
+  },
+  uploadImage: async (data) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/file/images/user/upload?token=${localStorage.getItem("token")}`;
+    const response = await fetch(URL, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      body: data,
+    });
+    console.log(response);
+    if (response.status == 500) return { error: true };
+    if (response.status == 201) return response.json();
+  },
+  createComment: async (courseId, topic, text, star) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/comment?token=${localStorage.getItem("token")}`;
+    console.log(URL);
+    const response = await fetch(URL, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        courseId,
+        topic,
+        text,
+        star,
+      }),
+    });
 
+    if (response.status == 400) return response.json();
+    if (response.status == 201) return { err: false };
+  },
+  editComment: async (courseId, topic, text, star) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/comment?token=${localStorage.getItem("token")}`;
+    const response = await fetch(URL, {
+      method: "PUT",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        courseId,
+        topic,
+        text,
+        star,
+      }),
+    });
+    if (response.status == 400) return response.json();
+    if (response.status == 201) return { err: false };
+  },
+  getComment: async (courseId) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/comment?courseId=${courseId}&token=${localStorage.getItem("token")}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors",
+    });
+    if (response.status == 404) return { error: true };
+    if (response.status == 200) return response.json();
+  },
+  deleteComment: async (courseId) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/comment?courseId=${courseId}&token=${localStorage.getItem("token")}`;
+    const response = await fetch(URL, {
+      method: "delete",
+      mode: "cors",
+    });
+    if (response.status == 400) return { error: true };
+    if (response.status == 201) return { error: false };
+  },
+  getMyComment: async (courseId) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/comment/myComment?courseId=${courseId}&token=${localStorage.getItem(
+      "token"
+    )}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors",
+    });
+    if (response.status == 404) return { error: true };
+    if (response.status == 200) return response.json();
+  },
+  sendReport: async (data) => {
+    const URL = `http://${
+      process.env.SERVERIP
+    }:8000/report?token=${localStorage.getItem("token")}`;
+    const response = await fetch(URL, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    console.log(response);
+    if (response.status == 500) return { error: true };
+    if (response.status == 201) return response.json();
+  },
+};
 export default Util;

@@ -4,77 +4,94 @@ import TutorCard from "../components/TutorCard";
 import history from "../history";
 import Util from "../apis/Util";
 import NormalButton from "./NormalButton";
+import Rating from "@material-ui/lab/Rating";
 export class CourseDetail extends Component {
   constructor(props) {
     super(props);
     console.log(props);
     this.state = {
       imgsrc:
-        "https://www.img.in.th/images/ced52db8eb1c2a59ab18b803b25e80c9.jpg"
+        "https://www.img.in.th/images/ced52db8eb1c2a59ab18b803b25e80c9.jpg",
     };
     this.onClick = this.onClick.bind(this);
   }
-
+  round_to_precision(x, precision) {
+    var y = +x + (precision === undefined ? 0.5 : precision / 2);
+    return y - (y % (precision === undefined ? 1 : +precision));
+  }
   render() {
     const date = (this.props.detail.lastModified + "").substring(0, 21);
     console.log(date);
     console.log(this.state.requestable);
     //console.log(this.props.detail);
     let showbutton;
-    if (this.state.requestable) {
+    let requestmsg = this.props.detail.requestStatus;
+    // alert(this.props.detail.requestStatus);
+    if (requestmsg == "requestable") {
       showbutton = (
-        <NormalButton color="orange" onClick={event => this.onClick(event)}>
-          Request
-        </NormalButton>
-      );
-    } else {
-      showbutton = (
-        <NormalButton
-          color="rgb(240,240,240)"
-          onClick={event => this.onClick(event)}
-          disabled
+        <button
+          className="button-white"
+          onClick={(event) => this.onClick(event)}
         >
-          Requested
-        </NormalButton>
+          Request
+        </button>
       );
-    }
-    let studentList;
-    let editbtn;
-    if (this.props.detail.owner) {
-      studentList = (
-        <div className="col-md-12 ">
-          <AllStudentList data={this.props.detail} />
-        </div>
-      );
-      editbtn = (
-        <NormalButton
-          color="rgba(135, 53, 53, 0.8)"
+    } else if (this.props.detail.owner) {
+      showbutton = (
+        <button
+          className="button-white"
           onClick={() => {
-            history.push(`/course/edit?courseId=${this.props.detail.courseid}`);
+            history.push(`/course/edit?courseId=${this.props.detail._id}`);
           }}
         >
           Edit Course
-        </NormalButton>
+        </button>
+      );
+    } else if (requestmsg == "unrequestable") {
+      showbutton = <div></div>;
+    } else {
+      showbutton = (
+        <button
+          className="button-white"
+          onClick={(event) => this.onClick(event)}
+          disabled
+        >
+          {requestmsg}
+        </button>
+      );
+    }
+
+    let studentList;
+    if (this.props.detail.owner) {
+      studentList = (
+        <div className="col-md-12">
+          <AllStudentList data={this.props.detail} />
+        </div>
       );
     } else {
       studentList = <div></div>;
-      editbtn = <div></div>;
     }
     return (
-      <div className="courseDetailCard">
+      <div className="bigCard" style={{ marginBottom: "20px" }}>
         <div className="row ">
           <div className={this.props.detail.owner ? "col-md-9" : "col-md-12"}>
             <div className="row  text-center" className="myStyle">
-              <h3 className="verifyTutorH ">Course Detail</h3>
+              <div className="inside-block textshadow">Course Detail</div>
             </div>
             <div className="row " style={{ padding: "5px 20px" }}>
               <div className="col-md-6 ">
-                <h4>{this.props.detail.courseName}</h4>
+                <div className="textshadow">{this.props.detail.courseName}</div>
               </div>
               <div className="col-md-6 ">
                 <a
-                  href={`/profile?userId=${this.props.detail.tutorId}`}
-                  style={{ fontSize: "22px" }}
+                  className="textshadow"
+                  onClick={() => {
+                    history.push(
+                      `/profile?userId=${this.props.detail.tutorId}`
+                    );
+                  }}
+                  href="#"
+                  // href={`/profile?userId=${this.props.detail.tutorId}`}
                 >
                   {" by " + this.props.detail.tutorName}
                 </a>
@@ -84,10 +101,47 @@ export class CourseDetail extends Component {
               <div className="col-md-12  infoC" style={{ marginBottom: "5px" }}>
                 <div className="row">
                   <div className="col-md-4">
+                    <div className="nameB">Rating:</div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="valueB">
+                      {this.props.detail.numberOfRating == 0
+                        ? 0
+                        : Math.round(
+                            (this.props.detail.sumOfRating /
+                              this.props.detail.numberOfRating +
+                              Number.EPSILON) *
+                              100
+                          ) /
+                            100 +
+                          " "}
+                      <Rating
+                        name="read-only"
+                        precision={0.1}
+                        value={
+                          this.props.detail.numberOfRating == 0
+                            ? 0
+                            : Math.round(
+                                (this.props.detail.sumOfRating /
+                                  this.props.detail.numberOfRating +
+                                  Number.EPSILON) *
+                                  100
+                              ) / 100
+                        }
+                        readOnly
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-4">
                     <div className="nameB">Category:</div>
                   </div>
                   <div className="col-md-8">
-                    <div className="valueB">{this.props.detail.category}</div>
+                    <div className="valueB">
+                      {this.props.detail.category.charAt(0).toUpperCase() +
+                        this.props.detail.category.slice(1)}
+                    </div>
                   </div>
                 </div>
                 <div className="row ">
@@ -148,13 +202,16 @@ export class CourseDetail extends Component {
             </div>
             <div className="row">
               <div className="col-md-12 ">
-                <div className="alert alert-warning">
-                  <strong>Warning!</strong> If you request to enroll this
-                  course, you can not cancel.
-                </div>
+                {this.state.requestable ? (
+                  <div className="alert alert-warning">
+                    <strong>Warning!</strong> If you request to enroll this
+                    course, you can not cancel.
+                  </div>
+                ) : (
+                  <div></div>
+                )}
                 <div className="row justify-content-center">
                   <div className="myStyle">{showbutton}</div>
-                  <div className="myStyle">{editbtn}</div>
                 </div>
               </div>
             </div>
@@ -178,7 +235,11 @@ export class CourseDetail extends Component {
   }
 
   async componentDidMount() {
-    this.setState({ requestable: this.props.detail.requestable });
+    let data = await Util.getProfile();
+    this.setState({
+      requestable: this.props.detail.requestable,
+      data,
+    });
   }
 
   async onClick(event) {
@@ -190,6 +251,7 @@ export class CourseDetail extends Component {
       this.props.detail.tutorId,
       this.props.detail._id
     );
+    window.location.reload();
     if (data.status == 0) {
       window.alert("Course Time Overlap");
     } else {
@@ -208,7 +270,7 @@ class AllStudentList extends Component {
     super(props);
 
     this.state = {
-      data: []
+      data: [],
     };
   }
 
@@ -218,10 +280,14 @@ class AllStudentList extends Component {
     }
     return (
       <div className="text-center">
-        <h3 className="verifyTutorH">Student List</h3>
-        {this.state.data.map(item => (
-          <StudentList detail={item} key={item._id} />
-        ))}
+        <div className="textshadow">Student List</div>
+        <div className="row justify-content-center">
+          <div className="col-md-12 slist justify-content-center">
+            {this.state.data.map((item) => (
+              <StudentList detail={item} key={item._id} />
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
@@ -229,7 +295,7 @@ class AllStudentList extends Component {
   async componentDidMount() {
     var studentList = [];
     console.log(this.props.data);
-    this.props.data.listOfStudentId.forEach(studentId => {
+    this.props.data.listOfStudentId.forEach((studentId) => {
       let student = Util.getProfile(studentId);
       studentList.push(student);
     });
@@ -247,18 +313,20 @@ class StudentList extends Component {
 
   render() {
     return (
-      <div className="card slist">
-        <a
-          className="studentlist"
-          onClick={() => this.onClick(this.props.detail._id)}
-        >
-          {this.props.detail.firstName + "\t" + this.props.detail.lastName}
-        </a>
+      <div className="row justify-content-center">
+        <div className="col-md-12 slist justify-content-center">
+          <button
+            className="button-studentList"
+            onClick={() => this.onClick(this.props.detail._id)}
+          >
+            {this.props.detail.firstName + "\t" + this.props.detail.lastName}
+          </button>
+        </div>
       </div>
     );
   }
 
-  onClick = studentId => {
+  onClick = (studentId) => {
     history.push(`/profile?userId=${studentId}`);
   };
 }

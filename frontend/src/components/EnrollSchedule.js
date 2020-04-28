@@ -52,13 +52,11 @@ export default class EnrollSchedule extends Component {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-12 ">
+                      <div className="col-md-12">
                         <div
+                          className="textshadow"
                           style={{
-                            textAlign: "center",
-                            height: "300px",
-                            fontSize: "24px",
-                            paddingTop: "20px"
+                            paddingTop: "20px",
                           }}
                         >
                           Loading...
@@ -134,7 +132,7 @@ export default class EnrollSchedule extends Component {
                           </div>
                         </div>
                       </div>
-                      {this.state.schedule.map(item => (
+                      {this.state.schedule.map((item) => (
                         <RowInformation detail={item} />
                       ))}
                     </div>
@@ -208,11 +206,9 @@ export default class EnrollSchedule extends Component {
                       <div className="row">
                         <div className="col-md-12 ">
                           <div
+                            className="textshadow"
                             style={{
-                              textAlign: "center",
-                              height: "300px",
-                              fontSize: "24px",
-                              paddingTop: "20px"
+                              paddingTop: "20px",
                             }}
                           >
                             You have no course enrollment
@@ -255,12 +251,13 @@ class RowInformation extends Component {
       tutorName,
       enrollDate,
       duration,
-      day
+      day,
+      tutorId,
     } = this.props.detail;
     if (this.props.detail) {
       return (
         <div className="row" key={this.props.detail._id}>
-          <div className="col-md-2 border">
+          <div className="col-md-2 background-color">
             <a
               className="courseL"
               style={{ textAlign: "center" }}
@@ -271,30 +268,36 @@ class RowInformation extends Component {
               {courseName ? courseName : "-"}
             </a>
           </div>
-          <div className="col-md-2 border">
-            <div style={{ textAlign: "center" }}>
+          <div className="col-md-2 background-color textnormal">
+            <a
+              className="courseL"
+              style={{ textAlign: "center" }}
+              onClick={() => {
+                history.push(`/profile?userId=${tutorId}`);
+              }}
+            >
               {tutorName ? tutorName : "-"}
-            </div>
+            </a>
           </div>
 
-          <div class="col-md-2 border">
+          <div className="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {enrollDate ? enrollDate : "-"}
             </div>
           </div>
 
-          <div class="col-md-2 border">
+          <div className="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {duration ? duration.split(" - ")[0] : "-"}
             </div>
           </div>
-          <div class="col-md-2 border">
+          <div className="col-md-2 background-color textnormal">
             <div style={{ textAlign: "center" }}>
               {duration ? duration.split(" - ")[1] : "-"}
             </div>
           </div>
-          <div className="col-md-2 border justify-content-center">
-            <textarea className="Eday" style={{ textAlign: "center" }}>
+          <div className="col-md-2 justify-content-center background-color textnormal">
+            <textarea className="Eday" style={{ textAlign: "center" }} disabled>
               {day ? this.dayToString(day) : "-"}
             </textarea>
           </div>

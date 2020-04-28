@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./RequestScrollBar.css";
 import Util from "../apis/Util";
-
+import history from "../history";
 export default class RequestScrollBar extends Component {
   constructor(props) {
     super(props);
@@ -14,27 +14,40 @@ export default class RequestScrollBar extends Component {
     data = await Util.getRequests(this.props.tutorId);
     this.setState({ data });
     console.log(data);
+    window.location.reload();
     //add student to class
   };
 
   render() {
     if (this.state.data) {
       return (
-        <div className="requestCard">
-          {this.state.data.map(item => {
+        <div className="requestCard background-color-trans">
+          {this.state.data.map((item) => {
             if (item.status === 0) {
               return (
                 <div
-                  className="row justify-content-center tableR"
-                  key={item.requestId}
+                  className="row justify-content-center tableR inside-block"
+                  key={item.requestId + item.courseId + item.studentId}
                 >
                   <div className="col-md-4 justify-content-center">
-                    <a href={`/profile?userId=${item.studentId}`}>
+                    <a
+                      onClick={() => {
+                        history.push(`/profile?userId=${item.studentId}`);
+                      }}
+                      href="#"
+                    >
                       {item.studentName}
                     </a>
                   </div>
-                  <div className="col-md-4 justify-content-center">
-                    <div>{item.courseName}</div>
+                  <div className="col-md-4 justify-content-center textnormal">
+                    <a
+                      onClick={() => {
+                        history.push(`/course?courseId=${item.courseId}`);
+                      }}
+                      href="#"
+                    >
+                      {item.courseName}
+                    </a>
                   </div>
                   <div className="col-md-2 justify-content-center">
                     <button
@@ -76,7 +89,7 @@ export default class RequestScrollBar extends Component {
       );
     } else {
       return (
-        <div className="requestCard">
+        <div className="requestCard background-color-trans">
           {/* <h5 align="center">Request List</h5> */}
         </div>
       );

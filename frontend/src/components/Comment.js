@@ -15,17 +15,17 @@ export default class Comment extends Component {
     
     render() {
         return (
-            <div class="card mb-3 w-12 innerbox">
-            <div class="row no-gutters ">
-              <div class="col-md-4 text-center ">
-                <img src={this.state.imgsrc} class="card-img p-2 pic"   alt="..."/>
+            <div className="card mb-3 w-12 innerbox">
+            <div className="row no-gutters ">
+              <div className="col-md-4 text-center ">
+                <img src={this.state.imgsrc} className="card-img p-2 pic"   alt="..."/>
               </div>
-              <div class="col-md-8 ">
-                <div class="card-body">
+              <div className="col-md-8 ">
+                <div className="card-body">
                   <center>
-                <a class="card-title title" href={this.state.nameurl}>{this.state.name}</a></center>
-                <p class="card-text">{this.state.comment}</p>
-                <p class="card-text"><small class="text-muted">Last updated {this.state.date}</small></p>
+                <a className="card-title title" href={this.state.nameurl}>{this.state.name}</a></center>
+                <p className="card-text">{this.state.comment}</p>
+                <p className="card-text"><small className="text-muted">Last updated {this.state.date}</small></p>
                 </div>
               </div>
             </div>

@@ -1,0 +1,36 @@
+.CommentCardLayout-card {
+  width: auto;
+  max-width: 900px;
+  height: auto !important;
+  /* max-height: 270px; */
+  margin: 0px 20px;
+  margin-bottom: 15px;
+  background-color: var(--white-color-trans) !important;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
+  -moz-transition: all 0.1s ease-in;
+  -o-transition: all 0.1s ease-in;
+  -webkit-transition: all 0.1s ease-in;
+  transition: all 0.1s ease-in !important;
+}
+.arrowBtn {
+  width: 35px !important;
+}
+/* #container {
+  white-space: nowrap;
+  border: 1px solid #f0f;
+  width: 190px;
+  overflow-x: auto;
+}
+#container > div {
+  background: #ccc;
+  width: 50px;
+  height: 50px;
+  display: inline-block; */
+
+/* for IE6/7, remove if you don't need to support those browsers */

@@ -7,35 +7,40 @@ const tutorSchema = new Schema(
     userId: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     premiumStatus: {
       type: Boolean,
       required: true,
-      default: false
+      default: false,
     },
     verificationDocument: {
       type: String,
-      unique: true,
-      sparse: true,
-      default: null
+      // unique: true,
+      // sparse: true,
+      default: null,
     },
     verificationPayment: {
       type: String,
-      unique: true,
-      sparse: true,
-      default: null
+      // unique: true,
+      // sparse: true,
+      default: null,
     },
     premiumPayment: {
       type: String,
-      unique: true,
-      sparse: true,
-      default: null
-    }
+      // unique: true,
+      // sparse: true,
+      default: null,
+    },
+    verifyStatus: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   {
     collection: collectionName,
-    versionKey: false
+    versionKey: false,
   }
 );
 
